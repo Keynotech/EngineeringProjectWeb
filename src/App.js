@@ -1,25 +1,28 @@
 import React from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import { QueryClient, QueryClientProvider } from "react-query"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import GlobalStyle from "./styles/globalStyle"
+import Today from "./pages/App/Today/Today"
+import Inbox from "./pages/App/Inbox/Inbox"
+import AppLayout from "./components/layout/AppLayout"
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<Navigate replace to="/today" />} />
+            <Route path="*" element={<Navigate replace to="/" />} />
+            <Route path="/today" element={<Today />} />
+            <Route path="/inbox" element={<Inbox />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   )
 }
 
