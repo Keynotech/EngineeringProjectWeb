@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from "react"
 import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
+import { PropTypes } from "prop-types"
 
 const Wrapper = styled.nav`
   position: fixed;
@@ -11,9 +11,6 @@ const Wrapper = styled.nav`
   background-color: rgb(245, 245, 245);
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
 
-  @media (max-width: 768px) {
-    left: -400px;
-  }
   ${({ sidebarShow }) =>
     sidebarShow &&
     css`
@@ -21,19 +18,20 @@ const Wrapper = styled.nav`
     `}
 `
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-left: 30px;
+  padding-top: 30px;
+`
+
+const MenuList = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 function Sidebar(props) {
   const { sidebarShow } = props
-  const Container = styled.div`
-    display: flex;
-    flex-direction: row;
-    padding-left: 30px;
-    padding-top: 30px;
-  `
-
-  const MenuList = styled.div`
-    display: flex;
-    flex-direction: column;
-  `
 
   return (
     <Wrapper sidebarShow={sidebarShow}>
@@ -45,6 +43,10 @@ function Sidebar(props) {
       </Container>
     </Wrapper>
   )
+}
+
+Sidebar.propTypes = {
+  sidebarShow: PropTypes.bool.isRequired,
 }
 
 export default Sidebar
