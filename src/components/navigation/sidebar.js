@@ -1,7 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
+import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import { PropTypes } from "prop-types"
 
 const Wrapper = styled.nav`
   position: fixed;
@@ -11,8 +11,8 @@ const Wrapper = styled.nav`
   background-color: rgb(245, 245, 245);
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
 
-  ${({ sidebarShow }) =>
-    sidebarShow &&
+  ${({ sidebarVisibility }) =>
+    sidebarVisibility &&
     css`
       left: 0px;
     `}
@@ -30,11 +30,12 @@ const MenuList = styled.div`
   flex-direction: column;
 `
 
-function Sidebar(props) {
-  const { sidebarShow } = props
-
+function Sidebar() {
+  const sidebarVisibility = useSelector(
+    (state) => state.sidebarVisibility.value
+  )
   return (
-    <Wrapper sidebarShow={sidebarShow}>
+    <Wrapper sidebarVisibility={sidebarVisibility}>
       <Container>
         <MenuList>
           <Link to="/inbox">Inbox</Link>
@@ -43,10 +44,6 @@ function Sidebar(props) {
       </Container>
     </Wrapper>
   )
-}
-
-Sidebar.propTypes = {
-  sidebarShow: PropTypes.bool.isRequired,
 }
 
 export default Sidebar

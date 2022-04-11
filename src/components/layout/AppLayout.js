@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components"
 import { Outlet } from "react-router-dom"
-import TopBar from "../navigation/topbar"
-import Sidebar from "../navigation/sidebar"
+import { useDispatch, useSelector } from "react-redux"
+import TopBar from "../Navigation/topbar"
+import Sidebar from "../Navigation/sidebar"
+import { hide, show } from "../../app/store/features/sidebarSlice"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -24,20 +26,19 @@ const Main = styled.main`
   @media (max-width: 768px) {
     margin-left: 0px;
   }
-  ${({ sidebarShow }) =>
-    sidebarShow &&
+  ${({ sidebarVisibility }) =>
+    sidebarVisibility &&
     css`
       margin-left: 300px;
     `}
 `
 
 function AppLayout() {
-  const [sidebarShow, setSidebarShow] = useState(true)
   const [width, setWidth] = useState(window.innerWidth)
-
-  const handleSidebar = (value) => {
-    setSidebarShow(value)
-  }
+  const sidebarVisibility = useSelector(
+    (state) => state.sidebarVisibility.value
+  )
+  const dispatch = useDispatch()
 
   useEffect(() => {
     function handleResize() {
@@ -49,22 +50,22 @@ function AppLayout() {
 
   useEffect(() => {
     if (width < 768) {
-      handleSidebar(false)
+      dispatch(hide())
     }
   }, [width < 768])
 
   useEffect(() => {
     if (width > 768) {
-      handleSidebar(true)
+      dispatch(show())
     }
   }, [width > 768])
 
   return (
     <Wrapper>
-      <TopBar setSidebarShow={() => handleSidebar(!sidebarShow)} />
+      <TopBar />
       <Container>
-        <Sidebar sidebarShow={sidebarShow} />
-        <Main sidebarShow={sidebarShow}>
+        <Sidebar />
+        <Main sidebarVisibility={sidebarVisibility}>
           <Outlet />
         </Main>
       </Container>

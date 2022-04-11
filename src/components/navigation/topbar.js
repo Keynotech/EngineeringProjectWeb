@@ -1,6 +1,7 @@
 import React from "react"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { PropTypes } from "prop-types"
+import { toggle } from "../../app/store/features/sidebarSlice"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -31,13 +32,14 @@ const RightMenu = styled.div`
   align-items: center;
 `
 
-function TopBar(props) {
-  const { setSidebarShow } = props
+function TopBar() {
+  const dispatch = useDispatch()
+
   return (
     <Wrapper>
       <Container>
         <LeftMenu>
-          <button type="button" onClick={setSidebarShow}>
+          <button type="button" onClick={() => dispatch(toggle())}>
             sidebar
           </button>
         </LeftMenu>
@@ -47,10 +49,6 @@ function TopBar(props) {
       </Container>
     </Wrapper>
   )
-}
-
-TopBar.propTypes = {
-  setSidebarShow: PropTypes.func.isRequired,
 }
 
 export default TopBar
