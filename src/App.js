@@ -2,7 +2,7 @@ import React from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { Provider } from "react-redux"
 import GlobalStyle from "./styles/globalStyle"
-import Navigation from "./components/navigation/Navigation"
+import Navigation from "./components/Navigation/Navigation"
 import store from "./app/store/store"
 
 const queryClient = new QueryClient()
