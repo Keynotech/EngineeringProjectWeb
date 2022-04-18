@@ -6,16 +6,16 @@ export const sidebarSlice = createSlice({
     value: true,
   },
   reducers: {
-    show: (state) => {
+    showSidebar: (state) => {
       state.value = true
     },
-    hide: (state) => {
+    hideSidebar: (state) => {
       state.value = false
     },
-    toggle: (state) => {
+    toggleSidebar: (state) => {
       state.value = !state.value
     },
   },
 })
-export const { hide, show, toggle } = sidebarSlice.actions
+export const { hideSidebar, showSidebar, toggleSidebar } = sidebarSlice.actions
 export default sidebarSlice.reducer

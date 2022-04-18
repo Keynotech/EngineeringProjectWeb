@@ -8,7 +8,7 @@ const Wrapper = styled.nav`
   width: 300px;
   left: -400px;
   height: calc(100vh - 56px);
-  background-color: rgb(245, 245, 245);
+  background-color: ${(props) => props.theme.primary};
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
 
   ${({ sidebarVisibility }) =>

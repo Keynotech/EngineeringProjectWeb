@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import TopBar from "../Navigation/topbar"
 import Sidebar from "../Navigation/sidebar"
-import { hide, show } from "../../app/store/features/sidebarSlice"
+import { hideSidebar, showSidebar } from "../../app/store/features/sidebarSlice"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -21,7 +21,6 @@ const Main = styled.main`
   padding: 0px 0px;
   margin-left: 0px;
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
-  background-color: aliceblue;
 
   @media (max-width: 768px) {
     margin-left: 0px;
@@ -50,13 +49,13 @@ function AppLayout() {
 
   useEffect(() => {
     if (width < 768) {
-      dispatch(hide())
+      dispatch(hideSidebar())
     }
   }, [width < 768])
 
   useEffect(() => {
     if (width > 768) {
-      dispatch(show())
+      dispatch(showSidebar())
     }
   }, [width > 768])
 

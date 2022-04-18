@@ -1,17 +1,16 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { toggle } from "../../app/store/features/sidebarSlice"
+import { toggleSidebar } from "../../app/store/features/sidebarSlice"
+import { toggleDarkMode } from "../../app/store/features/themeSlice"
 
 const Wrapper = styled.div`
   width: 100vw;
-  height: 56px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(245, 245, 245);
-  box-shadow: 0px 1px 10px rgba(196, 196, 196, 0.4);
-  border-bottom: 1px solid rgb(0 0 0 / 5%);
+  background-color: ${(props) => props.theme.brandColor};
 `
 
 const Container = styled.div`
@@ -39,8 +38,15 @@ function TopBar() {
     <Wrapper>
       <Container>
         <LeftMenu>
-          <button type="button" onClick={() => dispatch(toggle())}>
+          <button type="button" onClick={() => dispatch(toggleSidebar())}>
             sidebar
+          </button>
+          <button
+            style={{ marginLeft: "5px" }}
+            type="button"
+            onClick={() => dispatch(toggleDarkMode())}
+          >
+            darkMode
           </button>
         </LeftMenu>
         <RightMenu>
