@@ -1,14 +1,15 @@
-/* eslint-disable react/no-unstable-nested-components */
 import React from "react"
 import styled, { css } from "styled-components"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import InboxIcon from "@mui/icons-material/Inbox"
 import CalendarViewWeekIcon from "@mui/icons-material/CalendarViewWeek"
 import TodayIcon from "@mui/icons-material/Today"
 import NavItem from "./NavItem"
+import { hideSidebar } from "../../app/store/features/sidebarSlice"
 
 const Wrapper = styled.nav`
   position: fixed;
+  z-index: 999;
   overflow-y: auto;
   height: calc(100vh - 56px);
   width: min(300px, 100vw);
@@ -55,32 +56,61 @@ const MenuList = styled.ul`
   }
 `
 
+const Backdrop = styled.div`
+  visibility: hidden;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: all 0.2s cubic-bezier(0.42, 0, 1, 1);
+    opacity: 0;
+    visibility: hidden;
+
+    ${({ sidebarVisibility }) =>
+      sidebarVisibility &&
+      css`
+        opacity: 1;
+        visibility: visible;
+      `}
+  }
+`
+
 function Sidebar() {
+  const dispatch = useDispatch()
   const sidebarVisibility = useSelector(
     (state) => state.sidebarVisibility.value
   )
   return (
-    <Wrapper sidebarVisibility={sidebarVisibility}>
-      <Container>
-        <MenuList>
-          <NavItem
-            icon={<InboxIcon fontSize="inherit" />}
-            name="Inbox"
-            route="/inbox"
-          />
-          <NavItem
-            icon={<TodayIcon fontSize="inherit" />}
-            name="Today"
-            route="/today"
-          />
-          <NavItem
-            route="/week"
-            name="Current Week"
-            icon={<CalendarViewWeekIcon fontSize="inherit" />}
-          />
-        </MenuList>
-      </Container>
-    </Wrapper>
+    <>
+      <Wrapper sidebarVisibility={sidebarVisibility}>
+        <Container>
+          <MenuList>
+            <NavItem
+              icon={<InboxIcon fontSize="inherit" />}
+              name="Inbox"
+              route="/inbox"
+            />
+            <NavItem
+              icon={<TodayIcon fontSize="inherit" />}
+              name="Today"
+              route="/today"
+            />
+            <NavItem
+              route="/week"
+              name="Current Week"
+              icon={<CalendarViewWeekIcon fontSize="inherit" />}
+            />
+          </MenuList>
+        </Container>
+      </Wrapper>
+      <Backdrop
+        sidebarVisibility={sidebarVisibility}
+        onClick={() => dispatch(hideSidebar())}
+      />
+    </>
   )
 }
 
