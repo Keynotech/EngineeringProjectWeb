@@ -9,16 +9,14 @@ body {
     font-family: 'Inter', sans-serif;
     font-size:14px;
     color: ${({ theme }) => theme.textPrimary};
-    transition: all 0.5s cubic-bezier(0,0,.58,1);
+    transition: all 0.2s cubic-bezier(0,0,.58,1);
 }
-
 h1,h2,h3, header,p, a, a:link, a:active, a:visited, a:hover {
     padding: 0;
     margin:0;
     text-decoration:none;
     color: ${({ theme }) => theme.textPrimary}
 }
-
 button {
     background: none;
     border:0;
@@ -26,12 +24,16 @@ button {
     cursor: pointer;
     color: ${({ theme }) => theme.textPrimary}
 }
-
 input, input:focus {
     outline: none;
     border: 1px solid;
     border-radius: 2px;
     padding: 5px;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 `
 

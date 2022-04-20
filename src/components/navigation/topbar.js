@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 import React from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
@@ -39,19 +40,17 @@ function TopBar() {
       <Container>
         <LeftMenu>
           <button type="button" onClick={() => dispatch(toggleSidebar())}>
-            sidebar
+            s
           </button>
           <button
             style={{ marginLeft: "5px" }}
             type="button"
             onClick={() => dispatch(toggleDarkMode())}
           >
-            darkMode
+            d
           </button>
         </LeftMenu>
-        <RightMenu>
-          <p>settings, notif, statistics, profile</p>
-        </RightMenu>
+        <RightMenu></RightMenu>
       </Container>
     </Wrapper>
   )
