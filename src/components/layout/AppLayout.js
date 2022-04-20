@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components"
 import { Outlet } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import TopBar from "../Navigation/topbar"
-import Sidebar from "../Navigation/sidebar"
+import TopBar from "../navigation/topbar"
+import Sidebar from "../navigation/sidebar"
 import { hideSidebar, showSidebar } from "../../app/store/features/sidebarSlice"
 
 const Wrapper = styled.div`

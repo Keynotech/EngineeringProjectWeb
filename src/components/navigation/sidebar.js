@@ -9,11 +9,11 @@ import { hideSidebar } from "../../app/store/features/sidebarSlice"
 
 const Wrapper = styled.nav`
   position: fixed;
+  left: -400px;
   z-index: 999;
-  overflow-y: auto;
   height: calc(100vh - 56px);
   width: min(300px, 100vw);
-  left: -400px;
+  overflow-y: auto;
   background-color: ${(props) => props.theme.primary};
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
 
@@ -30,8 +30,8 @@ const Wrapper = styled.nav`
 
 const Container = styled.div`
   width: calc(100% - 40px);
-  padding-left: 30px;
   padding-top: 30px;
+  padding-left: 30px;
   padding-bottom: 30px;
 
   @media (max-width: 440px) {
@@ -46,7 +46,7 @@ const MenuList = styled.ul`
       display: flex;
       align-items: center;
       flex-direction: row;
-      padding: 8px;
+      padding: 8px 5px;
       border-radius: 4px;
       min-height: 24px;
     }

@@ -1,6 +1,11 @@
 import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
+
+html {
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
     background: ${({ theme }) => theme.background};
     margin:0;
@@ -16,6 +21,7 @@ h1,h2,h3, header,p, a, a:link, a:active, a:visited, a:hover {
     margin:0;
     text-decoration:none;
     color: ${({ theme }) => theme.textPrimary}
+    
 }
 button {
     background: none;
