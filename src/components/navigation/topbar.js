@@ -1,24 +1,29 @@
+/* eslint-disable react/self-closing-comp */
 import React from "react"
-import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { toggleSidebar } from "../../app/store/features/sidebarSlice"
-import { toggleDarkMode } from "../../app/store/features/themeSlice"
+import HamburgerMenu from "./HamburgerMenu"
 
 const Wrapper = styled.div`
-  width: 100vw;
-  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.brandColor};
+  z-index: 1000;
+  width: 100vw;
+  height: 48px;
+  background-color: ${(props) => props.theme.secondary};
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
 
 const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 0 30px;
   display: flex;
   justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  padding: 0 32px;
+
+  @media (max-width: 440px) {
+    padding: 0 12px;
+  }
 `
 
 const LeftMenu = styled.div`
@@ -32,26 +37,13 @@ const RightMenu = styled.div`
 `
 
 function TopBar() {
-  const dispatch = useDispatch()
-
   return (
     <Wrapper>
       <Container>
         <LeftMenu>
-          <button type="button" onClick={() => dispatch(toggleSidebar())}>
-            sidebar
-          </button>
-          <button
-            style={{ marginLeft: "5px" }}
-            type="button"
-            onClick={() => dispatch(toggleDarkMode())}
-          >
-            darkMode
-          </button>
+          <HamburgerMenu />
         </LeftMenu>
-        <RightMenu>
-          <p>settings, notif, statistics, profile</p>
-        </RightMenu>
+        <RightMenu></RightMenu>
       </Container>
     </Wrapper>
   )

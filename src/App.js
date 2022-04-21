@@ -5,7 +5,7 @@ import { ThemeProvider } from "styled-components"
 import lightTheme from "./styles/lightTheme"
 import darkTheme from "./styles/darkTheme"
 import GlobalStyle from "./styles/globalStyle"
-import Navigation from "./components/Navigation/Navigation"
+import Navigation from "./components/navigation/Navigation"
 
 const queryClient = new QueryClient()
 
