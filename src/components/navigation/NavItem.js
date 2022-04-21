@@ -7,9 +7,11 @@ import { hideSidebar } from "../../app/store/features/sidebarSlice"
 
 const Link = styled(NavLink)`
   transition: all 0.25s ease-in;
+
   &:hover {
     background-color: ${(props) => props.theme.tertiary};
   }
+
   &.active {
     background-color: ${(props) => props.theme.tertiary};
   }
@@ -22,6 +24,7 @@ const Icon = styled.span`
   height: 24px;
   margin-right: 5px;
   font-size: 18px;
+
   color: ${(props) => props.theme.textSecondary};
 `
 
@@ -33,7 +36,7 @@ function NavItem({ icon, name, route }) {
   const dispatch = useDispatch()
 
   const hideSidebarOnMobile = () => {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth <= 768) {
       dispatch(hideSidebar())
     }
   }

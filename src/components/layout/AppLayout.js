@@ -14,17 +14,25 @@ const Wrapper = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `
 
 const Main = styled.main`
   display: flex;
-  padding: 0px 0px;
-  margin-left: 0px;
+  justify-content: center;
+  overflow-y: auto;
+
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
+  margin-left: 0px;
+  padding-left: 30px;
+  padding-right: 30px;
 
   @media (max-width: 768px) {
     margin-left: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
+
   ${({ sidebarVisibility }) =>
     sidebarVisibility &&
     css`
