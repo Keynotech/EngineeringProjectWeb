@@ -2,15 +2,15 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import styled from "styled-components"
+import TaskItem from "../../item/Task/TaskItem"
 
 const Wrapper = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   li {
-    border-bottom: 1px solid ${(props) => props.theme.tertiary};
-    padding: 20px 0;
-    margin-bottom: 2px;
+    padding: 12px 0;
   }
 `
 
@@ -18,12 +18,7 @@ function TasksList({ tasks }) {
   return (
     <Wrapper>
       {tasks
-        ? tasks.map((task) => (
-            <li key={task._id}>
-              <input type="checkbox" checked={task.status} readOnly />
-              <span>{task.title}</span>
-            </li>
-          ))
+        ? tasks.map((task) => <TaskItem task={task} key={task._id} />)
         : null}
     </Wrapper>
   )

@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   min-height: 300px;
 `
 const Container = styled.div`
-  max-width: 1440px;
+  max-width: 1360px;
   width: 100%;
   padding-top: 30px;
   padding-bottom: 120px;

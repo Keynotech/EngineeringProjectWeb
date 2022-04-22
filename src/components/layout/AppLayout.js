@@ -21,7 +21,7 @@ const Main = styled.main`
   display: flex;
   justify-content: center;
   overflow-y: auto;
-
+  overflow-x: hidden;
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
   margin-left: 0px;
   padding-left: 30px;

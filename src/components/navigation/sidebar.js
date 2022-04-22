@@ -14,7 +14,8 @@ const Wrapper = styled.nav`
   height: calc(100vh - 56px);
   width: min(300px, 100vw);
   overflow-y: auto;
-  background-color: ${(props) => props.theme.primary};
+  background-color: ${(props) => props.theme.background};
+  border-right: 1px solid ${(props) => props.theme.secondary};
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
 
   ${({ sidebarVisibility }) =>

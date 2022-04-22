@@ -34,7 +34,6 @@ input, input:focus {
     outline: none;
     border: 1px solid;
     border-radius: 2px;
-    padding: 5px;
 }
 ul {
     margin: 0;
