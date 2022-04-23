@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
-import sidebarReducer from "./features/sidebarSlice"
+import layoutReducer from "./features/layoutSlice"
 import themeReducuer from "./features/themeSlice"
 import tasksReducer from "./features/tasksSlice"
 
 export default configureStore({
   reducer: {
-    sidebarVisibility: sidebarReducer,
+    layout: layoutReducer,
     theme: themeReducuer,
     tasks: tasksReducer,
   },

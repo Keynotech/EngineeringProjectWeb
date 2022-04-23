@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
-import { toggleSidebar } from "../../app/store/features/sidebarSlice"
+import { toggleSidebar } from "../../app/store/features/layoutSlice"
 
 const Hamburger = styled.div`
   display: flex;
@@ -12,7 +12,6 @@ const Hamburger = styled.div`
   height: 24px;
   border-radius: 4px;
   padding: 2px;
-  margin-left: -2px;
   cursor: pointer;
 
   &:hover {
@@ -68,7 +67,7 @@ const HamburgerInner = styled.div`
 function HamburgerMenu() {
   const dispatch = useDispatch()
   const sidebarVisibility = useSelector(
-    (state) => state.sidebarVisibility.value
+    (state) => state.layout.sidebarVisibility
   )
   return (
     <Hamburger onClick={() => dispatch(toggleSidebar())}>

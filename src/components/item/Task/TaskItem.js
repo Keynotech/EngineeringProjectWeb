@@ -1,10 +1,14 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import styled, { css, useTheme } from "styled-components"
 import PropTypes from "prop-types"
 import AttachmentOutlinedIcon from "@mui/icons-material/AttachmentOutlined"
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined"
+import { Link } from "react-router-dom"
+import { showTaskPage } from "../../../app/store/features/layoutSlice"
 import Checkbox from "../../button/Checkbox"
 
 const Wrapper = styled.div`
@@ -13,6 +17,12 @@ const Wrapper = styled.div`
   align-items: flex-start;
   position: relative;
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
+  padding: 10px 8px;
+
+  &:hover {
+    background-color: aliceblue;
+    border-radius: 4px;
+  }
 `
 
 const CheckboxContainer = styled.div`
@@ -66,7 +76,7 @@ const PropertiesIcons = styled.div`
   flex-shrink: 2;
   overflow: hidden;
   gap: 10px;
-  font-size: 16px;
+  font-size: 14px;
 `
 
 const DetailsContainer = styled.div`
@@ -96,6 +106,7 @@ const DescriptionInner = styled.span`
 
 function TaskItem({ task }) {
   const theme = useTheme()
+  const dispatch = useDispatch()
   const [isDone, setIsDone] = useState(task.status)
   const [isOverdue, setIsOverdue] = useState(false)
   const [checkboxColor, setCheckboxColor] = useState(theme.priority1)
@@ -136,23 +147,26 @@ function TaskItem({ task }) {
           />
         </CheckboxContainer>
         <Content>
-          <MainContainer>
-            <Date isOverdue={isOverdue}>24 Apr, 14:30</Date>
-            <Title displayTasksDetails={displayTasksDetails}>
-              {task.title}
-            </Title>
-            <PropertiesIcons>
-              <FormatListBulletedOutlinedIcon fontSize="inherit" />
-              <AttachmentOutlinedIcon fontSize="inherit" />
-            </PropertiesIcons>
-          </MainContainer>
-          <DetailsContainer>
-            {task.description ? (
-              <Description displayTasksDetails={displayTasksDetails}>
-                <DescriptionInner>{task.description}</DescriptionInner>
-              </Description>
-            ) : null}
-          </DetailsContainer>
+          <Link
+            to={`tasks/${task._id}`}
+            onClick={() => dispatch(showTaskPage())}
+          >
+            <MainContainer>
+              <Date isOverdue={isOverdue}>24 Apr, 14:30</Date>
+              <Title>{task.title}</Title>
+              <PropertiesIcons>
+                <FormatListBulletedOutlinedIcon fontSize="inherit" />
+                <AttachmentOutlinedIcon fontSize="inherit" />
+              </PropertiesIcons>
+            </MainContainer>
+            <DetailsContainer>
+              {task.description ? (
+                <Description displayTasksDetails={displayTasksDetails}>
+                  <DescriptionInner>{task.description}</DescriptionInner>
+                </Description>
+              ) : null}
+            </DetailsContainer>
+          </Link>
         </Content>
       </Wrapper>
     </li>
@@ -161,6 +175,7 @@ function TaskItem({ task }) {
 
 TaskItem.propTypes = {
   task: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     status: PropTypes.bool.isRequired,
     priority: PropTypes.number,

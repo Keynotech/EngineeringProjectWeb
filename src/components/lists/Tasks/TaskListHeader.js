@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  padding: 8px 0;
+  padding: 8px 8px;
   color: ${(props) => props.theme.textSecondary};
 `
 

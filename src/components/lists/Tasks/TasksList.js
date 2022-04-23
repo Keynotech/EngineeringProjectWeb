@@ -4,22 +4,22 @@ import React from "react"
 import styled from "styled-components"
 import TaskItem from "../../item/Task/TaskItem"
 
-const Wrapper = styled.ul`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  li {
-    padding: 12px 0;
-  }
 `
+
+const List = styled.ul``
 
 function TasksList({ tasks }) {
   return (
     <Wrapper>
-      {tasks
-        ? tasks.map((task) => <TaskItem task={task} key={task._id} />)
-        : null}
+      <List>
+        {tasks
+          ? tasks.map((task) => <TaskItem task={task} key={task._id} />)
+          : null}
+      </List>
     </Wrapper>
   )
 }

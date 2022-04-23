@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import { NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
-import { hideSidebar } from "../../app/store/features/sidebarSlice"
+import { hideSidebar, hideTaskPage } from "../../app/store/features/layoutSlice"
 
 const Link = styled(NavLink)`
   transition: all 0.25s ease-in;
@@ -43,7 +43,13 @@ function NavItem({ icon, name, route }) {
 
   return (
     <li>
-      <Link to={route} onClick={() => hideSidebarOnMobile()}>
+      <Link
+        to={route}
+        onClick={() => {
+          dispatch(hideTaskPage())
+          hideSidebarOnMobile()
+        }}
+      >
         <Icon> {icon}</Icon>
         <RouteName>{name}</RouteName>
       </Link>

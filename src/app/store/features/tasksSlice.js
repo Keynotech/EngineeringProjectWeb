@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 export const tasksSlice = createSlice({
   name: "sidebarVisibility",
   initialState: {
-    displayDetails: true,
+    displayDetails: false,
   },
   reducers: {
     toggleDisplayDetails: (state) => {
