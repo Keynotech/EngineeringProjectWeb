@@ -37,7 +37,7 @@ const Main = styled.main`
   ${({ sidebarVisibility }) =>
     sidebarVisibility &&
     css`
-      margin-left: 300px;
+      margin-left: 260px;
     `}
 
   ${({ taskPageVisibility }) =>

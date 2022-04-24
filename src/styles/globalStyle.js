@@ -30,10 +30,12 @@ button {
     cursor: pointer;
     color: ${({ theme }) => theme.textPrimary}
 }
-input, input:focus {
+input, input:focus, textarea {
     outline: none;
-    border: 1px solid;
-    border-radius: 2px;
+    border:0;
+    margin:0;
+    padding:0;
+    background:transparent;
 }
 ul {
     margin: 0;

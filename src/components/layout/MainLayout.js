@@ -10,12 +10,10 @@ const Wrapper = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
-  min-height: 300px;
   gap: 10px;
 `
 const Container = styled.div`
   width: 100%;
-  padding-top: 30px;
   padding-bottom: 120px;
 `
 

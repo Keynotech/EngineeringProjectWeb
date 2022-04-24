@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
-  padding: 8px 8px;
+  padding: 15px 6px;
   color: ${(props) => props.theme.textSecondary};
 `
 
@@ -16,12 +16,12 @@ const Icon = styled.span`
   align-items: center;
   min-width: 24px;
   min-height: 24px;
-  font-size: 18px;
+  font-size: 24px;
 `
 
 const Name = styled.h1`
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 500;
   color: ${(props) => props.theme.textPrimary};
 `
 

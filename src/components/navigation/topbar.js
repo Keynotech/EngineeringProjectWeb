@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   z-index: 1000;
   width: 100vw;
   height: 48px;
-  background-color: ${(props) => props.theme.brandColor};
+  background-color: ${(props) => props.theme.secondary};
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
 
