@@ -17,5 +17,6 @@ module.exports = {
       "error",
       { props: true, ignorePropertyModificationsFor: ["state"] },
     ],
+    "no-underscore-dangle": "off",
   },
 }

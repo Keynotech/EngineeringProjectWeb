@@ -13,7 +13,7 @@ import LastPageIcon from "@mui/icons-material/LastPage"
 import { hideTaskPage } from "../../../app/store/features/layoutSlice"
 import Checkbox from "../../button/Checkbox"
 import DescriptionInput from "../../input/DescriptionInput"
-import { useTaskQuery, useUpdateTask } from "../../../app/api/api"
+import { useTaskQuery, useUpdateSingleTask } from "../../../app/api/api"
 
 const Wrapper = styled.div`
   position: fixed;
@@ -123,7 +123,7 @@ function TaskPage() {
   const task = useTaskQuery(taskId)
   const dispatch = useDispatch()
   const theme = useTheme()
-  const updateTask = useUpdateTask(taskId)
+  const updateTask = useUpdateSingleTask(taskId)
 
   const isVisible = useSelector((state) => state.layout.taskPageVisibility)
 
@@ -184,7 +184,7 @@ function TaskPage() {
             <SectionHeader>Attachments</SectionHeader>
           </SectionContainer>
         </DetailsContainer>
-        <Footer>Updated at {format(new Date(task.data.updated), "Pp")}</Footer>
+        <Footer>Updated at </Footer>
       </Container>
     </Wrapper>
   ) : null

@@ -13,7 +13,7 @@ function Inbox() {
     <MainLayout>
       <Header icon={<InboxOutlinedIcon fontSize="inherit" />} name="Inbox" />
       <div style={{ marginTop: "20px" }}>
-        {tasks.isSuccess ? <TasksList tasks={tasks.data} /> : null}
+        {tasks.isSuccess ? <TasksList tasks={tasks} /> : null}
       </div>
     </MainLayout>
   )

@@ -17,7 +17,7 @@ function TasksList({ tasks }) {
     <Wrapper>
       <List>
         {tasks
-          ? tasks.map((task) => <TaskItem task={task} key={task._id} />)
+          ? tasks.data.map((task) => <TaskItem task={task} key={task._id} />)
           : null}
       </List>
     </Wrapper>

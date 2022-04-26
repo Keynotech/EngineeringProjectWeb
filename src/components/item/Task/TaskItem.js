@@ -1,15 +1,15 @@
-/* eslint-disable prefer-const */
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import styled, { css, useTheme } from "styled-components"
+import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
 import AttachmentOutlinedIcon from "@mui/icons-material/AttachmentOutlined"
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined"
 import { Link } from "react-router-dom"
 import { showTaskPage } from "../../../app/store/features/layoutSlice"
 import Checkbox from "../../button/Checkbox"
+import { useUpdateTaskOnList } from "../../../app/api/api"
 
 const Wrapper = styled.div`
   display: flex;
@@ -80,22 +80,19 @@ const PropertiesIcons = styled.div`
 `
 
 const DetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: none;
+  ${({ displayTasksDetails }) =>
+    displayTasksDetails &&
+    css`
+      display: flex;
+      flex-direction: column;
+    `}
 `
 
 const Description = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  ${({ displayTasksDetails }) =>
-    displayTasksDetails &&
-    css`
-      overflow: visible;
-      text-overflow: clip;
-      white-space: normal;
-    `}
 `
 
 const DescriptionInner = styled.span`
@@ -105,14 +102,18 @@ const DescriptionInner = styled.span`
 `
 
 function TaskItem({ task }) {
-  const theme = useTheme()
   const dispatch = useDispatch()
-  const [isDone, setIsDone] = useState(task.status)
+  const updateTask = useUpdateTaskOnList(task._id)
   const [isOverdue, setIsOverdue] = useState(false)
-  const [checkboxColor, setCheckboxColor] = useState(theme.priority1)
+  const [isAttachment, setIsAttachment] = useState(false)
   const displayTasksDetails = useSelector((state) => state.tasks.displayDetails)
 
-  const toggleIsDone = () => setIsDone(!isDone)
+  useEffect(() => {}, [task.dueDate])
+  useEffect(() => {
+    if (task.attachments) {
+      setIsAttachment(true)
+    } else setIsAttachment(false)
+  }, [task.attachments])
 
   return (
     <li>
@@ -120,7 +121,11 @@ function TaskItem({ task }) {
         <CheckboxContainer>
           <Checkbox
             checked={task.status}
-            onChange={toggleIsDone}
+            onChange={() =>
+              updateTask.mutate({
+                status: !task.status,
+              })
+            }
             priority={task.priority}
           />
         </CheckboxContainer>
@@ -130,16 +135,17 @@ function TaskItem({ task }) {
             onClick={() => dispatch(showTaskPage())}
           >
             <MainContainer>
-              <Date isOverdue={isOverdue}>24 Apr, 14:30</Date>
+              <Date isOverdue={isOverdue}>s</Date>
               <Title>{task.title}</Title>
               <PropertiesIcons>
-                <FormatListBulletedOutlinedIcon fontSize="inherit" />
-                <AttachmentOutlinedIcon fontSize="inherit" />
+                {isAttachment ? (
+                  <AttachmentOutlinedIcon fontSize="inherit" />
+                ) : null}
               </PropertiesIcons>
             </MainContainer>
-            <DetailsContainer>
+            <DetailsContainer displayTasksDetails={displayTasksDetails}>
               {task.description ? (
-                <Description displayTasksDetails={displayTasksDetails}>
+                <Description>
                   <DescriptionInner>{task.description}</DescriptionInner>
                 </Description>
               ) : null}

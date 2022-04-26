@@ -1,6 +1,8 @@
 import React from "react"
+import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import PropTypes from "prop-types"
+import { toggleDisplayDetails } from "../../../app/store/features/tasksSlice"
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,11 +33,17 @@ const Info = styled.span`
 `
 
 function TaskListHeader({ icon, name, additionaInfo }) {
+  const dispatch = useDispatch()
+  const isDetailDisplay = useSelector((state) => state.tasks.displayDetails)
+
   return (
     <Wrapper>
       <Icon>{icon}</Icon>
       <Name>{name}</Name>
       {additionaInfo ? <Info>{additionaInfo}</Info> : null}
+      <button type="button" onClick={() => dispatch(toggleDisplayDetails())}>
+        Tasks details: {isDetailDisplay.toString()}
+      </button>
     </Wrapper>
   )
 }

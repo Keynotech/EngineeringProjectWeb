@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 export const tasksSlice = createSlice({
-  name: "sidebarVisibility",
+  name: "tasks",
   initialState: {
     displayDetails: false,
   },
