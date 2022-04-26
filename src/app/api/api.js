@@ -31,27 +31,22 @@ function useUpdateSingleTask(taskId) {
     },
     {
       onMutate: async (edited) => {
-        console.log(taskId)
-        await queryClient.cancelQueries(["tasks", taskId])
         await queryClient.cancelQueries(["tasks"])
+        await queryClient.cancelQueries(["tasks", taskId])
         const previousTasks = queryClient.getQueryData(["tasks"])
         const previousTask = queryClient.getQueryData(["tasks", taskId])
         const updatedTask = { ...previousTask, ...edited }
         const updatedTasks = [...previousTasks]
 
-        console.log("previousTask", previousTask)
-        console.log("previousList", previousTasks)
         const index = updatedTasks.findIndex(
           (task) => task._id === updatedTask._id
         )
 
         queryClient.setQueryData(["tasks", taskId], updatedTask)
         if (index !== -1) {
-          console.log("udaptedTask", updatedTask)
           updatedTasks[index] = updatedTask
           queryClient.setQueryData(["tasks"], updatedTasks)
         }
-        console.log("updatedList", updatedTasks)
 
         return { previousTask, previousTasks }
       },
@@ -101,6 +96,7 @@ function useUpdateTaskOnList(taskId) {
 
         return { previousTask, previousTasks }
       },
+
       onError: ({ previousTask, previousTasks }) => {
         queryClient.setQueryData(["tasks", taskId], previousTask)
         queryClient.setQueryData(["tasks"], previousTasks)

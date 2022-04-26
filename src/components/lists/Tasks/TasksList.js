@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import styled from "styled-components"
-import TaskItem from "../../item/Task/TaskItem"
+import TaskItem from "../../item/Task/TaskItem/TaskItem"
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,16 +10,14 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const List = styled.ul``
-
 function TasksList({ tasks }) {
   return (
     <Wrapper>
-      <List>
+      <ul>
         {tasks
           ? tasks.data.map((task) => <TaskItem task={task} key={task._id} />)
           : null}
-      </List>
+      </ul>
     </Wrapper>
   )
 }

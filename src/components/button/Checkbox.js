@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import styled, { css, useTheme } from "styled-components"
 
 const Button = styled.button`
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   margin: 0;
   background-color: ${(props) => props.theme.background};
   border-radius: 5px;
