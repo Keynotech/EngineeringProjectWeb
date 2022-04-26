@@ -10,114 +10,26 @@ import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined"
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import LastPageIcon from "@mui/icons-material/LastPage"
-import { hideTaskPage } from "../../../app/store/features/layoutSlice"
-import Checkbox from "../../button/Checkbox"
-import DescriptionInput from "../../input/DescriptionInput"
-import { useTaskQuery, useUpdateSingleTask } from "../../../app/api/api"
-
-const Wrapper = styled.div`
-  position: fixed;
-  top: 49px;
-  right: -450px;
-  width: min(420px, 100vw);
-  height: calc(100vh - 48px);
-  overflow-y: auto;
-  background-color: ${(props) => props.theme.background};
-  border-left: 1px solid ${(props) => props.theme.secondary};
-  transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  ${({ isVisible }) =>
-    isVisible &&
-    css`
-      right: 0px;
-    `}
-`
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  position: relative;
-`
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 15px 15px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid ${(props) => props.theme.secondary};
-`
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  min-width: 32px;
-`
-
-const TitleContainer = styled.div`
-  min-width: 0;
-  max-width: 100%;
-  flex: 1;
-`
-const Title = styled.span`
-  font-size: 16px;
-  word-break: break-word;
-`
-
-const DetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 0;
-  max-width: 100%;
-  color: ${(props) => props.theme.textSecondary};
-  padding: 0 15px;
-`
-
-const SectionHeader = styled.span`
-  font-weight: 600;
-`
-
-const PropertiesContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-`
-
-const Propertie = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 20px;
-  gap: 5px;
-  color: ${(props) => props.theme.textTertiary};
-  font-size: 18px;
-  padding: 2px 6px;
-  border: 1px solid ${(props) => props.theme.tertiary};
-  border-radius: 5px;
-`
-const PropertieValue = styled.span`
-  font-size: 12px;
-`
-
-const SectionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`
-const Footer = styled.div`
-  position: absolute;
-  bottom: 0;
-  padding: 8px 15px;
-  font-size: 12px;
-  color: ${(props) => props.theme.textTertiary};
-`
-
-const AttachmentsContainer = styled.div``
+import { hideTaskPage } from "../../../../app/store/features/layoutSlice"
+import Checkbox from "../../../button/Checkbox"
+import TextInput from "../../../input/TextInput"
+import { useTaskQuery, useUpdateSingleTask } from "../../../../app/api/api"
+import {
+  Wrapper,
+  Container,
+  MainContainer,
+  CheckboxContainer,
+  TitleContainer,
+  Title,
+  DetailsContainer,
+  SectionHeader,
+  PropertiesContainer,
+  Propertie,
+  PropertieValue,
+  SectionContainer,
+  Footer,
+  AttachmentsContainer,
+} from "./TaskPage.style"
 
 function TaskPage() {
   let { taskId } = useParams()
@@ -175,9 +87,13 @@ function TaskPage() {
 
           <SectionContainer>
             <SectionHeader>Description</SectionHeader>
-            <DescriptionInput
+            <TextInput
               value={task.data.description}
               onChange={changeDesc}
+              placeholder="Description"
+              multiline
+              maxRows={15}
+              fontSize="12px"
             />
           </SectionContainer>
 

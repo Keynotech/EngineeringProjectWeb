@@ -4,7 +4,14 @@ import PropTypes from "prop-types"
 import { useTheme } from "styled-components"
 import { Input } from "@mui/material"
 
-function DescriptionInput({ value, onChange }) {
+function TextInput({
+  value,
+  onChange,
+  multiline,
+  maxRows,
+  placeholder,
+  fontSize,
+}) {
   const theme = useTheme()
 
   const handleChange = (event) => onChange(event.target.value)
@@ -13,25 +20,33 @@ function DescriptionInput({ value, onChange }) {
     <Input
       value={value}
       onChange={handleChange}
-      placeholder="Description"
-      multiline
-      maxRows={15}
+      placeholder={placeholder}
+      multiline={multiline}
+      maxRows={maxRows}
       disableUnderline
       sx={{
-        fontSize: "12px",
+        fontSize: { fontSize },
         color: theme.textSecondary,
       }}
     />
   )
 }
 
-DescriptionInput.propTypes = {
+TextInput.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  multiline: PropTypes.bool,
+  maxRows: PropTypes.number,
+  placeholder: PropTypes.string,
+  fontSize: PropTypes.string,
 }
 
-DescriptionInput.defaultProps = {
+TextInput.defaultProps = {
   value: "",
+  multiline: true,
+  maxRows: 1,
+  placeholder: "",
+  fontSize: "12px",
 }
 
-export default DescriptionInput
+export default TextInput

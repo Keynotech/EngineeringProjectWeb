@@ -2,7 +2,7 @@ import React from "react"
 import { Route, Routes, Outlet } from "react-router-dom"
 import styled from "styled-components"
 import PropTypes, { element } from "prop-types"
-import TaskPage from "../item/Task/TaskPage"
+import TaskPage from "../item/Task/TaskPage/TaskPage"
 
 const Wrapper = styled.div`
   display: flex;
