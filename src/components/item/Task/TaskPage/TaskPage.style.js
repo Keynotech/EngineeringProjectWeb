@@ -32,26 +32,24 @@ export const Container = styled.div`
 export const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: space-between;
   padding: 15px 15px;
   margin-bottom: 10px;
   border-bottom: 1px solid ${(props) => props.theme.secondary};
 `
-export const CheckboxContainer = styled.div`
+export const IconContainer = styled.div`
   display: flex;
   align-items: center;
-  min-width: 32px;
+  height: 32px;
 `
 
 export const TitleContainer = styled.div`
-  min-width: 0;
-  max-width: 100%;
   flex: 1;
+  min-height: 24px;
+  padding: 0 15px;
 `
-export const Title = styled.span`
-  font-size: 16px;
-  word-break: break-word;
-`
+export const Title = styled.span``
 
 export const DetailsContainer = styled.div`
   display: flex;

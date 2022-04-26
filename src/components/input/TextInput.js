@@ -24,6 +24,8 @@ function TextInput({
       multiline={multiline}
       maxRows={maxRows}
       disableUnderline
+      maxLength={50}
+      fullWidth
       sx={{
         fontSize: { fontSize },
         color: theme.textSecondary,
