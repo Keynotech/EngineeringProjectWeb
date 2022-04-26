@@ -114,36 +114,14 @@ function TaskItem({ task }) {
 
   const toggleIsDone = () => setIsDone(!isDone)
 
-  useEffect(() => {
-    // if task.dueDate < date.now() {}
-    //     setIsOverdue(true)
-    switch (task.priority) {
-      case 1:
-        setCheckboxColor(theme.priority1)
-        break
-      case 2:
-        setCheckboxColor(theme.priority2)
-        break
-      case 3:
-        setCheckboxColor(theme.priority3)
-        break
-      case 4:
-        setCheckboxColor(theme.priority4)
-        break
-      default:
-        setCheckboxColor(theme.priority1)
-        break
-    }
-  }, [task.priority])
-
   return (
     <li>
       <Wrapper displayTasksDetails={displayTasksDetails}>
         <CheckboxContainer>
           <Checkbox
-            checked={isDone}
+            checked={task.status}
             onChange={toggleIsDone}
-            color={checkboxColor}
+            priority={task.priority}
           />
         </CheckboxContainer>
         <Content>

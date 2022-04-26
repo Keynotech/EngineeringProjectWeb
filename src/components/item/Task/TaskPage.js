@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 import React, { useEffect, useState } from "react"
@@ -9,16 +10,15 @@ import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined"
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import LastPageIcon from "@mui/icons-material/LastPage"
-import { TimePicker, DatePicker } from "@mui/x-date-pickers"
 import { hideTaskPage } from "../../../app/store/features/layoutSlice"
 import Checkbox from "../../button/Checkbox"
 import DescriptionInput from "../../input/DescriptionInput"
-import { useTaskQuery } from "../../../app/api/api"
+import { useTaskQuery, useUpdateTask } from "../../../app/api/api"
 
 const Wrapper = styled.div`
   position: fixed;
   top: 49px;
-  right: -500px;
+  right: -450px;
   width: min(420px, 100vw);
   height: calc(100vh - 48px);
   overflow-y: auto;
@@ -123,35 +123,31 @@ function TaskPage() {
   const task = useTaskQuery(taskId)
   const dispatch = useDispatch()
   const theme = useTheme()
+  const updateTask = useUpdateTask(taskId)
+
   const isVisible = useSelector((state) => state.layout.taskPageVisibility)
-  const [isDone, setIsDone] = useState()
-  const [priority, setPriority] = useState()
-  const [title, setTitle] = useState()
-  const [desc, setDesc] = useState()
-  const [date, setDate] = useState(new Date())
 
-  const toggleIsDone = () => setIsDone(!isDone)
-  const changeDesc = (value) => setDesc(value)
-
-  useEffect(() => {
-    if (task.isSuccess) {
-      setIsDone(task.data.status)
-      setTitle(task.data.title)
-      setDesc(task.data.description)
-      setPriority(task.data.priority)
-      setDate(new Date(task.data.dueDate))
-    }
-  }, [task.data])
+  const changeDesc = (value) => updateTask.mutate({ description: value })
 
   return task.isSuccess ? (
     <Wrapper isVisible={isVisible}>
       <Container>
         <MainContainer>
           <CheckboxContainer>
-            <Checkbox checked={isDone} color="#eee" onChange={toggleIsDone} />
+            <Checkbox
+              checked={task.data.status}
+              priority={task.data.priority}
+              onChange={() => {
+                updateTask.mutate({
+                  status: !task.data.status,
+                })
+              }}
+            />
           </CheckboxContainer>
           <TitleContainer>
-            <Title>{title}</Title>
+            <Title>
+              {task.data.title} {task.data.status.toString()}
+            </Title>
           </TitleContainer>
           <LastPageIcon
             onClick={() => dispatch(hideTaskPage())}
@@ -162,7 +158,7 @@ function TaskPage() {
           <PropertiesContainer>
             <Propertie>
               <FlagOutlinedIcon fontSize="inherit" color="inherit" />
-              <PropertieValue>Priority {priority}</PropertieValue>
+              <PropertieValue>Priority {task.data.priority}</PropertieValue>
             </Propertie>
 
             <Propertie>
@@ -178,7 +174,10 @@ function TaskPage() {
 
           <SectionContainer>
             <SectionHeader>Description</SectionHeader>
-            <DescriptionInput value={desc} onChange={changeDesc} />
+            <DescriptionInput
+              value={task.data.description}
+              onChange={changeDesc}
+            />
           </SectionContainer>
 
           <SectionContainer>

@@ -1,12 +1,12 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import styled, { css } from "styled-components"
+import styled, { css, useTheme } from "styled-components"
 
 const Button = styled.button`
   width: 18px;
   height: 18px;
   margin: 0;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.background};
   border-radius: 5px;
   border: 2px solid ${(props) => props.color};
 
@@ -17,7 +17,30 @@ const Button = styled.button`
     `}
 `
 
-function Checkbox({ checked, onChange, color }) {
+function Checkbox({ checked, onChange, priority }) {
+  const [color, setColor] = useState()
+  const theme = useTheme()
+
+  useEffect(() => {
+    switch (priority) {
+      case 1:
+        setColor(theme.priority1)
+        break
+      case 2:
+        setColor(theme.priority2)
+        break
+      case 3:
+        setColor(theme.priority3)
+        break
+      case 4:
+        setColor(theme.priority4)
+        break
+      default:
+        setColor(theme.priority1)
+        break
+    }
+  }, [priority])
+
   return (
     <Button
       type="checkbox"
@@ -31,11 +54,7 @@ function Checkbox({ checked, onChange, color }) {
 Checkbox.propTypes = {
   checked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
-  color: PropTypes.string,
-}
-
-Checkbox.defaultProps = {
-  color: "#eeeeee",
+  priority: PropTypes.number.isRequired,
 }
 
 export default Checkbox
