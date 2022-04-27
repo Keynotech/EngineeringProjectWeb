@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react"
 import styled, { useTheme } from "styled-components"
 import FlagIcon from "@mui/icons-material/Flag"
 import {
-  DropDownMenu,
-  DropDownMenuContainer,
-  DropDownMenuItem,
+  DropDownWrapper,
+  DropDownContainer,
+  DropDownItem,
   Propertie,
   PropertieValue,
-} from "./style"
+} from "./PriorityInput.style"
 
 function PriorityInput({ value, onChange }) {
   const theme = useTheme()
@@ -32,10 +32,10 @@ function PriorityInput({ value, onChange }) {
     <Propertie onClick={() => setIsOpen(!isOpen)}>
       <FlagIcon fontSize="inherit" sx={{ color: selectedColor }} />
       <PropertieValue>Priority {value}</PropertieValue>
-      <DropDownMenu isOpen={isOpen}>
-        <DropDownMenuContainer>
+      <DropDownWrapper isOpen={isOpen}>
+        <DropDownContainer>
           {prioritiesData.map((priority) => (
-            <DropDownMenuItem
+            <DropDownItem
               onClick={() => {
                 setIsOpen(false)
                 onChange(priority.value)
@@ -44,10 +44,10 @@ function PriorityInput({ value, onChange }) {
             >
               <FlagIcon sx={{ fontSize: "18px", color: priority.color }} />
               {priority.name}
-            </DropDownMenuItem>
+            </DropDownItem>
           ))}
-        </DropDownMenuContainer>
-      </DropDownMenu>
+        </DropDownContainer>
+      </DropDownWrapper>
     </Propertie>
   )
 }

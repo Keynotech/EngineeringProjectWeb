@@ -5,14 +5,14 @@ import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
 import { useParams } from "react-router-dom"
-import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined"
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import LastPageIcon from "@mui/icons-material/LastPage"
 import { hideTaskPage } from "../../../../app/store/features/layoutSlice"
 import Checkbox from "../../../button/Checkbox"
 import TextInput from "../../../input/TextInput"
-import PriorityInput from "../../../input/TaskPropertieInput/PriorityInput"
+import PriorityInput from "../../../input/PriorityInput/PriorityInput"
+import DateInput from "../../../input/DateInput/DateInput"
 import { useTaskQuery, useUpdateSingleTask } from "../../../../app/api/api"
 import { formatDateToDisplay } from "../../../../utils/dateConvert"
 import {
@@ -102,10 +102,7 @@ function TaskPage() {
               value={task.data.priority}
               onChange={changePriority}
             />
-
-            <Propertie>
-              <CalendarMonthOutlinedIcon fontSize="inherit" color="inherit" />
-            </Propertie>
+            <DateInput onChange={changeDueDate} value={task.data.dueDate} />
 
             <Propertie>
               <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
