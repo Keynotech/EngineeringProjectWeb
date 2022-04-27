@@ -11,6 +11,7 @@ function TextInput({
   maxRows,
   placeholder,
   fontSize,
+  autoFocus,
 }) {
   const theme = useTheme()
 
@@ -26,6 +27,7 @@ function TextInput({
       disableUnderline
       maxLength={50}
       fullWidth
+      autoFocus={autoFocus}
       sx={{
         fontSize: { fontSize },
         color: theme.textSecondary,
@@ -41,6 +43,7 @@ TextInput.propTypes = {
   maxRows: PropTypes.number,
   placeholder: PropTypes.string,
   fontSize: PropTypes.string,
+  autoFocus: PropTypes.bool,
 }
 
 TextInput.defaultProps = {
@@ -49,6 +52,7 @@ TextInput.defaultProps = {
   maxRows: 1,
   placeholder: "",
   fontSize: "12px",
+  autoFocus: false,
 }
 
 export default TextInput

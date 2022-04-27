@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import TopBar from "../navigation/topbar"
 import Sidebar from "../navigation/sidebar"
 import { hideSidebar, showSidebar } from "../../app/store/features/layoutSlice"
+import NewTaskButton from "../button/NewTaskButton/NewTaskButton"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -44,6 +45,19 @@ const Main = styled.main`
     taskPageVisibility &&
     css`
       margin-right: 420px;
+    `}
+`
+
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transition: right 0.25s cubic-bezier(0.42, 0, 1, 1);
+
+  ${({ taskPageVisibility }) =>
+    taskPageVisibility &&
+    css`
+      right: 420px;
     `}
 `
 
@@ -87,6 +101,9 @@ function AppLayout() {
           taskPageVisibility={taskPageVisibility}
         >
           <Outlet />
+          <ButtonWrapper taskPageVisibility={taskPageVisibility}>
+            <NewTaskButton />
+          </ButtonWrapper>
         </Main>
       </Container>
     </Wrapper>

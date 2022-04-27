@@ -22,7 +22,6 @@ export const PropertieValue = styled.span`
 export const DropDownWrapper = styled.div`
   position: absolute;
   top: 30px;
-  left: -100px;
   z-index: 9999;
   background-color: ${(props) => props.theme.background};
   border: 1px solid ${(props) => props.theme.tertiary};
@@ -34,6 +33,15 @@ export const DropDownWrapper = styled.div`
     isOpen &&
     css`
       visibility: visible;
+    `}
+
+  ${({ dropdownTo }) =>
+    (dropdownTo === "left" &&
+      css`
+        right: 0;
+      `) ||
+    css`
+      left: 0;
     `}
 `
 

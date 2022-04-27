@@ -17,10 +17,10 @@ function PriorityInput({ value, onChange }) {
   const [selectedColor, setSelectedColor] = useState(theme.priority1)
 
   const prioritiesData = [
-    { name: "Priority 4", value: 4, color: theme.priority4 },
-    { name: "Priority 3", value: 3, color: theme.priority3 },
-    { name: "Priority 2", value: 2, color: theme.priority2 },
     { name: "Priority 1", value: 1, color: theme.priority1 },
+    { name: "Priority 2", value: 2, color: theme.priority2 },
+    { name: "Priority 3", value: 3, color: theme.priority3 },
+    { name: "Priority 4", value: 4, color: theme.priority4 },
   ]
 
   useEffect(() => {

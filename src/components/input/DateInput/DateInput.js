@@ -18,7 +18,7 @@ import {
   PropertieValue,
 } from "./DateInput.style"
 
-function DateTimeInput({ value, onChange }) {
+function DateInput({ value, onChange, dropdownTo }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const theme = useTheme()
@@ -33,7 +33,7 @@ function DateTimeInput({ value, onChange }) {
           {value ? formatDateToDisplay(value) : "Due date"}
         </PropertieValue>
       </Propertie>
-      <DropDownWrapper isOpen={isOpen}>
+      <DropDownWrapper isOpen={isOpen} dropdownTo={dropdownTo}>
         <DropDownContainer>
           <DatePickerWrapper>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -54,4 +54,4 @@ function DateTimeInput({ value, onChange }) {
     </Wrapper>
   )
 }
-export default DateTimeInput
+export default DateInput

@@ -1,19 +1,25 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from "react"
+import { useSelector } from "react-redux"
 import styled from "styled-components"
 import TaskItem from "../../item/Task/TaskItem/TaskItem"
+import TaskInput from "../../input/TaskInput/TaskInput"
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
 `
 
 function TasksList({ tasks }) {
+  const isTaskInputOpen = useSelector((state) => state.tasks.isTaskInputOpen)
+
   return (
     <Wrapper>
       <ul>
+        {isTaskInputOpen ? <TaskInput /> : null}
         {tasks
           ? tasks.data.map((task) => <TaskItem task={task} key={task._id} />)
           : null}

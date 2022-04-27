@@ -8,7 +8,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
   width: 100%;
   gap: 10px;
 `
@@ -22,6 +21,7 @@ function MainLayout({ children }) {
     <Wrapper>
       <Container>
         {children}
+
         <Outlet />
       </Container>
       <Routes>

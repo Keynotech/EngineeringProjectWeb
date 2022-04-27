@@ -14,7 +14,7 @@ import TextInput from "../../../input/TextInput"
 import PriorityInput from "../../../input/PriorityInput/PriorityInput"
 import DateInput from "../../../input/DateInput/DateInput"
 import { useTaskQuery, useUpdateSingleTask } from "../../../../app/api/api"
-import { formatDateToDisplay } from "../../../../utils/dateConvert"
+import { formatDateTimeToDisplay } from "../../../../utils/dateConvert"
 import {
   Wrapper,
   Container,
@@ -98,11 +98,16 @@ function TaskPage() {
         </MainContainer>
         <DetailsContainer>
           <PropertiesContainer>
-            <PriorityInput
-              value={task.data.priority}
-              onChange={changePriority}
+            <DateInput
+              onChange={changeDueDate}
+              value={task.data.dueDate}
+              dropdownTo="right"
             />
-            <DateInput onChange={changeDueDate} value={task.data.dueDate} />
+
+            <PriorityInput
+              onChange={changePriority}
+              value={task.data.priority}
+            />
 
             <Propertie>
               <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
@@ -126,7 +131,7 @@ function TaskPage() {
             <SectionHeader>Attachments</SectionHeader>
           </SectionContainer>
         </DetailsContainer>
-        <Footer>Updated at {formatDateToDisplay(task.data.updated)}</Footer>
+        <Footer>Updated at {formatDateTimeToDisplay(task.data.updated)}</Footer>
       </Container>
     </Wrapper>
   ) : null

@@ -12,4 +12,11 @@ function formatDateToDisplay(value) {
   return format(date, "LLL do")
 }
 
-export { convertDateToJS, formatDateToDisplay }
+function formatDateTimeToDisplay(value) {
+  const date = convertDateToJS(value)
+  //   return format(date, "LLL do, p")
+
+  return format(date, "LLL do, p")
+}
+
+export { convertDateToJS, formatDateToDisplay, formatDateTimeToDisplay }

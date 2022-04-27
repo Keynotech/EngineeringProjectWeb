@@ -1,17 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import { useMutation, useQuery, useQueryClient } from "react-query"
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { showTaskPage } from "../store/features/layoutSlice"
 
 function useTaskQuery(taskId) {
   const data = useQuery(["tasks", taskId], () =>
-    fetch(`http://localhost:5000/tasks/${taskId}`).then((res) => res.json())
+    fetch(`http://192.168.0.159:5000/tasks/${taskId}`).then((res) => res.json())
   )
   return data
 }
 
 function useTasksQuery() {
   const data = useQuery(["tasks"], () =>
-    fetch(`http://localhost:5000/tasks`).then((res) => res.json())
+    fetch(`http://192.168.0.159:5000/tasks`).then((res) => res.json())
   )
   return data
 }
@@ -21,7 +24,7 @@ function useUpdateSingleTask(taskId) {
 
   return useMutation(
     ({ ...props }) => {
-      fetch(`http://localhost:5000/tasks/${taskId}`, {
+      fetch(`http://192.168.0.159:5000/tasks/${taskId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -35,7 +38,7 @@ function useUpdateSingleTask(taskId) {
         await queryClient.cancelQueries(["tasks", taskId])
         const previousTasks = queryClient.getQueryData(["tasks"])
         const previousTask = queryClient.getQueryData(["tasks", taskId])
-        const updatedTask = { ...previousTask, ...edited }
+        const updatedTask = { ...previousTask, ...edited, updated: new Date() }
         const updatedTasks = [...previousTasks]
 
         const index = updatedTasks.findIndex(
@@ -74,7 +77,7 @@ function useUpdateTaskOnList(taskId) {
 
   return useMutation(
     ({ ...props }) => {
-      fetch(`http://localhost:5000/tasks/${taskId}`, {
+      fetch(`http://192.168.0.159:5000/tasks/${taskId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -88,7 +91,7 @@ function useUpdateTaskOnList(taskId) {
         const previousTasks = queryClient.getQueryData(["tasks"])
         const index = previousTasks.findIndex((task) => task._id === taskId)
         const previousTask = previousTasks[index]
-        const updatedTask = { ...previousTask, ...edited }
+        const updatedTask = { ...previousTask, ...edited, updated: new Date() }
         const updatedTasks = [...previousTasks]
         updatedTasks[index] = updatedTask
         queryClient.setQueryData(["tasks"], updatedTasks)
@@ -114,5 +117,33 @@ function useUpdateTaskOnList(taskId) {
     }
   )
 }
+
+/*
+function useCreateNewTask() {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const _showTaskPage = dispatch(showTaskPage())
+  return useMutation(
+    ({ title, isDone, dueDate, priority }) => {
+      fetch(`http://192.168.0.159:5000/tasks/`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ title, status: isDone, dueDate, priority }),
+      }).then((res) => res.json())
+    },
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(["tasks"])
+        queryClient.setQueriesData(["tasks", data._id], data)
+        navigate(`tasks/${data._id}`)
+        _showTaskPage()
+      },
+    }
+  )
+}
+*/
 
 export { useTaskQuery, useTasksQuery, useUpdateSingleTask, useUpdateTaskOnList }

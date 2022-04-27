@@ -8,9 +8,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: sticky;
+  top: 0;
   gap: 10px;
   padding: 15px 6px;
   color: ${(props) => props.theme.textSecondary};
+  background-color: ${(props) => props.theme.background};
+  z-index: 200;
 `
 
 const Icon = styled.span`
