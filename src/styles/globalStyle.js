@@ -11,7 +11,7 @@ body {
     margin:0;
     padding:0;
     overflow:hidden;
-    font-family: 'Inter', sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple Color Emoji,Helvetica,Arial,sans-serif,Segoe UI Emoji,Segoe UI Symbol;
     font-size:14px;
     color: ${({ theme }) => theme.textPrimary};
     transition: all 0.2s cubic-bezier(0,0,.58,1);

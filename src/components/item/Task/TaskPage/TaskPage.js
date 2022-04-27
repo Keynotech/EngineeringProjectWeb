@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
-import React from "react"
+import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
 import { useParams } from "react-router-dom"
@@ -12,6 +12,7 @@ import LastPageIcon from "@mui/icons-material/LastPage"
 import { hideTaskPage } from "../../../../app/store/features/layoutSlice"
 import Checkbox from "../../../button/Checkbox"
 import TextInput from "../../../input/TextInput"
+import PriorityInput from "../../../input/TaskPropertieInput/PriorityInput"
 import { useTaskQuery, useUpdateSingleTask } from "../../../../app/api/api"
 import { formatDateToDisplay } from "../../../../utils/dateConvert"
 import {
@@ -43,6 +44,8 @@ function TaskPage() {
   const updateTask = useUpdateSingleTask(taskId)
   const changeDesc = (value) => updateTask.mutate({ description: value })
   const changeTitle = (value) => updateTask.mutate({ title: value })
+  const changePriority = (value) => updateTask.mutate({ priority: value })
+  const changeDueDate = (value) => updateTask.mutate({ dueDate: value })
 
   // ===========================================================================
   // Dispatch
@@ -54,6 +57,7 @@ function TaskPage() {
   // Selectors &   Locale state
   // ===========================================================================
   const isVisible = useSelector((state) => state.layout.taskPageVisibility)
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false)
 
   // ===========================================================================
   // Others
@@ -94,14 +98,13 @@ function TaskPage() {
         </MainContainer>
         <DetailsContainer>
           <PropertiesContainer>
-            <Propertie>
-              <FlagOutlinedIcon fontSize="inherit" color="inherit" />
-              <PropertieValue>Priority {task.data.priority}</PropertieValue>
-            </Propertie>
+            <PriorityInput
+              value={task.data.priority}
+              onChange={changePriority}
+            />
 
             <Propertie>
               <CalendarMonthOutlinedIcon fontSize="inherit" color="inherit" />
-              <PropertieValue>Due date</PropertieValue>
             </Propertie>
 
             <Propertie>
