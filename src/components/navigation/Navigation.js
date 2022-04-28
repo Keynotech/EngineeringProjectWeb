@@ -12,9 +12,9 @@ function Navigation() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate replace to="/today" />} />
           <Route path="*" element={<Navigate replace to="/" />} />
-          <Route path="/today" element={<Today />} />
-          <Route path="/inbox" element={<Inbox />} />
-          <Route path="/week" element={<CurrentWeek />} />
+          <Route path="/today/*" element={<Today />} />
+          <Route path="/inbox/*" element={<Inbox />} />
+          <Route path="/week/*" element={<CurrentWeek />} />
         </Route>
       </Routes>
     </BrowserRouter>

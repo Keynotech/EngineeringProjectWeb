@@ -1,24 +1,25 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
-import InboxIcon from "@mui/icons-material/Inbox"
-import CalendarViewWeekIcon from "@mui/icons-material/CalendarViewWeek"
-import TodayIcon from "@mui/icons-material/Today"
+import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
+import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
+import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import NavItem from "./NavItem"
-import { hideSidebar } from "../../app/store/features/sidebarSlice"
+import { hideSidebar } from "../../app/store/features/layoutSlice"
 
 const Wrapper = styled.nav`
   position: fixed;
   left: -400px;
   z-index: 999;
-  height: calc(100vh - 56px);
-  width: min(300px, 100vw);
+  height: calc(100vh - 48px);
+  width: min(260px, 100vw);
   overflow-y: auto;
-  background-color: ${(props) => props.theme.primary};
+  background-color: ${(props) => props.theme.background};
+  border-right: 1px solid ${(props) => props.theme.secondary};
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
 
-  ${({ sidebarVisibility }) =>
-    sidebarVisibility &&
+  ${({ isVisible }) =>
+    isVisible &&
     css`
       left: 0px;
     `}
@@ -30,14 +31,9 @@ const Wrapper = styled.nav`
 
 const Container = styled.div`
   width: calc(100% - 40px);
-  padding-top: 30px;
+  padding-top: 15px;
   padding-left: 30px;
   padding-bottom: 30px;
-
-  @media (max-width: 440px) {
-    padding-left: 10px;
-    width: calc(100% - 20px);
-  }
 `
 
 const MenuList = styled.ul`
@@ -46,7 +42,7 @@ const MenuList = styled.ul`
       display: flex;
       align-items: center;
       flex-direction: row;
-      padding: 8px 5px;
+      padding: 5px;
       border-radius: 4px;
       min-height: 24px;
     }
@@ -69,8 +65,8 @@ const Backdrop = styled.div`
     opacity: 0;
     visibility: hidden;
 
-    ${({ sidebarVisibility }) =>
-      sidebarVisibility &&
+    ${({ isVisible }) =>
+      isVisible &&
       css`
         opacity: 1;
         visibility: visible;
@@ -80,36 +76,31 @@ const Backdrop = styled.div`
 
 function Sidebar() {
   const dispatch = useDispatch()
-  const sidebarVisibility = useSelector(
-    (state) => state.sidebarVisibility.value
-  )
+  const isVisible = useSelector((state) => state.layout.sidebarVisibility)
   return (
     <>
-      <Wrapper sidebarVisibility={sidebarVisibility}>
+      <Wrapper isVisible={isVisible}>
         <Container>
           <MenuList>
             <NavItem
-              icon={<InboxIcon fontSize="inherit" />}
+              icon={<InboxOutlinedIcon fontSize="inherit" />}
               name="Inbox"
               route="/inbox"
             />
             <NavItem
-              icon={<TodayIcon fontSize="inherit" />}
+              icon={<TodayOutlinedIcon fontSize="inherit" />}
               name="Today"
               route="/today"
             />
             <NavItem
               route="/week"
               name="Current Week"
-              icon={<CalendarViewWeekIcon fontSize="inherit" />}
+              icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
           </MenuList>
         </Container>
       </Wrapper>
-      <Backdrop
-        sidebarVisibility={sidebarVisibility}
-        onClick={() => dispatch(hideSidebar())}
-      />
+      <Backdrop isVisible={isVisible} onClick={() => dispatch(hideSidebar())} />
     </>
   )
 }

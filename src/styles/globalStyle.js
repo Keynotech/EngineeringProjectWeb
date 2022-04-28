@@ -11,7 +11,7 @@ body {
     margin:0;
     padding:0;
     overflow:hidden;
-    font-family: 'Inter', sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple Color Emoji,Helvetica,Arial,sans-serif,Segoe UI Emoji,Segoe UI Symbol;
     font-size:14px;
     color: ${({ theme }) => theme.textPrimary};
     transition: all 0.2s cubic-bezier(0,0,.58,1);
@@ -30,11 +30,12 @@ button {
     cursor: pointer;
     color: ${({ theme }) => theme.textPrimary}
 }
-input, input:focus {
+input, input:focus, textarea {
     outline: none;
-    border: 1px solid;
-    border-radius: 2px;
-    padding: 5px;
+    border:0;
+    margin:0;
+    padding:0;
+    background:transparent;
 }
 ul {
     margin: 0;

@@ -2,6 +2,7 @@ import React from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { useSelector } from "react-redux"
 import { ThemeProvider } from "styled-components"
+
 import lightTheme from "./styles/lightTheme"
 import darkTheme from "./styles/darkTheme"
 import GlobalStyle from "./styles/globalStyle"
