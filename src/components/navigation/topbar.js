@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 201;
+  z-index: 500;
   width: 100vw;
   height: 48px;
   background-color: ${(props) => props.theme.secondary};

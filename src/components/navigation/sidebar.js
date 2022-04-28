@@ -2,15 +2,18 @@ import React from "react"
 import styled, { css } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import NavItem from "./NavItem"
 import { hideSidebar } from "../../app/store/features/layoutSlice"
+import { useTagsQuery } from "../../app/api/api"
+import TagsList from "../lists/Tag/TagsList"
 
 const Wrapper = styled.nav`
   position: fixed;
   left: -400px;
-  z-index: 999;
+  z-index: 500;
   height: calc(100vh - 48px);
   width: min(260px, 100vw);
   overflow-y: auto;
@@ -52,6 +55,32 @@ const MenuList = styled.ul`
   }
 `
 
+const TagsWrapper = styled.div`
+  margin-top: 40px;
+`
+
+const SectionHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+`
+
+const SectionName = styled.span`
+  font-weight: 600;
+`
+
+const Icon = styled.span`
+  display: flex;
+  align-items: center;
+  width: 28px;
+  height: 24px;
+  margin-right: 5px;
+  font-size: 18px;
+
+  color: ${(props) => props.theme.textSecondary};
+`
+
 const Backdrop = styled.div`
   visibility: hidden;
 
@@ -77,6 +106,8 @@ const Backdrop = styled.div`
 function Sidebar() {
   const dispatch = useDispatch()
   const isVisible = useSelector((state) => state.layout.sidebarVisibility)
+
+  const tags = useTagsQuery()
   return (
     <>
       <Wrapper isVisible={isVisible}>
@@ -98,6 +129,16 @@ function Sidebar() {
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
           </MenuList>
+
+          <TagsWrapper>
+            <SectionHeader>
+              <Icon>
+                <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
+              </Icon>
+              <SectionName>Tags</SectionName>
+            </SectionHeader>
+            {tags.isSuccess ? <TagsList tags={tags} /> : null}
+          </TagsWrapper>
         </Container>
       </Wrapper>
       <Backdrop isVisible={isVisible} onClick={() => dispatch(hideSidebar())} />

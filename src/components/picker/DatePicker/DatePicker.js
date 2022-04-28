@@ -16,9 +16,9 @@ import {
   DatePickerWrapper,
   Propertie,
   PropertieValue,
-} from "./DateInput.style"
+} from "./DatePicker.style"
 
-function DateInput({ value, onChange, dropdownTo }) {
+function DatePicker({ value, onChange, dropdownTo }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const theme = useTheme()
@@ -54,4 +54,4 @@ function DateInput({ value, onChange, dropdownTo }) {
     </Wrapper>
   )
 }
-export default DateInput
+export default DatePicker

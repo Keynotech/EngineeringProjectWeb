@@ -14,12 +14,14 @@ const Wrapper = styled.div`
 `
 
 function TasksList({ tasks }) {
-  const isTaskInputOpen = useSelector((state) => state.tasks.isTaskInputOpen)
+  const taskInputVisibility = useSelector(
+    (state) => state.layout.taskInputVisibility
+  )
 
   return (
     <Wrapper>
       <ul>
-        {isTaskInputOpen ? <TaskInput /> : null}
+        {taskInputVisibility ? <TaskInput /> : null}
         {tasks
           ? tasks.data.map((task) => <TaskItem task={task} key={task._id} />)
           : null}
