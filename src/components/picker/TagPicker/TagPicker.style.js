@@ -43,6 +43,7 @@ export const DropDownWrapper = styled.div`
 export const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom: 14px;
 `
 
 export const DropDownItem = styled.div`
@@ -51,8 +52,17 @@ export const DropDownItem = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding-right: 8px;
 
   &:hover {
     background-color: ${(props) => props.theme.primary};
   }
+`
+
+export const AddNewTag = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  min-height: 24px;
 `

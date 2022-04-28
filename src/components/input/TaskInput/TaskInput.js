@@ -13,6 +13,7 @@ import {
   Main,
   CheckboxContainer,
   PropertiesContainer,
+  Buttons,
 } from "./TaskInput.style"
 import {
   hideTaskInput,
@@ -21,6 +22,9 @@ import {
 import TextInput from "../TextInput"
 import DatePicker from "../../picker/DatePicker/DatePicker"
 import PriorityPicker from "../../picker/PriorityPicker/PriorityPicker"
+import SubmitButton from "../../button/SubmitButton"
+import CancelButton from "../../button/CancelButton"
+import TagPicker from "../../picker/TagPicker/TagPicker"
 
 function TaskInput() {
   // Dispatch
@@ -39,6 +43,7 @@ function TaskInput() {
   const [isDone, setIsDone] = useState(false)
   const [dueDate, setDueDate] = useState()
   const [priority, setPriority] = useState(1)
+  const [tags, setTags] = useState([])
 
   const toggleIsdone = () => setIsDone(!isDone)
 
@@ -60,7 +65,13 @@ function TaskInput() {
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({ title, status: isDone, dueDate, priority }),
+        body: JSON.stringify({
+          title,
+          status: isDone,
+          dueDate,
+          priority,
+          tagId: tags[0],
+        }),
       }).then((res) => res.json()),
     {
       onSuccess: (data) => {
@@ -102,25 +113,6 @@ function TaskInput() {
               autoFocus
               multiline={false}
             />
-            <button
-              style={{
-                width: "120px",
-                borderRadius: "4px",
-                border: "1px solid black",
-              }}
-              type="submit"
-              onClick={() => {
-                createTask.mutate({
-                  title,
-                  isDone,
-                  dueDate,
-                  priority,
-                })
-                _hideTaskInput()
-              }}
-            >
-              Create new task
-            </button>
             <ClearIcon
               sx={{
                 color: theme.textTertiary,
@@ -138,9 +130,28 @@ function TaskInput() {
               value={priority}
               onChange={(value) => setPriority(value)}
             />
+            <TagPicker
+              currentTags={tags}
+              onChange={(value) => setTags([...value])}
+            />
           </PropertiesContainer>
         </Container>
       </Wrapper>
+      <Buttons>
+        <CancelButton text="Cancel" onClick={_hideTaskInput} />
+        <SubmitButton
+          text="Create"
+          onClick={() => {
+            createTask.mutate({
+              title,
+              isDone,
+              dueDate,
+              priority,
+            })
+            _hideTaskInput()
+          }}
+        />
+      </Buttons>
     </li>
   )
 }

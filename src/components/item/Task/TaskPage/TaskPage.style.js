@@ -54,13 +54,12 @@ export const Title = styled.span``
 export const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 14px;
   min-width: 0;
   max-width: 100%;
   color: ${(props) => props.theme.textSecondary};
   padding: 0 15px;
 `
-
 export const SectionHeader = styled.span`
   font-weight: 600;
 `
@@ -71,20 +70,12 @@ export const PropertiesContainer = styled.div`
   margin-bottom: 10px;
 `
 
-export const Propertie = styled.div`
+export const TagsContainer = styled.ul`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  height: 20px;
-  gap: 5px;
-  color: ${(props) => props.theme.textTertiary};
-  font-size: 18px;
-  padding: 2px 6px;
-  border: 1px solid ${(props) => props.theme.tertiary};
-  border-radius: 5px;
-`
-export const PropertieValue = styled.span`
-  font-size: 12px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
 `
 
 export const SectionContainer = styled.div`

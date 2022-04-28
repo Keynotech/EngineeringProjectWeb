@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import { useMutation, useQuery, useQueryClient } from "react-query"
@@ -152,9 +153,15 @@ function useDeleteTask(taskId) {
 }
 
 function useTagsQuery() {
+  const queryClient = useQueryClient()
   const data = useQuery(["tags"], () =>
     fetch(`http://localhost:5000/tags`).then((res) => res.json())
   )
+  if (data.isSuccess) {
+    data.data.forEach((e) => {
+      queryClient.setQueryData(["tags", e._id], e)
+    })
+  }
   return data
 }
 

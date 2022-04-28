@@ -1,7 +1,8 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
-import React, { useState } from "react"
+import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
 import { useParams } from "react-router-dom"
@@ -14,7 +15,6 @@ import TextInput from "../../../input/TextInput"
 import PriorityPicker from "../../../picker/PriorityPicker/PriorityPicker"
 import DatePicker from "../../../picker/DatePicker/DatePicker"
 import TagPicker from "../../../picker/TagPicker/TagPicker"
-import TagItem from "../../TagItem/TagItem"
 import {
   useTaskQuery,
   useUpdateSingleTask,
@@ -30,14 +30,14 @@ import {
   DetailsContainer,
   SectionHeader,
   PropertiesContainer,
-  Propertie,
-  PropertieValue,
   SectionContainer,
   Footer,
+  TagsContainer,
   FooterContainer,
   AttachmentsContainer,
   Attachment,
 } from "./TaskPage.style"
+import TaskTag from "../../Tag/TaskTag"
 
 function TaskPage() {
   // Query
@@ -60,7 +60,7 @@ function TaskPage() {
   const changePriority = (value) => updateTask.mutate({ priority: value })
   const changeDueDate = (value) => updateTask.mutate({ dueDate: value })
   const changeStatus = () => updateTask.mutate({ status: !task.data.status })
-  const changeTags = (value) => console.log(value)
+  const changeTags = (value) => updateTask.mutate({ tags: value })
 
   // Selectors &   Locale state
   // ===========================================================================
@@ -111,9 +111,6 @@ function TaskPage() {
 
             <TagPicker onChange={changeTags} value={task.data.tags} />
           </PropertiesContainer>
-          {task.data.tags.map((tag) => (
-            <TagItem key={tag._id} tag={tag} />
-          ))}
           <SectionContainer>
             <SectionHeader>Description</SectionHeader>
             <TextInput
@@ -130,8 +127,10 @@ function TaskPage() {
             <SectionHeader>Attachments</SectionHeader>
             <AttachmentsContainer>
               {task.data.attachments
-                ? task.data.attachments.map((attachment) => (
-                    <Attachment isFile>{attachment.name}</Attachment>
+                ? task.data.attachments.map((attachment, index) => (
+                    <Attachment key={index} isFile>
+                      {attachment.name}
+                    </Attachment>
                   ))
                 : null}
               <Attachment isFile={false}>
@@ -140,6 +139,14 @@ function TaskPage() {
                 <p>Upload file</p>
               </Attachment>
             </AttachmentsContainer>
+          </SectionContainer>
+
+          <SectionContainer>
+            <TagsContainer>
+              {task.data.tags
+                ? task.data.tags.map((tag) => <TaskTag tagId={tag} />)
+                : null}
+            </TagsContainer>
           </SectionContainer>
         </DetailsContainer>
         <Footer>

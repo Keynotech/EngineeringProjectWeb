@@ -3,8 +3,11 @@
 /* eslint-disable react/prop-types */
 
 import React from "react"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import TagItem from "../../item/TagItem/TagItem"
+import AddIcon from "@mui/icons-material/Add"
+import { showTagInput } from "../../../app/store/features/layoutSlice"
+import TagItem from "../../item/Tag/TagItem"
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,6 +16,14 @@ const Wrapper = styled.div`
   height: 100%;
 
   li {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 4px 8px;
+    border-radius: 4px;
+    min-height: 24px;
+    color: ${(props) => props.theme.textSecondary};
+
     &:hover {
       background-color: ${(props) => props.theme.secondary};
       border-radius: 4px;
@@ -21,12 +32,20 @@ const Wrapper = styled.div`
 `
 
 function TagsList({ tags }) {
+  const dispatch = useDispatch()
+  const _showTagInput = () => dispatch(showTagInput())
   return (
     <Wrapper>
       <ul>
         {tags
-          ? tags.data.map((tag) => <TagItem key={tag._id} tag={tag} />)
+          ? tags.data.map((tag) => <TagItem tagId={tag._id} key={tag._id} />)
           : null}
+        <li onClick={_showTagInput}>
+          <AddIcon
+            sx={{ fontSize: "18px", marginLeft: "-2px", marginRight: "16px" }}
+          />
+          Create new tag
+        </li>
       </ul>
     </Wrapper>
   )

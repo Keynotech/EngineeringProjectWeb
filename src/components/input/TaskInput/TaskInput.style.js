@@ -20,6 +20,7 @@ export const Main = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 24px;
 `
 
 export const CheckboxContainer = styled.div`
@@ -33,5 +34,12 @@ export const PropertiesContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  gap: 10px;
+`
+export const Buttons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 10px 8px;
   gap: 10px;
 `

@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
+import { useDispatch } from "react-redux"
+import AddIcon from "@mui/icons-material/Add"
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import Checkbox from "../../button/Checkbox"
 import {
@@ -11,9 +13,11 @@ import {
   DropDownItem,
   Propertie,
   PropertieValue,
+  AddNewTag,
 } from "./TagPicker.style"
-import TagItem from "../../item/TagItem/TagItem"
+import TagItem from "../../item/Tag/TagItem"
 import { useTagsQuery } from "../../../app/api/api"
+import { showTagInput } from "../../../app/store/features/layoutSlice"
 
 function TagPicker({ currentTags, onChange }) {
   // Query
@@ -36,6 +40,10 @@ function TagPicker({ currentTags, onChange }) {
       setSelectedTags([...selectedTags, id])
     }
   }
+  // Hooks
+  // ===========================================================================
+  const dispatch = useDispatch()
+  const _showTagInput = () => dispatch(showTagInput())
 
   // Hooks
   // ===========================================================================
@@ -57,15 +65,32 @@ function TagPicker({ currentTags, onChange }) {
       </Propertie>
       <DropDownWrapper isOpen={isOpen}>
         <DropDownContainer>
-          {tags.data.map((tag) => (
-            <DropDownItem onChange={() => handleChange(tag._id)} key={tag._id}>
-              <TagItem tag={tag} />
-              <Checkbox
-                onChange={() => handleChange(tag._id)}
-                checked={selectedTags.indexOf(tag._id) > -1}
+          {tags.isSuccess
+            ? tags.data.map((tag) => (
+                <DropDownItem
+                  onChange={() => handleChange(tag._id)}
+                  key={tag._id}
+                >
+                  <TagItem tagId={tag._id} />
+                  <Checkbox
+                    onChange={() => handleChange(tag._id)}
+                    checked={selectedTags.indexOf(tag._id) > -1}
+                  />
+                </DropDownItem>
+              ))
+            : null}
+          <DropDownItem onClick={_showTagInput}>
+            <AddNewTag>
+              <AddIcon
+                sx={{
+                  fontSize: "18px",
+                  marginLeft: "-2px",
+                  marginRight: "16px",
+                }}
               />
-            </DropDownItem>
-          ))}
+              Create new tag
+            </AddNewTag>
+          </DropDownItem>
         </DropDownContainer>
       </DropDownWrapper>
     </Wrapper>

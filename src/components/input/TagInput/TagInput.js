@@ -9,6 +9,8 @@ import ClearIcon from "@mui/icons-material/Clear"
 import Backdrop from "@mui/material/Backdrop"
 import TextInput from "../TextInput"
 import { hideTagInput } from "../../../app/store/features/layoutSlice"
+import CancelButton from "../../button/CancelButton"
+import SubmitButton from "../../button/SubmitButton"
 
 const Overlay = styled.div`
   position: absolute;
@@ -71,6 +73,9 @@ const Icon = styled.span`
 `
 
 const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   padding: 8px 15px;
 `
 
@@ -79,28 +84,18 @@ const Label = styled.label`
   font-weight: 600;
 `
 
+const PropertieInput = styled.div`
+  display: flex;
+  align-items: center;
+  height: 20px;
+`
+
 const Footer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
   justify-content: flex-end;
   align-items: center;
-`
-
-const SubmitButton = styled.button`
-  padding: 4px 10px;
-  border: 1px solid ${(props) => props.theme.brandColor};
-  background-color: ${(props) => props.theme.brandColor};
-  color: ${(props) => props.theme.background};
-  border-radius: 5px;
-`
-
-const CancelButton = styled.button`
-  padding: 4px 10px;
-  border: 1px solid ${(props) => props.theme.tertiary};
-  background-color: ${(props) => props.theme.background};
-  color: ${(props) => props.theme.textTertiary};
-  border-radius: 5px;
 `
 
 function TagInput() {
@@ -158,26 +153,27 @@ function TagInput() {
             </Header>
             <Form>
               <Label>Tag name</Label>
-              <TextInput
-                value={tagName}
-                onChange={(value) => setTagName(value)}
-                placeholder="New tag name"
-                fontSize="14px"
-                multiline={false}
-                autoFocus
-              />
+              <PropertieInput>
+                <TextInput
+                  value={tagName}
+                  onChange={(value) => setTagName(value)}
+                  placeholder="New tag name"
+                  fontSize="14px"
+                  multiline={false}
+                  autoFocus
+                />
+              </PropertieInput>
               <Footer>
-                <CancelButton onClick={_hideTagInput}>Cancel</CancelButton>
+                <CancelButton onClick={_hideTagInput} text="Cancel" />
                 <SubmitButton
+                  text="Create"
                   onClick={() => {
                     createTag.mutate({
                       tagName,
                     })
                     _hideTagInput()
                   }}
-                >
-                  Create
-                </SubmitButton>
+                />
               </Footer>
             </Form>
           </Wrapper>
