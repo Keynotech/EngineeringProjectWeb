@@ -21,6 +21,8 @@ export const PropertieValue = styled.span`
 
 export const DropDownWrapper = styled.div`
   min-width: 200px;
+  max-height: min(400px, 30vh);
+  overflow-y: auto;
   position: absolute;
   top: 30px;
   right: 0;
@@ -28,7 +30,6 @@ export const DropDownWrapper = styled.div`
   background-color: ${(props) => props.theme.background};
   border: 1px solid ${(props) => props.theme.tertiary};
   border-radius: 5px;
-  padding: 15px 0px;
   visibility: hidden;
   box-shadow: 0 0 10px ${(props) => props.theme.tertiary};
 
@@ -42,5 +43,16 @@ export const DropDownWrapper = styled.div`
 export const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+`
+
+export const DropDownItem = styled.div`
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    background-color: ${(props) => props.theme.primary};
+  }
 `

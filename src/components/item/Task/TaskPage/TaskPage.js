@@ -109,13 +109,12 @@ function TaskPage() {
               value={task.data.priority}
             />
 
-            <TagPicker onClose={changeTags} value={task.data.tags} />
+            <TagPicker onChange={changeTags} value={task.data.tags} />
           </PropertiesContainer>
-
+          {task.data.tags.map((tag) => (
+            <TagItem key={tag._id} tag={tag} />
+          ))}
           <SectionContainer>
-            {task.data.tags.map((tag) => (
-              <TagItem key={tag._id} tag={tag} />
-            ))}
             <SectionHeader>Description</SectionHeader>
             <TextInput
               value={task.data.description}
@@ -129,6 +128,18 @@ function TaskPage() {
 
           <SectionContainer>
             <SectionHeader>Attachments</SectionHeader>
+            <AttachmentsContainer>
+              {task.data.attachments
+                ? task.data.attachments.map((attachment) => (
+                    <Attachment isFile>{attachment.name}</Attachment>
+                  ))
+                : null}
+              <Attachment isFile={false}>
+                <FileUploadOutlinedIcon color="inherit" />
+
+                <p>Upload file</p>
+              </Attachment>
+            </AttachmentsContainer>
           </SectionContainer>
         </DetailsContainer>
         <Footer>

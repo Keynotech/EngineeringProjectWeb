@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   overflow-y: auto;
   background-color: ${(props) => props.theme.background};
   border-left: 1px solid ${(props) => props.theme.secondary};
-  transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
+  transition: right 0.25s cubic-bezier(0.42, 0, 1, 1);
   &::-webkit-scrollbar {
     display: none;
   }
