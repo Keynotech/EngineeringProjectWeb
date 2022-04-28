@@ -1,20 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { showTaskPage } from "../store/features/layoutSlice"
+import { hideTaskPage, showTaskPage } from "../store/features/layoutSlice"
 
 function useTaskQuery(taskId) {
   const data = useQuery(["tasks", taskId], () =>
-    fetch(`http://192.168.0.159:5000/tasks/${taskId}`).then((res) => res.json())
+    fetch(`http://localhost:5000/tasks/${taskId}`).then((res) => res.json())
   )
   return data
 }
 
 function useTasksQuery() {
   const data = useQuery(["tasks"], () =>
-    fetch(`http://192.168.0.159:5000/tasks`).then((res) => res.json())
+    fetch(`http://localhost:5000/tasks`).then((res) => res.json())
   )
   return data
 }
@@ -24,7 +24,7 @@ function useUpdateSingleTask(taskId) {
 
   return useMutation(
     ({ ...props }) => {
-      fetch(`http://192.168.0.159:5000/tasks/${taskId}`, {
+      fetch(`http://localhost:5000/tasks/${taskId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -77,7 +77,7 @@ function useUpdateTaskOnList(taskId) {
 
   return useMutation(
     ({ ...props }) => {
-      fetch(`http://192.168.0.159:5000/tasks/${taskId}`, {
+      fetch(`http://localhost:5000/tasks/${taskId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -117,10 +117,43 @@ function useUpdateTaskOnList(taskId) {
     }
   )
 }
+function useDeleteTask(taskId) {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const _hideTaskPage = () => dispatch(hideTaskPage())
+
+  return useMutation(
+    () => {
+      fetch(`http://localhost:5000/tasks/${taskId}`, {
+        method: "DELETE",
+      }).then((res) => res.json())
+    },
+    {
+      onMutate: async () => {
+        const previousTasks = queryClient.getQueryData(["tasks"])
+        const deletedTaskIndex = previousTasks.findIndex(
+          (task) => task._id === taskId
+        )
+        const removedTasks = [...previousTasks]
+        removedTasks.splice(deletedTaskIndex, 1)
+        queryClient.setQueryData(["tasks"], removedTasks)
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["tasks"],
+          refetchActive: false,
+        })
+        navigate(-1)
+        _hideTaskPage()
+      },
+    }
+  )
+}
 
 function useTagsQuery() {
   const data = useQuery(["tags"], () =>
-    fetch(`http://192.168.0.159:5000/tags`).then((res) => res.json())
+    fetch(`http://localhost:5000/tags`).then((res) => res.json())
   )
   return data
 }
@@ -158,5 +191,6 @@ export {
   useTasksQuery,
   useUpdateSingleTask,
   useUpdateTaskOnList,
+  useDeleteTask,
   useTagsQuery,
 }

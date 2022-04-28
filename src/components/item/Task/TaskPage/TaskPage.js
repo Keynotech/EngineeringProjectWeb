@@ -5,15 +5,21 @@ import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
 import { useParams } from "react-router-dom"
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
-import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import LastPageIcon from "@mui/icons-material/LastPage"
 import { hideTaskPage } from "../../../../app/store/features/layoutSlice"
 import Checkbox from "../../../button/Checkbox"
 import TextInput from "../../../input/TextInput"
 import PriorityPicker from "../../../picker/PriorityPicker/PriorityPicker"
 import DatePicker from "../../../picker/DatePicker/DatePicker"
-import { useTaskQuery, useUpdateSingleTask } from "../../../../app/api/api"
+import TagPicker from "../../../picker/TagPicker/TagPicker"
+import TagItem from "../../TagItem/TagItem"
+import {
+  useTaskQuery,
+  useUpdateSingleTask,
+  useDeleteTask,
+} from "../../../../app/api/api"
 import { formatDateTimeToDisplay } from "../../../../utils/dateConvert"
 import {
   Wrapper,
@@ -28,40 +34,38 @@ import {
   PropertieValue,
   SectionContainer,
   Footer,
+  FooterContainer,
   AttachmentsContainer,
+  Attachment,
 } from "./TaskPage.style"
 
 function TaskPage() {
-  // ===========================================================================
   // Query
   // ===========================================================================
   let { taskId } = useParams()
   const task = useTaskQuery(taskId)
 
-  // ===========================================================================
-  // Mutations
-  // ===========================================================================
-  const updateTask = useUpdateSingleTask(taskId)
-  const changeDesc = (value) => updateTask.mutate({ description: value })
-  const changeTitle = (value) => updateTask.mutate({ title: value })
-  const changePriority = (value) => updateTask.mutate({ priority: value })
-  const changeDueDate = (value) => updateTask.mutate({ dueDate: value })
-
-  // ===========================================================================
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
   const _hideTaskPage = () => dispatch(hideTaskPage())
 
+  // Mutations
   // ===========================================================================
+  const updateTask = useUpdateSingleTask(taskId)
+  const deleteTask = useDeleteTask(taskId)
+  const deleteTaskFunc = () => deleteTask.mutate()
+  const changeDesc = (value) => updateTask.mutate({ description: value })
+  const changeTitle = (value) => updateTask.mutate({ title: value })
+  const changePriority = (value) => updateTask.mutate({ priority: value })
+  const changeDueDate = (value) => updateTask.mutate({ dueDate: value })
+  const changeStatus = () => updateTask.mutate({ status: !task.data.status })
+  const changeTags = (value) => console.log(value)
+
   // Selectors &   Locale state
   // ===========================================================================
   const isVisible = useSelector((state) => state.layout.taskPageVisibility)
-  const [isDatePickerOpen, setDatePickerOpen] = useState(false)
 
-  // ===========================================================================
-  // Others
-  // ===========================================================================
   const theme = useTheme()
 
   return task.isSuccess ? (
@@ -72,11 +76,7 @@ function TaskPage() {
             <Checkbox
               checked={task.data.status}
               priority={task.data.priority}
-              onChange={() => {
-                updateTask.mutate({
-                  status: !task.data.status,
-                })
-              }}
+              onChange={changeStatus}
             />
           </IconContainer>
           <TitleContainer>
@@ -109,13 +109,13 @@ function TaskPage() {
               value={task.data.priority}
             />
 
-            <Propertie>
-              <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
-              <PropertieValue>Add tag</PropertieValue>
-            </Propertie>
+            <TagPicker onClose={changeTags} value={task.data.tags} />
           </PropertiesContainer>
 
           <SectionContainer>
+            {task.data.tags.map((tag) => (
+              <TagItem key={tag._id} tag={tag} />
+            ))}
             <SectionHeader>Description</SectionHeader>
             <TextInput
               value={task.data.description}
@@ -131,7 +131,15 @@ function TaskPage() {
             <SectionHeader>Attachments</SectionHeader>
           </SectionContainer>
         </DetailsContainer>
-        <Footer>Updated at {formatDateTimeToDisplay(task.data.updated)}</Footer>
+        <Footer>
+          <FooterContainer>
+            <div>Updated at {formatDateTimeToDisplay(task.data.updated)}</div>
+            <DeleteOutlineOutlinedIcon
+              onClick={deleteTaskFunc}
+              color="inherit"
+            />
+          </FooterContainer>
+        </Footer>
       </Container>
     </Wrapper>
   ) : null

@@ -94,10 +94,51 @@ export const SectionContainer = styled.div`
 `
 export const Footer = styled.div`
   position: absolute;
+  width: 100%;
   bottom: 0;
-  padding: 8px 15px;
   font-size: 12px;
   color: ${(props) => props.theme.textTertiary};
 `
 
-export const AttachmentsContainer = styled.div``
+export const FooterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 15px;
+`
+
+export const AttachmentsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+`
+
+export const Attachment = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 28px;
+  border-radius: 5px;
+  border: 2px dotted ${(props) => props.theme.tertiary};
+
+  ${({ isFile }) =>
+    isFile &&
+    css`
+      border: 1px solid ${(props) => props.theme.tertiary};
+    `}
+
+  p {
+    font-size: 12px;
+    color: ${(props) => props.theme.textTertiary};
+
+    :hover {
+      text-decoration: underline;
+      text-decoration-color: ${(props) => props.theme.textTertiary};
+    }
+  }
+  svg {
+    color: ${(props) => props.theme.brandColor};
+  }
+`

@@ -5,8 +5,9 @@ import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
+import AddIcon from "@mui/icons-material/Add"
 import NavItem from "./NavItem"
-import { hideSidebar } from "../../app/store/features/layoutSlice"
+import { hideSidebar, showTagInput } from "../../app/store/features/layoutSlice"
 import { useTagsQuery } from "../../app/api/api"
 import TagsList from "../lists/Tag/TagsList"
 
@@ -62,11 +63,13 @@ const TagsWrapper = styled.div`
 const SectionHeader = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   padding: 5px;
 `
 
 const SectionName = styled.span`
+  flex: 1;
   font-weight: 600;
 `
 
@@ -88,7 +91,7 @@ const Backdrop = styled.div`
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 998;
+    z-index: 499;
     background-color: rgba(0, 0, 0, 0.5);
     transition: all 0.2s cubic-bezier(0.42, 0, 1, 1);
     opacity: 0;
@@ -106,6 +109,7 @@ const Backdrop = styled.div`
 function Sidebar() {
   const dispatch = useDispatch()
   const isVisible = useSelector((state) => state.layout.sidebarVisibility)
+  const _showTagInput = () => dispatch(showTagInput())
 
   const tags = useTagsQuery()
   return (
@@ -136,6 +140,14 @@ function Sidebar() {
                 <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
               </Icon>
               <SectionName>Tags</SectionName>
+              <AddIcon
+                sx={{
+                  fontSize: "18px",
+                  marginLeft: "-2px",
+                  marginRight: "16px",
+                }}
+                onClick={_showTagInput}
+              />
             </SectionHeader>
             {tags.isSuccess ? <TagsList tags={tags} /> : null}
           </TagsWrapper>

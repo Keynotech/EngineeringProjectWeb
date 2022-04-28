@@ -100,6 +100,7 @@ function TaskInput() {
               placeholder="Create new task"
               fontSize="14px"
               autoFocus
+              multiline={false}
             />
             <button
               style={{

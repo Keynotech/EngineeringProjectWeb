@@ -35,6 +35,9 @@ function Checkbox({ checked, onChange, priority }) {
       case 4:
         setColor(theme.priority4)
         break
+      case undefined:
+        setColor(theme.priority1)
+        break
       default:
         setColor(theme.priority1)
         break
@@ -54,7 +57,11 @@ function Checkbox({ checked, onChange, priority }) {
 Checkbox.propTypes = {
   checked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
-  priority: PropTypes.number.isRequired,
+  priority: PropTypes.number,
+}
+
+Checkbox.defaultProps = {
+  priority: 1,
 }
 
 export default Checkbox

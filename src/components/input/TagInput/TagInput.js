@@ -163,6 +163,7 @@ function TagInput() {
                 onChange={(value) => setTagName(value)}
                 placeholder="New tag name"
                 fontSize="14px"
+                multiline={false}
                 autoFocus
               />
               <Footer>

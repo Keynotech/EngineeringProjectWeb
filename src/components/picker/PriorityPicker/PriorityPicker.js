@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
-import styled, { useTheme } from "styled-components"
+import { useTheme } from "styled-components"
 import FlagIcon from "@mui/icons-material/Flag"
 import {
   DropDownWrapper,
@@ -25,7 +25,7 @@ function PriorityPicker({ value, onChange }) {
 
   useEffect(() => {
     const active = prioritiesData.find((priority) => priority.value === value)
-    setSelectedColor(active.color)
+    setSelectedColor(active ? active.color : theme.priority1)
   }, [value])
 
   return (
