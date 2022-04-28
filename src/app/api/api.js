@@ -118,6 +118,13 @@ function useUpdateTaskOnList(taskId) {
   )
 }
 
+function useTagsQuery() {
+  const data = useQuery(["tags"], () =>
+    fetch(`http://192.168.0.159:5000/tags`).then((res) => res.json())
+  )
+  return data
+}
+
 /*
 function useCreateNewTask() {
   const queryClient = useQueryClient()
@@ -146,4 +153,10 @@ function useCreateNewTask() {
 }
 */
 
-export { useTaskQuery, useTasksQuery, useUpdateSingleTask, useUpdateTaskOnList }
+export {
+  useTaskQuery,
+  useTasksQuery,
+  useUpdateSingleTask,
+  useUpdateTaskOnList,
+  useTagsQuery,
+}

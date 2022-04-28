@@ -9,9 +9,9 @@ import {
   DropDownItem,
   Propertie,
   PropertieValue,
-} from "./PriorityInput.style"
+} from "./PriorityPicker.style"
 
-function PriorityInput({ value, onChange }) {
+function PriorityPicker({ value, onChange }) {
   const theme = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const [selectedColor, setSelectedColor] = useState(theme.priority1)
@@ -52,4 +52,4 @@ function PriorityInput({ value, onChange }) {
   )
 }
 
-export default PriorityInput
+export default PriorityPicker

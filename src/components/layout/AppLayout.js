@@ -6,6 +6,7 @@ import TopBar from "../navigation/topbar"
 import Sidebar from "../navigation/sidebar"
 import { hideSidebar, showSidebar } from "../../app/store/features/layoutSlice"
 import NewTaskButton from "../button/NewTaskButton/NewTaskButton"
+import TagInput from "../input/TagInput/TagInput"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -69,6 +70,9 @@ function AppLayout() {
   const taskPageVisibility = useSelector(
     (state) => state.layout.taskPageVisibility
   )
+  const tagInputVisibility = useSelector(
+    (state) => state.layout.tagInputVisibility
+  )
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -92,21 +96,24 @@ function AppLayout() {
   }, [width > 768])
 
   return (
-    <Wrapper>
-      <TopBar />
-      <Container>
-        <Sidebar />
-        <Main
-          sidebarVisibility={sidebarVisibility}
-          taskPageVisibility={taskPageVisibility}
-        >
-          <Outlet />
-          <ButtonWrapper taskPageVisibility={taskPageVisibility}>
-            <NewTaskButton />
-          </ButtonWrapper>
-        </Main>
-      </Container>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <TopBar />
+        <Container>
+          <Sidebar />
+          <Main
+            sidebarVisibility={sidebarVisibility}
+            taskPageVisibility={taskPageVisibility}
+          >
+            <Outlet />
+            <ButtonWrapper taskPageVisibility={taskPageVisibility}>
+              <NewTaskButton />
+            </ButtonWrapper>
+          </Main>
+        </Container>
+      </Wrapper>
+      {tagInputVisibility ? <TagInput /> : null}
+    </>
   )
 }
 

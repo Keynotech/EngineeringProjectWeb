@@ -11,8 +11,8 @@ import LastPageIcon from "@mui/icons-material/LastPage"
 import { hideTaskPage } from "../../../../app/store/features/layoutSlice"
 import Checkbox from "../../../button/Checkbox"
 import TextInput from "../../../input/TextInput"
-import PriorityInput from "../../../input/PriorityInput/PriorityInput"
-import DateInput from "../../../input/DateInput/DateInput"
+import PriorityPicker from "../../../picker/PriorityPicker/PriorityPicker"
+import DatePicker from "../../../picker/DatePicker/DatePicker"
 import { useTaskQuery, useUpdateSingleTask } from "../../../../app/api/api"
 import { formatDateTimeToDisplay } from "../../../../utils/dateConvert"
 import {
@@ -98,13 +98,13 @@ function TaskPage() {
         </MainContainer>
         <DetailsContainer>
           <PropertiesContainer>
-            <DateInput
+            <DatePicker
               onChange={changeDueDate}
               value={task.data.dueDate}
               dropdownTo="right"
             />
 
-            <PriorityInput
+            <PriorityPicker
               onChange={changePriority}
               value={task.data.priority}
             />

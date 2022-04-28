@@ -14,14 +14,15 @@ import {
   CheckboxContainer,
   PropertiesContainer,
 } from "./TaskInput.style"
-import { hideTaskInput } from "../../../app/store/features/tasksSlice"
-import { showTaskPage } from "../../../app/store/features/layoutSlice"
+import {
+  hideTaskInput,
+  showTaskPage,
+} from "../../../app/store/features/layoutSlice"
 import TextInput from "../TextInput"
-import DateInput from "../DateInput/DateInput"
-import PriorityInput from "../PriorityInput/PriorityInput"
+import DatePicker from "../../picker/DatePicker/DatePicker"
+import PriorityPicker from "../../picker/PriorityPicker/PriorityPicker"
 
 function TaskInput() {
-  // ===========================================================================
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -32,7 +33,6 @@ function TaskInput() {
     dispatch(showTaskPage())
   }
 
-  // ===========================================================================
   // Selectors &   Locale state
   // ===========================================================================
   const [title, setTitle] = useState("")
@@ -49,7 +49,6 @@ function TaskInput() {
     setPriority(1)
   }
 
-  // ===========================================================================
   // Mutations
   // ===========================================================================
   const queryClient = useQueryClient()
@@ -73,7 +72,6 @@ function TaskInput() {
     }
   )
 
-  // ===========================================================================
   // Hooks
   // ===========================================================================
 
@@ -81,9 +79,7 @@ function TaskInput() {
     clearInput()
   }, [])
 
-  // ===========================================================================
-  // Others
-  // ===========================================================================
+  // Others  // ===========================================================================
   const theme = useTheme()
 
   return (
@@ -132,12 +128,12 @@ function TaskInput() {
             />
           </Main>
           <PropertiesContainer>
-            <DateInput
+            <DatePicker
               value={dueDate}
               onChange={(value) => setDueDate(value)}
               dropdownTo="left"
             />
-            <PriorityInput
+            <PriorityPicker
               value={priority}
               onChange={(value) => setPriority(value)}
             />
