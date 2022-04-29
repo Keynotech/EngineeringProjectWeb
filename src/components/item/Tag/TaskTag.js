@@ -16,6 +16,9 @@ const Wrapper = styled.div`
 const Title = styled.span`
   font-weight: 400;
   font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 function TaskTag({ tagId }) {
@@ -23,7 +26,7 @@ function TaskTag({ tagId }) {
   const tag = queryClient.getQueryData(["tags", tagId])
   return (
     <Wrapper>
-      <Title>{tag.tagName}</Title>
+      <Title>{tag ? tag.tagName : ""}</Title>
     </Wrapper>
   )
 }

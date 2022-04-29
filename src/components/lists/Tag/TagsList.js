@@ -37,7 +37,7 @@ function TagsList({ tags }) {
   return (
     <Wrapper>
       <ul>
-        {tags
+        {tags.isSuccess
           ? tags.data.map((tag) => <TagItem tagId={tag._id} key={tag._id} />)
           : null}
         <li onClick={_showTagInput}>

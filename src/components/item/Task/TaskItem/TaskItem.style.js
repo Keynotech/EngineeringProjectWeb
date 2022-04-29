@@ -67,6 +67,7 @@ const PropertiesIcons = styled.div`
   overflow: hidden;
   gap: 10px;
   font-size: 14px;
+  margin-right: 8px;
 `
 
 const DetailsContainer = styled.div`
@@ -77,6 +78,17 @@ const DetailsContainer = styled.div`
       display: flex;
       flex-direction: column;
     `}
+`
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  //justify-content: flex-end;
+  gap: 8px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 `
 
 const Description = styled.div`

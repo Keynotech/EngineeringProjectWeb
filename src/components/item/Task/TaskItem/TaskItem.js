@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { isPast, isToday } from "date-fns"
 import PropTypes from "prop-types"
-import AttachmentOutlinedIcon from "@mui/icons-material/AttachmentOutlined"
+import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import { Link } from "react-router-dom"
 import { showTaskPage } from "../../../../app/store/features/layoutSlice"
 import Checkbox from "../../../button/Checkbox"
+import TaskTag from "../../Tag/TaskTag"
 import { useUpdateTaskOnList } from "../../../../app/api/api"
 import {
   Wrapper,
@@ -19,6 +20,7 @@ import {
   DetailsContainer,
   Description,
   DescriptionInner,
+  TagsContainer,
 } from "./TaskItem.style"
 import {
   convertDateToJS,
@@ -90,9 +92,15 @@ function TaskItem({ task }) {
 
               <PropertiesIcons>
                 {isAttachment ? (
-                  <AttachmentOutlinedIcon fontSize="inherit" />
+                  <InsertDriveFileOutlinedIcon fontSize="inherit" />
                 ) : null}
               </PropertiesIcons>
+
+              <TagsContainer>
+                {task.tags?.map((tag) => (
+                  <TaskTag key={tag} tagId={tag} />
+                ))}
+              </TagsContainer>
             </MainContainer>
             <DetailsContainer displayTasksDetails={displayTasksDetails}>
               {task.description ? (
@@ -110,9 +118,9 @@ function TaskItem({ task }) {
 
 TaskItem.propTypes = {
   task: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    status: PropTypes.bool.isRequired,
+    _id: PropTypes.string,
+    title: PropTypes.string,
+    status: PropTypes.bool,
     priority: PropTypes.number,
     description: PropTypes.string,
   }).isRequired,

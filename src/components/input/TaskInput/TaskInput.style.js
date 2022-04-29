@@ -29,13 +29,38 @@ export const CheckboxContainer = styled.div`
   min-width: 32px;
 `
 
-export const PropertiesContainer = styled.div`
+export const DetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
 `
+
+export const PropertiesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: nowrap;
+`
+export const TagsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+`
+
 export const Buttons = styled.div`
   display: flex;
   flex-direction: row;

@@ -46,7 +46,7 @@ function TaskListHeader({ icon, name, additionaInfo }) {
       <Name>{name}</Name>
       {additionaInfo ? <Info>{additionaInfo}</Info> : null}
       <button type="button" onClick={() => dispatch(toggleDisplayDetails())}>
-        Tasks details: {isDetailDisplay.toString()}
+        {isDetailDisplay ? "Hide details" : "Show details"}
       </button>
     </Wrapper>
   )

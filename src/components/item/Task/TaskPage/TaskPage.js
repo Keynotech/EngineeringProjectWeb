@@ -1,8 +1,9 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
 import { useParams } from "react-router-dom"
@@ -60,7 +61,7 @@ function TaskPage() {
   const changePriority = (value) => updateTask.mutate({ priority: value })
   const changeDueDate = (value) => updateTask.mutate({ dueDate: value })
   const changeStatus = () => updateTask.mutate({ status: !task.data.status })
-  const changeTags = (value) => updateTask.mutate({ tags: value })
+  const changeTags = (value) => updateTask.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
 
   // Selectors &   Locale state
   // ===========================================================================
@@ -126,13 +127,11 @@ function TaskPage() {
           <SectionContainer>
             <SectionHeader>Attachments</SectionHeader>
             <AttachmentsContainer>
-              {task.data.attachments
-                ? task.data.attachments.map((attachment, index) => (
-                    <Attachment key={index} isFile>
-                      {attachment.name}
-                    </Attachment>
-                  ))
-                : null}
+              {task.data.attachments?.map((attachment, index) => (
+                <Attachment key={index} isFile>
+                  {attachment.name}
+                </Attachment>
+              ))}
               <Attachment isFile={false}>
                 <FileUploadOutlinedIcon color="inherit" />
 
@@ -143,9 +142,9 @@ function TaskPage() {
 
           <SectionContainer>
             <TagsContainer>
-              {task.data.tags
-                ? task.data.tags.map((tag) => <TaskTag tagId={tag} />)
-                : null}
+              {task.data.tags?.map((tag) => (
+                <TaskTag key={tag} tagId={tag} />
+              ))}
             </TagsContainer>
           </SectionContainer>
         </DetailsContainer>

@@ -2,9 +2,9 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { hideTaskPage, showTaskPage } from "../store/features/layoutSlice"
+import { hideTaskPage } from "../store/features/layoutSlice"
 
 function useTaskQuery(taskId) {
   const data = useQuery(["tasks", taskId], () =>
@@ -37,19 +37,24 @@ function useUpdateSingleTask(taskId) {
       onMutate: async (edited) => {
         await queryClient.cancelQueries(["tasks"])
         await queryClient.cancelQueries(["tasks", taskId])
-        const previousTasks = queryClient.getQueryData(["tasks"])
-        const previousTask = queryClient.getQueryData(["tasks", taskId])
+        const previousTasks = queryClient.getQueryData(["tasks"], {
+          exact: true,
+        })
+        const previousTask = queryClient.getQueryData(["tasks", taskId], {
+          exact: true,
+        })
         const updatedTask = { ...previousTask, ...edited, updated: new Date() }
-        const updatedTasks = [...previousTasks]
-
-        const index = updatedTasks.findIndex(
-          (task) => task._id === updatedTask._id
-        )
-
         queryClient.setQueryData(["tasks", taskId], updatedTask)
-        if (index !== -1) {
-          updatedTasks[index] = updatedTask
-          queryClient.setQueryData(["tasks"], updatedTasks)
+
+        if (previousTasks) {
+          const updatedTasks = [...previousTasks]
+          const index = updatedTasks.findIndex(
+            (task) => task._id === updatedTask._id
+          )
+          if (index !== -1) {
+            updatedTasks[index] = updatedTask
+            queryClient.setQueryData(["tasks"], updatedTasks)
+          }
         }
 
         return { previousTask, previousTasks }
@@ -64,10 +69,7 @@ function useUpdateSingleTask(taskId) {
           queryKey: ["tasks", taskId],
           refetchActive: false,
         })
-        queryClient.invalidateQueries({
-          queryKey: ["tasks"],
-          refetchActive: false,
-        })
+        queryClient.invalidateQueries(["tasks"])
       },
     }
   )
@@ -152,6 +154,13 @@ function useDeleteTask(taskId) {
   )
 }
 
+function useTagQuery(tagId) {
+  const queryClient = useQueryClient()
+  const data = useQuery(["tags", tagId], () =>
+    fetch(`http://localhost:5000/tags/${tagId}`).then((res) => res.json())
+  )
+  return data
+}
 function useTagsQuery() {
   const queryClient = useQueryClient()
   const data = useQuery(["tags"], () =>
@@ -200,4 +209,5 @@ export {
   useUpdateTaskOnList,
   useDeleteTask,
   useTagsQuery,
+  useTagQuery,
 }

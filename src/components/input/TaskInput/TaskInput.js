@@ -14,6 +14,8 @@ import {
   CheckboxContainer,
   PropertiesContainer,
   Buttons,
+  TagsContainer,
+  DetailsContainer,
 } from "./TaskInput.style"
 import {
   hideTaskInput,
@@ -25,6 +27,7 @@ import PriorityPicker from "../../picker/PriorityPicker/PriorityPicker"
 import SubmitButton from "../../button/SubmitButton"
 import CancelButton from "../../button/CancelButton"
 import TagPicker from "../../picker/TagPicker/TagPicker"
+import TaskTag from "../../item/Tag/TaskTag"
 
 function TaskInput() {
   // Dispatch
@@ -52,12 +55,22 @@ function TaskInput() {
     setIsDone(false)
     setDueDate()
     setPriority(1)
+    setTags([])
   }
 
   // Mutations
   // ===========================================================================
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  console.log(
+    JSON.stringify({
+      title,
+      status: isDone,
+      dueDate,
+      priority,
+      tags,
+    })
+  )
   const createTask = useMutation(
     () =>
       fetch(`http://192.168.0.159:5000/tasks/`, {
@@ -65,12 +78,13 @@ function TaskInput() {
         headers: {
           "content-type": "application/json",
         },
+
         body: JSON.stringify({
           title,
           status: isDone,
           dueDate,
           priority,
-          tagId: tags[0],
+          tags,
         }),
       }).then((res) => res.json()),
     {
@@ -117,24 +131,31 @@ function TaskInput() {
               sx={{
                 color: theme.textTertiary,
               }}
-              onClick={_hideTaskInput}
+              onClick={clearInput}
             />
           </Main>
-          <PropertiesContainer>
-            <DatePicker
-              value={dueDate}
-              onChange={(value) => setDueDate(value)}
-              dropdownTo="left"
-            />
-            <PriorityPicker
-              value={priority}
-              onChange={(value) => setPriority(value)}
-            />
-            <TagPicker
-              currentTags={tags}
-              onChange={(value) => setTags([...value])}
-            />
-          </PropertiesContainer>
+          <DetailsContainer>
+            <TagsContainer>
+              {tags?.map((tag) => (
+                <TaskTag key={tag} tagId={tag} />
+              ))}
+            </TagsContainer>
+            <PropertiesContainer>
+              <DatePicker
+                value={dueDate}
+                onChange={(value) => setDueDate(value)}
+                dropdownTo="left"
+              />
+              <PriorityPicker
+                value={priority}
+                onChange={(value) => setPriority(value)}
+              />
+              <TagPicker
+                currentTags={tags}
+                onChange={(value) => setTags([...value])}
+              />
+            </PropertiesContainer>
+          </DetailsContainer>
         </Container>
       </Wrapper>
       <Buttons>

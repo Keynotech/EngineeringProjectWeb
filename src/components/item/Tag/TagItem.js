@@ -3,7 +3,7 @@ import React from "react"
 import styled, { css } from "styled-components"
 import { useQueryClient } from "react-query"
 
-const Wrapper = styled.li`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -45,7 +45,7 @@ function TagItem({ tagId }) {
       <IconWrapper>
         <Icon />
       </IconWrapper>
-      <Title>{tag.tagName}</Title>
+      <Title>{tag ? tag.tagName : ""}</Title>
     </Wrapper>
   )
 }

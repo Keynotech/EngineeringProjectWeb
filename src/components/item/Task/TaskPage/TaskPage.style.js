@@ -70,7 +70,7 @@ export const PropertiesContainer = styled.div`
   margin-bottom: 10px;
 `
 
-export const TagsContainer = styled.ul`
+export const TagsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
