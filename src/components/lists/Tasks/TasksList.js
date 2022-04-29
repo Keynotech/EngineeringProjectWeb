@@ -9,7 +9,8 @@ import TaskInput from "../../input/TaskInput/TaskInput"
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  min-height: 400px;
 `
 
 function TasksList({ tasks }) {

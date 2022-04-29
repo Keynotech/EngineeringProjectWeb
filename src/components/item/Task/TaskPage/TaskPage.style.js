@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   top: 49px;
   right: -450px;
   width: min(420px, 100vw);
+  max-height: calc(100vh - 48px);
   height: calc(100vh - 48px);
   overflow-y: auto;
   background-color: ${(props) => props.theme.background};

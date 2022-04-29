@@ -110,7 +110,7 @@ function TaskPage() {
               value={task.data.priority}
             />
 
-            <TagPicker onChange={changeTags} value={task.data.tags} />
+            <TagPicker onChange={changeTags} currentTags={task.data.tags} />
           </PropertiesContainer>
           <SectionContainer>
             <SectionHeader>Description</SectionHeader>
@@ -150,7 +150,7 @@ function TaskPage() {
         </DetailsContainer>
         <Footer>
           <FooterContainer>
-            <div>Updated at {formatDateTimeToDisplay(task.data.updated)}</div>
+            <div>Created at {formatDateTimeToDisplay(task.data.createdAt)}</div>
             <DeleteOutlineOutlinedIcon
               onClick={deleteTaskFunc}
               color="inherit"
