@@ -16,7 +16,7 @@ const Wrapper = styled.nav`
   left: -400px;
   z-index: 500;
   height: calc(100vh - 48px);
-  width: min(260px, 100vw);
+  width: min(250px, 100vw);
   overflow-y: auto;
   background-color: ${(props) => props.theme.background};
   border-right: 1px solid ${(props) => props.theme.secondary};

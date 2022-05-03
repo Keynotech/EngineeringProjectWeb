@@ -5,59 +5,34 @@ import { useDispatch, useSelector } from "react-redux"
 import TopBar from "../../navigation/TopBar/TopBar"
 import Sidebar from "../../navigation/Sidebar/Sidebar"
 import { hideSidebar, showSidebar } from "../../store/features/layoutSlice"
-import NewTaskButton from "../../feature/Task/NewTaskButton/NewTaskButton"
 import TagInput from "../../feature/Tag/TagInput/TagInput"
 
 const Wrapper = styled.div`
+  position: absolute;
   width: 100vw;
   height: 100vh;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
 `
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `
 
 const Main = styled.main`
-  display: flex;
-  justify-content: center;
-  transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
+  flex: 1;
   margin-left: 0px;
-  margin-right: 0px;
-  padding-left: 30px;
-  padding-right: 30px;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  @media (max-width: 768px) {
-    margin-left: 0px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
+  transition: margin-left 0.25s cubic-bezier(0.42, 0, 1, 1);
+  height: 100%;
 
   ${({ sidebarVisibility }) =>
     sidebarVisibility &&
     css`
-      margin-left: 260px;
-    `}
-
-  ${({ taskPageVisibility }) =>
-    taskPageVisibility &&
-    css`
-      margin-right: 420px;
-    `}
-`
-
-const ButtonWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  transition: right 0.25s cubic-bezier(0.42, 0, 1, 1);
-
-  ${({ taskPageVisibility }) =>
-    taskPageVisibility &&
-    css`
-      right: 420px;
+      margin-left: 250px;
     `}
 `
 
@@ -66,13 +41,12 @@ function AppLayout() {
   const sidebarVisibility = useSelector(
     (state) => state.layout.sidebarVisibility
   )
-  const taskPageVisibility = useSelector(
-    (state) => state.layout.taskPageVisibility
-  )
   const tagInputVisibility = useSelector(
     (state) => state.layout.tagInputVisibility
   )
   const dispatch = useDispatch()
+  const _hideSidebar = () => dispatch(hideSidebar())
+  const _showSidebar = () => dispatch(showSidebar())
 
   useEffect(() => {
     function handleResize() {
@@ -84,13 +58,13 @@ function AppLayout() {
 
   useEffect(() => {
     if (width < 768) {
-      dispatch(hideSidebar())
+      _hideSidebar()
     }
   }, [width < 768])
 
   useEffect(() => {
     if (width > 768) {
-      dispatch(showSidebar())
+      _showSidebar()
     }
   }, [width > 768])
 
@@ -100,14 +74,8 @@ function AppLayout() {
         <TopBar />
         <Container>
           <Sidebar />
-          <Main
-            sidebarVisibility={sidebarVisibility}
-            taskPageVisibility={taskPageVisibility}
-          >
+          <Main sidebarVisibility={sidebarVisibility}>
             <Outlet />
-            <ButtonWrapper taskPageVisibility={taskPageVisibility}>
-              <NewTaskButton />
-            </ButtonWrapper>
           </Main>
         </Container>
       </Wrapper>

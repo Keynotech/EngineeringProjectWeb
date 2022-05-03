@@ -70,7 +70,7 @@ function TaskPage() {
   const theme = useTheme()
 
   return task.isSuccess ? (
-    <Wrapper isVisible={isVisible}>
+    <Wrapper>
       <Container>
         <MainContainer>
           <IconContainer>

@@ -1,32 +1,66 @@
 import React from "react"
-import { Route, Routes, Outlet } from "react-router-dom"
-import styled from "styled-components"
+import { useSelector } from "react-redux"
+import { Outlet } from "react-router-dom"
+import styled, { css } from "styled-components"
 import PropTypes, { element } from "prop-types"
-import TaskPage from "../../feature/Task/TaskPage/TaskPage"
+import NewTaskButton from "../../feature/Task/NewTaskButton/NewTaskButton"
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   width: 100%;
-  gap: 10px;
+  height: 100%;
 `
-const Container = styled.div`
-  width: 100%;
-  padding-bottom: 120px;
+
+const ChildContainer = styled.div`
+  flex: 1;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 100%;
+  overflow-y: auto;
+`
+const OutletContainer = styled.div`
+  width: 0;
+  will-change: width;
+  transition: width 0.2s cubic-bezier(0.42, 0, 1, 1);
+
+  ${({ taskPageVisibility }) =>
+    taskPageVisibility &&
+    css`
+      width: min(420px, 100vw);
+    `}
+`
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  will-change: right;
+  transition: right 0.2s cubic-bezier(0.42, 0, 1, 1);
+
+  ${({ taskPageVisibility }) =>
+    taskPageVisibility &&
+    css`
+      right: min(420px, 100vw);
+    `}
 `
 
 function MainLayout({ children }) {
+  const taskPageVisibility = useSelector(
+    (state) => state.layout.taskPageVisibility
+  )
   return (
     <Wrapper>
-      <Container>
+      <ChildContainer taskPageVisibility={taskPageVisibility}>
         {children}
-
+      </ChildContainer>
+      <OutletContainer taskPageVisibility={taskPageVisibility}>
         <Outlet />
-      </Container>
-      <Routes>
-        <Route path="tasks/:taskId" element={<TaskPage />} />
-      </Routes>
+      </OutletContainer>
+      <ButtonContainer taskPageVisibility={taskPageVisibility}>
+        <NewTaskButton />
+      </ButtonContainer>
     </Wrapper>
   )
 }

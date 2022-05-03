@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   min-height: 400px;
+  padding-bottom: 140px;
 `
 
 function TasksList({ tasks }) {
@@ -22,9 +23,9 @@ function TasksList({ tasks }) {
     <Wrapper>
       <ul>
         {taskInputVisibility ? <TaskInput /> : null}
-        {tasks.data?.map((task) => (
-          <TaskItem task={task} key={task._id} />
-        ))}
+        {tasks.data.length
+          ? tasks.data.map((task) => <TaskItem task={task} key={task._id} />)
+          : null}
       </ul>
     </Wrapper>
   )

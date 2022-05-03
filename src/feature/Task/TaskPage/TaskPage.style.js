@@ -1,25 +1,16 @@
 import styled, { css } from "styled-components"
 
 export const Wrapper = styled.div`
-  position: fixed;
-  top: 49px;
-  right: -450px;
-  width: min(420px, 100vw);
+  width: 100%;
   max-height: calc(100vh - 48px);
   height: calc(100vh - 48px);
   overflow-y: auto;
   background-color: ${(props) => props.theme.background};
   border-left: 1px solid ${(props) => props.theme.secondary};
-  transition: right 0.25s cubic-bezier(0.42, 0, 1, 1);
+
   &::-webkit-scrollbar {
     display: none;
   }
-
-  ${({ isVisible }) =>
-    isVisible &&
-    css`
-      right: 0px;
-    `}
 `
 
 export const Container = styled.div`
@@ -27,7 +18,6 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  position: relative;
 `
 
 export const MainContainer = styled.div`
@@ -50,15 +40,13 @@ export const TitleContainer = styled.div`
   min-height: 24px;
   padding: 0 15px;
 `
-export const Title = styled.span``
 
 export const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  min-width: 0;
-  max-width: 100%;
   color: ${(props) => props.theme.textSecondary};
+  background-color: ${(props) => props.theme.background};
   padding: 0 15px;
 `
 export const SectionHeader = styled.span`
@@ -85,10 +73,11 @@ export const SectionContainer = styled.div`
   gap: 4px;
 `
 export const Footer = styled.div`
-  position: absolute;
-  width: 100%;
+  width: min(420px, 100vw);
   bottom: 0;
+  right: 0;
   font-size: 12px;
+  background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.textTertiary};
 `
 
