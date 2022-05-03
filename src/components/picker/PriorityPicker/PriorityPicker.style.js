@@ -1,22 +1,5 @@
 import styled, { css } from "styled-components"
 
-export const Propertie = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-  height: 20px;
-  gap: 5px;
-  color: ${(props) => props.theme.textTertiary};
-  font-size: 18px;
-  padding: 2px 6px;
-  border: 1px solid ${(props) => props.theme.tertiary};
-  border-radius: 5px;
-`
-export const PropertieValue = styled.span`
-  font-size: 12px;
-`
-
 export const DropDownWrapper = styled.div`
   min-width: 200px;
   position: absolute;
@@ -39,7 +22,7 @@ export const DropDownWrapper = styled.div`
 export const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 `
 
 export const DropDownItem = styled.div`

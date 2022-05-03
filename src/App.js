@@ -3,10 +3,10 @@ import { QueryClient, QueryClientProvider } from "react-query"
 import { useSelector } from "react-redux"
 import { ThemeProvider } from "styled-components"
 
-import lightTheme from "./styles/lightTheme"
-import darkTheme from "./styles/darkTheme"
-import GlobalStyle from "./styles/globalStyle"
-import Navigation from "./components/navigation/Navigation"
+import light from "./styles/light"
+import dark from "./styles/dark"
+import GlobalStyle from "./styles/GlobalStyle"
+import Navigation from "./navigation/Navigation"
 
 const queryClient = new QueryClient()
 
@@ -15,7 +15,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={isDarkMode === true ? darkTheme : lightTheme}>
+      <ThemeProvider theme={isDarkMode === true ? dark : light}>
         <GlobalStyle />
         <Navigation />
       </ThemeProvider>

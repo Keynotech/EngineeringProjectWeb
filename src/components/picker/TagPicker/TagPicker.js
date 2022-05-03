@@ -1,23 +1,38 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
+import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import Checkbox from "../../button/Checkbox"
-import {
-  Wrapper,
-  DropDownWrapper,
-  DropDownContainer,
-  DropDownItem,
-  Propertie,
-  PropertieValue,
-  AddNewTag,
-} from "./TagPicker.style"
-import TagItem from "../../item/Tag/TagItem"
-import { useTagsQuery } from "../../../app/api/api"
-import { showTagInput } from "../../../app/store/features/layoutSlice"
+import TagItem from "../../../feature/Tag/TagItem"
+import { useTagsQuery } from "../../../api/api"
+import { showTagInput } from "../../../store/features/layoutSlice"
+import Propertie from "../Propertie"
+import Dropdown from "../../Dropdown/Dropdown"
+
+export const Item = styled.div`
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 8px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.primary};
+  }
+`
+
+export const AddNewTag = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  min-height: 24px;
+`
 
 function TagPicker({ currentTags, onChange }) {
   // Query
@@ -44,57 +59,55 @@ function TagPicker({ currentTags, onChange }) {
   // ===========================================================================
   const dispatch = useDispatch()
   const _showTagInput = () => dispatch(showTagInput())
+  const wrapperRef = useRef()
 
   // Hooks
   // ===========================================================================
-  useEffect(() => {
+
+  const toggleIsOpen = () => {
     if (isOpen === false) {
-      onChange(selectedTags)
-      setSelectedTags([])
-    }
-    if (isOpen === true) {
       currentTags ? setSelectedTags([...currentTags]) : setSelectedTags([])
+      setIsOpen(true)
+    } else {
+      setIsOpen(false)
+      onChange(selectedTags)
     }
-  }, [isOpen])
+  }
 
   return (
-    <Wrapper>
-      <Propertie id="label" onClick={() => setIsOpen(!isOpen)}>
-        <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
-        <PropertieValue>Add tags</PropertieValue>
-      </Propertie>
-      <DropDownWrapper isOpen={isOpen}>
-        <DropDownContainer>
-          {tags.isSuccess
-            ? tags.data.map((tag) => (
-                <DropDownItem
+    <>
+      <Propertie
+        onClick={() => toggleIsOpen()}
+        icon={<LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />}
+        value="Add tag"
+      />
+      <Dropdown isOpen={isOpen}>
+        {tags.isSuccess
+          ? tags.data.map((tag) => (
+              <Item onChange={() => handleChange(tag._id)} key={tag._id}>
+                <TagItem tagId={tag._id} />
+                <Checkbox
                   onChange={() => handleChange(tag._id)}
-                  key={tag._id}
-                >
-                  <TagItem tagId={tag._id} />
-                  <Checkbox
-                    onChange={() => handleChange(tag._id)}
-                    checked={selectedTags.indexOf(tag._id) > -1}
-                  />
-                </DropDownItem>
-              ))
-            : null}
-          <DropDownItem onClick={_showTagInput}>
-            <AddNewTag>
-              <AddIcon
-                sx={{
-                  fontSize: "18px",
-                  marginLeft: "-2px",
-                  marginRight: "16px",
-                }}
-              />
-              Create new tag
-            </AddNewTag>
-          </DropDownItem>
-        </DropDownContainer>
-      </DropDownWrapper>
-    </Wrapper>
+                  checked={selectedTags.indexOf(tag._id) > -1}
+                />
+              </Item>
+            ))
+          : null}
+        <Item onClick={_showTagInput}>
+          <AddNewTag>
+            <AddIcon
+              sx={{
+                fontSize: "18px",
+                marginLeft: "-2px",
+                marginRight: "16px",
+              }}
+            />
+            Create new tag
+          </AddNewTag>
+        </Item>
+      </Dropdown>
+    </>
   )
 }
 
-export default TagPicker
+export default React.memo(TagPicker)

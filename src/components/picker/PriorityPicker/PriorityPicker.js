@@ -1,15 +1,23 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
-import { useTheme } from "styled-components"
-import FlagIcon from "@mui/icons-material/Flag"
-import {
-  DropDownWrapper,
-  DropDownContainer,
-  DropDownItem,
-  Propertie,
-  PropertieValue,
-} from "./PriorityPicker.style"
+import styled, { useTheme } from "styled-components"
+import StarIcon from "@mui/icons-material/Star"
+import Propertie from "../Propertie"
+import Dropdown from "../../Dropdown/Dropdown"
+
+export const Item = styled.div`
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 6px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.primary};
+  }
+`
 
 function PriorityPicker({ value, onChange }) {
   const theme = useTheme()
@@ -29,26 +37,27 @@ function PriorityPicker({ value, onChange }) {
   }, [value])
 
   return (
-    <Propertie onClick={() => setIsOpen(!isOpen)}>
-      <FlagIcon fontSize="inherit" sx={{ color: selectedColor }} />
-      <PropertieValue>Priority {value}</PropertieValue>
-      <DropDownWrapper isOpen={isOpen}>
-        <DropDownContainer>
-          {prioritiesData.map((priority) => (
-            <DropDownItem
-              onClick={() => {
-                setIsOpen(false)
-                onChange(priority.value)
-              }}
-              key={priority.value}
-            >
-              <FlagIcon sx={{ fontSize: "18px", color: priority.color }} />
-              {priority.name}
-            </DropDownItem>
-          ))}
-        </DropDownContainer>
-      </DropDownWrapper>
-    </Propertie>
+    <>
+      <Propertie
+        icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
+        value={`Priority ${value}`}
+        onClick={() => setIsOpen(!isOpen)}
+      />
+      <Dropdown isOpen={isOpen}>
+        {prioritiesData.map((priority) => (
+          <Item
+            onClick={() => {
+              setIsOpen(false)
+              onChange(priority.value)
+            }}
+            key={priority.value}
+          >
+            <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
+            {priority.name}
+          </Item>
+        ))}
+      </Dropdown>
+    </>
   )
 }
 

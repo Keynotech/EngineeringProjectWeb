@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import React from "react"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
-import Header from "../../../components/lists/Tasks/TaskListHeader"
-import TasksList from "../../../components/lists/Tasks/TasksList"
-import MainLayout from "../../../components/layout/MainLayout"
-import { useTasksQuery } from "../../../app/api/api"
+import TaskList from "../../../feature/Task/TaskList/TaskList"
+import Header from "../../../feature/Task/TaskList/TaskListHeader"
+import MainLayout from "../../../layout/MainLayout/MainLayout"
+import { useTasksQuery } from "../../../api/api"
 
 function Inbox() {
   const tasks = useTasksQuery()
@@ -13,7 +13,7 @@ function Inbox() {
     <MainLayout>
       <Header icon={<InboxOutlinedIcon fontSize="inherit" />} name="Inbox" />
       <div style={{ marginTop: "20px" }}>
-        {tasks.isSuccess ? <TasksList tasks={tasks} /> : null}
+        {tasks.isSuccess ? <TaskList tasks={tasks} /> : null}
       </div>
     </MainLayout>
   )
