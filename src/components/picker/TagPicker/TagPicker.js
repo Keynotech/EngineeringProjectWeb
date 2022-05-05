@@ -41,7 +41,6 @@ function TagPicker({ currentTags, onChange }) {
 
   // Refs
   // ===========================================================================
-  const dropdownRef = useRef()
 
   // State hooks
   // ===========================================================================
@@ -81,7 +80,6 @@ function TagPicker({ currentTags, onChange }) {
   return (
     <Dropdown
       isOpen={isOpen}
-      ref={dropdownRef}
       toggleComponent={
         <Propertie
           onClick={() => toggleIsOpen()}

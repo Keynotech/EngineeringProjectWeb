@@ -24,7 +24,6 @@ function PriorityPicker({ value, onChange }) {
   // Others
   // ===========================================================================
   const theme = useTheme()
-  const dropdownRef = useRef()
   const prioritiesData = [
     { name: "Urgent", value: 4, color: theme.priority4 },
     { name: "High", value: 3, color: theme.priority3 },
@@ -47,7 +46,6 @@ function PriorityPicker({ value, onChange }) {
   return (
     <Dropdown
       isOpen={isOpen}
-      ref={dropdownRef}
       toggleComponent={
         <Propertie
           icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
