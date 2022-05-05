@@ -28,17 +28,17 @@ import {
 } from "../../../utils/dateConvert"
 
 function TaskItem({ task }) {
-  // ===========================================================================
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
   const _showTaskPage = () => dispatch(showTaskPage())
 
+  // Selectors
   // ===========================================================================
-  // Selectors &   Locale state
-  // ===========================================================================
-
   const displayTasksDetails = useSelector((state) => state.tasks.displayDetails)
+
+  // State Hooks
+  // ===========================================================================
   const [isOverdue, setIsOverdue] = useState(false)
   const [isAttachment, setIsAttachment] = useState(false)
 
@@ -49,9 +49,8 @@ function TaskItem({ task }) {
   const _toggleIsDone = () => updateTask.mutate({ status: !task.status })
 
   // ===========================================================================
-  // Hooks
+  // Effect Hooks
   // ===========================================================================
-
   useEffect(() => {
     if (task.dueDate) {
       const _date = convertDateToJS(task.dueDate)

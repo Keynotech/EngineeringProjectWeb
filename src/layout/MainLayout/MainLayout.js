@@ -2,7 +2,7 @@ import React from "react"
 import { useSelector } from "react-redux"
 import { Outlet } from "react-router-dom"
 import styled, { css } from "styled-components"
-import PropTypes, { element } from "prop-types"
+import PropTypes from "prop-types"
 import NewTaskButton from "../../feature/Task/NewTaskButton/NewTaskButton"
 
 const Wrapper = styled.div`
@@ -47,6 +47,8 @@ const ButtonContainer = styled.div`
 `
 
 function MainLayout({ children }) {
+  // Selectors
+  // ===========================================================================
   const taskPageVisibility = useSelector(
     (state) => state.layout.taskPageVisibility
   )
@@ -66,7 +68,10 @@ function MainLayout({ children }) {
 }
 
 MainLayout.propTypes = {
-  children: PropTypes.arrayOf(element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 }
 
 export default MainLayout

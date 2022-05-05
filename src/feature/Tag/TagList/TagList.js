@@ -32,8 +32,11 @@ const Wrapper = styled.div`
 `
 
 function TagList({ tags }) {
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
   const _showTagInput = () => dispatch(showTagInput())
+
   return (
     <Wrapper>
       <ul>

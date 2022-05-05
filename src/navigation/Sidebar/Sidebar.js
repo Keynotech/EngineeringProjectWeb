@@ -107,11 +107,19 @@ const Backdrop = styled.div`
 `
 
 function Sidebar() {
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
-  const isVisible = useSelector((state) => state.layout.sidebarVisibility)
   const _showTagInput = () => dispatch(showTagInput())
 
+  // Selectors
+  // ===========================================================================
+  const isVisible = useSelector((state) => state.layout.sidebarVisibility)
+
+  // Query
+  // ===========================================================================
   const tags = useTagsQuery()
+
   return (
     <>
       <Wrapper isVisible={isVisible}>

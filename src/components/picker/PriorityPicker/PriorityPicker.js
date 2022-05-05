@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import Propertie from "../Propertie"
@@ -11,8 +12,8 @@ export const Item = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
-  padding: 5px 6px;
+  gap: 8px;
+  padding: 8px 50px 8px 5px;
 
   &:hover {
     background-color: ${(props) => props.theme.primary};
@@ -20,44 +21,57 @@ export const Item = styled.div`
 `
 
 function PriorityPicker({ value, onChange }) {
+  // Others
+  // ===========================================================================
   const theme = useTheme()
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedColor, setSelectedColor] = useState(theme.priority1)
-
+  const dropdownRef = useRef()
   const prioritiesData = [
-    { name: "Priority 1", value: 1, color: theme.priority1 },
-    { name: "Priority 2", value: 2, color: theme.priority2 },
-    { name: "Priority 3", value: 3, color: theme.priority3 },
-    { name: "Priority 4", value: 4, color: theme.priority4 },
+    { name: "Urgent", value: 4, color: theme.priority4 },
+    { name: "High", value: 3, color: theme.priority3 },
+    { name: "Medium", value: 2, color: theme.priority2 },
+    { name: "Low", value: 1, color: theme.priority1 },
   ]
 
+  // State Hooks
+  // ===========================================================================
+  const [selectedColor, setSelectedColor] = useState(theme.priority1)
+  const [isOpen, setIsOpen] = useState(false)
+
+  // Effect Hoks
+  // ===========================================================================
   useEffect(() => {
     const active = prioritiesData.find((priority) => priority.value === value)
     setSelectedColor(active ? active.color : theme.priority1)
   }, [value])
 
   return (
-    <>
-      <Propertie
-        icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
-        value={`Priority ${value}`}
-        onClick={() => setIsOpen(!isOpen)}
-      />
-      <Dropdown isOpen={isOpen}>
-        {prioritiesData.map((priority) => (
-          <Item
-            onClick={() => {
-              setIsOpen(false)
-              onChange(priority.value)
-            }}
-            key={priority.value}
-          >
-            <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
-            {priority.name}
-          </Item>
-        ))}
-      </Dropdown>
-    </>
+    <Dropdown
+      isOpen={isOpen}
+      ref={dropdownRef}
+      toggleComponent={
+        <Propertie
+          icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
+          value={`Priority ${value}`}
+          onClick={() => setIsOpen(!isOpen)}
+        />
+      }
+      menuComponent={
+        <div>
+          {prioritiesData.map((priority) => (
+            <Item
+              onClick={() => {
+                onChange(priority.value)
+                setIsOpen(false)
+              }}
+              key={priority.value}
+            >
+              <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
+              {priority.name}
+            </Item>
+          ))}
+        </div>
+      }
+    />
   )
 }
 

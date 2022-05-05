@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { CalendarPicker } from "@mui/x-date-pickers"
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
@@ -11,24 +11,28 @@ import { formatDateToDisplay } from "../../../utils/dateConvert"
 import Propertie from "../Propertie"
 import Dropdown from "../../Dropdown/Dropdown"
 
-function DatePicker({ value, onChange, dropdownTo }) {
+function DatePicker({ value, onChange }) {
+  const dropdownRef = useRef()
   const [isOpen, setIsOpen] = useState(false)
 
   const theme = useTheme()
   return (
-    <>
-      <Propertie
-        onClick={() => setIsOpen(!isOpen)}
-        icon={
-          <CalendarMonthOutlinedIcon
-            fontSize="inherit"
-            sx={{ color: theme.textTertiary }}
-          />
-        }
-        value={value ? formatDateToDisplay(value) : "Due date"}
-      />
-
-      <Dropdown isOpen={isOpen}>
+    <Dropdown
+      isOpen={isOpen}
+      ref={dropdownRef}
+      toggleComponent={
+        <Propertie
+          onClick={() => setIsOpen(!isOpen)}
+          icon={
+            <CalendarMonthOutlinedIcon
+              fontSize="inherit"
+              sx={{ color: theme.textTertiary }}
+            />
+          }
+          value={value ? formatDateToDisplay(value) : "Due date"}
+        />
+      }
+      menuComponent={
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <CalendarPicker
             showDaysOutsideCurrentMonth
@@ -37,13 +41,13 @@ function DatePicker({ value, onChange, dropdownTo }) {
             minDate={new Date()}
             value={value}
             onChange={(newValue) => {
-              setIsOpen(false)
               onChange(newValue.toDateString())
+              setIsOpen(false)
             }}
           />
         </LocalizationProvider>
-      </Dropdown>
-    </>
+      }
+    />
   )
 }
 export default DatePicker

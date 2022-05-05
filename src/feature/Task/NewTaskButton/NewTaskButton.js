@@ -6,8 +6,13 @@ import { Button, Icon } from "./NewTaskButton.style"
 import { showTaskInput } from "../../../store/features/layoutSlice"
 
 function NewTaskButton() {
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
   const _showTaskInput = () => dispatch(showTaskInput())
+
+  // Selectors
+  // ===========================================================================
   const isTaskInputOpen = useSelector(
     (state) => state.layout.taskInputVisibility
   )

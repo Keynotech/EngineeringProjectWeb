@@ -33,12 +33,15 @@ const RouteName = styled.span`
 `
 
 function SidebarItem({ icon, name, route }) {
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
   const _hideTaskPage = () => dispatch(hideTaskPage())
+  const _hideSidebar = () => dispatch(hideSidebar())
 
   const hideSidebarOnMobile = () => {
     if (window.innerWidth <= 768) {
-      dispatch(hideSidebar())
+      _hideSidebar()
     }
   }
 

@@ -105,9 +105,13 @@ function TagInput() {
   const _hideTagInput = () => {
     dispatch(hideTagInput())
   }
-  // Selectors &   Locale state
+  // State Hooks
   // ===========================================================================
   const [tagName, setTagName] = useState("")
+
+  // Handlers
+  // ===========================================================================
+
   const clearInput = () => {
     setTagName("")
   }
@@ -132,14 +136,12 @@ function TagInput() {
     }
   )
 
-  // Hooks
+  // Effect Hooks
   // ===========================================================================
 
   useEffect(() => {
     clearInput()
   }, [])
-
-  // Others  // ===========================================================================
 
   return (
     <Overlay>

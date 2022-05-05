@@ -15,6 +15,8 @@ const Wrapper = styled.div`
 `
 
 function TasksList({ tasks }) {
+  // Selectors
+  // ===========================================================================
   const taskInputVisibility = useSelector(
     (state) => state.layout.taskInputVisibility
   )

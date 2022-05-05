@@ -3,8 +3,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
-import React, { useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import React from "react"
+import { useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
 import { useParams } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
@@ -41,7 +41,7 @@ import {
 import TaskTag from "../../Tag/TaskTag"
 
 function TaskPage() {
-  // Query
+  // Queries
   // ===========================================================================
   let { taskId } = useParams()
   const task = useTaskQuery(taskId)
@@ -63,10 +63,8 @@ function TaskPage() {
   const changeStatus = () => updateTask.mutate({ status: !task.data.status })
   const changeTags = (value) => updateTask.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
 
-  // Selectors &   Locale state
+  // Others
   // ===========================================================================
-  const isVisible = useSelector((state) => state.layout.taskPageVisibility)
-
   const theme = useTheme()
 
   return task.isSuccess ? (

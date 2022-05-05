@@ -40,13 +40,16 @@ function TaskInput() {
     dispatch(showTaskPage())
   }
 
-  // Selectors &   Locale state
+  // State Hooks
   // ===========================================================================
   const [title, setTitle] = useState("")
   const [isDone, setIsDone] = useState(false)
   const [dueDate, setDueDate] = useState()
   const [priority, setPriority] = useState(1)
   const [tags, setTags] = useState([])
+
+  // Handlers
+  // ===========================================================================
 
   const toggleIsdone = () => setIsDone(!isDone)
 
@@ -88,7 +91,7 @@ function TaskInput() {
     }
   )
 
-  // Hooks
+  // Effect Hooks
   // ===========================================================================
 
   useEffect(() => {

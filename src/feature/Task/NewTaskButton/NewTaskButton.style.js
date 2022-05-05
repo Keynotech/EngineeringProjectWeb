@@ -3,8 +3,8 @@ import styled, { css } from "styled-components"
 
 export const Button = styled.button`
   position: absolute;
-  right: 30px;
-  bottom: 30px;
+  right: 20px;
+  bottom: 40px;
   width: 40px;
   height: 40px;
   z-index: 9999;

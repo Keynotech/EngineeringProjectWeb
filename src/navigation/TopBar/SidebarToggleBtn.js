@@ -65,12 +65,18 @@ const HamburgerInner = styled.div`
 `
 
 function SidebarToggleBtn() {
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
+  const _toggleSidebar = () => dispatch(toggleSidebar())
+
+  // Selectors
+  // ===========================================================================
   const sidebarVisibility = useSelector(
     (state) => state.layout.sidebarVisibility
   )
   return (
-    <Hamburger onClick={() => dispatch(toggleSidebar())}>
+    <Hamburger onClick={_toggleSidebar}>
       <HamburgerInner isActive={sidebarVisibility} />
     </Hamburger>
   )
