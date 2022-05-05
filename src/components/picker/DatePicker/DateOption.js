@@ -10,8 +10,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 14px;
-  padding: 8px 15px;
-  font-size: 15px;
+  padding: 8px 12px;
+  font-size: 14px;
   cursor: pointer;
 
   &:hover {

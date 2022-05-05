@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import AddIcon from "@mui/icons-material/Add"
 import { showTagInput } from "../../../store/features/layoutSlice"
-import TagItem from "../TagItem"
+import TagItem from "../TagItem/TagItem"
 
 const Wrapper = styled.div`
   display: flex;

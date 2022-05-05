@@ -21,7 +21,7 @@ const Title = styled.span`
   white-space: nowrap;
 `
 
-function TaskTag({ tagId }) {
+function TagDisplayInTask({ tagId }) {
   const queryClient = useQueryClient()
   const tag = queryClient.getQueryData(["tags", tagId])
   return (
@@ -31,4 +31,4 @@ function TaskTag({ tagId }) {
   )
 }
 
-export default TaskTag
+export default TagDisplayInTask

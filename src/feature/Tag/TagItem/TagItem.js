@@ -7,9 +7,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
-  padding: 4px 8px;
+  padding: 8px 12px;
   border-radius: 4px;
-  min-height: 24px;
   color: ${(props) => props.theme.textSecondary};
 `
 
@@ -17,7 +16,7 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 20px;
-  height: 24px;
+  max-height: 24px;
   margin-right: 12px;
 `
 
@@ -34,7 +33,11 @@ const Icon = styled.span`
 `
 
 const Title = styled.span`
+  flex: 1;
   font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 function TagItem({ tagId }) {

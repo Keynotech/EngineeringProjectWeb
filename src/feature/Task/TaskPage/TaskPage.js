@@ -38,7 +38,7 @@ import {
   AttachmentsContainer,
   Attachment,
 } from "./TaskPage.style"
-import TaskTag from "../../Tag/TaskTag"
+import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 
 function TaskPage() {
   // Queries
@@ -141,7 +141,7 @@ function TaskPage() {
           <SectionContainer>
             <TagsContainer>
               {task.data.tags?.map((tag) => (
-                <TaskTag key={tag} tagId={tag} />
+                <TagDisplayInTask key={tag} tagId={tag} />
               ))}
             </TagsContainer>
           </SectionContainer>

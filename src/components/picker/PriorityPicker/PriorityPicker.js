@@ -7,16 +7,25 @@ import StarIcon from "@mui/icons-material/Star"
 import Propertie from "../Propertie"
 import Dropdown from "../../Dropdown/Dropdown"
 
-export const Item = styled.div`
-  font-size: 12px;
+const Wrapper = styled.div`
+  width: 200px;
+  max-width: 100vw;
+`
+
+const Item = styled.div`
   display: flex;
+  width: 100%;
+  overflow: visible;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
-  padding: 8px 50px 8px 5px;
+  gap: 14px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  font-size: 14px;
+  cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.primary};
+    background-color: ${(props) => props.theme.secondary};
   }
 `
 
@@ -49,12 +58,14 @@ function PriorityPicker({ value, onChange }) {
       toggleComponent={
         <Propertie
           icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
-          value={`Priority ${value}`}
+          value={
+            prioritiesData.find((priority) => priority.value === value).name
+          }
           onClick={() => setIsOpen(!isOpen)}
         />
       }
       menuComponent={
-        <div>
+        <Wrapper>
           {prioritiesData.map((priority) => (
             <Item
               onClick={() => {
@@ -67,7 +78,7 @@ function PriorityPicker({ value, onChange }) {
               {priority.name}
             </Item>
           ))}
-        </div>
+        </Wrapper>
       }
     />
   )

@@ -7,22 +7,28 @@ import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import Checkbox from "../../button/Checkbox"
-import TagItem from "../../../feature/Tag/TagItem"
+import TagItem from "../../../feature/Tag/TagItem/TagItem"
 import { useTagsQuery } from "../../../api/api"
 import { showTagInput } from "../../../store/features/layoutSlice"
 import Propertie from "../Propertie"
 import Dropdown from "../../Dropdown/Dropdown"
 
+const Wrapper = styled.ul`
+  min-width: 200px;
+  max-width: 100vw;
+`
+
 const Item = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding-right: 8px;
+  cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => props.theme.primary};
+    background-color: ${(props) => props.theme.secondary};
   }
 `
 
@@ -30,7 +36,7 @@ const AddNewTag = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 8px;
+  padding: 8px 12px;
   min-height: 24px;
 `
 
@@ -88,10 +94,10 @@ function TagPicker({ currentTags, onChange }) {
         />
       }
       menuComponent={
-        <ul>
+        <Wrapper>
           {tags.isSuccess
             ? tags.data.map((tag) => (
-                <Item onChange={() => handleChange(tag._id)} key={tag._id}>
+                <Item onClick={() => handleChange(tag._id)} key={tag._id}>
                   <TagItem tagId={tag._id} />
                   <Checkbox
                     onChange={() => handleChange(tag._id)}
@@ -112,7 +118,7 @@ function TagPicker({ currentTags, onChange }) {
               Create new tag
             </AddNewTag>
           </Item>
-        </ul>
+        </Wrapper>
       }
     />
   )

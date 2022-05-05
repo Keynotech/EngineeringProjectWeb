@@ -27,7 +27,7 @@ import PriorityPicker from "../../../components/picker/PriorityPicker/PriorityPi
 import SubmitButton from "../../../components/button/SubmitButton"
 import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../../components/picker/TagPicker/TagPicker"
-import TaskTag from "../../Tag/TaskTag"
+import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 
 function TaskInput() {
   // Dispatch
@@ -131,7 +131,7 @@ function TaskInput() {
           <DetailsContainer>
             <TagsContainer>
               {tags?.map((tag) => (
-                <TaskTag key={tag} tagId={tag} />
+                <TagDisplayInTask key={tag} tagId={tag} />
               ))}
             </TagsContainer>
             <PropertiesContainer>

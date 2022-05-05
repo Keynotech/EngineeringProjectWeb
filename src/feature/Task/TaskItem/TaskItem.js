@@ -7,7 +7,7 @@ import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutl
 import { Link } from "react-router-dom"
 import { showTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
-import TaskTag from "../../Tag/TaskTag"
+import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import { useUpdateTaskOnList } from "../../../api/api"
 import {
   Wrapper,
@@ -97,7 +97,7 @@ function TaskItem({ task }) {
 
               <TagsContainer>
                 {task.tags?.map((tag) => (
-                  <TaskTag key={tag} tagId={tag} />
+                  <TagDisplayInTask key={tag} tagId={tag} />
                 ))}
               </TagsContainer>
             </MainContainer>

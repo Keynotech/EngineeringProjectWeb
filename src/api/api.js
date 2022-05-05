@@ -69,7 +69,10 @@ function useUpdateSingleTask(taskId) {
           queryKey: ["tasks", taskId],
           refetchActive: false,
         })
-        queryClient.invalidateQueries(["tasks"])
+        queryClient.invalidateQueries({
+          queryKey: ["tasks"],
+          refetchActive: false,
+        })
       },
     }
   )
