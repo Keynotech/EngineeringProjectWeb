@@ -10,22 +10,35 @@ import SidebarItem from "./SidebarItem"
 import { hideSidebar, showTagInput } from "../../store/features/layoutSlice"
 import { useTagsQuery } from "../../api/api"
 import TagsList from "../../feature/Tag/TagList/TagList"
+import { mq } from "../../utils/mq"
+import zIndex from "../../utils/zIndex"
 
 const Wrapper = styled.nav`
-  position: fixed;
-  left: -400px;
-  z-index: 500;
+  position: absolute;
+  width: 100vw;
+  left: -100vw;
   height: calc(100vh - 48px);
-  width: min(250px, 100vw);
   overflow-y: auto;
+  z-index: ${zIndex.level9};
   background-color: ${(props) => props.theme.background};
   border-right: 1px solid ${(props) => props.theme.secondary};
-  transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
+  transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
+  will-change: left;
+
+  @media ${mq.phone} {
+    position: fixed;
+    left: -300px;
+    width: 300px;
+  }
 
   ${({ isVisible }) =>
     isVisible &&
     css`
       left: 0px;
+
+      @media ${mq.phone} {
+        left: 0px;
+      }
     `}
 
   &::-webkit-scrollbar {
@@ -36,8 +49,12 @@ const Wrapper = styled.nav`
 const Container = styled.div`
   width: calc(100% - 40px);
   padding-top: 15px;
-  padding-left: 30px;
+  padding-left: 15px;
   padding-bottom: 30px;
+
+  @media ${mq.tablet} {
+    padding-left: 30px;
+  }
 `
 
 const MenuList = styled.ul`
@@ -85,15 +102,16 @@ const Icon = styled.span`
 `
 
 const Backdrop = styled.div`
-  visibility: hidden;
+  display: none;
 
-  @media (max-width: 768px) {
+  @media ${mq.phone} {
+    display: block;
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 499;
+    z-index: ${zIndex.level8};
     background-color: rgba(0, 0, 0, 0.5);
-    transition: all 0.2s cubic-bezier(0.42, 0, 1, 1);
+    transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
     opacity: 0;
     visibility: hidden;
 
@@ -104,9 +122,15 @@ const Backdrop = styled.div`
         visibility: visible;
       `}
   }
+  @media ${mq.tablet} {
+    display: none;
+  }
 `
 
 function Sidebar() {
+  // State Hooks
+  // ===========================================================================
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()

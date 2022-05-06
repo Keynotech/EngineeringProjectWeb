@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import { toggleDisplayDetails } from "../../../store/features/tasksSlice"
+import zIndex from "../../../utils/zIndex"
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
   padding: 15px 6px;
   color: ${(props) => props.theme.textSecondary};
   background-color: ${(props) => props.theme.background};
-  z-index: 200;
+  z-index: ${zIndex.level1};
 `
 
 const Icon = styled.span`

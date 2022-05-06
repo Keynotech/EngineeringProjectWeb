@@ -85,10 +85,6 @@ export const TagsContainer = styled.div`
   //justify-content: flex-end;
   gap: 8px;
   overflow: hidden;
-
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-  }
 `
 
 const Description = styled.div`

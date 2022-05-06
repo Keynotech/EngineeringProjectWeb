@@ -2,12 +2,14 @@
 import React from "react"
 import styled from "styled-components"
 import SidebarToggleBtn from "./SidebarToggleBtn"
+import { mq } from "../../utils/mq"
+import zIndex from "../../utils/zIndex"
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 500;
+  z-index: ${zIndex.level9};
   width: 100vw;
   height: 48px;
   background-color: ${(props) => props.theme.secondary};
@@ -20,10 +22,10 @@ const Container = styled.div`
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  padding: 0 32px;
+  padding: 0 15px;
 
-  @media (max-width: 768px) {
-    padding: 0 12px;
+  @media ${mq.tablet} {
+    padding: 0 30px;
   }
 `
 

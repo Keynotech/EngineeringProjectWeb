@@ -7,6 +7,7 @@ import Sidebar from "../../navigation/Sidebar/Sidebar"
 import { hideSidebar, showSidebar } from "../../store/features/layoutSlice"
 import TagInput from "../../feature/Tag/TagInput/TagInput"
 import useWindowSize from "../../hooks/useWindowSize"
+import { size, mq } from "../../utils/mq"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -28,14 +29,16 @@ const Main = styled.main`
   ${({ sidebarVisibility }) =>
     sidebarVisibility &&
     css`
-      margin-left: 250px;
+      @media ${mq.laptop} {
+        margin-left: 300px;
+      }
     `}
 `
 
 function AppLayout() {
   // State hooks
   // ===========================================================================
-  const size = useWindowSize()
+  const windowSize = useWindowSize()
 
   // Selectors
   // ===========================================================================
@@ -44,6 +47,10 @@ function AppLayout() {
   )
   const tagInputVisibility = useSelector(
     (state) => state.layout.tagInputVisibility
+  )
+
+  const taskPageVisibility = useSelector(
+    (state) => state.layout.taskPageVisibility
   )
 
   // Dispatch
@@ -56,16 +63,18 @@ function AppLayout() {
   // ===========================================================================
 
   useEffect(() => {
-    if (size.width < 768) {
+    if (windowSize.width < size.tablet) {
       _hideSidebar()
-    }
-  }, [size.width < 768])
-
-  useEffect(() => {
-    if (size.width > 768) {
+    } else if (windowSize.width > size.laptop) {
       _showSidebar()
     }
-  }, [size.width > 768])
+  }, [windowSize.width])
+
+  useEffect(() => {
+    if (windowSize.width < size.laptop && taskPageVisibility === true) {
+      _hideSidebar()
+    }
+  }, [windowSize.width, taskPageVisibility])
 
   return (
     <>

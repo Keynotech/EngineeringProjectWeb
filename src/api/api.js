@@ -8,14 +8,14 @@ import { hideTaskPage } from "../store/features/layoutSlice"
 
 function useTaskQuery(taskId) {
   const data = useQuery(["tasks", taskId], () =>
-    fetch(`http://localhost:5000/tasks/${taskId}`).then((res) => res.json())
+    fetch(`http://192.168.0.159:5000/tasks/${taskId}`).then((res) => res.json())
   )
   return data
 }
 
 function useTasksQuery() {
   const data = useQuery(["tasks"], () =>
-    fetch(`http://localhost:5000/tasks`).then((res) => res.json())
+    fetch(`http://192.168.0.159:5000/tasks`).then((res) => res.json())
   )
   return data
 }
@@ -25,7 +25,7 @@ function useUpdateSingleTask(taskId) {
 
   return useMutation(
     ({ ...props }) => {
-      fetch(`http://localhost:5000/tasks/${taskId}`, {
+      fetch(`http://192.168.0.159:5000/tasks/${taskId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -83,7 +83,7 @@ function useUpdateTaskOnList(taskId) {
 
   return useMutation(
     ({ ...props }) => {
-      fetch(`http://localhost:5000/tasks/${taskId}`, {
+      fetch(`http://192.168.0.159:5000/tasks/${taskId}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -131,7 +131,7 @@ function useDeleteTask(taskId) {
 
   return useMutation(
     () => {
-      fetch(`http://localhost:5000/tasks/${taskId}`, {
+      fetch(`http://192.168.0.159:5000/tasks/${taskId}`, {
         method: "DELETE",
       }).then((res) => res.json())
     },
@@ -160,14 +160,14 @@ function useDeleteTask(taskId) {
 function useTagQuery(tagId) {
   const queryClient = useQueryClient()
   const data = useQuery(["tags", tagId], () =>
-    fetch(`http://localhost:5000/tags/${tagId}`).then((res) => res.json())
+    fetch(`http://192.168.0.159:5000/tags/${tagId}`).then((res) => res.json())
   )
   return data
 }
 function useTagsQuery() {
   const queryClient = useQueryClient()
   const data = useQuery(["tags"], () =>
-    fetch(`http://localhost:5000/tags`).then((res) => res.json())
+    fetch(`http://192.168.0.159:5000/tags`).then((res) => res.json())
   )
   if (data.isSuccess) {
     data.data.forEach((e) => {

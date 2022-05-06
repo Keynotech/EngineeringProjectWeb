@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
 import { hideSidebar, hideTaskPage } from "../../store/features/layoutSlice"
+import { size } from "../../utils/mq"
 
 const Link = styled(NavLink)`
   transition: all 0.25s ease-in;
@@ -40,7 +41,7 @@ function SidebarItem({ icon, name, route }) {
   const _hideSidebar = () => dispatch(hideSidebar())
 
   const hideSidebarOnMobile = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= size.laptop) {
       _hideSidebar()
     }
   }
