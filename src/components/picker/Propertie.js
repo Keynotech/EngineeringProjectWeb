@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
   padding: 2px 6px;
   border: 1px solid ${(props) => props.theme.tertiary};
   border-radius: 5px;
+  cursor: pointer;
 
   @media ${mq.desktopL} {
     padding: 4px 18px;

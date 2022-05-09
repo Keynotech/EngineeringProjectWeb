@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
+import PropTypes from "prop-types"
+import OutsideClickHandler from "react-outside-click-handler"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import Propertie from "../Propertie"
@@ -29,7 +28,7 @@ const Item = styled.div`
   }
 `
 
-function PriorityPicker({ value, onChange }) {
+function PriorityPicker({ value, onChange, disableOutsideCapture }) {
   // Others
   // ===========================================================================
   const theme = useTheme()
@@ -53,35 +52,51 @@ function PriorityPicker({ value, onChange }) {
   }, [value])
 
   return (
-    <Dropdown
-      isOpen={isOpen}
-      toggleComponent={
-        <Propertie
-          icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
-          value={
-            prioritiesData.find((priority) => priority.value === value).name
-          }
-          onClick={() => setIsOpen(!isOpen)}
-        />
-      }
-      menuComponent={
-        <Wrapper>
-          {prioritiesData.map((priority) => (
-            <Item
-              onClick={() => {
-                onChange(priority.value)
-                setIsOpen(false)
-              }}
-              key={priority.value}
-            >
-              <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
-              {priority.name}
-            </Item>
-          ))}
-        </Wrapper>
-      }
-    />
+    <OutsideClickHandler
+      disabled={!isOpen}
+      useCapture={disableOutsideCapture}
+      onOutsideClick={() => setIsOpen(false)}
+    >
+      <Dropdown
+        isOpen={isOpen}
+        toggleComponent={
+          <Propertie
+            icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
+            value={
+              prioritiesData.find((priority) => priority.value === value).name
+            }
+            onClick={() => setIsOpen(!isOpen)}
+          />
+        }
+        menuComponent={
+          <Wrapper>
+            {prioritiesData.map((priority) => (
+              <Item
+                onClick={() => {
+                  onChange(priority.value)
+                  setIsOpen(false)
+                }}
+                key={priority.value}
+              >
+                <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
+                {priority.name}
+              </Item>
+            ))}
+          </Wrapper>
+        }
+      />
+    </OutsideClickHandler>
   )
+}
+
+PriorityPicker.propTypes = {
+  value: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  disableOutsideCapture: PropTypes.bool,
+}
+
+PriorityPicker.defaultProps = {
+  disableOutsideCapture: false,
 }
 
 export default PriorityPicker

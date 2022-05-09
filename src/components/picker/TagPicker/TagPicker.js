@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import React, { useState, useRef } from "react"
+import React, { useState } from "react"
+import OutsideClickHandler from "react-outside-click-handler"
 import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
 import LocalOfferIcon from "@mui/icons-material/LocalOffer"
+import PropTypes from "prop-types"
 import Checkbox from "../../button/Checkbox"
 import TagItem from "../../../feature/Tag/TagItem/TagItem"
 import useTagsQuery from "../../../hooks/query/useTagsQuery"
@@ -40,7 +39,7 @@ const AddNewTag = styled.div`
   min-height: 24px;
 `
 
-function TagPicker({ currentTags, onChange }) {
+function TagPicker({ currentTags, onChange, disableOutsideCapture }) {
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
@@ -58,7 +57,7 @@ function TagPicker({ currentTags, onChange }) {
 
   const toggleIsOpen = () => {
     if (isOpen === false) {
-      currentTags ? setSelectedTags([...currentTags]) : setSelectedTags([])
+      setSelectedTags([...currentTags] || [])
       setIsOpen(true)
     } else {
       setIsOpen(false)
@@ -84,44 +83,60 @@ function TagPicker({ currentTags, onChange }) {
   const _showTagInput = () => dispatch(showTagInput())
 
   return (
-    <Dropdown
-      isOpen={isOpen}
-      toggleComponent={
-        <Propertie
-          onClick={() => toggleIsOpen()}
-          icon={<LocalOfferIcon fontSize="inherit" color="inherit" />}
-          value="Add tag"
-        />
-      }
-      menuComponent={
-        <Wrapper>
-          {tags.isSuccess
-            ? tags.data.map((tag) => (
-                <Item onClick={() => handleChange(tag._id)} key={tag._id}>
-                  <TagItem tagId={tag._id} />
-                  <Checkbox
-                    onChange={() => handleChange(tag._id)}
-                    checked={selectedTags.indexOf(tag._id) > -1}
-                  />
-                </Item>
-              ))
-            : null}
-          <Item onClick={_showTagInput}>
-            <AddNewTag>
-              <AddIcon
-                sx={{
-                  fontSize: "18px",
-                  marginLeft: "-2px",
-                  marginRight: "16px",
-                }}
-              />
-              Create new tag
-            </AddNewTag>
-          </Item>
-        </Wrapper>
-      }
-    />
+    <OutsideClickHandler
+      useCapture={disableOutsideCapture}
+      disabled={!isOpen}
+      onOutsideClick={() => toggleIsOpen()}
+    >
+      <Dropdown
+        isOpen={isOpen}
+        toggleComponent={
+          <Propertie
+            onClick={() => toggleIsOpen()}
+            icon={<LocalOfferIcon fontSize="inherit" color="inherit" />}
+            value="Add tag"
+          />
+        }
+        menuComponent={
+          <Wrapper>
+            {tags.isSuccess
+              ? tags.data.map((tag) => (
+                  <Item onClick={() => handleChange(tag._id)} key={tag._id}>
+                    <TagItem tagId={tag._id} />
+                    <Checkbox
+                      onChange={() => handleChange(tag._id)}
+                      checked={selectedTags.indexOf(tag._id) > -1}
+                    />
+                  </Item>
+                ))
+              : null}
+            <Item onClick={_showTagInput}>
+              <AddNewTag>
+                <AddIcon
+                  sx={{
+                    fontSize: "18px",
+                    marginLeft: "-2px",
+                    marginRight: "16px",
+                  }}
+                />
+                Create new tag
+              </AddNewTag>
+            </Item>
+          </Wrapper>
+        }
+      />
+    </OutsideClickHandler>
   )
+}
+
+TagPicker.propTypes = {
+  currentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func.isRequired,
+  disableOutsideCapture: PropTypes.bool,
+}
+
+TagPicker.defaultProps = {
+  disableOutsideCapture: false,
 }
 
 export default React.memo(TagPicker)

@@ -15,3 +15,9 @@ const light = {
 }
 
 export default light
+/*
+  priority1: (190, 190, 190),
+  priority2: (82, 151, 255),
+  priority3: (255, 195, 0),
+  priority4: (219, 34, 42),
+*/

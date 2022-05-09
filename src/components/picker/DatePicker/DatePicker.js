@@ -1,15 +1,13 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useState } from "react"
+import PropTypes from "prop-types"
 import { add } from "date-fns"
+import OutsideClickHandler from "react-outside-click-handler"
 import { CalendarPicker } from "@mui/x-date-pickers"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
-import styled, { useTheme, css } from "styled-components"
+import styled from "styled-components"
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined"
-import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined"
 import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
@@ -33,7 +31,7 @@ const OptionsWrapper = styled.div`
   margin-bottom: 14px;
 `
 
-function DatePicker({ value, onChange }) {
+function DatePicker({ value, onChange, disableOutsideCapture }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const dates = [
@@ -78,60 +76,86 @@ function DatePicker({ value, onChange }) {
     setIsOpen(false)
   }
 
-  const theme = useTheme()
   return (
-    <Dropdown
-      isOpen={isOpen}
-      toggleComponent={
-        <Propertie
-          onClick={() => setIsOpen(!isOpen)}
-          icon={<CalendarMonthIcon fontSize="inherit" color="inherit" />}
-          value={value ? formatDateToDisplay(value) : "Due date"}
-        />
-      }
-      menuComponent={
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <Calendar
-            showDaysOutsideCurrentMonth
-            allowSameDateSelection
-            minDate={new Date()}
-            value={value}
-            onChange={(newValue) => {
-              onChange(newValue.toDateString())
-              setIsOpen(false)
-            }}
+    <OutsideClickHandler
+      disabled={!isOpen}
+      useCapture={disableOutsideCapture}
+      onOutsideClick={() => setIsOpen(false)}
+    >
+      <Dropdown
+        isOpen={isOpen}
+        toggleComponent={
+          <Propertie
+            onClick={() => setIsOpen(!isOpen)}
+            icon={<CalendarMonthIcon fontSize="inherit" color="inherit" />}
+            value={value ? formatDateToDisplay(value) : "Due date"}
           />
-          <OptionsWrapper>
-            <DateOption
-              onClick={setTomorrow}
-              title={dates[0].title}
-              icon={<WbSunnyOutlinedIcon fontSize="inherit" color="inherit" />}
-              value={dates[0].value}
+        }
+        menuComponent={
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Calendar
+              showDaysOutsideCurrentMonth
+              allowSameDateSelection
+              minDate={new Date()}
+              value={value}
+              onChange={(newValue) => {
+                onChange(newValue.toDateString())
+                setIsOpen(false)
+              }}
             />
-            <DateOption
-              onClick={setNextWeek}
-              title={dates[1].title}
-              icon={<NextWeekOutlinedIcon fontSize="inherit" color="inherit" />}
-              value={dates[1].value}
-            />
-            <DateOption
-              onClick={setNextMonth}
-              title={dates[2].title}
-              icon={<DarkModeOutlinedIcon fontSize="inherit" color="inherit" />}
-              value={dates[2].value}
-            />
-            <DateOption
-              onClick={setNoDate}
-              title={dates[3].title}
-              icon={
-                <DoNotDisturbOutlinedIcon fontSize="inherit" color="inherit" />
-              }
-              value={dates[3].value}
-            />
-          </OptionsWrapper>
-        </LocalizationProvider>
-      }
-    />
+            <OptionsWrapper>
+              <DateOption
+                onClick={setTomorrow}
+                title={dates[0].title}
+                icon={
+                  <WbSunnyOutlinedIcon fontSize="inherit" color="inherit" />
+                }
+                value={dates[0].value}
+              />
+              <DateOption
+                onClick={setNextWeek}
+                title={dates[1].title}
+                icon={
+                  <NextWeekOutlinedIcon fontSize="inherit" color="inherit" />
+                }
+                value={dates[1].value}
+              />
+              <DateOption
+                onClick={setNextMonth}
+                title={dates[2].title}
+                icon={
+                  <DarkModeOutlinedIcon fontSize="inherit" color="inherit" />
+                }
+                value={dates[2].value}
+              />
+              <DateOption
+                onClick={setNoDate}
+                title={dates[3].title}
+                icon={
+                  <DoNotDisturbOutlinedIcon
+                    fontSize="inherit"
+                    color="inherit"
+                  />
+                }
+                value={dates[3].value}
+              />
+            </OptionsWrapper>
+          </LocalizationProvider>
+        }
+      />
+    </OutsideClickHandler>
   )
 }
+
+DatePicker.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  disableOutsideCapture: PropTypes.bool,
+}
+
+DatePicker.defaultProps = {
+  value: "",
+  disableOutsideCapture: false,
+}
+
 export default DatePicker

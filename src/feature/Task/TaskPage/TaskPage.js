@@ -148,9 +148,9 @@ function TaskPage() {
             <SectionContainer>
               <SectionHeader>Attachments</SectionHeader>
               <AttachmentsContainer>
-                {task.data.attachments?.map((attachment, index) => (
+                {task.data.files?.map((file, index) => (
                   <Attachment key={index} isFile>
-                    {attachment.name}
+                    {file.name}
                   </Attachment>
                 ))}
                 <Attachment isFile={false}>

@@ -106,6 +106,7 @@ export const AttachmentsContainer = styled.div`
   display: flex;
   flex-direction: row;
   overflow-x: auto;
+  gap: 8px;
 `
 
 export const Attachment = styled.div`

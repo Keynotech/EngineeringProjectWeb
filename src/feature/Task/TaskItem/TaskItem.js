@@ -38,7 +38,7 @@ function TaskItem({ task }) {
   // State Hooks
   // ===========================================================================
   const [isOverdue, setIsOverdue] = useState(false)
-  const [isAttachment, setIsAttachment] = useState(false)
+  const [isfile, setIsFile] = useState(false)
 
   // ===========================================================================
   // Mutations
@@ -61,10 +61,10 @@ function TaskItem({ task }) {
   }, [task.dueDate])
 
   useEffect(() => {
-    if (task.files) {
-      setIsAttachment(true)
-    } else setIsAttachment(false)
-  }, [task.attachments])
+    if (task.files.length > 0) {
+      setIsFile(true)
+    } else setIsFile(false)
+  }, [task.files])
 
   return (
     <li>
@@ -88,7 +88,7 @@ function TaskItem({ task }) {
             <Title>{task.title}</Title>
 
             <PropertiesIcons>
-              {isAttachment ? (
+              {isfile ? (
                 <InsertDriveFileOutlinedIcon fontSize="inherit" />
               ) : null}
             </PropertiesIcons>

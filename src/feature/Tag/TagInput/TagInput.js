@@ -1,11 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/named */
 import React, { useState, useEffect } from "react"
+import OutsideClickHandler from "react-outside-click-handler"
 import { useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
-import { useNavigate } from "react-router-dom"
-import ClearIcon from "@mui/icons-material/Clear"
-import Backdrop from "@mui/material/Backdrop"
 import TextInput from "../../../components/input/TextInput"
 import { hideTagInput } from "../../../store/features/layoutSlice"
 import CancelButton from "../../../components/button/CancelButton"
@@ -130,39 +126,41 @@ function TagInput() {
   return (
     <Overlay>
       <OverlayContainer>
-        <Dialog>
-          <Wrapper>
-            <Header>
-              <Icon />
-              Create new tag
-            </Header>
-            <Form>
-              <Label>Tag name</Label>
-              <PropertieInput>
-                <TextInput
-                  value={tagName}
-                  onChange={(value) => setTagName(value)}
-                  placeholder="New tag name"
-                  fontSize="14px"
-                  multiline={false}
-                  autoFocus
-                />
-              </PropertieInput>
-              <Footer>
-                <CancelButton onClick={_hideTagInput} text="Cancel" />
-                <SubmitButton
-                  text="Create"
-                  onClick={() => {
-                    createTag.mutate({
-                      tagName,
-                    })
-                    _hideTagInput()
-                  }}
-                />
-              </Footer>
-            </Form>
-          </Wrapper>
-        </Dialog>
+        <OutsideClickHandler onOutsideClick={_hideTagInput}>
+          <Dialog>
+            <Wrapper>
+              <Header>
+                <Icon />
+                Create new tag
+              </Header>
+              <Form>
+                <Label>Tag name</Label>
+                <PropertieInput>
+                  <TextInput
+                    value={tagName}
+                    onChange={(value) => setTagName(value)}
+                    placeholder="New tag name"
+                    fontSize="14px"
+                    multiline={false}
+                    autoFocus
+                  />
+                </PropertieInput>
+                <Footer>
+                  <CancelButton onClick={_hideTagInput} text="Cancel" />
+                  <SubmitButton
+                    text="Create"
+                    onClick={() => {
+                      createTag.mutate({
+                        tagName,
+                      })
+                      _hideTagInput()
+                    }}
+                  />
+                </Footer>
+              </Form>
+            </Wrapper>
+          </Dialog>
+        </OutsideClickHandler>
       </OverlayContainer>
     </Overlay>
   )
