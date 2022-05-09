@@ -4,20 +4,18 @@ import { useSelector, useDispatch } from "react-redux"
 import { isPast, isToday } from "date-fns"
 import PropTypes from "prop-types"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
-import { Link } from "react-router-dom"
 import { showTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import { useUpdateTaskOnList } from "../../../api/api"
 import {
   Wrapper,
-  Content,
+  StyledLink,
   CheckboxContainer,
   MainContainer,
   Title,
   DatePropertie,
   PropertiesIcons,
-  DetailsContainer,
   Description,
   DescriptionInner,
   TagsContainer,
@@ -70,7 +68,7 @@ function TaskItem({ task }) {
 
   return (
     <li>
-      <Wrapper displayTasksDetails={displayTasksDetails}>
+      <Wrapper>
         <CheckboxContainer>
           <Checkbox
             checked={task.status}
@@ -78,38 +76,35 @@ function TaskItem({ task }) {
             priority={task.priority}
           />
         </CheckboxContainer>
-        <Content>
-          <Link to={`tasks/${task._id}`} onClick={_showTaskPage}>
-            <MainContainer>
-              {task.dueDate ? (
-                <DatePropertie isOverdue={isOverdue}>
-                  {formatDateToDisplay(task.dueDate)}
-                </DatePropertie>
+
+        <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
+          <MainContainer>
+            {task.dueDate ? (
+              <DatePropertie isOverdue={isOverdue}>
+                {formatDateToDisplay(task.dueDate)}
+              </DatePropertie>
+            ) : null}
+
+            <Title>{task.title}</Title>
+
+            <PropertiesIcons>
+              {isAttachment === false ? (
+                <InsertDriveFileOutlinedIcon fontSize="inherit" />
               ) : null}
+            </PropertiesIcons>
+            <TagsContainer>
+              {task.tags?.map((tag) => (
+                <TagDisplayInTask key={tag} tagId={tag} />
+              ))}
+            </TagsContainer>
+          </MainContainer>
 
-              <Title>{task.title}</Title>
-
-              <PropertiesIcons>
-                {isAttachment ? (
-                  <InsertDriveFileOutlinedIcon fontSize="inherit" />
-                ) : null}
-              </PropertiesIcons>
-
-              <TagsContainer>
-                {task.tags?.map((tag) => (
-                  <TagDisplayInTask key={tag} tagId={tag} />
-                ))}
-              </TagsContainer>
-            </MainContainer>
-            <DetailsContainer displayTasksDetails={displayTasksDetails}>
-              {task.description ? (
-                <Description>
-                  <DescriptionInner>{task.description}</DescriptionInner>
-                </Description>
-              ) : null}
-            </DetailsContainer>
-          </Link>
-        </Content>
+          {displayTasksDetails && task.description ? (
+            <Description>
+              <DescriptionInner>{task.description}</DescriptionInner>
+            </Description>
+          ) : null}
+        </StyledLink>
       </Wrapper>
     </li>
   )

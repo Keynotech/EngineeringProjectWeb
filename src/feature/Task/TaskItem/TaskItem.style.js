@@ -1,12 +1,13 @@
 import styled, { css } from "styled-components"
+import { Link } from "react-router-dom"
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  position: relative;
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
   padding: 10px 8px;
+  box-sizing: border-box;
   border-bottom: 1px solid ${(props) => props.theme.secondary};
 
   &:hover {
@@ -18,16 +19,18 @@ const Wrapper = styled.div`
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  min-height: 24px;
-  min-width: 32px;
+  height: 24px;
+  width: 32px;
 `
 
-const Content = styled.div`
+const StyledLink = styled(Link)`
+  min-width: 0px;
+  max-width: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
-  width: 100%;
-  min-width: 0px;
+  align-items: flex-start;
+  cursor: default;
 `
 
 const MainContainer = styled.div`
@@ -35,7 +38,8 @@ const MainContainer = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 4px;
-  min-height: 24px;
+  height: 24px;
+  width: 100%;
 `
 
 const DatePropertie = styled.span`
@@ -58,36 +62,31 @@ const Title = styled.span`
   font-size: 14px;
   color: ${(props) => props.theme.textPrimary};
   margin-right: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const PropertiesIcons = styled.div`
   display: flex;
   flex-direction: row;
-  flex-shrink: 2;
+  flex-shrink: 0;
   overflow: hidden;
   gap: 10px;
   font-size: 14px;
   margin-right: 8px;
 `
 
-const DetailsContainer = styled.div`
-  display: none;
-  ${({ displayTasksDetails }) =>
-    displayTasksDetails &&
-    css`
-      display: flex;
-      flex-direction: column;
-    `}
-`
 export const TagsContainer = styled.div`
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
-  //justify-content: flex-end;
   gap: 8px;
   overflow: hidden;
 `
 
 const Description = styled.div`
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -101,13 +100,12 @@ const DescriptionInner = styled.span`
 
 export {
   Wrapper,
-  Content,
+  StyledLink,
   CheckboxContainer,
   MainContainer,
   Title,
   DatePropertie,
   PropertiesIcons,
-  DetailsContainer,
   Description,
   DescriptionInner,
 }
