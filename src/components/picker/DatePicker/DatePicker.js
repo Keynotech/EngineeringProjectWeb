@@ -4,7 +4,7 @@
 import React, { useState } from "react"
 import { add } from "date-fns"
 import { CalendarPicker } from "@mui/x-date-pickers"
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import styled, { useTheme, css } from "styled-components"
@@ -85,12 +85,7 @@ function DatePicker({ value, onChange }) {
       toggleComponent={
         <Propertie
           onClick={() => setIsOpen(!isOpen)}
-          icon={
-            <CalendarMonthOutlinedIcon
-              fontSize="inherit"
-              sx={{ color: theme.textTertiary }}
-            />
-          }
+          icon={<CalendarMonthIcon fontSize="inherit" color="inherit" />}
           value={value ? formatDateToDisplay(value) : "Due date"}
         />
       }

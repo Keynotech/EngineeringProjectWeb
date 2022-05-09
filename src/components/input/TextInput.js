@@ -11,6 +11,7 @@ function TextInput({
   maxRows,
   placeholder,
   fontSize,
+  fontWeight,
   autoFocus,
 }) {
   const theme = useTheme()
@@ -29,8 +30,13 @@ function TextInput({
       fullWidth
       autoFocus={autoFocus}
       sx={{
+        padding: 0,
+        margin: 0,
         fontSize: { fontSize },
         color: theme.textSecondary,
+        fontWeight,
+        fontFamily:
+          "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple Color Emoji,Helvetica,Arial,sans-serif,Segoe UI Emoji,Segoe UI Symbol;",
       }}
     />
   )
@@ -44,6 +50,7 @@ TextInput.propTypes = {
   placeholder: PropTypes.string,
   fontSize: PropTypes.string,
   autoFocus: PropTypes.bool,
+  fontWeight: PropTypes.number,
 }
 
 TextInput.defaultProps = {
@@ -52,6 +59,7 @@ TextInput.defaultProps = {
   maxRows: 1,
   placeholder: "",
   fontSize: "12px",
+  fontWeight: 400,
   autoFocus: false,
 }
 

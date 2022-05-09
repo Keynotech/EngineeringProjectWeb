@@ -17,12 +17,12 @@ function Inbox() {
 
   return (
     <MainLayout>
-      <Wrapper>
-        <Header icon={<InboxOutlinedIcon fontSize="inherit" />} name="Inbox" />
-        <div style={{ marginTop: "20px" }}>
-          {tasks.isSuccess ? <TaskList tasks={tasks} /> : null}
-        </div>
-      </Wrapper>
+      <Header
+        icon={<InboxOutlinedIcon fontSize="inherit" />}
+        name="Inbox"
+        additionaInfo={tasks.data ? `${tasks.data.length} tasks` : null}
+      />
+      <Wrapper>{tasks.isSuccess ? <TaskList tasks={tasks} /> : null}</Wrapper>
     </MainLayout>
   )
 }

@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import styled from "styled-components"
+import { mq } from "../../utils/mq"
 
 export const Wrapper = styled.div`
   display: flex;
@@ -14,9 +15,17 @@ export const Wrapper = styled.div`
   padding: 2px 6px;
   border: 1px solid ${(props) => props.theme.tertiary};
   border-radius: 5px;
+
+  @media ${mq.desktopL} {
+    padding: 4px 18px;
+  }
 `
 export const PropertieValue = styled.span`
   font-size: 12px;
+
+  @media ${mq.desktopL} {
+    font-size: 14px;
+  }
 `
 
 function Propertie({ value, icon, onClick }) {

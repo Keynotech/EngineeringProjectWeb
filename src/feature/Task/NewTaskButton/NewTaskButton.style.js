@@ -8,9 +8,14 @@ export const Button = styled.button`
   height: 100%;
   border-radius: 25px;
   background-color: ${(props) => props.theme.brandColor};
+  box-shadow: 0 2px 8px ${(props) => props.theme.brandColor};
   z-index: ${zIndex.level2};
   opacity: 1;
-  transition: opacity 0.25s cubic-bezier(0.42, 0, 1, 1);
+  transition: opacity 0.25s linear;
+
+  &:hover {
+    box-shadow: 0 2px 14px ${(props) => props.theme.brandColor};
+  }
 
   ${({ isTaskInputOpen }) =>
     isTaskInputOpen &&

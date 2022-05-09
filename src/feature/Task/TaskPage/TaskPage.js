@@ -3,13 +3,16 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
-import LastPageIcon from "@mui/icons-material/LastPage"
+import KeyboardTabIcon from "@mui/icons-material/KeyboardTab"
+import FileCopyIcon from "@mui/icons-material/FileCopy"
+import ForwardIcon from "@mui/icons-material/Forward"
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import { hideTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
 import TextInput from "../../../components/input/TextInput"
@@ -29,6 +32,7 @@ import {
   IconContainer,
   TitleContainer,
   DetailsContainer,
+  SectionWrapper,
   SectionHeader,
   PropertiesContainer,
   SectionContainer,
@@ -37,14 +41,34 @@ import {
   FooterContainer,
   AttachmentsContainer,
   Attachment,
+  MenuContainer,
+  MenuItem,
 } from "./TaskPage.style"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
+import Dropdown from "../../../components/Dropdown/Dropdown"
 
 function TaskPage() {
   // Queries
   // ===========================================================================
   let { taskId } = useParams()
   const task = useTaskQuery(taskId)
+
+  // Local State
+  // ===========================================================================
+
+  const [menuIsOpen, toggleMenu] = useState(false)
+
+  // Hooks
+  // ===========================================================================
+
+  useEffect(() => {
+    toggleMenu(false)
+  }, [taskId])
+
+  // Others
+  // ===========================================================================
+  const theme = useTheme()
+  const navigation = useNavigate()
 
   // Dispatch
   // ===========================================================================
@@ -62,10 +86,6 @@ function TaskPage() {
   const changeDueDate = (value) => updateTask.mutate({ dueDate: value })
   const changeStatus = () => updateTask.mutate({ status: !task.data.status })
   const changeTags = (value) => updateTask.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
-
-  // Others
-  // ===========================================================================
-  const theme = useTheme()
 
   return task.isSuccess ? (
     <Wrapper>
@@ -85,19 +105,24 @@ function TaskPage() {
               placeholder="Task title"
               multiline
               maxRows={2}
-              fontSize="16px"
+              fontSize="20px"
+              fontWeight={600}
             />
           </TitleContainer>
           <IconContainer>
-            <LastPageIcon
+            <KeyboardTabIcon
               onClick={_hideTaskPage}
-              sx={{ color: theme.textSecondary }}
+              color="inherit"
+              sx={{ cursor: "pointer" }}
             />
           </IconContainer>
         </MainContainer>
         <DetailsContainer>
           <PropertiesContainer>
-            <TagPicker onChange={changeTags} currentTags={task.data.tags} />
+            <PriorityPicker
+              onChange={changePriority}
+              value={task.data.priority}
+            />
 
             <DatePicker
               onChange={changeDueDate}
@@ -105,56 +130,86 @@ function TaskPage() {
               dropdownTo="right"
             />
 
-            <PriorityPicker
-              onChange={changePriority}
-              value={task.data.priority}
-            />
+            <TagPicker onChange={changeTags} currentTags={task.data.tags} />
           </PropertiesContainer>
-          <SectionContainer>
-            <SectionHeader>Description</SectionHeader>
-            <TextInput
-              value={task.data.description}
-              onChange={changeDesc}
-              placeholder="Description"
-              multiline
-              maxRows={15}
-              fontSize="12px"
-            />
-          </SectionContainer>
 
-          <SectionContainer>
-            <SectionHeader>Attachments</SectionHeader>
-            <AttachmentsContainer>
-              {task.data.attachments?.map((attachment, index) => (
-                <Attachment key={index} isFile>
-                  {attachment.name}
+          <SectionWrapper>
+            <SectionContainer>
+              <TextInput
+                value={task.data.description}
+                onChange={changeDesc}
+                placeholder="Description"
+                multiline
+                maxRows={15}
+                fontSize="14px"
+              />
+            </SectionContainer>
+
+            <SectionContainer>
+              <TagsContainer>
+                {task.data.tags.map((tag) => (
+                  <TagDisplayInTask key={tag} tagId={tag} />
+                ))}
+              </TagsContainer>
+            </SectionContainer>
+
+            <SectionContainer>
+              <SectionHeader>Attachments</SectionHeader>
+              <AttachmentsContainer>
+                {task.data.attachments?.map((attachment, index) => (
+                  <Attachment key={index} isFile>
+                    {attachment.name}
+                  </Attachment>
+                ))}
+                <Attachment isFile={false}>
+                  <FileUploadOutlinedIcon color="inherit" />
+
+                  <p>Upload file</p>
                 </Attachment>
-              ))}
-              <Attachment isFile={false}>
-                <FileUploadOutlinedIcon color="inherit" />
+              </AttachmentsContainer>
+            </SectionContainer>
+          </SectionWrapper>
 
-                <p>Upload file</p>
-              </Attachment>
-            </AttachmentsContainer>
-          </SectionContainer>
+          <Footer>
+            <FooterContainer>
+              <div>
+                Created at {formatDateTimeToDisplay(task.data.createdAt)}
+              </div>
 
-          <SectionContainer>
-            <TagsContainer>
-              {task.data.tags?.map((tag) => (
-                <TagDisplayInTask key={tag} tagId={tag} />
-              ))}
-            </TagsContainer>
-          </SectionContainer>
+              <Dropdown
+                isOpen={menuIsOpen}
+                toggleComponent={
+                  <MoreHorizIcon
+                    onClick={() => toggleMenu(!menuIsOpen)}
+                    color="inherit"
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                  />
+                }
+                menuComponent={
+                  <MenuContainer>
+                    <MenuItem type="button">
+                      <FileCopyIcon color="inherit" fontSize="inehrit" />
+                      Clone
+                    </MenuItem>
+                    <MenuItem type="button" onClick={deleteTaskFunc}>
+                      <ForwardIcon color="inherit" fontSize="inehrit" />
+                      Go to project
+                    </MenuItem>
+                    <MenuItem type="button" onClick={deleteTaskFunc}>
+                      <DeleteOutlineOutlinedIcon
+                        color="inherit"
+                        fontSize="inehrit"
+                      />
+                      Delete Task
+                    </MenuItem>
+                  </MenuContainer>
+                }
+              />
+            </FooterContainer>
+          </Footer>
         </DetailsContainer>
-        <Footer>
-          <FooterContainer>
-            <div>Updated at {formatDateTimeToDisplay(task.data.createdAt)}</div>
-            <DeleteOutlineOutlinedIcon
-              onClick={deleteTaskFunc}
-              color="inherit"
-            />
-          </FooterContainer>
-        </Footer>
       </Container>
     </Wrapper>
   ) : null

@@ -26,7 +26,7 @@ function NewTaskButton() {
       isTaskInputOpen={isTaskInputOpen}
     >
       <Icon>
-        <AddIcon sx={{ color: theme.background, fontSize: "36px" }} />
+        <AddIcon sx={{ color: theme.background, fontSize: "32px" }} />
       </Icon>
     </Button>
   )

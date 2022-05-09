@@ -20,29 +20,29 @@ const ChildContainer = styled.div`
   height: 100%;
   overflow-y: auto;
   padding: 0 12px;
-  transition: padding 0.25s cubic-bezier(0.42, 0, 1, 1);
+  transition: padding 0.2s cubic-bezier(0.42, 0, 1, 1);
 
   @media ${mq.tablet} {
-    padding: 0 28px;
+    min-width: 320px;
+    max-width: 100%;
   }
 `
 const OutletContainer = styled.div`
   z-index: ${zIndex.level2};
-  width: 0;
+  position: absolute;
+  width: 100vw;
+  visibility: hidden;
 
   @media ${mq.tablet} {
-    will-change: width;
-    transition: width 0.25s cubic-bezier(0.42, 0, 1, 1);
+    position: relative;
+    width: 0px;
   }
 
   ${({ taskPageVisibility }) =>
     taskPageVisibility &&
     css`
-      width: 100vw;
-      position: absolute;
-
+      visibility: visible;
       @media ${mq.tablet} {
-        position: relative;
         width: 400px;
       }
 
@@ -67,7 +67,6 @@ const ButtonContainer = styled.div`
   width: 40px;
   height: 40px;
   z-index: ${zIndex.level1};
-  will-change: right;
   transition: right 0.25s cubic-bezier(0.42, 0, 1, 1);
 
   @media ${mq.tablet} {
@@ -79,6 +78,7 @@ const ButtonContainer = styled.div`
     css`
       @media ${mq.tablet} {
         right: 420px;
+        transition: none;
       }
 
       @media ${mq.desktop} {

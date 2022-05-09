@@ -30,7 +30,7 @@ const Icon = styled.span`
 `
 
 const RouteName = styled.span`
-  font-weight: 500;
+  font-weight: 600;
 `
 
 function SidebarItem({ icon, name, route }) {

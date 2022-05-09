@@ -135,14 +135,14 @@ function TaskInput() {
               ))}
             </TagsContainer>
             <PropertiesContainer>
+              <PriorityPicker
+                value={priority}
+                onChange={(value) => setPriority(value)}
+              />
               <DatePicker
                 value={dueDate}
                 onChange={(value) => setDueDate(value)}
                 dropdownTo="left"
-              />
-              <PriorityPicker
-                value={priority}
-                onChange={(value) => setPriority(value)}
               />
               <TagPicker
                 currentTags={tags}

@@ -5,7 +5,7 @@ import React, { useState, useRef } from "react"
 import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
-import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
+import LocalOfferIcon from "@mui/icons-material/LocalOffer"
 import Checkbox from "../../button/Checkbox"
 import TagItem from "../../../feature/Tag/TagItem/TagItem"
 import { useTagsQuery } from "../../../api/api"
@@ -89,7 +89,7 @@ function TagPicker({ currentTags, onChange }) {
       toggleComponent={
         <Propertie
           onClick={() => toggleIsOpen()}
-          icon={<LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />}
+          icon={<LocalOfferIcon fontSize="inherit" color="inherit" />}
           value="Add tag"
         />
       }

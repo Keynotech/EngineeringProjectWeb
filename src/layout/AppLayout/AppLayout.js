@@ -63,7 +63,7 @@ function AppLayout() {
   // ===========================================================================
 
   useEffect(() => {
-    if (windowSize.width < size.tablet) {
+    if (windowSize.width < size.laptop) {
       _hideSidebar()
     } else if (windowSize.width > size.laptop) {
       _showSidebar()
@@ -72,6 +72,7 @@ function AppLayout() {
 
   useEffect(() => {
     if (windowSize.width < size.laptop && taskPageVisibility === true) {
+      console.log("True")
       _hideSidebar()
     }
   }, [windowSize.width, taskPageVisibility])
