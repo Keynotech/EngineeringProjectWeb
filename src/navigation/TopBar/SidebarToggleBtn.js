@@ -2,7 +2,6 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
 import { toggleSidebar } from "../../store/features/layoutSlice"
-import zIndex from "../../utils/zIndex"
 
 const Hamburger = styled.div`
   display: flex;
@@ -14,7 +13,6 @@ const Hamburger = styled.div`
   border-radius: 4px;
   padding: 2px;
   cursor: pointer;
-  z-index: ${zIndex.level10};
 
   &:hover {
     background-color: ${(props) => props.theme.tertiary};

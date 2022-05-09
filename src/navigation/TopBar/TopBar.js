@@ -13,7 +13,6 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 48px;
   background-color: ${(props) => props.theme.secondary};
-  // background-color: rgb(0, 175, 102);
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
 

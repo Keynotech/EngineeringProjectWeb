@@ -63,19 +63,19 @@ function AppLayout() {
   // ===========================================================================
 
   useEffect(() => {
-    if (windowSize.width < size.laptop) {
+    if (
+      (windowSize.width < size.laptop && taskPageVisibility === true) ||
+      windowSize.width < size.laptop
+    ) {
       _hideSidebar()
-    } else if (windowSize.width > size.laptop) {
-      _showSidebar()
     }
-  }, [windowSize.width])
+  }, [windowSize.width < size.laptop, taskPageVisibility])
 
   useEffect(() => {
-    if (windowSize.width < size.laptop && taskPageVisibility === true) {
-      console.log("True")
-      _hideSidebar()
+    if (windowSize.width > size.laptop) {
+      _showSidebar()
     }
-  }, [windowSize.width, taskPageVisibility])
+  }, [windowSize.width > size.laptop])
 
   return (
     <>

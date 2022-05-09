@@ -122,7 +122,7 @@ const Backdrop = styled.div`
         visibility: visible;
       `}
   }
-  @media ${mq.tablet} {
+  @media ${mq.laptop} {
     display: none;
   }
 `
