@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useTheme } from "styled-components"
-import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
 import ClearIcon from "@mui/icons-material/Clear"
 import Checkbox from "../../../components/button/Checkbox"
@@ -28,6 +27,7 @@ import SubmitButton from "../../../components/button/SubmitButton"
 import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../../components/picker/TagPicker/TagPicker"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
+import useCreateTask from "../../../hooks/mutation/useCreateTask"
 
 function TaskInput() {
   // Dispatch
@@ -36,14 +36,11 @@ function TaskInput() {
   const _hideTaskInput = () => {
     dispatch(hideTaskInput())
   }
-  const _showTaskPage = () => {
-    dispatch(showTaskPage())
-  }
 
   // State Hooks
   // ===========================================================================
   const [title, setTitle] = useState("")
-  const [isDone, setIsDone] = useState(false)
+  const [status, setStatus] = useState(false)
   const [dueDate, setDueDate] = useState()
   const [priority, setPriority] = useState(1)
   const [tags, setTags] = useState([])
@@ -51,11 +48,11 @@ function TaskInput() {
   // Handlers
   // ===========================================================================
 
-  const toggleIsdone = () => setIsDone(!isDone)
+  const toggleIsdone = () => setStatus(!status)
 
   const clearInput = () => {
     setTitle("")
-    setIsDone(false)
+    setStatus(false)
     setDueDate()
     setPriority(1)
     setTags([])
@@ -63,33 +60,7 @@ function TaskInput() {
 
   // Mutations
   // ===========================================================================
-  const queryClient = useQueryClient()
-  const navigate = useNavigate()
-  const createTask = useMutation(
-    () =>
-      fetch(`http://192.168.0.159:5000/tasks/`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-
-        body: JSON.stringify({
-          title,
-          status: isDone,
-          dueDate,
-          priority,
-          tags,
-        }),
-      }).then((res) => res.json()),
-    {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries(["tasks"])
-        queryClient.setQueriesData(["tasks", data._id], data)
-        navigate(`tasks/${data._id}`)
-        _showTaskPage()
-      },
-    }
-  )
+  const createTask = useCreateTask()
 
   // Effect Hooks
   // ===========================================================================
@@ -108,7 +79,7 @@ function TaskInput() {
           <Main>
             <CheckboxContainer>
               <Checkbox
-                checked={isDone}
+                checked={status}
                 onChange={toggleIsdone}
                 priority={priority}
               />
@@ -159,9 +130,10 @@ function TaskInput() {
           onClick={() => {
             createTask.mutate({
               title,
-              isDone,
+              status,
               dueDate,
               priority,
+              tags,
             })
             _hideTaskInput()
           }}

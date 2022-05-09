@@ -7,7 +7,6 @@ import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutl
 import { showTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
-import { useUpdateTaskOnList } from "../../../api/api"
 import {
   Wrapper,
   StyledLink,
@@ -24,6 +23,7 @@ import {
   convertDateToJS,
   formatDateToDisplay,
 } from "../../../utils/dateConvert"
+import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 
 function TaskItem({ task }) {
   // Dispatch
@@ -43,8 +43,8 @@ function TaskItem({ task }) {
   // ===========================================================================
   // Mutations
   // ===========================================================================
-  const updateTask = useUpdateTaskOnList(task._id)
-  const _toggleIsDone = () => updateTask.mutate({ status: !task.status })
+  const updateTask = useUpdateTask(task._id)
+  const _toggleStatus = () => updateTask.mutate({ status: !task.status })
 
   // ===========================================================================
   // Effect Hooks
@@ -61,7 +61,7 @@ function TaskItem({ task }) {
   }, [task.dueDate])
 
   useEffect(() => {
-    if (task.attachments) {
+    if (task.files) {
       setIsAttachment(true)
     } else setIsAttachment(false)
   }, [task.attachments])
@@ -72,7 +72,7 @@ function TaskItem({ task }) {
         <CheckboxContainer>
           <Checkbox
             checked={task.status}
-            onChange={_toggleIsDone}
+            onChange={_toggleStatus}
             priority={task.priority}
           />
         </CheckboxContainer>
@@ -88,7 +88,7 @@ function TaskItem({ task }) {
             <Title>{task.title}</Title>
 
             <PropertiesIcons>
-              {isAttachment === false ? (
+              {isAttachment ? (
                 <InsertDriveFileOutlinedIcon fontSize="inherit" />
               ) : null}
             </PropertiesIcons>

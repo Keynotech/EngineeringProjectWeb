@@ -5,7 +5,7 @@ import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import TaskList from "../../../feature/Task/TaskList/TaskList"
 import Header from "../../../feature/Task/TaskList/TaskListHeader"
 import MainLayout from "../../../layout/MainLayout/MainLayout"
-import { useTasksQuery } from "../../../api/api"
+import useTasksQuery from "../../../hooks/query/useTasksQuery"
 
 const Wrapper = styled.div`
   display: flex;

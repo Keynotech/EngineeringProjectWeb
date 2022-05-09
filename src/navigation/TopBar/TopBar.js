@@ -24,7 +24,7 @@ const Container = styled.div`
   width: 100%;
   padding: 0 15px;
 
-  @media ${mq.tablet} {
+  @media ${mq.laptop} {
     padding: 0 30px;
   }
 `

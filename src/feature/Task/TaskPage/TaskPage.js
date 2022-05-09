@@ -5,8 +5,7 @@
 /* eslint-disable prefer-const */
 import React, { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { useTheme } from "styled-components"
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import KeyboardTabIcon from "@mui/icons-material/KeyboardTab"
@@ -19,11 +18,6 @@ import TextInput from "../../../components/input/TextInput"
 import PriorityPicker from "../../../components/picker/PriorityPicker/PriorityPicker"
 import DatePicker from "../../../components/picker/DatePicker/DatePicker"
 import TagPicker from "../../../components/picker/TagPicker/TagPicker"
-import {
-  useTaskQuery,
-  useUpdateSingleTask,
-  useDeleteTask,
-} from "../../../api/api"
 import { formatDateTimeToDisplay } from "../../../utils/dateConvert"
 import {
   Wrapper,
@@ -46,12 +40,15 @@ import {
 } from "./TaskPage.style"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import Dropdown from "../../../components/Dropdown/Dropdown"
+import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
+import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
+import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 
 function TaskPage() {
   // Queries
   // ===========================================================================
   let { taskId } = useParams()
-  const task = useTaskQuery(taskId)
+  const task = useSingleTaskQuery(taskId)
 
   // Local State
   // ===========================================================================
@@ -65,11 +62,6 @@ function TaskPage() {
     toggleMenu(false)
   }, [taskId])
 
-  // Others
-  // ===========================================================================
-  const theme = useTheme()
-  const navigation = useNavigate()
-
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -77,7 +69,7 @@ function TaskPage() {
 
   // Mutations
   // ===========================================================================
-  const updateTask = useUpdateSingleTask(taskId)
+  const updateTask = useUpdateTask(taskId)
   const deleteTask = useDeleteTask(taskId)
   const deleteTaskFunc = () => deleteTask.mutate()
   const changeDesc = (value) => updateTask.mutate({ description: value }) // [TODO] mutates each time the user makes a change

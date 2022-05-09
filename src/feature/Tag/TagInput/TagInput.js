@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
-import { useMutation, useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
 import ClearIcon from "@mui/icons-material/Clear"
 import Backdrop from "@mui/material/Backdrop"
@@ -11,6 +10,7 @@ import TextInput from "../../../components/input/TextInput"
 import { hideTagInput } from "../../../store/features/layoutSlice"
 import CancelButton from "../../../components/button/CancelButton"
 import SubmitButton from "../../../components/button/SubmitButton"
+import useCreateTag from "../../../hooks/mutation/useCreateTag"
 
 const Overlay = styled.div`
   position: absolute;
@@ -118,23 +118,7 @@ function TagInput() {
 
   // Mutations
   // ===========================================================================
-  const queryClient = useQueryClient()
-  const createTag = useMutation(
-    () =>
-      fetch(`http://192.168.0.159:5000/tags/`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ tagName }),
-      }).then((res) => res.json()),
-    {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries(["tags"])
-        queryClient.setQueriesData(["tags", data._id], data)
-      },
-    }
-  )
+  const createTag = useCreateTag()
 
   // Effect Hooks
   // ===========================================================================
