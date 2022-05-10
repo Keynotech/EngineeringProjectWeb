@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import StarIcon from "@mui/icons-material/Star"
 import styled, { useTheme } from "styled-components"
-import { mq } from "../../../utils/mq"
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,17 +14,10 @@ const Wrapper = styled.div`
   padding: 4px 6px;
   border-radius: 4px;
   color: ${(props) => props.theme.textTertiary};
-
-  @media ${mq.laptop} {
-    font-size: 14px;
-  }
 `
 const Value = styled.span`
   font-size: 12px;
-
-  @media ${mq.laptop} {
-    font-size: 14px;
-  }
+  font-weight: 500;
 `
 
 function PriorityPropertie({

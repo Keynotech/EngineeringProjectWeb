@@ -4,13 +4,24 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
-import { isPast, isToday, isTomorrow } from "date-fns"
+import {
+  isPast,
+  isToday,
+  isTomorrow,
+  isThisWeek,
+  isMonday,
+  isTuesday,
+  isWednesday,
+  isThursday,
+  isFriday,
+  isSaturday,
+  isSunday,
+} from "date-fns"
 import styled, { css } from "styled-components"
 import {
   convertDateToJS,
   formatDateToDisplay,
 } from "../../../utils/dateConvert"
-import { mq } from "../../../utils/mq"
 
 export const Wrapper = styled.div`
   display: flex;
@@ -29,10 +40,7 @@ export const Wrapper = styled.div`
 `
 const Value = styled.span`
   font-size: 12px;
-
-  @media ${mq.laptop} {
-    font-size: 14px;
-  }
+  font-weight: 500;
 `
 
 function DatePropertie({
@@ -44,21 +52,31 @@ function DatePropertie({
   backgroundColor,
   border,
 }) {
+  const [date, setDate] = useState(value)
   const [overdue, setIsOverdue] = useState(false)
   const [tomorrow, setIsTomorrow] = useState(false)
 
   useEffect(() => {
     if (value) {
-      const _date = convertDateToJS(value)
-      if (isPast(_date) || isToday(_date)) {
+      const _date = new Date(value)
+      if (isPast(_date)) {
         setIsOverdue(true)
+        if (isToday(_date)) setDate("Today")
+        else {
+          setDate(formatDateToDisplay(value))
+        }
       } else {
         setIsOverdue(false)
-      }
-      if (isTomorrow(_date)) {
-        setIsTomorrow(true)
-      } else {
-        setIsTomorrow(false)
+        if (isThisWeek(_date)) {
+          if (isTomorrow(_date)) setDate("Tomorrow")
+          else if (isMonday(_date)) setDate("Monday")
+          else if (isTuesday(_date)) setDate("Tuesday")
+          else if (isWednesday(_date)) setDate("Wednesday")
+          else if (isThursday(_date)) setDate("Thursday")
+          else if (isFriday(_date)) setDate("Friday")
+          else if (isSaturday(_date)) setDate("Saturday")
+          else if (isSunday(_date)) setDate("Sunday")
+        } else setDate(formatDateToDisplay(value))
       }
     }
   }, [value])
@@ -76,9 +94,7 @@ function DatePropertie({
           color="inherit"
         />
       ) : null}
-      {displayValue ? (
-        <Value>{value ? formatDateToDisplay(value) : "Due date"}</Value>
-      ) : null}
+      {displayValue ? <Value>{value ? date : "Due date"}</Value> : null}
     </Wrapper>
   )
 }

@@ -72,6 +72,7 @@ function TaskItem({ task }) {
               <DatePropertie
                 backgroundColor={theme.tertiary}
                 value={task.dueDate}
+                displayIcon={false}
               />
             ) : null}
 

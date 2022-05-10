@@ -4,7 +4,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import LocalOfferIcon from "@mui/icons-material/LocalOffer"
 import styled from "styled-components"
-import { mq } from "../../../utils/mq"
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,11 +16,9 @@ const Wrapper = styled.div`
 `
 const Value = styled.span`
   font-size: 12px;
-
-  @media ${mq.laptop} {
-    font-size: 14px;
-  }
+  font-weight: 500;
 `
+
 function TagPropertie({
   displayValue,
   displayIcon,

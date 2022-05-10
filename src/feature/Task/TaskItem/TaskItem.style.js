@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { mq } from "../../../utils/mq"
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,11 +44,15 @@ const MainContainer = styled.div`
   width: 100%;
 `
 const Title = styled.span`
-  font-size: 14px;
+  font-size: 12px;
   color: ${(props) => props.theme.textPrimary};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media ${mq.laptop} {
+    font-size: 14px;
+  }
 `
 
 const PropertiesIcons = styled.div`
