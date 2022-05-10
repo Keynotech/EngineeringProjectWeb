@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import OutsideClickHandler from "react-outside-click-handler"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "styled-components"
 import ClearIcon from "@mui/icons-material/Clear"
 import Checkbox from "../../../components/button/Checkbox"
@@ -37,6 +37,7 @@ function TaskInput() {
   const [dueDate, setDueDate] = useState()
   const [priority, setPriority] = useState(1)
   const [tags, setTags] = useState([])
+  const isOpen = useSelector((state) => state.layout.taskInputVisibility)
 
   // Handlers
   // ===========================================================================
@@ -67,7 +68,7 @@ function TaskInput() {
 
   return (
     <li>
-      <OutsideClickHandler useCapture onOutsideClick={_hideTaskInput}>
+      <OutsideClickHandler disabled={!isOpen} onOutsideClick={_hideTaskInput}>
         <Wrapper>
           <Container>
             <Main>
@@ -101,40 +102,37 @@ function TaskInput() {
               </TagsContainer>
               <PropertiesContainer>
                 <PriorityPicker
-                  disableOutsideCapture
                   value={priority}
                   onChange={(value) => setPriority(value)}
                 />
                 <DatePicker
-                  disableOutsideCapture
                   value={dueDate}
                   onChange={(value) => setDueDate(value)}
                 />
                 <TagPicker
-                  disableOutsideCapture
                   currentTags={tags}
                   onChange={(value) => setTags([...value])}
                 />
               </PropertiesContainer>
             </DetailsContainer>
+            <Buttons>
+              <CancelButton text="Cancel" onClick={_hideTaskInput} />
+              <SubmitButton
+                text="Create"
+                onClick={() => {
+                  createTask.mutate({
+                    title,
+                    status,
+                    dueDate,
+                    priority,
+                    tags,
+                  })
+                  _hideTaskInput()
+                }}
+              />
+            </Buttons>
           </Container>
         </Wrapper>
-        <Buttons>
-          <CancelButton text="Cancel" onClick={_hideTaskInput} />
-          <SubmitButton
-            text="Create"
-            onClick={() => {
-              createTask.mutate({
-                title,
-                status,
-                dueDate,
-                priority,
-                tags,
-              })
-              _hideTaskInput()
-            }}
-          />
-        </Buttons>
       </OutsideClickHandler>
     </li>
   )

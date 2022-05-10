@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { add } from "date-fns"
 import OutsideClickHandler from "react-outside-click-handler"
 import { CalendarPicker } from "@mui/x-date-pickers"
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import styled from "styled-components"
@@ -11,10 +10,9 @@ import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined"
 import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined"
 import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
-import { formatDateToDisplay } from "../../../utils/dateConvert"
-import Propertie from "../Propertie"
 import Dropdown from "../../Dropdown/Dropdown"
 import DateOption from "./DateOption"
+import DatePropertie from "../../propertie/DatePropertie"
 
 const Calendar = styled(CalendarPicker)`
   max-width: 290px;
@@ -31,7 +29,7 @@ const OptionsWrapper = styled.div`
   margin-bottom: 14px;
 `
 
-function DatePicker({ value, onChange, disableOutsideCapture }) {
+function DatePicker({ value, onChange, useCapture }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const dates = [
@@ -79,17 +77,13 @@ function DatePicker({ value, onChange, disableOutsideCapture }) {
   return (
     <OutsideClickHandler
       disabled={!isOpen}
-      useCapture={disableOutsideCapture}
+      useCapture={useCapture}
       onOutsideClick={() => setIsOpen(false)}
     >
       <Dropdown
         isOpen={isOpen}
         toggleComponent={
-          <Propertie
-            onClick={() => setIsOpen(!isOpen)}
-            icon={<CalendarMonthIcon fontSize="inherit" color="inherit" />}
-            value={value ? formatDateToDisplay(value) : "Due date"}
-          />
+          <DatePropertie onClick={() => setIsOpen(!isOpen)} value={value} />
         }
         menuComponent={
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -150,12 +144,12 @@ function DatePicker({ value, onChange, disableOutsideCapture }) {
 DatePicker.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  disableOutsideCapture: PropTypes.bool,
+  useCapture: PropTypes.bool,
 }
 
 DatePicker.defaultProps = {
   value: "",
-  disableOutsideCapture: false,
+  useCapture: false,
 }
 
 export default DatePicker

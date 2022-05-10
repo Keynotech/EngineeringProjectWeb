@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react"
+/* eslint-disable react/require-default-props */
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import OutsideClickHandler from "react-outside-click-handler"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
-import Propertie from "../Propertie"
 import Dropdown from "../../Dropdown/Dropdown"
+import PriorityPropertie from "../../propertie/PriorityPropertie"
 
 const Wrapper = styled.div`
   width: 200px;
@@ -28,10 +29,11 @@ const Item = styled.div`
   }
 `
 
-function PriorityPicker({ value, onChange, disableOutsideCapture }) {
+function PriorityPicker({ value, onChange, useCapture }) {
   // Others
   // ===========================================================================
   const theme = useTheme()
+
   const prioritiesData = [
     { name: "Urgent", value: 4, color: theme.priority4 },
     { name: "High", value: 3, color: theme.priority3 },
@@ -41,32 +43,21 @@ function PriorityPicker({ value, onChange, disableOutsideCapture }) {
 
   // State Hooks
   // ===========================================================================
-  const [selectedColor, setSelectedColor] = useState(theme.priority1)
   const [isOpen, setIsOpen] = useState(false)
 
   // Effect Hoks
   // ===========================================================================
-  useEffect(() => {
-    const active = prioritiesData.find((priority) => priority.value === value)
-    setSelectedColor(active ? active.color : theme.priority1)
-  }, [value])
 
   return (
     <OutsideClickHandler
       disabled={!isOpen}
-      useCapture={disableOutsideCapture}
+      useCapture={useCapture}
       onOutsideClick={() => setIsOpen(false)}
     >
       <Dropdown
         isOpen={isOpen}
         toggleComponent={
-          <Propertie
-            icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
-            value={
-              prioritiesData.find((priority) => priority.value === value).name
-            }
-            onClick={() => setIsOpen(!isOpen)}
-          />
+          <PriorityPropertie value={value} onClick={() => setIsOpen(!isOpen)} />
         }
         menuComponent={
           <Wrapper>
@@ -92,11 +83,11 @@ function PriorityPicker({ value, onChange, disableOutsideCapture }) {
 PriorityPicker.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  disableOutsideCapture: PropTypes.bool,
+  useCapture: PropTypes.bool,
 }
 
 PriorityPicker.defaultProps = {
-  disableOutsideCapture: false,
+  useCapture: false,
 }
 
 export default PriorityPicker

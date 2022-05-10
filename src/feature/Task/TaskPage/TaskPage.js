@@ -97,7 +97,7 @@ function TaskPage() {
               placeholder="Task title"
               multiline
               maxRows={2}
-              fontSize="20px"
+              fontSize="18px"
               fontWeight={600}
             />
           </TitleContainer>
@@ -112,6 +112,7 @@ function TaskPage() {
         <DetailsContainer>
           <PropertiesContainer>
             <PriorityPicker
+              useCapture
               onChange={changePriority}
               value={task.data.priority}
             />
@@ -119,10 +120,14 @@ function TaskPage() {
             <DatePicker
               onChange={changeDueDate}
               value={task.data.dueDate}
-              dropdownTo="right"
+              useCapture
             />
 
-            <TagPicker onChange={changeTags} currentTags={task.data.tags} />
+            <TagPicker
+              useCapture
+              onChange={changeTags}
+              currentTags={task.data.tags}
+            />
           </PropertiesContainer>
 
           <SectionWrapper>
@@ -164,9 +169,7 @@ function TaskPage() {
 
           <Footer>
             <FooterContainer>
-              <div>
-                Created at {formatDateTimeToDisplay(task.data.createdAt)}
-              </div>
+              <div>Updated at {formatDateTimeToDisplay(task.data.updated)}</div>
 
               <Dropdown
                 isOpen={menuIsOpen}

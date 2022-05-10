@@ -7,6 +7,7 @@ import { mq } from "../../utils/mq"
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   height: 20px;
   gap: 5px;
@@ -18,7 +19,7 @@ export const Wrapper = styled.div`
   cursor: pointer;
 
   @media ${mq.desktopL} {
-    padding: 4px 18px;
+    padding: 2px 14px;
   }
 `
 export const PropertieValue = styled.span`
@@ -29,7 +30,7 @@ export const PropertieValue = styled.span`
   }
 `
 
-function Propertie({ value, icon, onClick }) {
+function DefaultPropertie({ value, icon, onClick }) {
   return (
     <Wrapper onClick={onClick}>
       {icon}
@@ -38,4 +39,4 @@ function Propertie({ value, icon, onClick }) {
   )
 }
 
-export default Propertie
+export default DefaultPropertie

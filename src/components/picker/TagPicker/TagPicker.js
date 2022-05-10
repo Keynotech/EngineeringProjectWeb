@@ -3,13 +3,12 @@ import OutsideClickHandler from "react-outside-click-handler"
 import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
-import LocalOfferIcon from "@mui/icons-material/LocalOffer"
 import PropTypes from "prop-types"
 import Checkbox from "../../button/Checkbox"
 import TagItem from "../../../feature/Tag/TagItem/TagItem"
 import useTagsQuery from "../../../hooks/query/useTagsQuery"
 import { showTagInput } from "../../../store/features/layoutSlice"
-import Propertie from "../Propertie"
+import TagPropertie from "../../propertie/TagPropertie"
 import Dropdown from "../../Dropdown/Dropdown"
 
 const Wrapper = styled.ul`
@@ -39,7 +38,7 @@ const AddNewTag = styled.div`
   min-height: 24px;
 `
 
-function TagPicker({ currentTags, onChange, disableOutsideCapture }) {
+function TagPicker({ currentTags, onChange, useCapture }) {
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
@@ -84,19 +83,13 @@ function TagPicker({ currentTags, onChange, disableOutsideCapture }) {
 
   return (
     <OutsideClickHandler
-      useCapture={disableOutsideCapture}
+      useCapture={useCapture}
       disabled={!isOpen}
       onOutsideClick={() => toggleIsOpen()}
     >
       <Dropdown
         isOpen={isOpen}
-        toggleComponent={
-          <Propertie
-            onClick={() => toggleIsOpen()}
-            icon={<LocalOfferIcon fontSize="inherit" color="inherit" />}
-            value="Add tag"
-          />
-        }
+        toggleComponent={<TagPropertie onClick={() => toggleIsOpen()} />}
         menuComponent={
           <Wrapper>
             {tags.isSuccess
@@ -132,11 +125,11 @@ function TagPicker({ currentTags, onChange, disableOutsideCapture }) {
 TagPicker.propTypes = {
   currentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
-  disableOutsideCapture: PropTypes.bool,
+  useCapture: PropTypes.bool,
 }
 
 TagPicker.defaultProps = {
-  disableOutsideCapture: false,
+  useCapture: false,
 }
 
 export default React.memo(TagPicker)

@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { isPast, isToday } from "date-fns"
 import PropTypes from "prop-types"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import { showTaskPage } from "../../../store/features/layoutSlice"
@@ -13,17 +12,13 @@ import {
   CheckboxContainer,
   MainContainer,
   Title,
-  DatePropertie,
   PropertiesIcons,
   Description,
   DescriptionInner,
   TagsContainer,
 } from "./TaskItem.style"
-import {
-  convertDateToJS,
-  formatDateToDisplay,
-} from "../../../utils/dateConvert"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
+import DatePropertie from "../../../components/propertie/DatePropertie"
 
 function TaskItem({ task }) {
   // Dispatch
@@ -37,8 +32,7 @@ function TaskItem({ task }) {
 
   // State Hooks
   // ===========================================================================
-  const [isOverdue, setIsOverdue] = useState(false)
-  const [isfile, setIsFile] = useState(false)
+  const [isFile, setIsFile] = useState(false)
 
   // ===========================================================================
   // Mutations
@@ -49,16 +43,6 @@ function TaskItem({ task }) {
   // ===========================================================================
   // Effect Hooks
   // ===========================================================================
-  useEffect(() => {
-    if (task.dueDate) {
-      const _date = convertDateToJS(task.dueDate)
-      if (isPast(_date) || isToday(_date)) {
-        setIsOverdue(true)
-      } else {
-        setIsOverdue(false)
-      }
-    }
-  }, [task.dueDate])
 
   useEffect(() => {
     if (task.files.length > 0) {
@@ -79,16 +63,12 @@ function TaskItem({ task }) {
 
         <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
           <MainContainer>
-            {task.dueDate ? (
-              <DatePropertie isOverdue={isOverdue}>
-                {formatDateToDisplay(task.dueDate)}
-              </DatePropertie>
-            ) : null}
+            {task.dueDate ? <DatePropertie value={task.dueDate} /> : null}
 
             <Title>{task.title}</Title>
 
             <PropertiesIcons>
-              {isfile ? (
+              {isFile ? (
                 <InsertDriveFileOutlinedIcon fontSize="inherit" />
               ) : null}
             </PropertiesIcons>

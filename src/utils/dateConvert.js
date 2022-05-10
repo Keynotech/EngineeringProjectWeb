@@ -7,7 +7,6 @@ function convertDateToJS(value) {
 
 function formatDateToDisplay(value) {
   const date = convertDateToJS(value)
-  //   return format(date, "LLL do, p")
 
   return format(date, "LLL do")
 }

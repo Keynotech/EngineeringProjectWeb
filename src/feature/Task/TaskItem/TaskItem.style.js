@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { Link } from "react-router-dom"
 
 const Wrapper = styled.div`
@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
   padding: 10px 8px;
   box-sizing: border-box;
-  border-bottom: 1px solid ${(props) => props.theme.secondary};
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
 
   &:hover {
     background-color: aliceblue;
@@ -37,31 +37,14 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 8px;
   margin-bottom: 4px;
   height: 24px;
   width: 100%;
 `
-
-const DatePropertie = styled.span`
-  flex-shrink: 0;
-  margin-right: 8px;
-  padding: 4px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-  background-color: ${(props) => props.theme.tertiary};
-  color: ${(props) => props.theme.textTertiary};
-
-  ${({ isOverdue }) =>
-    isOverdue &&
-    css`
-      color: ${(props) => props.theme.textError};
-    `}
-`
-
 const Title = styled.span`
   font-size: 14px;
   color: ${(props) => props.theme.textPrimary};
-  margin-right: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -74,7 +57,6 @@ const PropertiesIcons = styled.div`
   overflow: hidden;
   gap: 10px;
   font-size: 14px;
-  margin-right: 8px;
 `
 
 export const TagsContainer = styled.div`
@@ -104,7 +86,6 @@ export {
   CheckboxContainer,
   MainContainer,
   Title,
-  DatePropertie,
   PropertiesIcons,
   Description,
   DescriptionInner,
