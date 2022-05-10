@@ -5,7 +5,7 @@ import OutsideClickHandler from "react-outside-click-handler"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import Dropdown from "../../Dropdown/Dropdown"
-import PriorityPropertie from "../../propertie/PriorityPropertie"
+import PriorityPropertie from "./PriorityPropertie"
 
 const Wrapper = styled.div`
   width: 200px;
@@ -29,7 +29,16 @@ const Item = styled.div`
   }
 `
 
-function PriorityPicker({ value, onChange, useCapture }) {
+function PriorityPicker({
+  value,
+  onChange,
+  useCapture,
+  displayIcon,
+  displayValue,
+  iconSize,
+  backgroundColor,
+  border,
+}) {
   // Others
   // ===========================================================================
   const theme = useTheme()
@@ -57,7 +66,16 @@ function PriorityPicker({ value, onChange, useCapture }) {
       <Dropdown
         isOpen={isOpen}
         toggleComponent={
-          <PriorityPropertie value={value} onClick={() => setIsOpen(!isOpen)} />
+          <PriorityPropertie
+            prioritiesData={prioritiesData}
+            value={value}
+            onClick={() => setIsOpen(!isOpen)}
+            displayIcon={displayIcon}
+            displayValue={displayValue}
+            iconSize={iconSize}
+            backgroundColor={backgroundColor}
+            border={border}
+          />
         }
         menuComponent={
           <Wrapper>
@@ -84,6 +102,11 @@ PriorityPicker.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   useCapture: PropTypes.bool,
+  displayIcon: PropTypes.bool,
+  displayValue: PropTypes.bool,
+  iconSize: PropTypes.number,
+  backgroundColor: PropTypes.string,
+  border: PropTypes.string,
 }
 
 PriorityPicker.defaultProps = {

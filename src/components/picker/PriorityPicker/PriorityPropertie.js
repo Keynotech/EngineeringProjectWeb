@@ -5,46 +5,41 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import StarIcon from "@mui/icons-material/Star"
 import styled, { useTheme } from "styled-components"
-import { mq } from "../../utils/mq"
+import { mq } from "../../../utils/mq"
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
   padding: 4px 6px;
   border-radius: 4px;
-  background-color: ${(props) => props.theme.tertiary};
   color: ${(props) => props.theme.textTertiary};
 
-  @media ${mq.desktopL} {
-    padding: 4px 14px;
+  @media ${mq.laptop} {
+    font-size: 14px;
   }
 `
-export const Value = styled.span`
+const Value = styled.span`
   font-size: 12px;
 
-  @media ${mq.desktopL} {
+  @media ${mq.laptop} {
     font-size: 14px;
   }
 `
 
 function PriorityPropertie({
   value,
+  prioritiesData,
   displayValue,
   displayIcon,
   onClick,
   iconSize,
+  backgroundColor,
+  border,
 }) {
   const theme = useTheme()
   const [selectedColor, setSelectedColor] = useState(theme.priority1)
-
-  const prioritiesData = [
-    { name: "Urgent", value: 4, color: theme.priority4 },
-    { name: "High", value: 3, color: theme.priority3 },
-    { name: "Medium", value: 2, color: theme.priority2 },
-    { name: "Low", value: 1, color: theme.priority1 },
-  ]
 
   useEffect(() => {
     const active = prioritiesData.find((priority) => priority.value === value)
@@ -52,12 +47,9 @@ function PriorityPropertie({
   }, [value])
 
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper style={{ backgroundColor, border }} onClick={onClick}>
       {displayIcon ? (
-        <StarIcon
-          fontSize={iconSize || "inherit"}
-          sx={{ color: selectedColor }}
-        />
+        <StarIcon sx={{ fontSize: iconSize || "16px", color: selectedColor }} />
       ) : null}
       {displayValue ? (
         <Value>
@@ -72,7 +64,7 @@ PriorityPropertie.propTypes = {
   onClick: PropTypes.func,
   displayValue: PropTypes.bool,
   displayIcon: PropTypes.bool,
-  iconSize: PropTypes.string,
+  iconSize: PropTypes.number,
 }
 
 PriorityPropertie.defaultProps = {

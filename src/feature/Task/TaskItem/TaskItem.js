@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
+import { useTheme } from "styled-components"
 import { showTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
@@ -18,7 +19,7 @@ import {
   TagsContainer,
 } from "./TaskItem.style"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
-import DatePropertie from "../../../components/propertie/DatePropertie"
+import DatePropertie from "../../../components/picker/DatePicker/DatePropertie"
 
 function TaskItem({ task }) {
   // Dispatch
@@ -50,6 +51,10 @@ function TaskItem({ task }) {
     } else setIsFile(false)
   }, [task.files])
 
+  // Othgers
+  // ===========================================================================
+  const theme = useTheme()
+
   return (
     <li>
       <Wrapper>
@@ -63,7 +68,12 @@ function TaskItem({ task }) {
 
         <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
           <MainContainer>
-            {task.dueDate ? <DatePropertie value={task.dueDate} /> : null}
+            {task.dueDate ? (
+              <DatePropertie
+                backgroundColor={theme.tertiary}
+                value={task.dueDate}
+              />
+            ) : null}
 
             <Title>{task.title}</Title>
 

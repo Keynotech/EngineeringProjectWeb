@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useState } from "react"
 import OutsideClickHandler from "react-outside-click-handler"
 import styled from "styled-components"
@@ -8,7 +9,7 @@ import Checkbox from "../../button/Checkbox"
 import TagItem from "../../../feature/Tag/TagItem/TagItem"
 import useTagsQuery from "../../../hooks/query/useTagsQuery"
 import { showTagInput } from "../../../store/features/layoutSlice"
-import TagPropertie from "../../propertie/TagPropertie"
+import TagPropertie from "./TagPropertie"
 import Dropdown from "../../Dropdown/Dropdown"
 
 const Wrapper = styled.ul`
@@ -38,7 +39,16 @@ const AddNewTag = styled.div`
   min-height: 24px;
 `
 
-function TagPicker({ currentTags, onChange, useCapture }) {
+function TagPicker({
+  currentTags,
+  onChange,
+  useCapture,
+  displayIcon,
+  displayValue,
+  iconSize,
+  backgroundColor,
+  border,
+}) {
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
@@ -89,7 +99,16 @@ function TagPicker({ currentTags, onChange, useCapture }) {
     >
       <Dropdown
         isOpen={isOpen}
-        toggleComponent={<TagPropertie onClick={() => toggleIsOpen()} />}
+        toggleComponent={
+          <TagPropertie
+            onClick={() => toggleIsOpen()}
+            displayIcon={displayIcon}
+            displayValue={displayValue}
+            iconSize={iconSize}
+            backgroundColor={backgroundColor}
+            border={border}
+          />
+        }
         menuComponent={
           <Wrapper>
             {tags.isSuccess
@@ -126,6 +145,11 @@ TagPicker.propTypes = {
   currentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
   useCapture: PropTypes.bool,
+  displayIcon: PropTypes.bool,
+  displayValue: PropTypes.bool,
+  iconSize: PropTypes.number,
+  backgroundColor: PropTypes.string,
+  border: PropTypes.string,
 }
 
 TagPicker.defaultProps = {

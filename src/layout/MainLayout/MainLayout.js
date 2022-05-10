@@ -25,7 +25,7 @@ const ChildContainer = styled.div`
   @media ${mq.tablet} {
     min-width: 320px;
     max-width: 100%;
-    padding: 0 28px;
+    padding: 0 30px;
   }
 `
 const OutletContainer = styled.div`

@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { add } from "date-fns"
@@ -12,7 +13,7 @@ import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
 import Dropdown from "../../Dropdown/Dropdown"
 import DateOption from "./DateOption"
-import DatePropertie from "../../propertie/DatePropertie"
+import DatePropertie from "./DatePropertie"
 
 const Calendar = styled(CalendarPicker)`
   max-width: 290px;
@@ -29,7 +30,16 @@ const OptionsWrapper = styled.div`
   margin-bottom: 14px;
 `
 
-function DatePicker({ value, onChange, useCapture }) {
+function DatePicker({
+  value,
+  onChange,
+  useCapture,
+  displayIcon,
+  displayValue,
+  iconSize,
+  backgroundColor,
+  border,
+}) {
   const [isOpen, setIsOpen] = useState(false)
 
   const dates = [
@@ -83,7 +93,15 @@ function DatePicker({ value, onChange, useCapture }) {
       <Dropdown
         isOpen={isOpen}
         toggleComponent={
-          <DatePropertie onClick={() => setIsOpen(!isOpen)} value={value} />
+          <DatePropertie
+            onClick={() => setIsOpen(!isOpen)}
+            value={value}
+            displayIcon={displayIcon}
+            displayValue={displayValue}
+            iconSize={iconSize}
+            backgroundColor={backgroundColor}
+            border={border}
+          />
         }
         menuComponent={
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -145,6 +163,11 @@ DatePicker.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   useCapture: PropTypes.bool,
+  displayIcon: PropTypes.bool,
+  displayValue: PropTypes.bool,
+  iconSize: PropTypes.number,
+  backgroundColor: PropTypes.string,
+  border: PropTypes.string,
 }
 
 DatePicker.defaultProps = {

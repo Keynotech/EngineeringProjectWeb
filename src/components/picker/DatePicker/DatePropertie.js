@@ -6,8 +6,11 @@ import PropTypes from "prop-types"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { isPast, isToday, isTomorrow } from "date-fns"
 import styled, { css } from "styled-components"
-import { mq } from "../../utils/mq"
-import { convertDateToJS, formatDateToDisplay } from "../../utils/dateConvert"
+import {
+  convertDateToJS,
+  formatDateToDisplay,
+} from "../../../utils/dateConvert"
+import { mq } from "../../../utils/mq"
 
 export const Wrapper = styled.div`
   display: flex;
@@ -16,12 +19,7 @@ export const Wrapper = styled.div`
   flex-shrink: 0;
   padding: 4px 6px;
   border-radius: 4px;
-  background-color: ${(props) => props.theme.tertiary};
   color: ${(props) => props.theme.textTertiary};
-
-  @media ${mq.desktopL} {
-    padding: 4px 14px;
-  }
 
   ${({ overdue }) =>
     overdue &&
@@ -29,10 +27,10 @@ export const Wrapper = styled.div`
       color: ${(props) => props.theme.textError};
     `}
 `
-export const Value = styled.span`
+const Value = styled.span`
   font-size: 12px;
 
-  @media ${mq.desktopL} {
+  @media ${mq.laptop} {
     font-size: 14px;
   }
 `
@@ -43,6 +41,8 @@ function DatePropertie({
   displayIcon,
   onClick,
   iconSize,
+  backgroundColor,
+  border,
 }) {
   const [overdue, setIsOverdue] = useState(false)
   const [tomorrow, setIsTomorrow] = useState(false)
@@ -64,9 +64,17 @@ function DatePropertie({
   }, [value])
 
   return (
-    <Wrapper onClick={onClick} overdue={overdue} tomorrow={tomorrow}>
+    <Wrapper
+      style={{ backgroundColor, border }}
+      onClick={onClick}
+      overdue={overdue}
+      tomorrow={tomorrow}
+    >
       {displayIcon ? (
-        <CalendarMonthIcon fontSize={iconSize || "inherit"} color="inherit" />
+        <CalendarMonthIcon
+          sx={{ fontSize: iconSize || "16px" }}
+          color="inherit"
+        />
       ) : null}
       {displayValue ? (
         <Value>{value ? formatDateToDisplay(value) : "Due date"}</Value>
@@ -79,7 +87,7 @@ DatePropertie.propTypes = {
   onClick: PropTypes.func,
   displayValue: PropTypes.bool,
   displayIcon: PropTypes.bool,
-  iconSize: PropTypes.string,
+  iconSize: PropTypes.number,
 }
 
 DatePropertie.defaultProps = {

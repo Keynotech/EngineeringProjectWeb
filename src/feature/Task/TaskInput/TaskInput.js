@@ -12,7 +12,7 @@ import {
   PropertiesContainer,
   Buttons,
   TagsContainer,
-  DetailsContainer,
+  Footer,
 } from "./TaskInput.style"
 import { hideTaskInput } from "../../../store/features/layoutSlice"
 import TextInput from "../../../components/input/TextInput"
@@ -23,6 +23,7 @@ import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../../components/picker/TagPicker/TagPicker"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
+import DatePropertie from "../../../components/picker/DatePicker/DatePropertie"
 
 function TaskInput() {
   // Dispatch
@@ -79,6 +80,7 @@ function TaskInput() {
                   priority={priority}
                 />
               </CheckboxContainer>
+              {dueDate ? <DatePropertie value={dueDate} /> : null}
               <TextInput
                 value={title}
                 onChange={(value) => setTitle(value)}
@@ -87,6 +89,26 @@ function TaskInput() {
                 autoFocus
                 multiline={false}
               />
+              <PropertiesContainer>
+                <PriorityPicker
+                  value={priority}
+                  onChange={(value) => setPriority(value)}
+                  displayValue={false}
+                  iconSize={20}
+                />
+                <DatePicker
+                  value={dueDate}
+                  onChange={(value) => setDueDate(value)}
+                  displayValue={false}
+                  iconSize={20}
+                />
+                <TagPicker
+                  currentTags={tags}
+                  onChange={(value) => setTags([...value])}
+                  displayValue={false}
+                  iconSize={20}
+                />
+              </PropertiesContainer>
               <ClearIcon
                 sx={{
                   color: theme.textTertiary,
@@ -94,43 +116,29 @@ function TaskInput() {
                 onClick={clearInput}
               />
             </Main>
-            <DetailsContainer>
+            <Footer>
               <TagsContainer>
                 {tags?.map((tag) => (
                   <TagDisplayInTask key={tag} tagId={tag} />
                 ))}
               </TagsContainer>
-              <PropertiesContainer>
-                <PriorityPicker
-                  value={priority}
-                  onChange={(value) => setPriority(value)}
+              <Buttons>
+                <CancelButton text="Cancel" onClick={_hideTaskInput} />
+                <SubmitButton
+                  text="Create"
+                  onClick={() => {
+                    createTask.mutate({
+                      title,
+                      status,
+                      dueDate,
+                      priority,
+                      tags,
+                    })
+                    _hideTaskInput()
+                  }}
                 />
-                <DatePicker
-                  value={dueDate}
-                  onChange={(value) => setDueDate(value)}
-                />
-                <TagPicker
-                  currentTags={tags}
-                  onChange={(value) => setTags([...value])}
-                />
-              </PropertiesContainer>
-            </DetailsContainer>
-            <Buttons>
-              <CancelButton text="Cancel" onClick={_hideTaskInput} />
-              <SubmitButton
-                text="Create"
-                onClick={() => {
-                  createTask.mutate({
-                    title,
-                    status,
-                    dueDate,
-                    priority,
-                    tags,
-                  })
-                  _hideTaskInput()
-                }}
-              />
-            </Buttons>
+              </Buttons>
+            </Footer>
           </Container>
         </Wrapper>
       </OutsideClickHandler>

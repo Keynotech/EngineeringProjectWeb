@@ -4,35 +4,36 @@ import React from "react"
 import PropTypes from "prop-types"
 import LocalOfferIcon from "@mui/icons-material/LocalOffer"
 import styled from "styled-components"
-import { mq } from "../../utils/mq"
+import { mq } from "../../../utils/mq"
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
   padding: 4px 6px;
   border-radius: 4px;
-  background-color: ${(props) => props.theme.tertiary};
   color: ${(props) => props.theme.textTertiary};
-
-  @media ${mq.desktopL} {
-    padding: 4px 14px;
-  }
 `
-export const Value = styled.span`
+const Value = styled.span`
   font-size: 12px;
 
-  @media ${mq.desktopL} {
+  @media ${mq.laptop} {
     font-size: 14px;
   }
 `
-
-function TagPropertie({ displayValue, displayIcon, onClick, iconSize }) {
+function TagPropertie({
+  displayValue,
+  displayIcon,
+  onClick,
+  iconSize,
+  backgroundColor,
+  border,
+}) {
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper style={{ backgroundColor, border }} onClick={onClick}>
       {displayIcon ? (
-        <LocalOfferIcon fontSize={iconSize || "inherit"} color="inherit" />
+        <LocalOfferIcon sx={{ fontSize: iconSize || "16px" }} color="inherit" />
       ) : null}
       {displayValue ? <Value>Add tag</Value> : null}
     </Wrapper>
@@ -43,7 +44,7 @@ TagPropertie.propTypes = {
   onClick: PropTypes.func,
   displayValue: PropTypes.bool,
   displayIcon: PropTypes.bool,
-  iconSize: PropTypes.string,
+  iconSize: PropTypes.number,
 }
 
 TagPropertie.defaultProps = {

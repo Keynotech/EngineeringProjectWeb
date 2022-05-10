@@ -2,45 +2,41 @@ import styled from "styled-components"
 
 export const Wrapper = styled.div`
   position: relative;
-  padding: 10px 8px;
+  padding: 8px;
   border-radius: 5px;
   border: 1px solid ${(props) => props.theme.secondary};
-  background-color: ${(props) => props.theme.primary};
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
+  background-color: ${(props) => props.theme.primary};
+  margin-bottom: 20px;
 `
 
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 `
 
 export const Main = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 24px;
+  min-height: 30px;
+  gap: 8px;
 `
 
 export const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  min-width: 32px;
+  min-width: 24px;
 `
 
-export const DetailsContainer = styled.div`
+export const Footer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-  }
+  height: 30px;
 `
 
 export const PropertiesContainer = styled.div`
@@ -64,7 +60,6 @@ export const TagsContainer = styled.div`
 export const Buttons = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  padding: 10px 8px;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 8px;
 `

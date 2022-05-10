@@ -12,6 +12,7 @@ import KeyboardTabIcon from "@mui/icons-material/KeyboardTab"
 import FileCopyIcon from "@mui/icons-material/FileCopy"
 import ForwardIcon from "@mui/icons-material/Forward"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
+import { useTheme } from "styled-components"
 import { hideTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
 import TextInput from "../../../components/input/TextInput"
@@ -79,6 +80,9 @@ function TaskPage() {
   const changeStatus = () => updateTask.mutate({ status: !task.data.status })
   const changeTags = (value) => updateTask.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
 
+  // Others  // ===========================================================================
+  const theme = useTheme()
+
   return task.isSuccess ? (
     <Wrapper>
       <Container>
@@ -115,18 +119,21 @@ function TaskPage() {
               useCapture
               onChange={changePriority}
               value={task.data.priority}
+              border={`1px solid ${theme.tertiary} `}
             />
 
             <DatePicker
               onChange={changeDueDate}
               value={task.data.dueDate}
               useCapture
+              border={`1px solid ${theme.tertiary} `}
             />
 
             <TagPicker
               useCapture
               onChange={changeTags}
               currentTags={task.data.tags}
+              border={`1px solid ${theme.tertiary} `}
             />
           </PropertiesContainer>
 
