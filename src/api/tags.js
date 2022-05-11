@@ -1,6 +1,6 @@
 const API_URL = `http://192.168.0.159:5000/tags`
 
-const post = ({ tagName }) =>
+const post = async ({ tagName }) =>
   fetch(API_URL, {
     method: "POST",
     headers: {

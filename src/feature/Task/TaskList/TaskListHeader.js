@@ -2,7 +2,6 @@
 import React from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
-import zIndex from "../../../utils/zIndex"
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,7 +13,6 @@ const Wrapper = styled.div`
   padding: 15px 0px;
   color: ${(props) => props.theme.textSecondary};
   background-color: ${(props) => props.theme.background};
-  z-index: ${zIndex.level1};
   height: 32px;
   border-bottom: 1px solid transparent;
 `

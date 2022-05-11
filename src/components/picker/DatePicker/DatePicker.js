@@ -65,17 +65,17 @@ function DatePicker({
   ]
 
   const setTomorrow = () => {
-    onChange(dates[0].value)
+    onChange(dates[0].value.toDateString())
     setIsOpen(false)
   }
 
   const setNextWeek = () => {
-    onChange(dates[1].value)
+    onChange(dates[1].value.toDateString())
     setIsOpen(false)
   }
 
   const setNextMonth = () => {
-    onChange(dates[2].value)
+    onChange(dates[2].value.toDateString())
     setIsOpen(false)
   }
 

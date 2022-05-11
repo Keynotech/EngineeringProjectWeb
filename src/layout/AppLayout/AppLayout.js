@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react"
 import styled, { css } from "styled-components"
 import { Outlet } from "react-router-dom"
@@ -78,18 +79,16 @@ function AppLayout() {
   }, [windowSize.width > size.laptop])
 
   return (
-    <>
-      <Wrapper>
-        <TopBar />
-        <Container>
-          <Sidebar />
-          <Main sidebarVisibility={sidebarVisibility}>
-            <Outlet />
-          </Main>
-        </Container>
-      </Wrapper>
+    <Wrapper>
+      <TopBar />
+      <Container>
+        <Sidebar />
+        <Main sidebarVisibility={sidebarVisibility}>
+          <Outlet />
+        </Main>
+      </Container>
       {tagInputVisibility ? <TagInput /> : null}
-    </>
+    </Wrapper>
   )
 }
 

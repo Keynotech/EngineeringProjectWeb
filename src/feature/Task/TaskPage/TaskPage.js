@@ -3,8 +3,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
-import React, { useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
+import React, { useState, useEffect, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
@@ -35,7 +35,8 @@ import {
   TagsContainer,
   FooterContainer,
   AttachmentsContainer,
-  Attachment,
+  AttachmentItem,
+  AttachmentItemInner,
   MenuContainer,
   MenuItem,
 } from "./TaskPage.style"
@@ -44,6 +45,7 @@ import Dropdown from "../../../components/Dropdown/Dropdown"
 import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
+import FileUpload from "../../../components/input/FileUpload.js/FileUpload"
 
 function TaskPage() {
   // Queries
@@ -55,6 +57,10 @@ function TaskPage() {
   // ===========================================================================
 
   const [menuIsOpen, toggleMenu] = useState(false)
+
+  // Selectors
+  // ===========================================================================
+  const isOpen = useSelector((state) => state.layout.taskPageVisibility)
 
   // Hooks
   // ===========================================================================
@@ -80,12 +86,19 @@ function TaskPage() {
   const changeStatus = () => updateTask.mutate({ status: !task.data.status })
   const changeTags = (value) => updateTask.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
 
-  // Others  // ===========================================================================
+  // Others
+  // ===========================================================================
   const theme = useTheme()
+
+  // ref
+  // ===========================================================================
+  const fileUploadRef = useRef()
+  const openUpload = () => fileUploadRef.current.openUpload()
 
   return task.isSuccess ? (
     <Wrapper>
       <Container>
+        {isOpen ? <FileUpload ref={fileUploadRef} taskId={taskId} /> : null}
         <MainContainer>
           <IconContainer>
             <Checkbox
@@ -160,16 +173,19 @@ function TaskPage() {
             <SectionContainer>
               <SectionHeader>Attachments</SectionHeader>
               <AttachmentsContainer>
+                <AttachmentItem onClick={openUpload} isFile={false}>
+                  <AttachmentItemInner isFile={false}>
+                    <FileUploadOutlinedIcon color="inherit" />
+                    <p>Upload file</p>
+                  </AttachmentItemInner>
+                </AttachmentItem>
                 {task.data.files?.map((file, index) => (
-                  <Attachment key={index} isFile>
-                    {file.name}
-                  </Attachment>
+                  <AttachmentItem key={index} isFile>
+                    <AttachmentItemInner isFile>
+                      <p>{file}</p>
+                    </AttachmentItemInner>
+                  </AttachmentItem>
                 ))}
-                <Attachment isFile={false}>
-                  <FileUploadOutlinedIcon color="inherit" />
-
-                  <p>Upload file</p>
-                </Attachment>
               </AttachmentsContainer>
             </SectionContainer>
           </SectionWrapper>

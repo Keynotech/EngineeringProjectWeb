@@ -39,6 +39,10 @@ const OutletContainer = styled.div`
     width: 0px;
   }
 
+  @media ${mq.laptop} {
+    z-index: 0;
+  }
+
   ${({ taskPageVisibility }) =>
     taskPageVisibility &&
     css`
@@ -102,6 +106,7 @@ function MainLayout({ children }) {
   const taskPageVisibility = useSelector(
     (state) => state.layout.taskPageVisibility
   )
+
   return (
     <Wrapper>
       <ChildContainer taskPageVisibility={taskPageVisibility}>

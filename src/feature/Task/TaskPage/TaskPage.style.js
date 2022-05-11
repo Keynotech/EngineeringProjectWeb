@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   height: calc(100vh - 48px);
   overflow-y: auto;
   background-color: ${(props) => props.theme.background};
-  border-left: 1px solid ${(props) => props.theme.secondary};
+  border-left: 1px solid ${(props) => props.theme.tertiary};
 
   &::-webkit-scrollbar {
     display: none;
@@ -27,7 +27,7 @@ export const MainContainer = styled.div`
   justify-content: space-between;
   padding: 15px 15px;
   margin-bottom: 10px;
-  border-bottom: 1px solid ${(props) => props.theme.secondary};
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
 export const IconContainer = styled.div`
   display: flex;
@@ -109,20 +109,35 @@ export const AttachmentsContainer = styled.div`
   gap: 8px;
 `
 
-export const Attachment = styled.div`
+export const AttachmentItem = styled.div`
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding: 20px 28px;
+  padding: 12px 12px;
   border-radius: 5px;
   border: 2px dotted ${(props) => props.theme.tertiary};
+  width: 100px;
+  height: 80px;
+  margin-bottom: 8px;
+
+  svg {
+    color: ${(props) => props.theme.brandColor};
+  }
 
   ${({ isFile }) =>
     isFile &&
     css`
       border: 1px solid ${(props) => props.theme.tertiary};
     `}
+`
+export const AttachmentItemInner = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+  word-break: break-all;
 
   p {
     font-size: 12px;
@@ -132,9 +147,6 @@ export const Attachment = styled.div`
       text-decoration: underline;
       text-decoration-color: ${(props) => props.theme.textTertiary};
     }
-  }
-  svg {
-    color: ${(props) => props.theme.brandColor};
   }
 `
 

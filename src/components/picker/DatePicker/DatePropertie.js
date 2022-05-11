@@ -30,6 +30,7 @@ export const Wrapper = styled.div`
   flex-shrink: 0;
   padding: 4px 6px;
   border-radius: 4px;
+  cursor: pointer;
   color: ${(props) => props.theme.textTertiary};
 
   ${({ overdue }) =>
@@ -59,6 +60,7 @@ function DatePropertie({
   useEffect(() => {
     if (value) {
       const _date = new Date(value)
+
       if (isPast(_date)) {
         setIsOverdue(true)
         if (isToday(_date)) setDate("Today")

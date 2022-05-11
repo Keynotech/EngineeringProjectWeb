@@ -12,6 +12,7 @@ const Wrapper = styled.div`
   flex-shrink: 0;
   padding: 4px 6px;
   border-radius: 4px;
+  cursor: pointer;
   color: ${(props) => props.theme.textTertiary};
 `
 const Value = styled.span`

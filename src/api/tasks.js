@@ -1,6 +1,6 @@
 const API_URL = `http://192.168.0.159:5000/tasks`
 
-const post = ({ title, status, dueDate, priority, tags }) =>
+const post = async ({ title, status, dueDate, priority, tags }) =>
   fetch(API_URL, {
     method: "POST",
     headers: {

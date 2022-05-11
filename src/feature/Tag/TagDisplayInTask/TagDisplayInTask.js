@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   padding: 4px 8px;
   border-radius: 5px;
   color: ${(props) => props.theme.textTertiary};
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${(props) => props.theme.tertiary};
 `
 
 const Title = styled.span`

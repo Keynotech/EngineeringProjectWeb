@@ -11,7 +11,6 @@ import {
   CheckboxContainer,
   PropertiesContainer,
   Buttons,
-  TagsContainer,
   Footer,
 } from "./TaskInput.style"
 import { hideTaskInput } from "../../../store/features/layoutSlice"
@@ -21,7 +20,6 @@ import PriorityPicker from "../../../components/picker/PriorityPicker/PriorityPi
 import SubmitButton from "../../../components/button/SubmitButton"
 import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../../components/picker/TagPicker/TagPicker"
-import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
 import DatePropertie from "../../../components/picker/DatePicker/DatePropertie"
 
@@ -80,7 +78,13 @@ function TaskInput() {
                   priority={priority}
                 />
               </CheckboxContainer>
-              {dueDate ? <DatePropertie value={dueDate} /> : null}
+              {dueDate ? (
+                <DatePropertie
+                  displayIcon={false}
+                  backgroundColor={theme.tertiary}
+                  value={dueDate}
+                />
+              ) : null}
               <TextInput
                 value={title}
                 onChange={(value) => setTitle(value)}
@@ -117,11 +121,6 @@ function TaskInput() {
               />
             </Main>
             <Footer>
-              <TagsContainer>
-                {tags?.map((tag) => (
-                  <TagDisplayInTask key={tag} tagId={tag} />
-                ))}
-              </TagsContainer>
               <Buttons>
                 <CancelButton text="Cancel" onClick={_hideTaskInput} />
                 <SubmitButton
