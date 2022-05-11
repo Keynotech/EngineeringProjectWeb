@@ -9,7 +9,6 @@ import { onDragLeave } from "../../../store/features/windowDragEnterSlice"
 import { Wrapper, Container, Title, SubTitle } from "./FileUpload.style"
 import useUploadFile from "../../../hooks/mutation/useUploadFile"
 import uploadImage from "../../../assets/images/undraw_add_files_re_v09g.svg"
-import useWindowDragDetect from "../../../hooks/useWindowDragDetect"
 
 function FileUpload(props, ref) {
   const { taskId } = props
@@ -39,8 +38,7 @@ function FileUpload(props, ref) {
 
   // Hooks
   // ===========================================================================
-  const windowDragDetect = useWindowDragDetect()
-  const { getRootProps, open } = useDropzone({
+  const { getRootProps, getInputProps, open } = useDropzone({
     onDrop: (acceptedFiles) => {
       const formData = new FormData()
       acceptedFiles.forEach((file) => {
@@ -70,6 +68,7 @@ function FileUpload(props, ref) {
         onDragLeave={(e) => handleDragLeave(e)}
         isActive={isDragEnter}
       >
+        <input {...getInputProps()} />
         <img src={uploadImage} alt="upload file" />
         <Title>Add files</Title>
         <SubTitle> Drop files here to add them to task</SubTitle>

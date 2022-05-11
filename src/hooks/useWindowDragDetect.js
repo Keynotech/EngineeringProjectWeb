@@ -18,10 +18,6 @@ function useWindowDragDetect() {
     dispatch(onDragLeave())
   }
 
-  const handleDropInvalid = (e) => {
-    _onDragLeave()
-  }
-
   useEffect(() => {
     const handleDragEnter = () => {
       _onDragEnter()
@@ -31,6 +27,9 @@ function useWindowDragDetect() {
         _onDragLeave()
       }
     }
+    const handleDropInvalid = (e) => {
+      _onDragLeave()
+    }
 
     document.addEventListener("dragleave", (e) => handleDragLeave(e))
 
@@ -39,7 +38,6 @@ function useWindowDragDetect() {
     document.addEventListener("drop", (e) => handleDropInvalid(e))
 
     return () => {
-      console.log("remove")
       document.removeEventListener("dragleave", (e) => handleDragLeave(e))
       document.removeEventListener("dragenter", (e) => {
         handleDragEnter(e)

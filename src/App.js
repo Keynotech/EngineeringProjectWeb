@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { useSelector } from "react-redux"
@@ -6,11 +7,13 @@ import light from "./styles/light"
 import dark from "./styles/dark"
 import GlobalStyle from "./styles/GlobalStyle"
 import Navigation from "./navigation/Navigation"
+import useWindowDragDetect from "./hooks/useWindowDragDetect"
 
 const queryClient = new QueryClient()
 
 function App() {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode)
+  const windowDragDetect = useWindowDragDetect()
 
   return (
     <QueryClientProvider client={queryClient}>
