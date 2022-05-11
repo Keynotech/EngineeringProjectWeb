@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
@@ -10,13 +11,18 @@ const Button = styled.button`
   border-radius: 5px;
 `
 
-function CancelButton({ text, onClick }) {
-  return <Button onClick={onClick}>{text}</Button>
+function CancelButton({ text, onClick, type }) {
+  return (
+    <Button type={type} onClick={onClick}>
+      {text}
+    </Button>
+  )
 }
 
 CancelButton.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  type: PropTypes.string.isRequired,
 }
 
 export default CancelButton

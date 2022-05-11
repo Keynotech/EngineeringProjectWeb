@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react"
+/* eslint-disable no-unneeded-ternary */
+import React from "react"
 import OutsideClickHandler from "react-outside-click-handler"
+import { useFormik } from "formik"
+import * as Yup from "yup"
 import { useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
 import TextInput from "../../../components/input/TextInput"
@@ -7,6 +10,7 @@ import { hideTagInput } from "../../../store/features/layoutSlice"
 import CancelButton from "../../../components/button/CancelButton"
 import SubmitButton from "../../../components/button/SubmitButton"
 import useCreateTag from "../../../hooks/mutation/useCreateTag"
+import TextError from "../../../components/text/TextError"
 
 const Overlay = styled.div`
   position: absolute;
@@ -68,7 +72,7 @@ const Icon = styled.span`
     `}
 `
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -95,33 +99,38 @@ const Footer = styled.div`
 `
 
 function TagInput() {
+  // Mutations
+  // ===========================================================================
+  const createTag = useCreateTag()
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
   const _hideTagInput = () => {
     dispatch(hideTagInput())
   }
-  // State Hooks
-  // ===========================================================================
-  const [tagName, setTagName] = useState("")
 
-  // Handlers
+  // Validation
   // ===========================================================================
+  const CreateTagSchema = Yup.object().shape({
+    tagName: Yup.string().max(50, "Max 50 characters"),
+  })
 
-  const clearInput = () => {
-    setTagName("")
-  }
-
-  // Mutations
+  // Forms
   // ===========================================================================
-  const createTag = useCreateTag()
+  const formik = useFormik({
+    initialValues: {
+      tagName: "",
+    },
+    validationSchema: CreateTagSchema,
+    onSubmit: (values) => {
+      createTag.mutate({ tagName: values.tagName })
+      _hideTagInput()
+    },
+  })
 
   // Effect Hooks
   // ===========================================================================
-
-  useEffect(() => {
-    clearInput()
-  }, [])
 
   return (
     <Overlay>
@@ -133,28 +142,33 @@ function TagInput() {
                 <Icon />
                 Create new tag
               </Header>
-              <Form>
-                <Label>Tag name</Label>
+              <Form onSubmit={formik.handleSubmit}>
+                <Label htmlFor="tagName">Tag name</Label>
                 <PropertieInput>
                   <TextInput
-                    value={tagName}
-                    onChange={(value) => setTagName(value)}
+                    id="tagName"
+                    name="tagName"
+                    value={formik.values.tagName}
+                    onChange={formik.handleChange}
                     placeholder="New tag name"
                     fontSize="14px"
                     multiline={false}
                     autoFocus
                   />
                 </PropertieInput>
+                {formik.errors.tagName ? (
+                  <TextError value={formik.errors.tagName} />
+                ) : null}
                 <Footer>
-                  <CancelButton onClick={_hideTagInput} text="Cancel" />
+                  <CancelButton
+                    type="button"
+                    onClick={_hideTagInput}
+                    text="Cancel"
+                  />
                   <SubmitButton
+                    disabled={!(formik.isValid && formik.dirty)}
                     text="Create"
-                    onClick={() => {
-                      createTag.mutate({
-                        tagName,
-                      })
-                      _hideTagInput()
-                    }}
+                    type="submit"
                   />
                 </Footer>
               </Form>

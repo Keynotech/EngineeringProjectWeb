@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-unused-vars */
 import React from "react"
 import PropTypes from "prop-types"
@@ -13,15 +14,17 @@ function TextInput({
   fontSize,
   fontWeight,
   autoFocus,
+  id,
+  name,
 }) {
   const theme = useTheme()
 
-  const handleChange = (event) => onChange(event.target.value)
-
   return (
     <Input
+      id={id}
+      name={name}
       value={value}
-      onChange={handleChange}
+      onChange={onChange}
       placeholder={placeholder}
       multiline={multiline}
       maxRows={maxRows}
@@ -43,6 +46,8 @@ function TextInput({
 }
 
 TextInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   multiline: PropTypes.bool,
