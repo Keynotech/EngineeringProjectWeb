@@ -7,7 +7,7 @@ import { hideSidebar, hideTaskPage } from "../../store/features/layoutSlice"
 import { size } from "../../utils/mq"
 
 const Link = styled(NavLink)`
-  transition: all 0.25s ease-in;
+  transition: background-color 0.25s ease-in;
 
   &:hover {
     background-color: ${(props) => props.theme.tertiary};

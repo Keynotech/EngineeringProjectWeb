@@ -11,13 +11,12 @@ import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined"
 import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined"
 import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
-import Dropdown from "../../Dropdown/Dropdown"
+import Popover from "../../Popover/Popover"
 import DateOption from "./DateOption"
 import DatePropertie from "./DatePropertie"
 
 const Calendar = styled(CalendarPicker)`
   max-width: 290px;
-
   & .PrivatePickersSlideTransition-root {
     min-height: 200px;
   }
@@ -41,6 +40,25 @@ function DatePicker({
   border,
 }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleOpen = (event) => {
+    setAnchorEl(event.currentTarget)
+    setIsOpen(true)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+    setIsOpen(false)
+  }
+
+  const togglePopover = (e) => {
+    if (isOpen) {
+      handleClose()
+    } else {
+      handleOpen(e)
+    }
+  }
 
   const dates = [
     {
@@ -88,73 +106,59 @@ function DatePicker({
     <OutsideClickHandler
       disabled={!isOpen}
       useCapture={useCapture}
-      onOutsideClick={() => setIsOpen(false)}
+      onOutsideClick={handleClose}
     >
-      <Dropdown
-        isOpen={isOpen}
-        toggleComponent={
-          <DatePropertie
-            onClick={() => setIsOpen(!isOpen)}
-            value={value}
-            displayIcon={displayIcon}
-            displayValue={displayValue}
-            iconSize={iconSize}
-            backgroundColor={backgroundColor}
-            border={border}
-          />
-        }
-        menuComponent={
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Calendar
-              showDaysOutsideCurrentMonth
-              allowSameDateSelection
-              minDate={new Date()}
-              value={value}
-              onChange={(newValue) => {
-                onChange(newValue.toDateString())
-                setIsOpen(false)
-              }}
-            />
-            <OptionsWrapper>
-              <DateOption
-                onClick={setTomorrow}
-                title={dates[0].title}
-                icon={
-                  <WbSunnyOutlinedIcon fontSize="inherit" color="inherit" />
-                }
-                value={dates[0].value}
-              />
-              <DateOption
-                onClick={setNextWeek}
-                title={dates[1].title}
-                icon={
-                  <NextWeekOutlinedIcon fontSize="inherit" color="inherit" />
-                }
-                value={dates[1].value}
-              />
-              <DateOption
-                onClick={setNextMonth}
-                title={dates[2].title}
-                icon={
-                  <DarkModeOutlinedIcon fontSize="inherit" color="inherit" />
-                }
-                value={dates[2].value}
-              />
-              <DateOption
-                onClick={setNoDate}
-                title={dates[3].title}
-                icon={
-                  <DoNotDisturbOutlinedIcon
-                    fontSize="inherit"
-                    color="inherit"
-                  />
-                }
-                value={dates[3].value}
-              />
-            </OptionsWrapper>
-          </LocalizationProvider>
-        }
+      <DatePropertie
+        onClick={togglePopover}
+        value={value}
+        displayIcon={displayIcon}
+        displayValue={displayValue}
+        iconSize={iconSize}
+        backgroundColor={backgroundColor}
+        border={border}
       />
+      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Calendar
+            showDaysOutsideCurrentMonth
+            allowSameDateSelection
+            minDate={new Date()}
+            value={value}
+            onChange={(newValue) => {
+              onChange(newValue.toDateString())
+              setIsOpen(false)
+            }}
+          />
+          <OptionsWrapper>
+            <DateOption
+              onClick={setTomorrow}
+              title={dates[0].title}
+              icon={<WbSunnyOutlinedIcon fontSize="inherit" color="inherit" />}
+              value={dates[0].value}
+            />
+            <DateOption
+              onClick={setNextWeek}
+              title={dates[1].title}
+              icon={<NextWeekOutlinedIcon fontSize="inherit" color="inherit" />}
+              value={dates[1].value}
+            />
+            <DateOption
+              onClick={setNextMonth}
+              title={dates[2].title}
+              icon={<DarkModeOutlinedIcon fontSize="inherit" color="inherit" />}
+              value={dates[2].value}
+            />
+            <DateOption
+              onClick={setNoDate}
+              title={dates[3].title}
+              icon={
+                <DoNotDisturbOutlinedIcon fontSize="inherit" color="inherit" />
+              }
+              value={dates[3].value}
+            />
+          </OptionsWrapper>
+        </LocalizationProvider>
+      </Popover>
     </OutsideClickHandler>
   )
 }

@@ -2,26 +2,23 @@ import styled from "styled-components"
 
 export const Wrapper = styled.div`
   position: relative;
-  padding: 8px;
   border-radius: 5px;
   border: 1px solid ${(props) => props.theme.secondary};
-  transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
   background-color: ${(props) => props.theme.primary};
   margin-bottom: 20px;
 `
 
 export const Form = styled.form`
   display: flex;
-  flex-direction: row;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  padding: 8px 15px;
 `
 
 export const Main = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  min-height: 30px;
   gap: 8px;
 `
 
@@ -29,14 +26,14 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 30px;
 `
 
 export const PropertiesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: nowrap;
 `
 export const TagsContainer = styled.div`

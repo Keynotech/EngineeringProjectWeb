@@ -80,6 +80,8 @@ function DatePropertie({
           else if (isSunday(_date)) setDate("Sunday")
         } else setDate(formatDateToDisplay(value))
       }
+    } else {
+      setIsOverdue(false)
     }
   }, [value])
 

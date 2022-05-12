@@ -19,14 +19,18 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
-    padding: 4px 8px;
+    padding: 8px 12px;
     border-radius: 4px;
-    min-height: 24px;
     color: ${(props) => props.theme.textSecondary};
 
+    transition: background-color 0.25s ease-in;
+
     &:hover {
-      background-color: ${(props) => props.theme.secondary};
-      border-radius: 4px;
+      background-color: ${(props) => props.theme.tertiary};
+    }
+
+    &.active {
+      background-color: ${(props) => props.theme.tertiary};
     }
   }
 `
@@ -41,7 +45,9 @@ function TagList({ tags }) {
     <Wrapper>
       <ul>
         {tags.isSuccess
-          ? tags.data.map((tag) => <TagItem tagId={tag._id} key={tag._id} />)
+          ? tags.data.map((tag) => (
+              <TagItem showMenu tagId={tag._id} key={tag._id} />
+            ))
           : null}
         <li onClick={_showTagInput}>
           <AddIcon

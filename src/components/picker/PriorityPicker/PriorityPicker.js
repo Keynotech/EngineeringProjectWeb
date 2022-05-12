@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import OutsideClickHandler from "react-outside-click-handler"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
-import Dropdown from "../../Dropdown/Dropdown"
+import Popover from "../../Popover/Popover"
 import PriorityPropertie from "./PriorityPropertie"
 
 const Wrapper = styled.div`
@@ -53,47 +53,58 @@ function PriorityPicker({
   // State Hooks
   // ===========================================================================
   const [isOpen, setIsOpen] = useState(false)
+  const [anchorEl, setAnchorEl] = React.useState(null)
 
-  // Effect Hoks
-  // ===========================================================================
+  const handleOpen = (event) => {
+    setAnchorEl(event.currentTarget)
+    setIsOpen(true)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+    setIsOpen(false)
+  }
+
+  const togglePopover = (e) => {
+    if (isOpen) {
+      handleClose()
+    } else {
+      handleOpen(e)
+    }
+  }
 
   return (
     <OutsideClickHandler
       disabled={!isOpen}
       useCapture={useCapture}
-      onOutsideClick={() => setIsOpen(false)}
+      onOutsideClick={handleClose}
     >
-      <Dropdown
-        isOpen={isOpen}
-        toggleComponent={
-          <PriorityPropertie
-            prioritiesData={prioritiesData}
-            value={value}
-            onClick={() => setIsOpen(!isOpen)}
-            displayIcon={displayIcon}
-            displayValue={displayValue}
-            iconSize={iconSize}
-            backgroundColor={backgroundColor}
-            border={border}
-          />
-        }
-        menuComponent={
-          <Wrapper>
-            {prioritiesData.map((priority) => (
-              <Item
-                onClick={() => {
-                  onChange(priority.value)
-                  setIsOpen(false)
-                }}
-                key={priority.value}
-              >
-                <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
-                {priority.name}
-              </Item>
-            ))}
-          </Wrapper>
-        }
+      <PriorityPropertie
+        prioritiesData={prioritiesData}
+        value={value}
+        onClick={togglePopover}
+        displayIcon={displayIcon}
+        displayValue={displayValue}
+        iconSize={iconSize}
+        backgroundColor={backgroundColor}
+        border={border}
       />
+      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+        <Wrapper>
+          {prioritiesData.map((priority) => (
+            <Item
+              onClick={() => {
+                onChange(priority.value)
+                setIsOpen(false)
+              }}
+              key={priority.value}
+            >
+              <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
+              {priority.name}
+            </Item>
+          ))}
+        </Wrapper>
+      </Popover>
     </OutsideClickHandler>
   )
 }

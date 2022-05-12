@@ -10,7 +10,7 @@ import TagItem from "../../../feature/Tag/TagItem/TagItem"
 import useTagsQuery from "../../../hooks/query/useTagsQuery"
 import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "./TagPropertie"
-import Dropdown from "../../Dropdown/Dropdown"
+import Popover from "../../Popover/Popover"
 
 const Wrapper = styled.ul`
   min-width: 200px;
@@ -60,17 +60,27 @@ function TagPicker({
   // ===========================================================================
   const [selectedTags, setSelectedTags] = useState([])
   const [isOpen, setIsOpen] = useState(false)
+  const [anchorEl, setAnchorEl] = React.useState(null)
 
   // Handlers
   // ===========================================================================
+  const handleOpen = (event) => {
+    setSelectedTags([...currentTags] || [])
+    setAnchorEl(event.currentTarget)
+    setIsOpen(true)
+  }
 
-  const toggleIsOpen = () => {
-    if (isOpen === false) {
-      setSelectedTags([...currentTags] || [])
-      setIsOpen(true)
+  const handleClose = () => {
+    setAnchorEl(null)
+    setIsOpen(false)
+    onChange(selectedTags)
+  }
+
+  const togglePopover = (e) => {
+    if (isOpen) {
+      handleClose()
     } else {
-      setIsOpen(false)
-      onChange(selectedTags)
+      handleOpen(e)
     }
   }
 
@@ -95,48 +105,44 @@ function TagPicker({
     <OutsideClickHandler
       useCapture={useCapture}
       disabled={!isOpen}
-      onOutsideClick={() => toggleIsOpen()}
+      onOutsideClick={handleClose}
     >
-      <Dropdown
-        isOpen={isOpen}
-        toggleComponent={
-          <TagPropertie
-            onClick={() => toggleIsOpen()}
-            displayIcon={displayIcon}
-            displayValue={displayValue}
-            iconSize={iconSize}
-            backgroundColor={backgroundColor}
-            border={border}
-          />
-        }
-        menuComponent={
-          <Wrapper>
-            {tags.isSuccess
-              ? tags.data.map((tag) => (
-                  <Item onClick={() => handleChange(tag._id)} key={tag._id}>
-                    <TagItem tagId={tag._id} />
-                    <Checkbox
-                      onChange={() => handleChange(tag._id)}
-                      checked={selectedTags.indexOf(tag._id) > -1}
-                    />
-                  </Item>
-                ))
-              : null}
-            <Item onClick={_showTagInput}>
-              <AddNewTag>
-                <AddIcon
-                  sx={{
-                    fontSize: "18px",
-                    marginLeft: "-2px",
-                    marginRight: "16px",
-                  }}
-                />
-                Create new tag
-              </AddNewTag>
-            </Item>
-          </Wrapper>
-        }
+      <TagPropertie
+        onClick={togglePopover}
+        displayIcon={displayIcon}
+        displayValue={displayValue}
+        iconSize={iconSize}
+        backgroundColor={backgroundColor}
+        border={border}
       />
+      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+        <Wrapper>
+          {tags.isSuccess
+            ? tags.data.map((tag) => (
+                <Item onClick={() => handleChange(tag._id)} key={tag._id}>
+                  <TagItem showMenu={false} tagId={tag._id} />
+                  <Checkbox
+                    id="tag-picker-select"
+                    onChange={() => handleChange(tag._id)}
+                    checked={selectedTags.indexOf(tag._id) > -1}
+                  />
+                </Item>
+              ))
+            : null}
+          <Item onClick={_showTagInput}>
+            <AddNewTag>
+              <AddIcon
+                sx={{
+                  fontSize: "18px",
+                  marginLeft: "-2px",
+                  marginRight: "16px",
+                }}
+              />
+              Create new tag
+            </AddNewTag>
+          </Item>
+        </Wrapper>
+      </Popover>
     </OutsideClickHandler>
   )
 }

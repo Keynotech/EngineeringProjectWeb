@@ -41,11 +41,11 @@ import {
   MenuItem,
 } from "./TaskPage.style"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
-import Dropdown from "../../../components/Dropdown/Dropdown"
 import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import FileUpload from "../../../components/input/FileUpload.js/FileUpload"
+import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
 
 function TaskPage() {
   // Queries
@@ -76,19 +76,38 @@ function TaskPage() {
 
   // Mutations
   // ===========================================================================
-  const updateTask = useUpdateTask(taskId)
-  const deleteTask = useDeleteTask(taskId)
-  const deleteTaskFunc = () => deleteTask.mutate()
-  const changeDesc = (value) => updateTask.mutate({ description: value }) // [TODO] mutates each time the user makes a change
-  const changeTitle = (value) => updateTask.mutate({ title: value }) // [TODO] mutates each time the user makes a change
-  const changePriority = (value) => updateTask.mutate({ priority: value })
-  const changeDueDate = (value) => updateTask.mutate({ dueDate: value })
-  const changeStatus = () => updateTask.mutate({ status: !task.data.status })
-  const changeTags = (value) => updateTask.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
+  const updateTaskMutation = useUpdateTask(taskId)
+  const deleteTaskMutation = useDeleteTask(taskId)
+  const deleteTask = () => deleteTaskMutation.mutate()
+  const changeDesc = (value) =>
+    updateTaskMutation.mutate({ description: value }) // [TODO] mutates each time the user makes a change
+  const changeTitle = (value) => updateTaskMutation.mutate({ title: value }) // [TODO] mutates each time the user makes a change
+  const changePriority = (value) =>
+    updateTaskMutation.mutate({ priority: value })
+  const changeDueDate = (value) => updateTaskMutation.mutate({ dueDate: value })
+  const changeStatus = () =>
+    updateTaskMutation.mutate({ status: !task.data.status })
+  const changeTags = (value) => updateTaskMutation.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
 
   // Others
   // ===========================================================================
   const theme = useTheme()
+
+  const menuItems = [
+    {
+      icon: <FileCopyIcon color="inherit" fontSize="inehrit" />,
+      title: "Clone",
+    },
+    {
+      icon: <ForwardIcon color="inherit" fontSize="inehrit" />,
+      title: "Go to project",
+    },
+    {
+      icon: <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />,
+      title: "Delete Task",
+      onClick: deleteTask,
+    },
+  ]
 
   // ref
   // ===========================================================================
@@ -102,6 +121,7 @@ function TaskPage() {
         <MainContainer>
           <IconContainer>
             <Checkbox
+              id="task-status"
               checked={task.data.status}
               priority={task.data.priority}
               onChange={changeStatus}
@@ -109,6 +129,8 @@ function TaskPage() {
           </IconContainer>
           <TitleContainer>
             <TextInput
+              id="task-title"
+              name="task-title"
               value={task.data.title}
               onChange={changeTitle}
               placeholder="Task title"
@@ -153,6 +175,8 @@ function TaskPage() {
           <SectionWrapper>
             <SectionContainer>
               <TextInput
+                id="task-description"
+                name="task-description"
                 value={task.data.description}
                 onChange={changeDesc}
                 placeholder="Description"
@@ -179,10 +203,10 @@ function TaskPage() {
                     <p>Upload file</p>
                   </AttachmentItemInner>
                 </AttachmentItem>
-                {task.data.files?.map((file, index) => (
-                  <AttachmentItem key={index} isFile>
+                {task.data.files?.map((file) => (
+                  <AttachmentItem key={file._id} isFile>
                     <AttachmentItemInner isFile>
-                      <p>{file}</p>
+                      <p>{file?.file[0].originalname}</p>
                     </AttachmentItemInner>
                   </AttachmentItem>
                 ))}
@@ -194,36 +218,19 @@ function TaskPage() {
             <FooterContainer>
               <div>Updated at {formatDateTimeToDisplay(task.data.updated)}</div>
 
-              <Dropdown
+              <DropdownMenu
                 isOpen={menuIsOpen}
+                outsideClick={() => toggleMenu(false)}
                 toggleComponent={
                   <MoreHorizIcon
-                    onClick={() => toggleMenu(!menuIsOpen)}
                     color="inherit"
                     sx={{
                       cursor: "pointer",
                     }}
+                    onClick={() => toggleMenu(!menuIsOpen)}
                   />
                 }
-                menuComponent={
-                  <MenuContainer>
-                    <MenuItem type="button">
-                      <FileCopyIcon color="inherit" fontSize="inehrit" />
-                      Clone
-                    </MenuItem>
-                    <MenuItem type="button" onClick={deleteTaskFunc}>
-                      <ForwardIcon color="inherit" fontSize="inehrit" />
-                      Go to project
-                    </MenuItem>
-                    <MenuItem type="button" onClick={deleteTaskFunc}>
-                      <DeleteOutlineOutlinedIcon
-                        color="inherit"
-                        fontSize="inehrit"
-                      />
-                      Delete Task
-                    </MenuItem>
-                  </MenuContainer>
-                }
+                menuItems={menuItems}
               />
             </FooterContainer>
           </Footer>

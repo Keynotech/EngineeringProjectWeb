@@ -5,7 +5,7 @@ import { mq } from "../../../utils/mq"
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
   padding: 10px 8px;
   box-sizing: border-box;
@@ -30,7 +30,7 @@ const StyledLink = styled(Link)`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   cursor: default;
 `
 

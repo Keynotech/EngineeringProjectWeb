@@ -46,7 +46,7 @@ function TaskItem({ task }) {
   // ===========================================================================
 
   useEffect(() => {
-    if (task.files.length > 0) {
+    if (task.files?.length > 0) {
       setIsFile(true)
     } else setIsFile(false)
   }, [task.files])
@@ -60,6 +60,7 @@ function TaskItem({ task }) {
       <Wrapper>
         <CheckboxContainer>
           <Checkbox
+            id="task-status"
             checked={task.status}
             onChange={_toggleStatus}
             priority={task.priority}

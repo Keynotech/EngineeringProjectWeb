@@ -21,7 +21,6 @@ import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../../components/picker/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
 import DatePropertie from "../../../components/picker/DatePicker/DatePropertie"
-import TextError from "../../../components/text/TextError"
 
 function TaskInput() {
   // Dispatch
@@ -40,7 +39,7 @@ function TaskInput() {
   // Validation
   // ===========================================================================
   const CreateTagSchema = Yup.object().shape({
-    title: Yup.string().max(50, "Max 50 characters").required(""),
+    title: Yup.string().max(100, "Max 100 characters").required(""),
   })
 
   // Forms
@@ -87,11 +86,14 @@ function TaskInput() {
                 id="title"
                 name="title"
                 value={formik.values.title}
-                onChange={formik.handleChange}
+                onChange={(val) => {
+                  formik.setFieldValue("title", val)
+                }}
                 placeholder="Create new task"
-                fontSize="14px"
+                fontSize="16px"
                 autoFocus
                 multiline={false}
+                maxLength={100}
               />
               <PropertiesContainer>
                 <PriorityPicker
@@ -128,7 +130,6 @@ function TaskInput() {
               </PropertiesContainer>
             </Main>
             <Footer>
-              <TextError value={formik.errors.title} />
               <Buttons>
                 <CancelButton
                   type="button"

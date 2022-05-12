@@ -16,20 +16,25 @@ function TextInput({
   autoFocus,
   id,
   name,
+  maxLength,
 }) {
   const theme = useTheme()
+
+  const handleChange = (event) => onChange(event.target.value)
 
   return (
     <Input
       id={id}
       name={name}
       value={value}
-      onChange={onChange}
+      onChange={handleChange}
       placeholder={placeholder}
       multiline={multiline}
       maxRows={maxRows}
+      inputProps={{
+        maxLength,
+      }}
       disableUnderline
-      maxLength={50}
       fullWidth
       autoFocus={autoFocus}
       sx={{
@@ -56,6 +61,7 @@ TextInput.propTypes = {
   fontSize: PropTypes.string,
   autoFocus: PropTypes.bool,
   fontWeight: PropTypes.number,
+  maxLength: PropTypes.number,
 }
 
 TextInput.defaultProps = {

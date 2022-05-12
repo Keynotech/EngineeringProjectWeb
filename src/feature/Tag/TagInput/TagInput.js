@@ -10,7 +10,6 @@ import { hideTagInput } from "../../../store/features/layoutSlice"
 import CancelButton from "../../../components/button/CancelButton"
 import SubmitButton from "../../../components/button/SubmitButton"
 import useCreateTag from "../../../hooks/mutation/useCreateTag"
-import TextError from "../../../components/text/TextError"
 
 const Overlay = styled.div`
   position: absolute;
@@ -33,7 +32,7 @@ const OverlayContainer = styled.div`
 `
 
 const Dialog = styled.div`
-  width: min(400px, 100vw);
+  width: min(460px, 100vw);
   height: auto;
   background-color: ${(props) => props.theme.background};
   border-radius: 5px;
@@ -149,14 +148,16 @@ function TagInput() {
                     id="tagName"
                     name="tagName"
                     value={formik.values.tagName}
-                    onChange={formik.handleChange}
+                    onChange={(val) => {
+                      formik.setFieldValue("tagName", val)
+                    }}
                     placeholder="New tag name"
                     fontSize="14px"
                     multiline={false}
                     autoFocus
+                    maxLength={50}
                   />
                 </PropertieInput>
-                <TextError value={formik.errors.tagName} />
                 <Footer>
                   <CancelButton
                     type="button"
