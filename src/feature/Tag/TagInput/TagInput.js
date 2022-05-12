@@ -113,7 +113,7 @@ function TagInput() {
   // Validation
   // ===========================================================================
   const CreateTagSchema = Yup.object().shape({
-    tagName: Yup.string().max(50, "Max 50 characters"),
+    tagName: Yup.string().max(50, "Max 50 characters").required(),
   })
 
   // Forms
@@ -156,9 +156,7 @@ function TagInput() {
                     autoFocus
                   />
                 </PropertieInput>
-                {formik.errors.tagName ? (
-                  <TextError value={formik.errors.tagName} />
-                ) : null}
+                <TextError value={formik.errors.tagName} />
                 <Footer>
                   <CancelButton
                     type="button"

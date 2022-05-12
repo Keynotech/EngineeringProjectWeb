@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import styled, { css, useTheme } from "styled-components"
@@ -17,7 +18,7 @@ const Button = styled.button`
     `}
 `
 
-function Checkbox({ checked, onChange, priority }) {
+function Checkbox({ id, name, checked, onChange, priority }) {
   const [color, setColor] = useState()
   const theme = useTheme()
 
@@ -46,6 +47,8 @@ function Checkbox({ checked, onChange, priority }) {
 
   return (
     <Button
+      id={id}
+      name={name}
       type="checkbox"
       checked={checked}
       onClick={onChange}
@@ -55,6 +58,8 @@ function Checkbox({ checked, onChange, priority }) {
 }
 
 Checkbox.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string,
   checked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   priority: PropTypes.number,

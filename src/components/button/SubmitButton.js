@@ -14,7 +14,6 @@ const Button = styled.button`
   ${({ disabled }) =>
     disabled &&
     css`
-      cursor: ;
       border: 1px solid ${(props) => props.theme.tertiary};
       background-color: ${(props) => props.theme.background};
       color: ${(props) => props.theme.textTertiary};

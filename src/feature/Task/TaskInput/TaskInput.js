@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import OutsideClickHandler from "react-outside-click-handler"
+import { useFormik } from "formik"
+import * as Yup from "yup"
 import { useDispatch, useSelector } from "react-redux"
 import { useTheme } from "styled-components"
-import ClearIcon from "@mui/icons-material/Clear"
-import Checkbox from "../../../components/button/Checkbox"
 import {
   Wrapper,
-  Container,
+  Form,
   Main,
-  CheckboxContainer,
   PropertiesContainer,
   Buttons,
   Footer,
@@ -22,6 +21,7 @@ import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../../components/picker/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
 import DatePropertie from "../../../components/picker/DatePicker/DatePropertie"
+import TextError from "../../../components/text/TextError"
 
 function TaskInput() {
   // Dispatch
@@ -29,38 +29,43 @@ function TaskInput() {
   const dispatch = useDispatch()
   const _hideTaskInput = () => dispatch(hideTaskInput())
 
-  // State Hooks
-  // ===========================================================================
-  const [title, setTitle] = useState("")
-  const [status, setStatus] = useState(false)
-  const [dueDate, setDueDate] = useState()
-  const [priority, setPriority] = useState(1)
-  const [tags, setTags] = useState([])
-  const isOpen = useSelector((state) => state.layout.taskInputVisibility)
-
-  // Handlers
-  // ===========================================================================
-
-  const toggleIsdone = () => setStatus(!status)
-
-  const clearInput = () => {
-    setTitle("")
-    setStatus(false)
-    setDueDate()
-    setPriority(1)
-    setTags([])
-  }
-
   // Mutations
   // ===========================================================================
   const createTask = useCreateTask()
 
-  // Effect Hooks
+  // State Hooks
   // ===========================================================================
+  const isOpen = useSelector((state) => state.layout.taskInputVisibility)
 
-  useEffect(() => {
-    clearInput()
-  }, [])
+  // Validation
+  // ===========================================================================
+  const CreateTagSchema = Yup.object().shape({
+    title: Yup.string().max(50, "Max 50 characters").required(""),
+  })
+
+  // Forms
+  // ===========================================================================
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      status: false,
+      dueDate: null,
+      priority: 1,
+      tags: [],
+    },
+    validationSchema: CreateTagSchema,
+
+    onSubmit: (values) => {
+      createTask.mutate({
+        title: values.title,
+        status: values.status,
+        dueDate: values.dueDate,
+        priority: values.priority,
+        tags: values.tags,
+      })
+      _hideTaskInput()
+    },
+  })
 
   // Others  // ===========================================================================
   const theme = useTheme()
@@ -69,25 +74,20 @@ function TaskInput() {
     <li>
       <OutsideClickHandler disabled={!isOpen} onOutsideClick={_hideTaskInput}>
         <Wrapper>
-          <Container>
+          <Form onSubmit={formik.handleSubmit}>
             <Main>
-              <CheckboxContainer>
-                <Checkbox
-                  checked={status}
-                  onChange={toggleIsdone}
-                  priority={priority}
-                />
-              </CheckboxContainer>
-              {dueDate ? (
+              {formik.values.dueDate ? (
                 <DatePropertie
                   displayIcon={false}
                   backgroundColor={theme.tertiary}
-                  value={dueDate}
+                  value={formik.values.dueDate}
                 />
               ) : null}
               <TextInput
-                value={title}
-                onChange={(value) => setTitle(value)}
+                id="title"
+                name="title"
+                value={formik.values.title}
+                onChange={formik.handleChange}
                 placeholder="Create new task"
                 fontSize="14px"
                 autoFocus
@@ -95,50 +95,54 @@ function TaskInput() {
               />
               <PropertiesContainer>
                 <PriorityPicker
-                  value={priority}
-                  onChange={(value) => setPriority(value)}
+                  id="priority"
+                  name="priority"
+                  value={formik.values.priority}
+                  onChange={(val) => {
+                    formik.setFieldValue("priority", val)
+                  }}
                   displayValue={false}
                   iconSize={20}
                 />
                 <DatePicker
-                  value={dueDate}
-                  onChange={(value) => setDueDate(value)}
+                  id="dueDate"
+                  name="dueDate"
+                  value={formik.values.dueDate}
+                  onChange={(val) => {
+                    formik.setFieldValue("dueDate", val)
+                  }}
                   displayValue={false}
                   iconSize={20}
                 />
                 <TagPicker
-                  currentTags={tags}
-                  onChange={(value) => setTags([...value])}
+                  id="tags"
+                  name="tags"
+                  currentTags={formik.values.tags}
+                  onChange={(val) => {
+                    formik.setFieldValue("tags", val)
+                  }}
                   displayValue={false}
+                  sa
                   iconSize={20}
                 />
               </PropertiesContainer>
-              <ClearIcon
-                sx={{
-                  color: theme.textTertiary,
-                }}
-                onClick={clearInput}
-              />
             </Main>
             <Footer>
+              <TextError value={formik.errors.title} />
               <Buttons>
-                <CancelButton text="Cancel" onClick={_hideTaskInput} />
+                <CancelButton
+                  type="button"
+                  text="Cancel"
+                  onClick={_hideTaskInput}
+                />
                 <SubmitButton
                   text="Create"
-                  onClick={() => {
-                    createTask.mutate({
-                      title,
-                      status,
-                      dueDate,
-                      priority,
-                      tags,
-                    })
-                    _hideTaskInput()
-                  }}
+                  type="submit"
+                  disabled={!(formik.isValid && formik.dirty)}
                 />
               </Buttons>
             </Footer>
-          </Container>
+          </Form>
         </Wrapper>
       </OutsideClickHandler>
     </li>

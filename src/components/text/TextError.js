@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 const Text = styled.span`
   font-size: 12px;
   color: ${(props) => props.theme.textError};
+  height: 12px;
 `
 
 function TextError({ value }) {

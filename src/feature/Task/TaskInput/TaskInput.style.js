@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   margin-bottom: 20px;
 `
 
-export const Container = styled.div`
+export const Form = styled.form`
   display: flex;
   flex-direction: row;
   flex-direction: column;
@@ -25,17 +25,11 @@ export const Main = styled.div`
   gap: 8px;
 `
 
-export const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  min-width: 24px;
-`
-
 export const Footer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   height: 30px;
 `
 
