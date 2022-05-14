@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
+import { useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
-import EditIcon from "@mui/icons-material/Edit"
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
 import useSingleTagQuery from "../../../hooks/query/useSingleTagQuery"
 import useDeleteTag from "../../../hooks/mutation/useDeleteTag"
+import {
+  showTagEdit,
+  setTagEditId,
+} from "../../../store/features/tagEditPageSlice"
 
 const Wrapper = styled.li`
   display: flex;
@@ -61,10 +66,25 @@ function TagItem({ tagId, showMenu }) {
   const deleteTagMutation = useDeleteTag(tagId)
   const deleteTag = () => deleteTagMutation.mutate()
 
+  const dispatch = useDispatch()
+  const _showTagInput = () => {
+    dispatch(showTagEdit())
+  }
+
+  const _setTagEditId = () => {
+    dispatch(setTagEditId(tagId))
+  }
+
+  const openTagEdit = () => {
+    _setTagEditId()
+    _showTagInput()
+  }
+
   const menuItems = [
     {
-      icon: <EditIcon color="inherit" fontSize="inehrit" />,
+      icon: <EditOutlinedIcon color="inherit" fontSize="inehrit" />,
       title: "Edit tag",
+      onClick: openTagEdit,
     },
     {
       icon: <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />,
@@ -87,6 +107,7 @@ function TagItem({ tagId, showMenu }) {
       {showMenu ? (
         <Menu displayMenu={displayMenuBtn}>
           <DropdownMenu
+            outsideClick={() => toggleMenu(false)}
             isOpen={menuIsOpen}
             toggleComponent={
               <MoreHorizIcon

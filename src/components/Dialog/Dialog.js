@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from "react"
 import OutsideClickHandler from "react-outside-click-handler"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 const Overlay = styled.div`
   position: absolute;
@@ -22,21 +23,41 @@ const OverlayContainer = styled.div`
   height: 100%;
 `
 
-const DialogWrapper = styled.div`
-  width: min(460px, 100vw);
+const DialogContainer = styled.div`
+  position: relative;
+  bottom: 48px;
+  width: min(460px, 95vw);
   height: auto;
   background-color: ${(props) => props.theme.background};
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid ${(props) => props.theme.tertiary};
   z-index: 9999;
 `
 
-const Icon = styled.span ``
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
 
-const Title = styled.span ``
+const Header = styled.header`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 15px;
+  min-height: 24px;
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
+`
 
-function Dialog{icon, title,onOutsideClick}) {
+const Icon = styled.span``
 
+const Title = styled.span`
+  font-weight: 700;
+  font-size: 16px;
+`
+
+function Dialog({ icon, dialogName, onOutsideClick, children }) {
   // Effect Hooks
   // ===========================================================================
 
@@ -44,15 +65,15 @@ function Dialog{icon, title,onOutsideClick}) {
     <Overlay>
       <OverlayContainer>
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
-          <DialogWrapper>
+          <DialogContainer>
             <Wrapper>
               <Header>
-                {icon? <Icon>{icon}</Icon> : null}
-                {title? <Title>{title}</Title> : null}
+                {icon ? <Icon>{icon}</Icon> : null}
+                {dialogName ? <Title>{dialogName}</Title> : null}
               </Header>
               {children}
             </Wrapper>
-          </DialogWrapper>
+          </DialogContainer>
         </OutsideClickHandler>
       </OverlayContainer>
     </Overlay>

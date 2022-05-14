@@ -10,7 +10,7 @@ const PopoverWrapper = styled.div`
   text-align: center;
   z-index: ${zIndex.level9};
   overflow-y: auto;
-  border-radius: 12px;
+  border-radius: 10px;
   background-color: ${(props) => props.theme.background};
   border: 1px solid ${(props) => props.theme.tertiary};
   box-shadow: 0 2px 10px ${(props) => props.theme.tertiary};

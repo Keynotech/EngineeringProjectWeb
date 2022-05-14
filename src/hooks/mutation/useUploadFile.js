@@ -1,14 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useMutation, useQueryClient } from "react-query"
 import useUpdateTask from "./useUpdateTask"
-import post from "../../api/file"
+import { post } from "../../api/file"
 
 function useUploadFile(taskId) {
   const queryClient = useQueryClient()
   const updateTask = useUpdateTask(taskId)
   return useMutation((formData) => post({ taskId, formData }), {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       const task = queryClient.getQueryData(["tasks", taskId])
-      updateTask.mutate({ files: [...task.files, data._id] })
+      const updatedFilesList = [...task.files, ...data]
+      updateTask.mutate({ files: updatedFilesList })
     },
   })
 }

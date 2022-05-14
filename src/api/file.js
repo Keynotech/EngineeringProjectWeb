@@ -6,4 +6,9 @@ const post = async ({ taskId, formData }) =>
     body: formData,
   }).then((res) => res.json())
 
-export default post
+const del = async ({ taskId, fileId }) =>
+  fetch(`${API_URL}/${taskId}/${fileId}`, {
+    method: "DELETE",
+  }).then((res) => res.json())
+
+export { post, del }

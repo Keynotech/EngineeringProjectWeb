@@ -19,15 +19,22 @@ function useWindowDragDetect() {
   }
 
   useEffect(() => {
-    const handleDragEnter = () => {
+    const handleDragEnter = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      console.log("enter")
       _onDragEnter()
     }
     const handleDragLeave = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
       if (!e.fromElement) {
+        console.log("leave")
         _onDragLeave()
       }
     }
     const handleDropInvalid = (e) => {
+      e.preventDefault()
       _onDragLeave()
     }
 

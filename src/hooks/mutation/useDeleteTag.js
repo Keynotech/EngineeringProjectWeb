@@ -17,6 +17,7 @@ function useDeleteTag(tagId) {
         queryKey: ["tags"],
         refetchActive: false,
       })
+      queryClient.invalidateQueries(["tasks"])
     },
   })
 }

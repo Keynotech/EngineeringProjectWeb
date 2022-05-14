@@ -18,12 +18,16 @@ const MenuItem = styled.button`
   gap: 14px;
   padding: 8px 20px 8px 12px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 16px;
   color: ${(props) => props.theme.textTertiary};
   cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
+  }
+
+  span {
+    font-size: 14px;
   }
 `
 

@@ -9,6 +9,7 @@ import { hideSidebar, showSidebar } from "../../store/features/layoutSlice"
 import TagInput from "../../feature/Tag/TagInput/TagInput"
 import useWindowSize from "../../hooks/useWindowSize"
 import { size, mq } from "../../utils/mq"
+import TagEdit from "../../feature/Tag/TagInput/TagEdit"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -54,6 +55,8 @@ function AppLayout() {
     (state) => state.layout.taskPageVisibility
   )
 
+  const tagEditVisibility = useSelector((state) => state.tagEditPage.visibility)
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -88,6 +91,7 @@ function AppLayout() {
         </Main>
       </Container>
       {tagInputVisibility ? <TagInput /> : null}
+      {tagEditVisibility ? <TagEdit /> : null}
     </Wrapper>
   )
 }

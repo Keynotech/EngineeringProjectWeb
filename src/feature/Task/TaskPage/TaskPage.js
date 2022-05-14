@@ -9,8 +9,8 @@ import { useParams } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import KeyboardTabIcon from "@mui/icons-material/KeyboardTab"
-import FileCopyIcon from "@mui/icons-material/FileCopy"
-import ForwardIcon from "@mui/icons-material/Forward"
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
+import ForwardOutlinedIcon from "@mui/icons-material/ForwardOutlined"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import { useTheme } from "styled-components"
 import { hideTaskPage } from "../../../store/features/layoutSlice"
@@ -44,6 +44,7 @@ import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
+import useDeleteFile from "../../../hooks/mutation/useDeleteFile"
 import FileUpload from "../../../components/input/FileUpload.js/FileUpload"
 import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
 
@@ -78,6 +79,9 @@ function TaskPage() {
   // ===========================================================================
   const updateTaskMutation = useUpdateTask(taskId)
   const deleteTaskMutation = useDeleteTask(taskId)
+  const deleteTaskFileMutation = useDeleteFile(taskId)
+
+  const deleteFile = (fileId) => deleteTaskFileMutation.mutate(fileId)
   const deleteTask = () => deleteTaskMutation.mutate()
   const changeDesc = (value) =>
     updateTaskMutation.mutate({ description: value }) // [TODO] mutates each time the user makes a change
@@ -95,11 +99,11 @@ function TaskPage() {
 
   const menuItems = [
     {
-      icon: <FileCopyIcon color="inherit" fontSize="inehrit" />,
-      title: "Clone",
+      icon: <ContentCopyOutlinedIcon color="inherit" fontSize="inehrit" />,
+      title: "Duplicate",
     },
     {
-      icon: <ForwardIcon color="inherit" fontSize="inehrit" />,
+      icon: <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />,
       title: "Go to project",
     },
     {
@@ -108,7 +112,6 @@ function TaskPage() {
       onClick: deleteTask,
     },
   ]
-
   // ref
   // ===========================================================================
   const fileUploadRef = useRef()
@@ -188,7 +191,7 @@ function TaskPage() {
 
             <SectionContainer>
               <TagsContainer>
-                {task.data.tags.map((tag) => (
+                {task.data.tags?.map((tag) => (
                   <TagDisplayInTask key={tag} tagId={tag} />
                 ))}
               </TagsContainer>
@@ -204,11 +207,16 @@ function TaskPage() {
                   </AttachmentItemInner>
                 </AttachmentItem>
                 {task.data.files?.map((file) => (
-                  <AttachmentItem key={file._id} isFile>
-                    <AttachmentItemInner isFile>
-                      <p>{file?.file[0].originalname}</p>
-                    </AttachmentItemInner>
-                  </AttachmentItem>
+                  <div key={file._id}>
+                    <AttachmentItem isFile>
+                      <AttachmentItemInner isFile>
+                        <p>{file._id}</p>
+                      </AttachmentItemInner>
+                    </AttachmentItem>
+                    <button onClick={() => deleteFile(file._id)} type="button">
+                      Delete file
+                    </button>
+                  </div>
                 ))}
               </AttachmentsContainer>
             </SectionContainer>

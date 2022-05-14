@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import styled from "styled-components"
-import { useQueryClient } from "react-query"
+import useSingleTagQuery from "../../../hooks/query/useSingleTagQuery"
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,8 +22,8 @@ const Title = styled.span`
 `
 
 function TagDisplayInTask({ tagId }) {
-  const queryClient = useQueryClient()
-  const tag = queryClient.getQueryData(["tags", tagId])
+  const tag = useSingleTagQuery(tagId)
+
   return (
     <Wrapper>
       <Title>{tag ? tag.tagName : ""}</Title>
