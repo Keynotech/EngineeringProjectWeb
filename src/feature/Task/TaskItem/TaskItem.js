@@ -7,7 +7,6 @@ import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutl
 import { useTheme } from "styled-components"
 import { showTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../TaskCheckbox/TaskCheckbox"
-import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import {
   Wrapper,
   StyledLink,
@@ -22,8 +21,14 @@ import {
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 
 import DatePropertie from "../../../components/DatePicker/DatePropertie"
+import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
+import Chip from "../../../components/Chip/Chip"
 
 function TaskItem({ task }) {
+  // Query
+  // ===========================================================================
+  const taskTags = useGetTaskTags(task.tags)
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -91,8 +96,8 @@ function TaskItem({ task }) {
               ) : null}
             </PropertiesIcons>
             <TagsContainer>
-              {task.tags?.map((tag) => (
-                <TagDisplayInTask key={tag} tagId={tag} />
+              {taskTags.map((tag) => (
+                <Chip label={tag.tagName} key={tag._id} />
               ))}
             </TagsContainer>
           </MainContainer>

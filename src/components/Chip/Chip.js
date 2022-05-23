@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import styled from "styled-components"
-import useSingleTagQuery from "../../../hooks/query/useSingleTagQuery"
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,7 +12,11 @@ const Wrapper = styled.div`
   background-color: ${(props) => props.theme.tertiary};
 `
 
-const Title = styled.span`
+const Icon = styled.span`
+  font-size: 16px;
+`
+
+const Label = styled.span`
   font-weight: 400;
   font-size: 12px;
   overflow: hidden;
@@ -21,14 +24,13 @@ const Title = styled.span`
   white-space: nowrap;
 `
 
-function TagDisplayInTask({ tagId }) {
-  const tag = useSingleTagQuery(tagId)
-
+function Chip({ label, icon }) {
   return (
     <Wrapper>
-      <Title>{tag ? tag.tagName : ""}</Title>
+      {icon ? <Icon>{icon}</Icon> : null}
+      {label ? <Label> {label}</Label> : null}
     </Wrapper>
   )
 }
 
-export default TagDisplayInTask
+export default Chip

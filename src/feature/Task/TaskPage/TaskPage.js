@@ -40,19 +40,21 @@ import {
   MenuContainer,
   MenuItem,
 } from "./TaskPage.style"
-import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import useDeleteFile from "../../../hooks/mutation/useDeleteFile"
 import FileUpload from "../../../components/FileUpload/FileUpload"
 import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
+import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
+import Chip from "../../../components/Chip/Chip"
 
 function TaskPage() {
   // Queries
   // ===========================================================================
   let { taskId } = useParams()
   const task = useSingleTaskQuery(taskId)
+  const taskTags = useGetTaskTags(task.isSuccess ? task.data.tags : [])
 
   // Local State
   // ===========================================================================
@@ -205,8 +207,8 @@ function TaskPage() {
 
             <SectionContainer>
               <TagsContainer>
-                {task.data.tags?.map((tag) => (
-                  <TagDisplayInTask key={tag} tagId={tag} />
+                {taskTags?.map((tag) => (
+                  <Chip label={tag.tagName} key={tag._id} />
                 ))}
               </TagsContainer>
             </SectionContainer>
