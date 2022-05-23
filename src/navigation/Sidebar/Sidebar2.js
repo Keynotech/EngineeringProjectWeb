@@ -19,8 +19,6 @@ const Wrapper = styled.nav`
   height: 100vh;
   overflow-y: auto;
   z-index: ${zIndex.level9};
-  background-color: ${(props) => props.theme.secondary};
-  border-right: 1px solid ${(props) => props.theme.secondary};
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
   will-change: left;
 
@@ -44,12 +42,17 @@ const Wrapper = styled.nav`
     display: none;
   }
 `
+const WrapperInner = styled.div`
+  margin: 30px;
+  background-color: ${(props) => props.theme.tertiary};
+  border-radius: 5px;
+`
 
 const Container = styled.div`
-  width: calc(100% - 40px);
   padding-top: 15px;
   padding-left: 15px;
   padding-bottom: 30px;
+  height: 100%;
 
   @media ${mq.tablet} {
     padding-left: 30px;
@@ -126,7 +129,7 @@ const Backdrop = styled.div`
   }
 `
 
-function Sidebar() {
+function Sidebar2() {
   // State Hooks
   // ===========================================================================
 
@@ -146,39 +149,41 @@ function Sidebar() {
   return (
     <>
       <Wrapper isVisible={isVisible}>
-        <Container>
-          <MenuList>
-            <SidebarItem
-              icon={<InboxOutlinedIcon fontSize="inherit" />}
-              name="Inbox"
-              route="/inbox"
-            />
-            <SidebarItem
-              icon={<TodayOutlinedIcon fontSize="inherit" />}
-              name="Today"
-              route="/today"
-            />
-            <SidebarItem
-              route="/week"
-              name="Current Week"
-              icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
-            />
-          </MenuList>
+        <WrapperInner>
+          <Container>
+            <MenuList>
+              <SidebarItem
+                icon={<InboxOutlinedIcon fontSize="inherit" />}
+                name="Inbox"
+                route="/inbox"
+              />
+              <SidebarItem
+                icon={<TodayOutlinedIcon fontSize="inherit" />}
+                name="Today"
+                route="/today"
+              />
+              <SidebarItem
+                route="/week"
+                name="Current Week"
+                icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
+              />
+            </MenuList>
 
-          <TagsWrapper>
-            <SectionHeader>
-              <Icon>
-                <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
-              </Icon>
-              <SectionName>Tags</SectionName>
-            </SectionHeader>
-            {tags.isSuccess ? <TagsList tags={tags} /> : null}
-          </TagsWrapper>
-        </Container>
+            <TagsWrapper>
+              <SectionHeader>
+                <Icon>
+                  <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
+                </Icon>
+                <SectionName>Tags</SectionName>
+              </SectionHeader>
+              {tags.isSuccess ? <TagsList tags={tags} /> : null}
+            </TagsWrapper>
+          </Container>
+        </WrapperInner>
       </Wrapper>
       <Backdrop isVisible={isVisible} onClick={_hideSidebar} />
     </>
   )
 }
 
-export default Sidebar
+export default Sidebar2

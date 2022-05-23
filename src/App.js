@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 import React from "react"
 import { QueryClient, QueryClientProvider } from "react-query"

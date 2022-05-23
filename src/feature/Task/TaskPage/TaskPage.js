@@ -5,7 +5,7 @@
 /* eslint-disable prefer-const */
 import React, { useState, useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import KeyboardTabIcon from "@mui/icons-material/KeyboardTab"
@@ -15,10 +15,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import { useTheme } from "styled-components"
 import { hideTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
-import TextInput from "../../../components/input/TextInput"
-import PriorityPicker from "../../../components/picker/PriorityPicker/PriorityPicker"
-import DatePicker from "../../../components/picker/DatePicker/DatePicker"
-import TagPicker from "../../../components/picker/TagPicker/TagPicker"
+import TextInput from "../../../components/TextInput/TextInput"
+import PriorityPicker from "../../../components/PriorityPicker/PriorityPicker"
+import DatePicker from "../../../components/DatePicker/DatePicker"
+import TagPicker from "../../../components/TagPicker/TagPicker"
 import { formatDateTimeToDisplay } from "../../../utils/dateConvert"
 import {
   Wrapper,
@@ -45,7 +45,7 @@ import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import useDeleteFile from "../../../hooks/mutation/useDeleteFile"
-import FileUpload from "../../../components/input/FileUpload.js/FileUpload"
+import FileUpload from "../../../components/FileUpload/FileUpload"
 import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
 
 function TaskPage() {
@@ -63,17 +63,16 @@ function TaskPage() {
   // ===========================================================================
   const isOpen = useSelector((state) => state.layout.taskPageVisibility)
 
-  // Hooks
-  // ===========================================================================
-
-  useEffect(() => {
-    toggleMenu(false)
-  }, [taskId])
-
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
   const _hideTaskPage = () => dispatch(hideTaskPage())
+
+  // Others
+  // ===========================================================================
+  const theme = useTheme()
+  const navigate = useNavigate()
+  const goBack = () => navigate("../")
 
   // Mutations
   // ===========================================================================
@@ -82,7 +81,10 @@ function TaskPage() {
   const deleteTaskFileMutation = useDeleteFile(taskId)
 
   const deleteFile = (fileId) => deleteTaskFileMutation.mutate(fileId)
-  const deleteTask = () => deleteTaskMutation.mutate()
+  const deleteTask = () => {
+    deleteTaskMutation.mutate()
+    goBack()
+  }
   const changeDesc = (value) =>
     updateTaskMutation.mutate({ description: value }) // [TODO] mutates each time the user makes a change
   const changeTitle = (value) => updateTaskMutation.mutate({ title: value }) // [TODO] mutates each time the user makes a change
@@ -92,10 +94,6 @@ function TaskPage() {
   const changeStatus = () =>
     updateTaskMutation.mutate({ status: !task.data.status })
   const changeTags = (value) => updateTaskMutation.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
-
-  // Others
-  // ===========================================================================
-  const theme = useTheme()
 
   const menuItems = [
     {
@@ -116,6 +114,19 @@ function TaskPage() {
   // ===========================================================================
   const fileUploadRef = useRef()
   const openUpload = () => fileUploadRef.current.openUpload()
+
+  // Hooks
+  // ===========================================================================
+
+  useEffect(() => {
+    toggleMenu(false)
+  }, [taskId])
+
+  useEffect(() => {
+    if (task.isError) {
+      goBack()
+    }
+  }, [task.isError])
 
   return task.isSuccess ? (
     <Wrapper>
@@ -145,7 +156,10 @@ function TaskPage() {
           </TitleContainer>
           <IconContainer>
             <KeyboardTabIcon
-              onClick={_hideTaskPage}
+              onClick={() => {
+                goBack()
+                _hideTaskPage()
+              }}
               color="inherit"
               sx={{ cursor: "pointer" }}
             />
@@ -229,7 +243,7 @@ function TaskPage() {
               <DropdownMenu
                 isOpen={menuIsOpen}
                 outsideClick={() => toggleMenu(false)}
-                toggleComponent={
+                toggle={
                   <MoreHorizIcon
                     color="inherit"
                     sx={{

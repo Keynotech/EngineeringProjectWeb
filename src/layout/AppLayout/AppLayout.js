@@ -83,7 +83,6 @@ function AppLayout() {
 
   return (
     <Wrapper>
-      <TopBar />
       <Container>
         <Sidebar />
         <Main sidebarVisibility={sidebarVisibility}>

@@ -14,10 +14,16 @@ function useCreateTask() {
       post({ title, status, dueDate, priority, tags }),
     {
       onSuccess: (data) => {
-        queryClient.invalidateQueries(["tasks"])
-        queryClient.setQueriesData(["tasks", data._id], data)
+        const tasks = queryClient.getQueryData(["tasks"])
+        const updatedTasksList = [...tasks, data]
+        queryClient.setQueryData(["tasks"], updatedTasksList)
+        queryClient.setQueryData(["tasks", data._id], data)
         navigate(`tasks/${data._id}`)
         _showTaskPage()
+        queryClient.invalidateQueries({
+          queryKey: ["tasks"],
+          refetchActive: false,
+        })
       },
     }
   )

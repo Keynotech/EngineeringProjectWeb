@@ -19,7 +19,8 @@ import {
   TagsContainer,
 } from "./TaskItem.style"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
-import DatePropertie from "../../../components/picker/DatePicker/DatePropertie"
+
+import DatePropertie from "../../../components/DatePicker/DatePropertie"
 
 function TaskItem({ task }) {
   // Dispatch
@@ -51,7 +52,7 @@ function TaskItem({ task }) {
     } else setIsFile(false)
   }, [task.files])
 
-  // Othgers
+  // Others
   // ===========================================================================
   const theme = useTheme()
 

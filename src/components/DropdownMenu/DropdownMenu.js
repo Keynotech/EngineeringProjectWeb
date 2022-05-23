@@ -31,12 +31,12 @@ const MenuItem = styled.button`
   }
 `
 
-const Toggle = styled.span`
+const ToggleContainer = styled.span`
   display: flex;
   align-items: center;
 `
 
-function DropdownMenu({ isOpen, outsideClick, toggleComponent, menuItems }) {
+function DropdownMenu({ isOpen, outsideClick, toggle, menuItems }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   // Handlers
@@ -59,7 +59,7 @@ function DropdownMenu({ isOpen, outsideClick, toggleComponent, menuItems }) {
 
   return menuItems ? (
     <OutsideClickHandler disabled={!isOpen} onOutsideClick={outsideClick}>
-      <Toggle onClick={togglePopover}>{toggleComponent}</Toggle>
+      <ToggleContainer onClick={togglePopover}>{toggle}</ToggleContainer>
       <Popover anchorEl={anchorEl} isOpen={isOpen}>
         <MenuContainer>
           {menuItems.map((elem) => (

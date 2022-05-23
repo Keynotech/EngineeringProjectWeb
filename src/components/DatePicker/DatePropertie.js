@@ -18,10 +18,7 @@ import {
   isSunday,
 } from "date-fns"
 import styled, { css } from "styled-components"
-import {
-  convertDateToJS,
-  formatDateToDisplay,
-} from "../../../utils/dateConvert"
+import { formatDateToDisplay } from "../../utils/dateConvert"
 
 export const Wrapper = styled.div`
   display: flex;

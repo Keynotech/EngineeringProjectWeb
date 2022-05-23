@@ -2,8 +2,8 @@ import styled, { css } from "styled-components"
 
 export const Wrapper = styled.div`
   width: 100%;
-  max-height: calc(100vh - 48px);
-  height: calc(100vh - 48px);
+  max-height: 100vh;
+  height: 100vh;
   overflow-y: auto;
   background-color: ${(props) => props.theme.background};
   border-left: 1px solid ${(props) => props.theme.tertiary};

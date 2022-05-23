@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import OutsideClickHandler from "react-outside-click-handler"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
-import Popover from "../../Popover/Popover"
+import Popover from "../Popover/Popover"
 import PriorityPropertie from "./PriorityPropertie"
 
 const Wrapper = styled.div`

@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient } from "react-query"
 import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
 import { del } from "../../api/tasks"
 import { hideTaskPage } from "../../store/features/layoutSlice"
 
 function useDeleteTask(taskId) {
   const queryClient = useQueryClient()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const _hideTaskPage = () => dispatch(hideTaskPage())
 
@@ -25,7 +23,6 @@ function useDeleteTask(taskId) {
         queryKey: ["tasks"],
         refetchActive: false,
       })
-      navigate(-1)
       _hideTaskPage()
     },
   })

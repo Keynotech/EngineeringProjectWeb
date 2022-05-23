@@ -13,14 +13,14 @@ import {
   Footer,
 } from "./TaskInput.style"
 import { hideTaskInput } from "../../../store/features/layoutSlice"
-import TextInput from "../../../components/input/TextInput"
-import DatePicker from "../../../components/picker/DatePicker/DatePicker"
-import PriorityPicker from "../../../components/picker/PriorityPicker/PriorityPicker"
+import TextInput from "../../../components/TextInput/TextInput"
+import DatePicker from "../../../components/DatePicker/DatePicker"
+import PriorityPicker from "../../../components/PriorityPicker/PriorityPicker"
 import SubmitButton from "../../../components/button/SubmitButton"
 import CancelButton from "../../../components/button/CancelButton"
-import TagPicker from "../../../components/picker/TagPicker/TagPicker"
+import TagPicker from "../../../components/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
-import DatePropertie from "../../../components/picker/DatePicker/DatePropertie"
+import DatePropertie from "../../../components/DatePicker/DatePropertie"
 
 function TaskInput() {
   // Dispatch

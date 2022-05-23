@@ -109,7 +109,7 @@ function TagItem({ tagId, showMenu }) {
           <DropdownMenu
             outsideClick={() => toggleMenu(false)}
             isOpen={menuIsOpen}
-            toggleComponent={
+            toggle={
               <MoreHorizIcon
                 color="inherit"
                 sx={{
