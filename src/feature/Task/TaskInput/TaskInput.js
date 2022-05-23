@@ -70,7 +70,7 @@ function TaskInput() {
   const theme = useTheme()
 
   return (
-    <li>
+    <div>
       <OutsideClickHandler disabled={!isOpen} onOutsideClick={_hideTaskInput}>
         <Wrapper>
           <Form onSubmit={formik.handleSubmit}>
@@ -146,7 +146,7 @@ function TaskInput() {
           </Form>
         </Wrapper>
       </OutsideClickHandler>
-    </li>
+    </div>
   )
 }
 

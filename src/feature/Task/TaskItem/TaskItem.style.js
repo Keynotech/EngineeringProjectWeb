@@ -6,21 +6,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
   padding: 10px 8px;
   box-sizing: border-box;
-  border-bottom: 1px solid ${(props) => props.theme.tertiary};
-
-  &:hover {
-    background-color: aliceblue;
-    border-radius: 4px;
-  }
+  border-bottom: 1px solid ${(props) => props.theme.secondary};
 `
 
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  height: 24px;
+  height: 32px;
   width: 32px;
 `
 
@@ -39,9 +33,9 @@ const MainContainer = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  margin-bottom: 4px;
-  height: 24px;
+  height: 32px;
   width: 100%;
+  cursor: pointer;
 `
 const Title = styled.span`
   font-size: 12px;

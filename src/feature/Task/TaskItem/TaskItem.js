@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
+import { motion } from "framer-motion"
 import { useSelector, useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import { useTheme } from "styled-components"
 import { showTaskPage } from "../../../store/features/layoutSlice"
-import Checkbox from "../../../components/button/Checkbox"
+import Checkbox from "../TaskCheckbox/TaskCheckbox"
 import TagDisplayInTask from "../../Tag/TagDisplayInTask/TagDisplayInTask"
 import {
   Wrapper,
@@ -57,11 +58,15 @@ function TaskItem({ task }) {
   const theme = useTheme()
 
   return (
-    <li>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ x: [300, -20, 0], opacity: 1 }}
+      exit={{ x: 500, opacity: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       <Wrapper>
         <CheckboxContainer>
           <Checkbox
-            id="task-status"
             checked={task.status}
             onChange={_toggleStatus}
             priority={task.priority}
@@ -99,7 +104,7 @@ function TaskItem({ task }) {
           ) : null}
         </StyledLink>
       </Wrapper>
-    </li>
+    </motion.div>
   )
 }
 

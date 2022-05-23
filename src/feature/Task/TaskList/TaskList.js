@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from "react"
+import { AnimatePresence } from "framer-motion"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
 import TaskItem from "../TaskItem/TaskItem"
@@ -23,12 +24,12 @@ function TasksList({ tasks }) {
 
   return (
     <Wrapper>
-      <ul>
+      <AnimatePresence>
         {taskInputVisibility ? <TaskInput /> : null}
         {tasks.data.length
           ? tasks.data.map((task) => <TaskItem task={task} key={task._id} />)
           : null}
-      </ul>
+      </AnimatePresence>
     </Wrapper>
   )
 }

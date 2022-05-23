@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React, { useEffect, useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import styled, { css, useTheme } from "styled-components"
 
@@ -10,7 +10,6 @@ const Button = styled.button`
   background-color: ${(props) => props.theme.background};
   border-radius: 5px;
   border: 2px solid ${(props) => props.color};
-
   ${({ checked }) =>
     checked &&
     css`
@@ -18,55 +17,23 @@ const Button = styled.button`
     `}
 `
 
-function Checkbox({ id, name, checked, onChange, priority }) {
-  const [color, setColor] = useState()
+function Checkbox({ checked, onChange, color }) {
   const theme = useTheme()
-
-  useEffect(() => {
-    switch (priority) {
-      case 1:
-        setColor(theme.priority1)
-        break
-      case 2:
-        setColor(theme.priority2)
-        break
-      case 3:
-        setColor(theme.priority3)
-        break
-      case 4:
-        setColor(theme.priority4)
-        break
-      case undefined:
-        setColor(theme.priority1)
-        break
-      default:
-        setColor(theme.priority1)
-        break
-    }
-  }, [priority])
 
   return (
     <Button
-      id={id}
-      name={name}
       type="checkbox"
       checked={checked}
       onClick={onChange}
-      color={color}
+      color={color || theme.priority1}
     />
   )
 }
 
 Checkbox.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string,
   checked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
-  priority: PropTypes.number,
-}
-
-Checkbox.defaultProps = {
-  priority: 1,
+  color: PropTypes.string,
 }
 
 export default Checkbox
