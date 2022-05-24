@@ -6,9 +6,9 @@ import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import SidebarItem from "./SidebarItem"
-import { hideSidebar } from "../../store/features/layoutSlice"
+import { hideSidebar, showTagInput } from "../../store/features/layoutSlice"
 import useTagsQuery from "../../hooks/query/useTagsQuery"
-import TagsList from "../../feature/Tag/TagList/TagList"
+import TagList from "../../feature/Tag/TagList/TagList"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
 
@@ -46,14 +46,9 @@ const Wrapper = styled.nav`
 `
 
 const Container = styled.div`
-  width: calc(100% - 40px);
+  width: 100%;
   padding-top: 15px;
-  padding-left: 15px;
   padding-bottom: 30px;
-
-  @media ${mq.tablet} {
-    padding-left: 30px;
-  }
 `
 
 const MenuList = styled.ul`
@@ -62,8 +57,7 @@ const MenuList = styled.ul`
       display: flex;
       align-items: center;
       flex-direction: row;
-      padding: 5px;
-      border-radius: 4px;
+      padding: 5px 15px 5px 20px;
       min-height: 24px;
     }
     &:not(:last-child) {
@@ -81,7 +75,7 @@ const SectionHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  padding: 5px 15px 5px 20px;
 `
 
 const SectionName = styled.span`
@@ -134,6 +128,7 @@ function Sidebar() {
   // ===========================================================================
   const dispatch = useDispatch()
   const _hideSidebar = () => dispatch(hideSidebar())
+  const _showTagInput = () => dispatch(showTagInput())
 
   // Selectors
   // ===========================================================================
@@ -171,8 +166,11 @@ function Sidebar() {
                 <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
               </Icon>
               <SectionName>Tags</SectionName>
+              <button type="button" onClick={_showTagInput}>
+                Add tag
+              </button>
             </SectionHeader>
-            {tags.isSuccess ? <TagsList tags={tags} /> : null}
+            {tags.isSuccess ? <TagList tags={tags} /> : null}
           </TagsWrapper>
         </Container>
       </Wrapper>

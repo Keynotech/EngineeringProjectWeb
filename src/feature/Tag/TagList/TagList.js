@@ -1,12 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
-
 import React from "react"
-import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import AddIcon from "@mui/icons-material/Add"
-import { showTagInput } from "../../../store/features/layoutSlice"
 import TagItem from "../TagItem/TagItem"
 
 const Wrapper = styled.div`
@@ -19,8 +15,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
-    padding: 8px 12px;
-    border-radius: 4px;
+    padding: 5px 15px 5px 20px;
     color: ${(props) => props.theme.textSecondary};
 
     transition: background-color 0.25s ease-in;
@@ -36,11 +31,6 @@ const Wrapper = styled.div`
 `
 
 function TagList({ tags }) {
-  // Dispatch
-  // ===========================================================================
-  const dispatch = useDispatch()
-  const _showTagInput = () => dispatch(showTagInput())
-
   return (
     <Wrapper>
       <ul>
@@ -49,12 +39,6 @@ function TagList({ tags }) {
               <TagItem showMenu tagId={tag._id} key={tag._id} />
             ))
           : null}
-        <li onClick={_showTagInput}>
-          <AddIcon
-            sx={{ fontSize: "18px", marginLeft: "-2px", marginRight: "16px" }}
-          />
-          Create new tag
-        </li>
       </ul>
     </Wrapper>
   )

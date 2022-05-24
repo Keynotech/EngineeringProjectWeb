@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
@@ -19,8 +20,7 @@ import {
   TagsContainer,
 } from "./TaskItem.style"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
-
-import DatePropertie from "../../../components/DatePicker/DatePropertie"
+import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
 import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
 import Chip from "../../../components/Chip/Chip"
 
@@ -97,7 +97,13 @@ function TaskItem({ task }) {
             </PropertiesIcons>
             <TagsContainer>
               {taskTags.map((tag) => (
-                <Chip label={tag.tagName} key={tag._id} />
+                <Chip
+                  label={tag.tagName}
+                  key={tag._id}
+                  variant="outlined"
+                  size="small"
+                  onDelete={() => console.log("xd")}
+                />
               ))}
             </TagsContainer>
           </MainContainer>

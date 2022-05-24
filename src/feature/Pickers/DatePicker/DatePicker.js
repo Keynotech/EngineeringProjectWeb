@@ -11,7 +11,7 @@ import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined"
 import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined"
 import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
-import Popover from "../Popover/Popover"
+import Popover from "../../../components/Popover/Popover"
 import DateOption from "./DateOption"
 import DatePropertie from "./DatePropertie"
 

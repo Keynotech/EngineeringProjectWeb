@@ -16,9 +16,9 @@ import { useTheme } from "styled-components"
 import { hideTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../../../components/button/Checkbox"
 import TextInput from "../../../components/TextInput/TextInput"
-import PriorityPicker from "../../../components/PriorityPicker/PriorityPicker"
-import DatePicker from "../../../components/DatePicker/DatePicker"
-import TagPicker from "../../../components/TagPicker/TagPicker"
+import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
+import DatePicker from "../../Pickers/DatePicker/DatePicker"
+import TagPicker from "../../Pickers/TagPicker/TagPicker"
 import { formatDateTimeToDisplay } from "../../../utils/dateConvert"
 import {
   Wrapper,
@@ -44,7 +44,7 @@ import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import useDeleteFile from "../../../hooks/mutation/useDeleteFile"
-import FileUpload from "../../../components/FileUpload/FileUpload"
+import FileUpload from "../../FileUpload/FileUpload"
 import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
 import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
 import Chip from "../../../components/Chip/Chip"
@@ -208,7 +208,12 @@ function TaskPage() {
             <SectionContainer>
               <TagsContainer>
                 {taskTags?.map((tag) => (
-                  <Chip label={tag.tagName} key={tag._id} />
+                  <Chip
+                    label={tag.tagName}
+                    key={tag._id}
+                    onDelete={() => console.log("delete")}
+                    size="small"
+                  />
                 ))}
               </TagsContainer>
             </SectionContainer>

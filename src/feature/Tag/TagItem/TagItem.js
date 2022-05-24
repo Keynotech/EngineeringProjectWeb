@@ -13,15 +13,6 @@ import {
   setTagEditId,
 } from "../../../store/features/tagEditPageSlice"
 
-const Wrapper = styled.li`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  padding: 8px 12px;
-  border-radius: 4px;
-  color: ${(props) => props.theme.textSecondary};
-`
-
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -93,7 +84,7 @@ function TagItem({ tagId, showMenu }) {
     },
   ]
   return (
-    <Wrapper
+    <li
       onMouseEnter={() => toggleDisplayMenuBtn(true)}
       onMouseLeave={() => {
         toggleMenu(false)
@@ -122,7 +113,7 @@ function TagItem({ tagId, showMenu }) {
           />
         </Menu>
       ) : null}
-    </Wrapper>
+    </li>
   )
 }
 

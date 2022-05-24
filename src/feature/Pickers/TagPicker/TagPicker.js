@@ -5,12 +5,12 @@ import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
 import PropTypes from "prop-types"
-import Checkbox from "../button/Checkbox"
-import TagItem from "../../feature/Tag/TagItem/TagItem"
-import useTagsQuery from "../../hooks/query/useTagsQuery"
-import { showTagInput } from "../../store/features/layoutSlice"
+import Checkbox from "../../../components/button/Checkbox"
+import TagItem from "../../Tag/TagItem/TagItem"
+import useTagsQuery from "../../../hooks/query/useTagsQuery"
+import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "./TagPropertie"
-import Popover from "../Popover/Popover"
+import Popover from "../../../components/Popover/Popover"
 
 const Wrapper = styled.ul`
   min-width: 200px;
