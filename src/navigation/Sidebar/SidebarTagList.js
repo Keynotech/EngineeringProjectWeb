@@ -15,6 +15,7 @@ import useDeleteTag from "../../hooks/mutation/useDeleteTag"
 import SidebarSectionHeader from "./SidebarSectionHeader"
 import SidebarList from "./SidebarList"
 import SidebarItem from "./SidebarItem"
+// import SidebarLink from "./SidebarLink"
 import { DropdownItemMenu } from "../../components/DropdownMenu"
 
 const TagsWrapper = styled.div`
@@ -66,7 +67,6 @@ function SidebarTagList() {
                 transition={{ duration: 0.4 }}
               >
                 <SidebarItem
-                  as="div"
                   icon={<TagColor color={tag.color} />}
                   name={tag.tagName}
                   fontWeight="light"
@@ -104,6 +104,7 @@ function SidebarTagList() {
               name="Create new tag"
               fontWeight="light"
               onClick={_showTagInput}
+              clickable
             />
           </SidebarList>
         </AnimatePresence>

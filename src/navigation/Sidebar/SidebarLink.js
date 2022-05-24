@@ -2,23 +2,29 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState } from "react"
+import { useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
+import { NavLink } from "react-router-dom"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import PropTypes from "prop-types"
+import { hideSidebar, hideTaskPage } from "../../store/features/layoutSlice"
+import { size } from "../../utils/mq"
 import { DropdownMenu } from "../../components/DropdownMenu"
 
-const Wrapper = styled.div`
-  min-height: 28px;
+const Link = styled(NavLink)`
+  display: inline-block;
+  width: 100%;
 
   &:hover {
     background-color: ${(props) => props.theme.tertiary};
   }
+  &.active {
+    background-color: ${(props) => props.theme.tertiary};
+  }
+`
 
-  ${({ clickable }) =>
-    clickable &&
-    css`
-      cursor: pointer;
-    `}
+const Wrapper = styled.div`
+  min-height: 28px;
 `
 
 const Container = styled.div`
@@ -66,14 +72,7 @@ const RouteName = styled.span`
     `};
 `
 
-function SidebarItem({
-  icon,
-  name,
-  menuContent,
-  fontWeight,
-  onClick,
-  clickable,
-}) {
+function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
   const [displayMenuBtn, toggleDisplayMenuBtn] = useState(false)
   const [menuIsOpen, toggleMenu] = useState(false)
 
@@ -89,6 +88,18 @@ function SidebarItem({
     if (menuContent) {
       toggleMenu(false)
       toggleDisplayMenuBtn(false)
+    }
+  }
+
+  // Dispatch
+  // ===========================================================================
+  const dispatch = useDispatch()
+  const _hideTaskPage = () => dispatch(hideTaskPage())
+  const _hideSidebar = () => dispatch(hideSidebar())
+
+  const hideSidebarOnMobile = () => {
+    if (window.innerWidth <= size.laptop) {
+      _hideSidebar()
     }
   }
 
@@ -118,37 +129,32 @@ function SidebarItem({
   }
 
   const _onClick = () => {
-    if (onClick) {
-      onClick()
-    }
+    _hideTaskPage()
+    hideSidebarOnMobile()
   }
 
   return (
-    <Wrapper
-      onClick={_onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      clickable={clickable}
-    >
-      <Container>
-        <IconWrapper> {icon}</IconWrapper>
-        <RouteName fontWeight={fontWeight}>{name}</RouteName>
-        {menu}
-      </Container>
+    <Wrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <Link as={as} to={route} onClick={_onClick}>
+        <Container>
+          <IconWrapper> {icon}</IconWrapper>
+          <RouteName fontWeight={fontWeight}>{name}</RouteName>
+          {menu}
+        </Container>
+      </Link>
     </Wrapper>
   )
 }
 
-SidebarItem.propTypes = {
+SidebarLink.propTypes = {
   icon: PropTypes.element.isRequired,
   name: PropTypes.string.isRequired,
+  route: PropTypes.string,
   fontWeight: PropTypes.oneOf(["light", "bold"]),
-  clickable: PropTypes.bool,
 }
 
-SidebarItem.defaultProps = {
+SidebarLink.defaultProps = {
   fontWeight: "bold",
-  clickable: false,
 }
 
-export default SidebarItem
+export default SidebarLink

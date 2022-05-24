@@ -61,8 +61,15 @@ function DropdownItemMenu({
     rightComponent = <RightWrapper>{rightComponentProp}</RightWrapper>
   }
 
+  const _onClick = (e) => {
+    e.stopPropagation()
+    if (onClick) {
+      onClick()
+    }
+  }
+
   return (
-    <MenuItem onClick={onClick}>
+    <MenuItem onClick={(e) => _onClick(e)}>
       {icon}
       <MenuLabel>{label}</MenuLabel>
       {rightComponent}

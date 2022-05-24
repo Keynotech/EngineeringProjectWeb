@@ -5,7 +5,7 @@ import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
-import SidebarItem from "./SidebarItem"
+import SidebarLink from "./SidebarLink"
 import { hideSidebar } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
@@ -90,8 +90,8 @@ const SearchButton = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
-  width: 32px;
+  height: 28px;
+  width: 28px;
   border-radius: 25px;
   background-color: ${(props) => props.theme.tertiary};
 `
@@ -115,7 +115,7 @@ function Sidebar() {
         <Container>
           <Header>
             <SidebarSectionHeader
-              fontSize="18px"
+              fontSize="16px"
               name="Hi, {user.nickname}"
               rightComponent={
                 <SearchButton>
@@ -125,17 +125,17 @@ function Sidebar() {
             />
           </Header>
           <SidebarList>
-            <SidebarItem
+            <SidebarLink
               icon={<InboxOutlinedIcon fontSize="inherit" />}
               name="Inbox"
               route="/inbox"
             />
-            <SidebarItem
+            <SidebarLink
               icon={<TodayOutlinedIcon fontSize="inherit" />}
               name="Today"
               route="/today"
             />
-            <SidebarItem
+            <SidebarLink
               route="/week"
               name="Current Week"
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
