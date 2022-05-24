@@ -45,7 +45,10 @@ import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import useDeleteFile from "../../../hooks/mutation/useDeleteFile"
 import FileUpload from "../../FileUpload/FileUpload"
-import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
+import {
+  DropdownMenu,
+  DropdownItemMenu,
+} from "../../../components/DropdownMenu"
 import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
 import Chip from "../../../components/Chip/Chip"
 
@@ -97,21 +100,6 @@ function TaskPage() {
     updateTaskMutation.mutate({ status: !task.data.status })
   const changeTags = (value) => updateTaskMutation.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
 
-  const menuItems = [
-    {
-      icon: <ContentCopyOutlinedIcon color="inherit" fontSize="inehrit" />,
-      title: "Duplicate",
-    },
-    {
-      icon: <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />,
-      title: "Go to project",
-    },
-    {
-      icon: <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />,
-      title: "Delete Task",
-      onClick: deleteTask,
-    },
-  ]
   // ref
   // ===========================================================================
   const fileUploadRef = useRef()
@@ -259,8 +247,33 @@ function TaskPage() {
                     onClick={() => toggleMenu(!menuIsOpen)}
                   />
                 }
-                menuItems={menuItems}
-              />
+              >
+                <DropdownItemMenu
+                  leftIcon={
+                    <ContentCopyOutlinedIcon
+                      color="inherit"
+                      fontSize="inehrit"
+                    />
+                  }
+                  label="Duplicate tag"
+                />
+                <DropdownItemMenu
+                  leftIcon={
+                    <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />
+                  }
+                  label="Go to project"
+                />
+                <DropdownItemMenu
+                  leftIcon={
+                    <DeleteOutlineOutlinedIcon
+                      color="inherit"
+                      fontSize="inehrit"
+                    />
+                  }
+                  label="Delete task"
+                  onClick={deleteTask}
+                />
+              </DropdownMenu>
             </FooterContainer>
           </Footer>
         </DetailsContainer>

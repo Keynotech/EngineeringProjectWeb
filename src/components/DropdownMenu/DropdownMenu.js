@@ -7,28 +7,8 @@ import Popover from "../Popover/Popover"
 const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-const MenuItem = styled.button`
-  display: flex;
-  width: 100%;
-  overflow: visible;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
-  padding: 8px 20px 8px 12px;
-  box-sizing: border-box;
-  font-size: 16px;
-  color: ${(props) => props.theme.textTertiary};
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => props.theme.secondary};
-  }
-
-  span {
-    font-size: 14px;
-  }
+  box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
+  border: 1px solid ${(props) => props.theme.tertiary};
 `
 
 const ToggleContainer = styled.span`
@@ -36,13 +16,13 @@ const ToggleContainer = styled.span`
   align-items: center;
 `
 
-function DropdownMenu({ isOpen, outsideClick, toggle, menuItems }) {
+function DropdownMenu({ isOpen, outsideClick, toggle, children }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   // Handlers
   // ===========================================================================
-  const handleOpen = (event) => {
-    setAnchorEl(event.currentTarget)
+  const handleOpen = (e) => {
+    setAnchorEl(e.currentTarget)
   }
 
   const handleClose = () => {
@@ -52,26 +32,23 @@ function DropdownMenu({ isOpen, outsideClick, toggle, menuItems }) {
   const togglePopover = (e) => {
     if (isOpen) {
       handleClose()
+      e.preventDefault()
+      e.stopPropagation()
     } else {
       handleOpen(e)
+      e.preventDefault()
+      e.stopPropagation()
     }
   }
 
-  return menuItems ? (
+  return (
     <OutsideClickHandler disabled={!isOpen} onOutsideClick={outsideClick}>
       <ToggleContainer onClick={togglePopover}>{toggle}</ToggleContainer>
       <Popover anchorEl={anchorEl} isOpen={isOpen}>
-        <MenuContainer>
-          {menuItems.map((elem) => (
-            <MenuItem key={elem.title} type="button" onClick={elem.onClick}>
-              {elem.icon}
-              <span>{elem.title}</span>
-            </MenuItem>
-          ))}
-        </MenuContainer>
+        <MenuContainer>{children}</MenuContainer>
       </Popover>
     </OutsideClickHandler>
-  ) : null
+  )
 }
 
 export default DropdownMenu

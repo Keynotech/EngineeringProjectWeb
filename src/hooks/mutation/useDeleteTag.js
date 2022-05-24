@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "react-query"
 import { del } from "../../api/tags"
 
-function useDeleteTag(tagId) {
+function useDeleteTag() {
   const queryClient = useQueryClient()
 
-  return useMutation(() => del(tagId), {
-    onMutate: async () => {
+  return useMutation((tagId) => del(tagId), {
+    onMutate: async (tagId) => {
       const previousTags = queryClient.getQueryData(["tags"])
       const deletedTagIndex = previousTags.findIndex((tag) => tag._id === tagId)
       const removedTags = [...previousTags]

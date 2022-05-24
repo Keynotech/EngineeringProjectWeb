@@ -22,7 +22,7 @@ const ChipLabel = styled.span`
       font-size: 12px;
       line-height: 14px;
       padding-left: 6px;
-      padding-right: 4px;
+      padding-right: 6px;
     `};
 `
 

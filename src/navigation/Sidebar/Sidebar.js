@@ -2,15 +2,16 @@ import React from "react"
 import styled, { css } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
-import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
+import SearchIcon from "@mui/icons-material/Search"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import SidebarItem from "./SidebarItem"
-import { hideSidebar, showTagInput } from "../../store/features/layoutSlice"
-import useTagsQuery from "../../hooks/query/useTagsQuery"
-import TagList from "../../feature/Tag/TagList/TagList"
+import { hideSidebar } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
+import SidebarList from "./SidebarList"
+import SidebarTagList from "./SidebarTagList"
+import SidebarSectionHeader from "./SidebarSectionHeader"
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -19,8 +20,8 @@ const Wrapper = styled.nav`
   height: 100vh;
   overflow-y: auto;
   z-index: ${zIndex.level9};
-  background-color: ${(props) => props.theme.secondary};
-  border-right: 1px solid ${(props) => props.theme.secondary};
+  background-color: ${(props) => props.theme.background};
+  border-right: 1px solid ${(props) => props.theme.tertiary};
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
   will-change: left;
 
@@ -47,51 +48,8 @@ const Wrapper = styled.nav`
 
 const Container = styled.div`
   width: 100%;
-  padding-top: 15px;
+  padding-top: 5px;
   padding-bottom: 30px;
-`
-
-const MenuList = styled.ul`
-  li {
-    a {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      padding: 5px 15px 5px 20px;
-      min-height: 24px;
-    }
-    &:not(:last-child) {
-      margin-bottom: 2px;
-    }
-  }
-`
-
-const TagsWrapper = styled.div`
-  margin-top: 40px;
-`
-
-const SectionHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 15px 5px 20px;
-`
-
-const SectionName = styled.span`
-  flex: 1;
-  font-weight: 600;
-`
-
-const Icon = styled.span`
-  display: flex;
-  align-items: center;
-  width: 28px;
-  height: 24px;
-  margin-right: 5px;
-  font-size: 18px;
-
-  color: ${(props) => props.theme.textSecondary};
 `
 
 const Backdrop = styled.div`
@@ -120,6 +78,24 @@ const Backdrop = styled.div`
   }
 `
 
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
+  margin-bottom: 10px;
+`
+
+const SearchButton = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 25px;
+  background-color: ${(props) => props.theme.tertiary};
+`
+
 function Sidebar() {
   // State Hooks
   // ===========================================================================
@@ -128,21 +104,27 @@ function Sidebar() {
   // ===========================================================================
   const dispatch = useDispatch()
   const _hideSidebar = () => dispatch(hideSidebar())
-  const _showTagInput = () => dispatch(showTagInput())
 
   // Selectors
   // ===========================================================================
   const isVisible = useSelector((state) => state.layout.sidebarVisibility)
 
-  // Query
-  // ===========================================================================
-  const tags = useTagsQuery()
-
   return (
     <>
       <Wrapper isVisible={isVisible}>
         <Container>
-          <MenuList>
+          <Header>
+            <SidebarSectionHeader
+              fontSize="18px"
+              name="Hi, {user.nickname}"
+              rightComponent={
+                <SearchButton>
+                  <SearchIcon />
+                </SearchButton>
+              }
+            />
+          </Header>
+          <SidebarList>
             <SidebarItem
               icon={<InboxOutlinedIcon fontSize="inherit" />}
               name="Inbox"
@@ -158,20 +140,9 @@ function Sidebar() {
               name="Current Week"
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
-          </MenuList>
+          </SidebarList>
 
-          <TagsWrapper>
-            <SectionHeader>
-              <Icon>
-                <LocalOfferOutlinedIcon fontSize="inherit" color="inherit" />
-              </Icon>
-              <SectionName>Tags</SectionName>
-              <button type="button" onClick={_showTagInput}>
-                Add tag
-              </button>
-            </SectionHeader>
-            {tags.isSuccess ? <TagList tags={tags} /> : null}
-          </TagsWrapper>
+          <SidebarTagList />
         </Container>
       </Wrapper>
       <Backdrop isVisible={isVisible} onClick={_hideSidebar} />

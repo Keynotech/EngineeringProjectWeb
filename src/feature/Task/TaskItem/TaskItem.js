@@ -102,7 +102,6 @@ function TaskItem({ task }) {
                   key={tag._id}
                   variant="outlined"
                   size="small"
-                  onDelete={() => console.log("xd")}
                 />
               ))}
             </TagsContainer>

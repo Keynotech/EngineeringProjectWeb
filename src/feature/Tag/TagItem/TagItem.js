@@ -5,7 +5,10 @@ import styled, { css } from "styled-components"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
-import DropdownMenu from "../../../components/DropdownMenu/DropdownMenu"
+import {
+  DropdownMenu,
+  DropdownItemMenu,
+} from "../../../components/DropdownMenu"
 import useSingleTagQuery from "../../../hooks/query/useSingleTagQuery"
 import useDeleteTag from "../../../hooks/mutation/useDeleteTag"
 import {
@@ -54,11 +57,11 @@ function TagItem({ tagId, showMenu }) {
   const [displayMenuBtn, toggleDisplayMenuBtn] = useState(false)
   const [menuIsOpen, toggleMenu] = useState(false)
   const tag = useSingleTagQuery(tagId)
-  const deleteTagMutation = useDeleteTag(tagId)
-  const deleteTag = () => deleteTagMutation.mutate()
+  const deleteTagMutation = useDeleteTag()
+  const deleteTag = () => deleteTagMutation.mutate(tagId)
 
   const dispatch = useDispatch()
-  const _showTagInput = () => {
+  const _showTagEdit = () => {
     dispatch(showTagEdit())
   }
 
@@ -68,23 +71,11 @@ function TagItem({ tagId, showMenu }) {
 
   const openTagEdit = () => {
     _setTagEditId()
-    _showTagInput()
+    _showTagEdit()
   }
 
-  const menuItems = [
-    {
-      icon: <EditOutlinedIcon color="inherit" fontSize="inehrit" />,
-      title: "Edit tag",
-      onClick: openTagEdit,
-    },
-    {
-      icon: <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />,
-      title: "Delete tag",
-      onClick: deleteTag,
-    },
-  ]
   return (
-    <li
+    <div
       onMouseEnter={() => toggleDisplayMenuBtn(true)}
       onMouseLeave={() => {
         toggleMenu(false)
@@ -109,11 +100,23 @@ function TagItem({ tagId, showMenu }) {
                 onClick={() => toggleMenu(!menuIsOpen)}
               />
             }
-            menuItems={menuItems}
-          />
+          >
+            <DropdownItemMenu
+              leftIcon={<EditOutlinedIcon color="inherit" fontSize="inehrit" />}
+              label="Edit tag"
+              onClick={openTagEdit}
+            />
+            <DropdownItemMenu
+              leftIcon={
+                <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />
+              }
+              label="Delete tag"
+              onClick={deleteTag}
+            />
+          </DropdownMenu>
         </Menu>
       ) : null}
-    </li>
+    </div>
   )
 }
 
