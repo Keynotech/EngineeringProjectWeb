@@ -83,17 +83,17 @@ function DatePicker({
   ]
 
   const setTomorrow = () => {
-    onChange(dates[0].value.toDateString())
+    onChange(dates[0].value.toISOString())
     setIsOpen(false)
   }
 
   const setNextWeek = () => {
-    onChange(dates[1].value.toDateString())
+    onChange(dates[1].value.toISOString())
     setIsOpen(false)
   }
 
   const setNextMonth = () => {
-    onChange(dates[2].value.toDateString())
+    onChange(dates[2].value.toISOString())
     setIsOpen(false)
   }
 
@@ -125,7 +125,7 @@ function DatePicker({
             minDate={new Date()}
             value={value}
             onChange={(newValue) => {
-              onChange(newValue.toDateString())
+              onChange(newValue.toISOString())
               setIsOpen(false)
             }}
           />

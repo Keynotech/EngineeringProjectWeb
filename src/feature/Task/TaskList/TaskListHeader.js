@@ -2,6 +2,8 @@
 import React from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
+import TaskMenu from "./TaskMenu/TaskMenu"
+import SortController from "./SortController"
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,28 +19,23 @@ const Wrapper = styled.div`
   border-bottom: 1px solid transparent;
 `
 
-const Icon = styled.span`
-  display: flex;
-  align-items: center;
-  min-width: 32px;
-  font-size: 32px;
-`
-
 const TextContainer = styled.div`
   display: flex;
   flex: 1;
-  height: 20px;
+  height: 24px;
   align-items: flex-end;
 `
 
 const Name = styled.span`
-  font-weight: 600;
+  font-weight: 700;
   font-size: 20px;
+  line-height: 1.1;
   color: ${(props) => props.theme.textPrimary};
 `
 
 const Info = styled.span`
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 1.1;
   font-weight: 500;
   padding-left: 14px;
   color: ${(props) => props.theme.textTertiary};
@@ -48,7 +45,6 @@ const Info = styled.span`
 function TaskListHeader({ icon, name, additionaInfo }) {
   return (
     <Wrapper>
-      <Icon>{icon}</Icon>
       <TextContainer>
         <Name>{name}</Name>
         {additionaInfo ? <Info>{additionaInfo}</Info> : null}

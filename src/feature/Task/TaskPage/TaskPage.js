@@ -14,7 +14,7 @@ import ForwardOutlinedIcon from "@mui/icons-material/ForwardOutlined"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import { useTheme } from "styled-components"
 import { hideTaskPage } from "../../../store/features/layoutSlice"
-import Checkbox from "../../../components/button/Checkbox"
+import Checkbox from "../TaskCheckbox/TaskCheckbox"
 import TextInput from "../../../components/TextInput/TextInput"
 import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
 import DatePicker from "../../Pickers/DatePicker/DatePicker"
@@ -125,10 +125,9 @@ function TaskPage() {
         <MainContainer>
           <IconContainer>
             <Checkbox
-              id="task-status"
               checked={task.data.status}
-              priority={task.data.priority}
               onChange={changeStatus}
+              priority={task.data.priority}
             />
           </IconContainer>
           <TitleContainer>

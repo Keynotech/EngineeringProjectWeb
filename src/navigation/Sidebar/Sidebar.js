@@ -20,7 +20,7 @@ const Wrapper = styled.nav`
   height: 100vh;
   overflow-y: auto;
   z-index: ${zIndex.level9};
-  background-color: ${(props) => props.theme.background};
+  background-color: ${(props) => props.theme.primary};
   border-right: 1px solid ${(props) => props.theme.tertiary};
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
   will-change: left;
@@ -48,7 +48,7 @@ const Wrapper = styled.nav`
 
 const Container = styled.div`
   width: 100%;
-  padding-top: 5px;
+  padding-top: 10px;
   padding-bottom: 30px;
 `
 
@@ -82,8 +82,7 @@ const Header = styled.div`
   display: flex;
   flex-direction: row;
   height: 48px;
-  border-bottom: 1px solid ${(props) => props.theme.tertiary};
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `
 
 const SearchButton = styled.span`
@@ -116,7 +115,7 @@ function Sidebar() {
           <Header>
             <SidebarSectionHeader
               fontSize="16px"
-              name="Hi, {user.nickname}"
+              name="{user.nickname}"
               rightComponent={
                 <SearchButton>
                   <SearchIcon />

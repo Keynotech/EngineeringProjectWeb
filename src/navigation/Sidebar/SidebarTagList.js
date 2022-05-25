@@ -56,8 +56,8 @@ function SidebarTagList() {
       <SidebarSectionHeader name="Tags" />
 
       {tags.isSuccess ? (
-        <AnimatePresence>
-          <SidebarList>
+        <SidebarList>
+          <AnimatePresence>
             {tags.data.map((tag) => (
               <motion.div
                 key={tag._id}
@@ -106,8 +106,8 @@ function SidebarTagList() {
               onClick={_showTagInput}
               clickable
             />
-          </SidebarList>
-        </AnimatePresence>
+          </AnimatePresence>
+        </SidebarList>
       ) : null}
     </TagsWrapper>
   )

@@ -8,7 +8,6 @@ const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
-  border: 1px solid ${(props) => props.theme.tertiary};
 `
 
 const ToggleContainer = styled.span`

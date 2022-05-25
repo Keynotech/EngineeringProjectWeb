@@ -1,11 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React from "react"
 import { AnimatePresence } from "framer-motion"
+import { useQueryClient } from "react-query"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
 import TaskItem from "../TaskItem/TaskItem"
 import TaskInput from "../TaskInput/TaskInput"
+import TaskListHeader from "./TaskListHeader"
+import useTasksQuery from "../../../hooks/query/useTasksQuery"
+import SortController from "./SortController"
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,7 +20,20 @@ const Wrapper = styled.div`
   padding-bottom: 140px;
 `
 
-function TasksList({ tasks }) {
+function TasksList({ listName, listIcon }) {
+  const tasksQuery = useTasksQuery()
+  const queryClient = useQueryClient()
+  const setSortedTasks = (data) => {
+    const sortedList = [...data]
+    queryClient.setQueryData(["tasks"], sortedList)
+  }
+
+  const sortOptions = [
+    { name: "Created date", key: "createdAt", type: "date" },
+    { name: "Due date", key: "dueDate", type: "date" },
+    { name: "Priority", key: "priority", type: "int" },
+  ]
+
   // Selectors
   // ===========================================================================
   const taskInputVisibility = useSelector(
@@ -24,10 +42,24 @@ function TasksList({ tasks }) {
 
   return (
     <Wrapper>
+      <TaskListHeader
+        name={listName}
+        icon={listIcon}
+        additionaInfo={
+          tasksQuery.data ? `${tasksQuery.data.length} tasks` : null
+        }
+      />
+      <SortController
+        data={tasksQuery.data}
+        onSortChange={setSortedTasks}
+        sortOptions={sortOptions}
+      />
       <AnimatePresence>
         {taskInputVisibility ? <TaskInput /> : null}
-        {tasks.data.length
-          ? tasks.data.map((task) => <TaskItem task={task} key={task._id} />)
+        {tasksQuery.isSuccess
+          ? tasksQuery.data.map((task) => (
+              <TaskItem task={task} key={task._id} />
+            ))
           : null}
       </AnimatePresence>
     </Wrapper>
