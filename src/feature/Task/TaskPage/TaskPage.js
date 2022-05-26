@@ -57,7 +57,14 @@ function TaskPage() {
   // ===========================================================================
   let { taskId } = useParams()
   const task = useSingleTaskQuery(taskId)
-  const taskTags = useGetTaskTags(task.isSuccess ? task.data.tags : [])
+  const taskTags = useGetTaskTags(task && task.isSuccess ? task.data.tags : [])
+
+  let tags = null
+  if (taskTags) {
+    tags = taskTags.map((tag) => (
+      <Chip label={tag.tagName} key={tag._id} variant="outlined" size="small" />
+    ))
+  }
 
   // Local State
   // ===========================================================================
@@ -118,7 +125,7 @@ function TaskPage() {
     }
   }, [task.isError])
 
-  return task.isSuccess ? (
+  return task && task.isSuccess ? (
     <Wrapper>
       <Container>
         {isOpen ? <FileUpload ref={fileUploadRef} taskId={taskId} /> : null}
@@ -193,16 +200,7 @@ function TaskPage() {
             </SectionContainer>
 
             <SectionContainer>
-              <TagsContainer>
-                {taskTags?.map((tag) => (
-                  <Chip
-                    label={tag.tagName}
-                    key={tag._id}
-                    onDelete={() => console.log("delete")}
-                    size="small"
-                  />
-                ))}
-              </TagsContainer>
+              <TagsContainer>{tags}</TagsContainer>
             </SectionContainer>
 
             <SectionContainer>

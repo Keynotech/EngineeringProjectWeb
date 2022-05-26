@@ -14,8 +14,8 @@ import useTagsQuery from "../../hooks/query/useTagsQuery"
 import useDeleteTag from "../../hooks/mutation/useDeleteTag"
 import SidebarSectionHeader from "./SidebarSectionHeader"
 import SidebarList from "./SidebarList"
+import SidebarLink from "./SidebarLink"
 import SidebarItem from "./SidebarItem"
-// import SidebarLink from "./SidebarLink"
 import { DropdownItemMenu } from "../../components/DropdownMenu"
 
 const TagsWrapper = styled.div`
@@ -66,9 +66,10 @@ function SidebarTagList() {
                 exit={{ x: 200, opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
-                <SidebarItem
+                <SidebarLink
                   icon={<TagColor color={tag.color} />}
                   name={tag.tagName}
+                  route={`tag/${tag._id}`}
                   fontWeight="light"
                   menuContent={
                     <>

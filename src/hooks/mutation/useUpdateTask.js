@@ -7,7 +7,6 @@ function useUpdateTask(taskId) {
   return useMutation((props) => patch({ taskId, props }), {
     onMutate: async (edited) => {
       await queryClient.cancelQueries(["tasks"])
-      await queryClient.cancelQueries(["tasks", taskId])
       const previousTasks = await queryClient.getQueryData(["tasks"])
       const index = previousTasks.findIndex((task) => task._id === taskId)
       const previousTask = previousTasks[index]
@@ -25,14 +24,7 @@ function useUpdateTask(taskId) {
       queryClient.setQueryData(["tasks"], previousTasks)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["tasks", taskId],
-        refetchActive: false,
-      })
-      queryClient.invalidateQueries({
-        queryKey: ["tasks"],
-        refetchActive: false,
-      })
+      queryClient.invalidateQueries(["tasks"])
     },
   })
 }

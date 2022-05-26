@@ -1,28 +1,39 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { AnimatePresence } from "framer-motion"
 import TaskItem from "../TaskItem/TaskItem"
 
+const Section = styled.section`
+  padding-bottom: 20px;
+
+  ${({ isSectionName }) =>
+    isSectionName &&
+    css`
+      padding-top: 20px;
+    `};
+`
+
 const SectionTitle = styled.h2`
   font-size: 14px;
+  padding-bottom: 10px;
 `
 
 function ListSection({ title, array }) {
   let sectionName = null
   if (title) {
-    sectionName = <h4>{title}</h4>
+    sectionName = <SectionTitle>{title}</SectionTitle>
   }
 
   return (
-    <section>
-      <SectionTitle>{sectionName}</SectionTitle>
+    <Section isSectionName={sectionName || false}>
+      {sectionName}
       <AnimatePresence>
         {array?.map((task) => (
           <TaskItem task={task} key={task._id} />
         ))}
       </AnimatePresence>
-    </section>
+    </Section>
   )
 }
 

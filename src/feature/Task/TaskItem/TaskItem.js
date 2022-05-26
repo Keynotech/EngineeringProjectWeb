@@ -29,6 +29,13 @@ function TaskItem({ task }) {
   // ===========================================================================
   const taskTags = useGetTaskTags(task.tags)
 
+  let tags = null
+  if (taskTags) {
+    tags = taskTags.map((tag) => (
+      <Chip label={tag.tagName} key={tag._id} variant="outlined" size="small" />
+    ))
+  }
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -95,16 +102,7 @@ function TaskItem({ task }) {
                 <InsertDriveFileOutlinedIcon fontSize="inherit" />
               ) : null}
             </PropertiesIcons>
-            <TagsContainer>
-              {taskTags.map((tag) => (
-                <Chip
-                  label={tag.tagName}
-                  key={tag._id}
-                  variant="outlined"
-                  size="small"
-                />
-              ))}
-            </TagsContainer>
+            <TagsContainer>{tags}</TagsContainer>
           </MainContainer>
 
           {displayTasksDetails && task.description ? (

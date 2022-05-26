@@ -27,12 +27,10 @@ function useGroupBy({ data, groupOptions, onGroupChange }) {
   }
 
   useEffect(() => {
-    if (data?.length) {
-      let groupedData = [...data]
-      if (onGroupChange) {
-        groupedData = groupData(groupedData)
-        onGroupChange(groupedData)
-      }
+    let groupedData = [...data]
+    if (onGroupChange) {
+      groupedData = groupData(groupedData)
+      onGroupChange(groupedData)
     }
   }, [data, groupOption])
 

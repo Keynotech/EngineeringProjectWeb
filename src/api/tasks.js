@@ -14,6 +14,9 @@ const post = async ({ title, status, dueDate, priority, tags }) =>
 const getAll = async () => fetchWithError(`${API_URL}`)
 const getOne = async (taskId) => fetchWithError(`${API_URL}/${taskId}`)
 
+const getTaskByTag = async (tagId) =>
+  fetchWithError(`${API_URL}/findByTag/${tagId}`)
+
 const del = async (taskId) =>
   fetchWithError(`${API_URL}/${taskId}`, {
     method: "DELETE",
@@ -28,4 +31,4 @@ const patch = async ({ taskId, props }) =>
     body: JSON.stringify({ ...props }),
   })
 
-export { post, getAll, getOne, del, patch }
+export { post, getAll, getOne, getTaskByTag, del, patch }
