@@ -30,13 +30,13 @@ function DropdownMenu({ isOpen, outsideClick, toggle, children }) {
 
   const togglePopover = (e) => {
     if (isOpen) {
+      e.preventDefault()
+      e.stopPropagation()
       handleClose()
-      e.preventDefault()
-      e.stopPropagation()
     } else {
-      handleOpen(e)
       e.preventDefault()
       e.stopPropagation()
+      handleOpen(e)
     }
   }
 

@@ -139,8 +139,17 @@ function Chip({
       </DeleteIconWrapper>
     )
   }
+
+  const _onClick = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    if (onClick) {
+      onClick()
+    }
+  }
+
   return (
-    <ChipWrapper onClick={onClick} ownerState={ownerState}>
+    <ChipWrapper onClick={_onClick} ownerState={ownerState}>
       {icon}
       <ChipLabel ownerState={ownerState}> {label}</ChipLabel>
       {deleteIcon}

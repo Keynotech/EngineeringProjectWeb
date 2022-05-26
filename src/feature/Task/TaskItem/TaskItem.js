@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import { useTheme } from "styled-components"
-import { showTaskPage } from "../../../store/features/layoutSlice"
+import { hideTaskPage, showTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../TaskCheckbox/TaskCheckbox"
 import {
   Wrapper,
@@ -23,23 +23,18 @@ import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
 import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
 import Chip from "../../../components/Chip/Chip"
+import { useNavigate } from "react-router-dom"
 
 function TaskItem({ task }) {
   // Query
   // ===========================================================================
   const taskTags = useGetTaskTags(task.tags)
 
-  let tags = null
-  if (taskTags) {
-    tags = taskTags.map((tag) => (
-      <Chip label={tag.tagName} key={tag._id} variant="outlined" size="small" />
-    ))
-  }
-
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
   const _showTaskPage = () => dispatch(showTaskPage())
+  const _hideTaskPage = () => dispatch(hideTaskPage())
 
   // Selectors
   // ===========================================================================
@@ -68,6 +63,24 @@ function TaskItem({ task }) {
   // Others
   // ===========================================================================
   const theme = useTheme()
+  const navigate = useNavigate()
+
+  let tags = null
+  if (taskTags) {
+    tags = taskTags.map((tag) => (
+      <Chip
+        onClick={() => {
+          navigate(`/tag/${tag._id}`)
+          _hideTaskPage()
+        }}
+        label={tag.tagName}
+        key={tag._id}
+        variant="outlined"
+        size="small"
+        clickable
+      />
+    ))
+  }
 
   return (
     <motion.div

@@ -63,6 +63,7 @@ function DropdownItemMenu({
 
   const _onClick = (e) => {
     e.stopPropagation()
+    e.preventDefault()
     if (onClick) {
       onClick()
     }

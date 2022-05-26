@@ -16,6 +16,10 @@ import {
   setTagEditId,
 } from "../../../store/features/tagEditPageSlice"
 
+const Wrapper = styled.div`
+  display: flex;
+`
+
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -75,7 +79,7 @@ function TagItem({ tagId, showMenu }) {
   }
 
   return (
-    <div
+    <Wrapper
       onMouseEnter={() => toggleDisplayMenuBtn(true)}
       onMouseLeave={() => {
         toggleMenu(false)
@@ -116,7 +120,7 @@ function TagItem({ tagId, showMenu }) {
           </DropdownMenu>
         </Menu>
       ) : null}
-    </div>
+    </Wrapper>
   )
 }
 

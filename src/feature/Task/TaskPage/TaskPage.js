@@ -53,18 +53,17 @@ import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
 import Chip from "../../../components/Chip/Chip"
 
 function TaskPage() {
+  // Others
+  // ===========================================================================
+  const theme = useTheme()
+  const navigate = useNavigate()
+  const goBack = () => navigate("../")
+
   // Queries
   // ===========================================================================
   let { taskId } = useParams()
   const task = useSingleTaskQuery(taskId)
   const taskTags = useGetTaskTags(task && task.isSuccess ? task.data.tags : [])
-
-  let tags = null
-  if (taskTags) {
-    tags = taskTags.map((tag) => (
-      <Chip label={tag.tagName} key={tag._id} variant="outlined" size="small" />
-    ))
-  }
 
   // Local State
   // ===========================================================================
@@ -79,12 +78,6 @@ function TaskPage() {
   // ===========================================================================
   const dispatch = useDispatch()
   const _hideTaskPage = () => dispatch(hideTaskPage())
-
-  // Others
-  // ===========================================================================
-  const theme = useTheme()
-  const navigate = useNavigate()
-  const goBack = () => navigate("../")
 
   // Mutations
   // ===========================================================================
@@ -121,9 +114,24 @@ function TaskPage() {
 
   useEffect(() => {
     if (task.isError) {
+      _hideTaskPage()
       goBack()
     }
   }, [task.isError])
+
+  let tags = null
+  if (taskTags) {
+    tags = taskTags.map((tag) => (
+      <Chip
+        onClick={() => navigate(`/tag/${tag._id}/tasks/${taskId}`)}
+        label={tag.tagName}
+        key={tag._id}
+        variant="outlined"
+        size="small"
+        clickable
+      />
+    ))
+  }
 
   return task && task.isSuccess ? (
     <Wrapper>

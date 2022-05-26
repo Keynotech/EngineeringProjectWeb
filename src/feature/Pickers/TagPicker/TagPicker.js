@@ -18,12 +18,16 @@ const Wrapper = styled.ul`
 `
 
 const Item = styled.div`
-  font-size: 14px;
   display: flex;
+  width: 100%;
+  overflow: visible;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-right: 8px;
+  gap: 14px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  font-size: 14px;
   cursor: pointer;
 
   &:hover {
@@ -35,8 +39,6 @@ const AddNewTag = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
-  min-height: 24px;
 `
 
 function TagPicker({

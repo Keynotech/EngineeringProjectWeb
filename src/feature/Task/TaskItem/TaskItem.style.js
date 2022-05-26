@@ -35,7 +35,6 @@ const MainContainer = styled.div`
   gap: 8px;
   height: 32px;
   width: 100%;
-  cursor: pointer;
 `
 const Title = styled.span`
   font-size: 12px;
