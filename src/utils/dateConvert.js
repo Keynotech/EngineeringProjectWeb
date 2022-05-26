@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { format } from "date-fns"
+import { format, isSameQuarter } from "date-fns"
 
 function convertDateToJS(value) {
   return new Date(value)
@@ -7,7 +7,13 @@ function convertDateToJS(value) {
 
 function formatDateToDisplay(value) {
   const date = convertDateToJS(value)
-  return format(date, "LLL do")
+  let res = null
+  if (isSameQuarter(date, new Date())) {
+    res = format(date, "LLL do")
+  } else {
+    res = format(date, "LLL do yyyy")
+  }
+  return res
 }
 
 function formatDateTimeToDisplay(value) {

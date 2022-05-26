@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
-import { LegendToggle } from "@mui/icons-material"
 import { useState, useEffect } from "react"
 import compareDate from "../../utils/sort/compareDate"
 import compareInt from "../../utils/sort/compareInt"

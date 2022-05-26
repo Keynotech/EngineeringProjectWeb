@@ -1,3 +1,7 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable func-names */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-lonely-if */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-restricted-syntax */
 /*
@@ -42,43 +46,30 @@ function TasksList({ tasks }) {
 
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react"
-import compareDate from "../../utils/sort/compareDate"
-import compareInt from "../../utils/sort/compareInt"
-
-function Section({ name, tasks }) {
-  return (
-    <div>
-      <h2>{name}</h2>
-      {tasks.map((task) => (
-        <li key={task._id}>
-          <input type="checkbox" checked={task.status} />
-          <span>{task.title}</span>
-        </li>
-      ))}
-    </div>
-  )
-}
+import { useState, useEffect } from "react"
+import groupByDate from "./groupByDate"
+import groupByPriority from "./groupByPriority"
 
 function useGroupBy({ data, groupOptions, onGroupChange }) {
-  const [groupKey, setGroupKey] = useState(groupOptions[0].key)
-  const [sortKeyType, setSortKeyType] = useState(groupOptions[0].type)
+  const [groupOption, setGroupOption] = useState(groupOptions[0])
 
   const groupData = (arr) => {
-    const arrByPropertie = {}
-    const sections = []
-    arr.forEach((element) => {
-      if (
-        Object.prototype.hasOwnProperty.call(arrByPropertie, element[groupKey])
-      ) {
-        arrByPropertie[element[groupKey]].push(element)
-      } else {
-        arrByPropertie[element[groupKey]] = [element]
-      }
-    })
-    for (const [propertie, tasksStatus] of Object.entries(arrByPropertie)) {
-      sections.push(Section(propertie, tasksStatus))
+    let arrByPropertie = {}
+    const { key } = groupOption
+
+    if (key === "default") {
+      arrByPropertie = [{ key: "default", name: null, array: data }]
+    } else if (key === "createdAt") {
+      const nullKeyName = ""
+      arrByPropertie = groupByDate({ arr, key, nullKeyName })
+    } else if (key === "dueDate") {
+      const nullKeyName = "No due date"
+      arrByPropertie = groupByDate({ arr, key, nullKeyName })
+    } else if (key === "priority") {
+      arrByPropertie = groupByPriority({ arr, key })
     }
+
+    return arrByPropertie
   }
 
   useEffect(() => {
@@ -89,18 +80,17 @@ function useGroupBy({ data, groupOptions, onGroupChange }) {
         onGroupChange(groupedData)
       }
     }
-  }, [data, groupKey])
+  }, [data, groupOption])
 
-  const handleGroupKeyChange = (key, type) => {
-    if (groupKey !== key) {
-      setGroupKey(key)
-      setSortKeyType(type)
+  const handleGroupOptionChange = (newGroupOption) => {
+    if (groupOption !== newGroupOption) {
+      setGroupOption(newGroupOption)
     }
   }
 
   return {
-    handleGroupKeyChange,
-    groupKey,
+    handleGroupOptionChange,
+    groupOption,
   }
 }
 

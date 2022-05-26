@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import FilterListIcon from "@mui/icons-material/FilterList"
 import styled from "styled-components"
 import PropTypes from "prop-types"
-import { DropdownMenu } from "../../../../components/DropdownMenu"
+import { DropdownMenu } from "../../../components/DropdownMenu"
 
 const ToggleWrapper = styled.div`
   display: flex;

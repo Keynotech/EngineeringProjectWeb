@@ -1,16 +1,14 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
-import React from "react"
-import { AnimatePresence } from "framer-motion"
-import { useQueryClient } from "react-query"
+import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
-import TaskItem from "../TaskItem/TaskItem"
 import TaskInput from "../TaskInput/TaskInput"
 import TaskListHeader from "./TaskListHeader"
-import useTasksQuery from "../../../hooks/query/useTasksQuery"
-import SortController from "./SortController"
+import GroupController from "./GroupController"
+import ListSection from "./ListSection"
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,18 +18,17 @@ const Wrapper = styled.div`
   padding-bottom: 140px;
 `
 
-function TasksList({ listName, listIcon }) {
-  const tasksQuery = useTasksQuery()
-  const queryClient = useQueryClient()
-  const setSortedTasks = (data) => {
-    const sortedList = [...data]
-    queryClient.setQueryData(["tasks"], sortedList)
+function TasksList({ tasks, listName, listIcon }) {
+  const [sections, setSections] = useState()
+  const onGroupChange = (data) => {
+    setSections(data)
   }
 
-  const sortOptions = [
-    { name: "Created date", key: "createdAt", type: "date" },
-    { name: "Due date", key: "dueDate", type: "date" },
-    { name: "Priority", key: "priority", type: "int" },
+  const groupOptions = [
+    { name: "Default", key: "default" },
+    { name: "Due date", key: "dueDate" },
+    { name: "Created date", key: "createdAt" },
+    { name: "Priority", key: "priority" },
   ]
 
   // Selectors
@@ -45,23 +42,25 @@ function TasksList({ listName, listIcon }) {
       <TaskListHeader
         name={listName}
         icon={listIcon}
-        additionaInfo={
-          tasksQuery.data ? `${tasksQuery.data.length} tasks` : null
-        }
-      />
-      <SortController
-        data={tasksQuery.data}
-        onSortChange={setSortedTasks}
-        sortOptions={sortOptions}
-      />
-      <AnimatePresence>
-        {taskInputVisibility ? <TaskInput /> : null}
-        {tasksQuery.isSuccess
-          ? tasksQuery.data.map((task) => (
-              <TaskItem task={task} key={task._id} />
-            ))
-          : null}
-      </AnimatePresence>
+        additionaInfo={`${tasks.length} tasks`}
+      >
+        <GroupController
+          data={tasks}
+          onGroupChange={onGroupChange}
+          groupOptions={groupOptions}
+        />
+      </TaskListHeader>
+
+      {taskInputVisibility ? <TaskInput /> : null}
+      {sections && sections.length
+        ? sections.map((section) => (
+            <ListSection
+              key={section.key}
+              title={section.name}
+              array={section.array}
+            />
+          ))
+        : null}
     </Wrapper>
   )
 }

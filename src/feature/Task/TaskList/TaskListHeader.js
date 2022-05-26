@@ -2,8 +2,6 @@
 import React from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
-import TaskMenu from "./TaskMenu/TaskMenu"
-import SortController from "./SortController"
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,24 +40,30 @@ const Info = styled.span`
   opacity: 0.8;
 `
 
-function TaskListHeader({ icon, name, additionaInfo }) {
+function TaskListHeader({ children, name, additionaInfo }) {
+  let childrenElem = null
+  if (children) {
+    childrenElem = <div>{children}</div>
+  }
   return (
     <Wrapper>
       <TextContainer>
         <Name>{name}</Name>
         {additionaInfo ? <Info>{additionaInfo}</Info> : null}
       </TextContainer>
+      {childrenElem}
     </Wrapper>
   )
 }
 
 TaskListHeader.propTypes = {
-  icon: PropTypes.element.isRequired,
+  children: PropTypes.node,
   name: PropTypes.string.isRequired,
   additionaInfo: PropTypes.string,
 }
 
 TaskListHeader.defaultProps = {
+  children: null,
   additionaInfo: null,
 }
 
