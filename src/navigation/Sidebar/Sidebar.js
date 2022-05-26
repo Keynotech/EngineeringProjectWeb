@@ -10,6 +10,7 @@ import { hideSidebar } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
 import SidebarList from "./SidebarList"
+import SidebarProjectList from "./SidebarProjectList"
 import SidebarTagList from "./SidebarTagList"
 import SidebarSectionHeader from "./SidebarSectionHeader"
 
@@ -140,7 +141,7 @@ function Sidebar() {
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
           </SidebarList>
-
+          <SidebarProjectList />
           <SidebarTagList />
         </Container>
       </Wrapper>

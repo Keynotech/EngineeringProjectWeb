@@ -7,6 +7,7 @@ export const layoutSlice = createSlice({
     taskPageVisibility: false,
     taskInputVisibility: false,
     tagInputVisibility: false,
+    projectInputVisibility: false,
   },
   reducers: {
     showSidebar: (state) => {
@@ -39,6 +40,12 @@ export const layoutSlice = createSlice({
     hideTagInput: (state) => {
       state.tagInputVisibility = false
     },
+    hideProjectInput: (state) => {
+      state.projectInputVisibility = false
+    },
+    showProjectInput: (state) => {
+      state.projectInputVisibility = true
+    },
   },
 })
 export const {
@@ -52,5 +59,7 @@ export const {
   hideTaskInput,
   showTagInput,
   hideTagInput,
+  hideProjectInput,
+  showProjectInput,
 } = layoutSlice.actions
 export default layoutSlice.reducer

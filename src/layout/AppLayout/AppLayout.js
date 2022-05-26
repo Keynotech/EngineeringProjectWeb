@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from "react-redux"
 import Sidebar from "../../navigation/Sidebar/Sidebar"
 import { hideSidebar, showSidebar } from "../../store/features/layoutSlice"
 import TagInput from "../../feature/Tag/TagInput/TagInput"
+import ProjectInput from "../../feature/Project/ProjectInput/ProjectInput"
 import useWindowSize from "../../hooks/useWindowSize"
 import { size, mq } from "../../utils/mq"
 import TagEdit from "../../feature/Tag/TagInput/TagEdit"
+import ProjectEdit from "../../feature/Project/ProjectInput/ProjectEdit"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -54,7 +56,15 @@ function AppLayout() {
     (state) => state.layout.taskPageVisibility
   )
 
+  const projectInputVisibility = useSelector(
+    (state) => state.layout.projectInputVisibility
+  )
+
   const tagEditVisibility = useSelector((state) => state.tagEditPage.visibility)
+
+  const projectEditVisibility = useSelector(
+    (state) => state.projectEditPage.visibility
+  )
 
   // Dispatch
   // ===========================================================================
@@ -90,6 +100,8 @@ function AppLayout() {
       </Container>
       {tagInputVisibility ? <TagInput /> : null}
       {tagEditVisibility ? <TagEdit /> : null}
+      {projectInputVisibility ? <ProjectInput /> : null}
+      {projectEditVisibility ? <ProjectEdit /> : null}
     </Wrapper>
   )
 }
