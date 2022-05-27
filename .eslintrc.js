@@ -11,7 +11,13 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
+
   rules: {
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "no-param-reassign": [
+      "error",
+      { props: true, ignorePropertyModificationsFor: ["state"] },
+    ],
+    "no-underscore-dangle": "off",
   },
 }

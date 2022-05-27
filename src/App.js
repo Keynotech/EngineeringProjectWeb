@@ -1,27 +1,27 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
 import React from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import GlobalStyle from "./styles/globalStyle"
-import Today from "./pages/App/Today/Today"
-import Inbox from "./pages/App/Inbox/Inbox"
-import AppLayout from "./components/layout/AppLayout"
-
-const queryClient = new QueryClient()
+import { useSelector } from "react-redux"
+import { ThemeProvider } from "styled-components"
+import light from "./styles/light"
+import dark from "./styles/dark"
+import GlobalStyle from "./styles/GlobalStyle"
+import Navigation from "./navigation/Navigation"
+import useWindowDragDetect from "./hooks/useWindowDragDetect"
 
 function App() {
+  const queryClient = new QueryClient()
+
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode)
+  const windowDragDetect = useWindowDragDetect()
+
   return (
     <QueryClientProvider client={queryClient}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Navigate replace to="/today" />} />
-            <Route path="*" element={<Navigate replace to="/" />} />
-            <Route path="/today" element={<Today />} />
-            <Route path="/inbox" element={<Inbox />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={isDarkMode === true ? dark : light}>
+        <GlobalStyle />
+        <Navigation />
+      </ThemeProvider>
     </QueryClientProvider>
   )
 }
