@@ -4,7 +4,7 @@ export const projectEditSlice = createSlice({
   name: "projectEditSliceEditPage",
   initialState: {
     visibility: false,
-    tagId: null,
+    projectId: null,
   },
   reducers: {
     showProjectEdit: (state) => {
@@ -13,8 +13,8 @@ export const projectEditSlice = createSlice({
     hideProjectEdit: (state) => {
       state.visibility = false
     },
-    setProjectEditId: (state, tagId) => {
-      state.tagId = tagId
+    setProjectEditId: (state, projectId) => {
+      state.projectId = projectId
     },
   },
 })

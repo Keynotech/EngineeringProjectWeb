@@ -27,7 +27,6 @@ function useUpdateProject(projectId) {
     onSuccess: () => {
       queryClient.invalidateQueries(["projects", projectId])
       queryClient.invalidateQueries(["projects"])
-      queryClient.invalidateQueries(["projects"])
     },
   })
 }

@@ -19,6 +19,7 @@ import TextInput from "../../../components/TextInput/TextInput"
 import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
 import DatePicker from "../../Pickers/DatePicker/DatePicker"
 import TagPicker from "../../Pickers/TagPicker/TagPicker"
+import ProjectPicker from "../../Pickers/ProjectPicker/ProjectPicker"
 import { formatDateTimeToDisplay } from "../../../utils/dateConvert"
 import {
   Wrapper,
@@ -99,7 +100,7 @@ function TaskPage() {
   const changeStatus = () =>
     updateTaskMutation.mutate({ status: !task.data.status })
   const changeTags = (value) => updateTaskMutation.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
-
+  const changeProject = (value) => updateTaskMutation.mutate({ project: value })
   // ref
   // ===========================================================================
   const fileUploadRef = useRef()
@@ -171,6 +172,12 @@ function TaskPage() {
         </MainContainer>
         <DetailsContainer>
           <PropertiesContainer>
+            <ProjectPicker
+              useCapture
+              onChange={changeProject}
+              value={task.data.project}
+              border={`1px solid ${theme.tertiary} `}
+            />
             <PriorityPicker
               useCapture
               onChange={changePriority}

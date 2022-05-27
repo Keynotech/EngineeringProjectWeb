@@ -10,9 +10,9 @@ import GlobalStyle from "./styles/GlobalStyle"
 import Navigation from "./navigation/Navigation"
 import useWindowDragDetect from "./hooks/useWindowDragDetect"
 
-const queryClient = new QueryClient()
-
 function App() {
+  const queryClient = new QueryClient()
+
   const isDarkMode = useSelector((state) => state.theme.isDarkMode)
   const windowDragDetect = useWindowDragDetect()
 

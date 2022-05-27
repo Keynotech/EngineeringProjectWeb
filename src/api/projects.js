@@ -28,4 +28,8 @@ const patch = async ({ projectId, props }) =>
     },
     body: JSON.stringify({ ...props }),
   })
-export { post, getAll, getOne, del, patch }
+
+const getTaskByProject = async (projectId) =>
+  fetchWithError(`${API_URL}/${projectId}/tasks`)
+
+export { post, getAll, getOne, del, patch, getTaskByProject }

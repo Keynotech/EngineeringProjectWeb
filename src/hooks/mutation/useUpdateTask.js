@@ -5,22 +5,22 @@ function useUpdateTask(taskId) {
   const queryClient = useQueryClient()
 
   return useMutation((props) => patch({ taskId, props }), {
-    onMutate: async (edited) => {
-      await queryClient.cancelQueries(["tasks"])
-      const previousTasks = await queryClient.getQueryData(["tasks"])
-      const index = previousTasks.findIndex((task) => task._id === taskId)
-      const previousTask = previousTasks[index]
-      const updatedTask = { ...previousTask, ...edited, updated: new Date() }
-      const updatedTasksList = [...previousTasks]
-      updatedTasksList[index] = updatedTask
-      queryClient.setQueryData(["tasks"], updatedTasksList)
-      queryClient.setQueryData(["tasks", taskId], updatedTask)
+    onMutate: (edited) => {
+      const previousTasks = queryClient.getQueryData(["tasks"])
+      if (previousTasks) {
+        const index = previousTasks.findIndex((task) => task._id === taskId)
+        const previousTask = previousTasks[index]
+        const updatedTask = { ...previousTask, ...edited, updated: new Date() }
+        const updatedTasksList = [...previousTasks]
+        updatedTasksList[index] = updatedTask
+        queryClient.setQueryData(["tasks"], updatedTasksList)
+        queryClient.setQueryData(["tasks", taskId], updatedTask)
+      }
 
-      return { previousTask, previousTasks }
+      return { previousTasks }
     },
 
-    onError: ({ previousTask, previousTasks }) => {
-      queryClient.setQueryData(["tasks", taskId], previousTask)
+    onError: ({ previousTasks }) => {
       queryClient.setQueryData(["tasks"], previousTasks)
     },
     onSuccess: () => {

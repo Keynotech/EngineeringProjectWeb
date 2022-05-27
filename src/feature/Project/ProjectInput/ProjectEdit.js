@@ -3,14 +3,14 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import ProjectInputLayout from "./ProjectInput.layout"
-import useSingleTagQuery from "../../../hooks/query/useSingleTagQuery"
+import useSingleProjectQuery from "../../../hooks/query/useSingleProjectQuery"
 import useUpdateProject from "../../../hooks/mutation/useUpdateProject"
 import { hideProjectEdit } from "../../../store/features/projectEditPageSlice"
 
 function ProjectEdit() {
   const projectId = useSelector((state) => state.projectEditPage.projectId)
   const updateProject = useUpdateProject(projectId.payload)
-  const project = useSingleTagQuery(projectId.payload)
+  const project = useSingleProjectQuery(projectId.payload)
 
   const dispatch = useDispatch()
   const _hideProjectEdit = () => {

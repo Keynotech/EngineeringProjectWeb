@@ -6,6 +6,7 @@ import CurrentWeek from "../pages/App/CurrentWeek/CurrentWeek"
 import AppLayout from "../layout/AppLayout/AppLayout"
 import TaskPage from "../feature/Task/TaskPage/TaskPage"
 import TagPage from "../pages/App/TagPage/TagPage"
+import ProjectPage from "../pages/App/ProjectPage/ProjectPage"
 
 function Navigation() {
   return (
@@ -24,6 +25,9 @@ function Navigation() {
             <Route path="tasks/:taskId" element={<TaskPage />} />
           </Route>
           <Route path="/tag/:tagId" element={<TagPage />}>
+            <Route path="tasks/:taskId" element={<TaskPage />} />
+          </Route>
+          <Route path="/project/:projectId" element={<ProjectPage />}>
             <Route path="tasks/:taskId" element={<TaskPage />} />
           </Route>
         </Route>

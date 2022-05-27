@@ -57,12 +57,16 @@ const PropertiesIcons = styled.div`
   font-size: 14px;
 `
 
-export const TagsContainer = styled.div`
+const TagsContainer = styled.div`
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
   gap: 8px;
   overflow: hidden;
+`
+
+const ProjectInfo = styled.div`
+  margin-left: auto;
 `
 
 const Description = styled.div`
@@ -84,7 +88,9 @@ export {
   CheckboxContainer,
   MainContainer,
   Title,
+  TagsContainer,
   PropertiesIcons,
+  ProjectInfo,
   Description,
   DescriptionInner,
 }

@@ -51,6 +51,7 @@ function TaskInput() {
       dueDate: null,
       priority: 1,
       tags: [],
+      project: null,
     },
     validationSchema: CreateTagSchema,
 
@@ -61,6 +62,7 @@ function TaskInput() {
         dueDate: values.dueDate,
         priority: values.priority,
         tags: values.tags,
+        project: values.project,
       })
       _hideTaskInput()
     },

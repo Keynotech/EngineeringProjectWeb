@@ -5,6 +5,7 @@ import styled from "styled-components"
 import AddIcon from "@mui/icons-material/Add"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
+import { useNavigate, useLocation } from "react-router-dom"
 import { showProjectInput } from "../../store/features/layoutSlice"
 import {
   showProjectEdit,
@@ -30,6 +31,9 @@ const TagColor = styled.div`
 `
 
 function SidebarProjectList() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
   // Query
   // ===========================================================================
   const projects = useProjectsQuery()
@@ -49,7 +53,12 @@ function SidebarProjectList() {
   // Mutations
   // ===========================================================================
   const deleteProjectMutation = useDeleteProject()
-  const deleteProject = (tagId) => deleteProjectMutation.mutate(tagId)
+  const deleteProject = (projectId) => {
+    deleteProjectMutation.mutate(projectId)
+    if (location.pathname === `/project/${projectId}`) {
+      navigate("inbox")
+    }
+  }
 
   return (
     <TagsWrapper>
@@ -81,7 +90,9 @@ function SidebarProjectList() {
                           />
                         }
                         label="Edit project"
-                        onClick={() => openProjectEdit(project._id)}
+                        onClick={() => {
+                          openProjectEdit(project._id)
+                        }}
                       />
                       <DropdownItemMenu
                         leftIcon={

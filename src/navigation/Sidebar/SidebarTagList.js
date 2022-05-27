@@ -1,6 +1,7 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { AnimatePresence, motion } from "framer-motion"
+import { useNavigate, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import AddIcon from "@mui/icons-material/Add"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
@@ -10,6 +11,7 @@ import {
   showTagEdit,
   setTagEditId,
 } from "../../store/features/tagEditPageSlice"
+
 import useTagsQuery from "../../hooks/query/useTagsQuery"
 import useDeleteTag from "../../hooks/mutation/useDeleteTag"
 import SidebarSectionHeader from "./SidebarSectionHeader"
@@ -30,6 +32,8 @@ const TagColor = styled.div`
 `
 
 function SidebarTagList() {
+  const location = useLocation()
+  const navigate = useNavigate()
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
@@ -49,7 +53,12 @@ function SidebarTagList() {
   // Mutations
   // ===========================================================================
   const deleteTagMutation = useDeleteTag()
-  const deleteTag = (tagId) => deleteTagMutation.mutate(tagId)
+  const deleteTag = (tagId) => {
+    deleteTagMutation.mutate(tagId)
+    if (location.pathname === `/tag/${tagId}`) {
+      navigate("inbox")
+    }
+  }
 
   return (
     <TagsWrapper>

@@ -1,25 +1,24 @@
 import { useMutation, useQueryClient } from "react-query"
-import { del } from "../../api/tags"
+import { del } from "../../api/projects"
 
 function useDeleteTag() {
   const queryClient = useQueryClient()
 
   return useMutation((projectId) => del(projectId), {
     onMutate: async (projectId) => {
+      queryClient.invalidateQueries(["tasks"])
       const previousProjects = queryClient.getQueryData(["projects"])
       const deletedProjectIndex = previousProjects.findIndex(
-        (tag) => tag._id === projectId
+        (project) => project._id === projectId
       )
       const removedProject = [...previousProjects]
       removedProject.splice(deletedProjectIndex, 1)
       queryClient.setQueryData(["projects"], removedProject)
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["projects"],
-        refetchActive: false,
-      })
+    onSuccess: (projectId) => {
+      queryClient.invalidateQueries(["projects", projectId])
       queryClient.invalidateQueries(["projects"])
+      queryClient.invalidateQueries(["tasks"])
     },
   })
 }

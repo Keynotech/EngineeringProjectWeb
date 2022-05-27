@@ -3,7 +3,7 @@ import { getOne } from "../../api/tasks"
 
 function useTaskQuery(taskId) {
   const data = useQuery(["tasks", taskId], () => getOne(taskId), {
-    retry: 2,
+    retry: 0,
   })
   return data
 }

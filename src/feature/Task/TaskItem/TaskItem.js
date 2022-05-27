@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/order */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
@@ -15,12 +16,14 @@ import {
   MainContainer,
   Title,
   PropertiesIcons,
+  ProjectInfo,
   Description,
   DescriptionInner,
   TagsContainer,
 } from "./TaskItem.style"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
+import ProjectPropertie from "../../Pickers/ProjectPicker/ProjectPropertie"
 import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
 import Chip from "../../../components/Chip/Chip"
 import { useNavigate } from "react-router-dom"
@@ -28,7 +31,7 @@ import { useNavigate } from "react-router-dom"
 function TaskItem({ task }) {
   // Query
   // ===========================================================================
-  const taskTags = useGetTaskTags(task.tags)
+  const taskTags = useGetTaskTags(task ? task.tags : [])
 
   // Dispatch
   // ===========================================================================
@@ -82,6 +85,12 @@ function TaskItem({ task }) {
     ))
   }
 
+  const project = (
+    <ProjectInfo>
+      <ProjectPropertie value={task.project} />
+    </ProjectInfo>
+  )
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -116,6 +125,7 @@ function TaskItem({ task }) {
               ) : null}
             </PropertiesIcons>
             <TagsContainer>{tags}</TagsContainer>
+            {project}
           </MainContainer>
 
           {displayTasksDetails && task.description ? (
