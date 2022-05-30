@@ -102,7 +102,7 @@ function TaskPage() {
   const changeTags = (value) => updateTaskMutation.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
   const changeProject = (value) => updateTaskMutation.mutate({ project: value })
   const removeTag = (tagId) => {
-    const index = task.data.tags.findIndex((tag) => tag._id === tagId)
+    const index = task.data.tags.findIndex((tag) => tag === tagId)
     const newData = [
       ...task.data.tags.slice(0, index),
       ...task.data.tags.slice(index + 1),

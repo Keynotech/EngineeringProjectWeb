@@ -37,22 +37,31 @@ function TasksList({ tasks, listName, listIcon }) {
     (state) => state.layout.taskInputVisibility
   )
 
+  let SortingController = null
+  if (tasks.isSuccess) {
+    SortingController = (
+      <GroupController
+        data={tasks.isSuccess ? tasks.data : null}
+        onGroupChange={onGroupChange}
+        groupOptions={groupOptions}
+      />
+    )
+  }
+
+  const tasksCounter = `${tasks.isSuccess ? tasks.data.length : 0} tasks`
+
   return (
     <Wrapper>
       <TaskListHeader
         name={listName}
         icon={listIcon}
-        additionaInfo={`${tasks.length} tasks`}
+        additionaInfo={tasksCounter}
       >
-        <GroupController
-          data={tasks}
-          onGroupChange={onGroupChange}
-          groupOptions={groupOptions}
-        />
+        {SortingController}
       </TaskListHeader>
 
       {taskInputVisibility ? <TaskInput /> : null}
-      {sections && sections.length
+      {tasks.isSuccess && sections && sections.length
         ? sections.map((section) => (
             <ListSection
               key={section.key}

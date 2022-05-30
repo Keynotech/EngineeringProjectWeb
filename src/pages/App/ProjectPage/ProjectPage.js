@@ -14,15 +14,11 @@ function ProjectPage() {
 
   return (
     <MainLayout>
-      {tasksQuery.isSuccess ? (
-        <TaskList
-          tasks={tasksQuery.data}
-          listName={project.projectName}
-          listIcon={<InboxOutlinedIcon fontSize="inherit" />}
-        />
-      ) : (
-        <div />
-      )}
+      <TaskList
+        tasks={tasksQuery}
+        listName={project.projectName}
+        listIcon={<InboxOutlinedIcon fontSize="inherit" />}
+      />
     </MainLayout>
   )
 }

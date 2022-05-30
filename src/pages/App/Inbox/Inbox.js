@@ -10,15 +10,11 @@ function Inbox() {
 
   return (
     <MainLayout>
-      {tasksQuery.isSuccess ? (
-        <TaskList
-          tasks={tasksQuery.data}
-          listName="Inbox"
-          listIcon={<InboxOutlinedIcon fontSize="inherit" />}
-        />
-      ) : (
-        <div />
-      )}
+      <TaskList
+        tasks={tasksQuery}
+        listName="Inbox"
+        listIcon={<InboxOutlinedIcon fontSize="inherit" />}
+      />
     </MainLayout>
   )
 }

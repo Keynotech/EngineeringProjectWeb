@@ -14,15 +14,11 @@ function TagPage() {
 
   return (
     <MainLayout>
-      {tasksQuery.isSuccess ? (
-        <TaskList
-          tasks={tasksQuery.data}
-          listName={tag.tagName}
-          listIcon={<InboxOutlinedIcon fontSize="inherit" />}
-        />
-      ) : (
-        <div />
-      )}
+      <TaskList
+        tasks={tasksQuery}
+        listName={tag.tagName}
+        listIcon={<InboxOutlinedIcon fontSize="inherit" />}
+      />
     </MainLayout>
   )
 }

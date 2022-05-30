@@ -3,6 +3,7 @@ import OutsideClickHandler from "react-outside-click-handler"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useDispatch, useSelector } from "react-redux"
+import PropTypes from "prop-types"
 import { useTheme } from "styled-components"
 import {
   Wrapper,
@@ -22,7 +23,7 @@ import TagPicker from "../../Pickers/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
 import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
 
-function TaskInput() {
+function TaskInput({ priority, project, tag, dueDate }) {
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -48,10 +49,10 @@ function TaskInput() {
     initialValues: {
       title: "",
       status: false,
-      dueDate: null,
-      priority: 1,
-      tags: [],
-      project: null,
+      dueDate,
+      priority,
+      tags: [...tag],
+      project,
     },
     validationSchema: CreateTagSchema,
 
@@ -150,6 +151,20 @@ function TaskInput() {
       </OutsideClickHandler>
     </div>
   )
+}
+
+TaskInput.propTypes = {
+  priority: PropTypes.number,
+  project: PropTypes.string,
+  tag: PropTypes.arrayOf(PropTypes.string),
+  dueDate: PropTypes.oneOfType([Date, PropTypes.string]),
+}
+
+TaskInput.defaultProps = {
+  priority: 1,
+  project: "",
+  tag: [],
+  dueDate: null,
 }
 
 export default TaskInput
