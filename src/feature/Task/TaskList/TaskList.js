@@ -18,7 +18,15 @@ const Wrapper = styled.div`
   padding-bottom: 140px;
 `
 
-function TasksList({ tasks, listName, listIcon }) {
+function TasksList({
+  tasks,
+  listName,
+  listIcon,
+  inputPriorityVal,
+  inputProjectVal,
+  inputTagVal,
+  inputDueDateVal,
+}) {
   const [sections, setSections] = useState()
   const onGroupChange = (data) => {
     setSections(data)
@@ -60,7 +68,14 @@ function TasksList({ tasks, listName, listIcon }) {
         {SortingController}
       </TaskListHeader>
 
-      {taskInputVisibility ? <TaskInput /> : null}
+      {taskInputVisibility ? (
+        <TaskInput
+          project={inputProjectVal}
+          dueDate={inputDueDateVal}
+          tag={inputTagVal}
+          priority={inputPriorityVal}
+        />
+      ) : null}
       {tasks.isSuccess && sections && sections.length
         ? sections.map((section) => (
             <ListSection

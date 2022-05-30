@@ -18,6 +18,7 @@ function TagPage() {
         tasks={tasksQuery}
         listName={tag.tagName}
         listIcon={<InboxOutlinedIcon fontSize="inherit" />}
+        inputTagVal={[tagId]}
       />
     </MainLayout>
   )
