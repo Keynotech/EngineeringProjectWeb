@@ -42,6 +42,10 @@ const DeleteIconWrapper = styled.span`
   border-radius: 25px;
   margin-left: 5px;
   margin-right: 5px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.tertiary};
+  }
 `
 
 const ChipWrapper = styled.div`
