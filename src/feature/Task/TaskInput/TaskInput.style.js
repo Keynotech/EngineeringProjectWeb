@@ -42,7 +42,6 @@ export const Footer = styled.div`
 export const PropertiesContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 8px;
   flex-wrap: nowrap;
 `
 export const TagsContainer = styled.div`

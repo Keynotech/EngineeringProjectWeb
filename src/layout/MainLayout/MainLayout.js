@@ -25,7 +25,7 @@ const ChildContainer = styled.div`
   @media ${mq.tablet} {
     min-width: 320px;
     max-width: 100%;
-    padding: 0 30px;
+    padding: 0 40px;
   }
 `
 const OutletContainer = styled.div`
@@ -72,7 +72,6 @@ const ButtonContainer = styled.div`
   width: 40px;
   height: 40px;
   z-index: ${zIndex.level1};
-  transition: right 0.25s cubic-bezier(0.42, 0, 1, 1);
 
   @media ${mq.tablet} {
     right: 40px;

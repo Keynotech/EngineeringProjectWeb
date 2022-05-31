@@ -29,7 +29,7 @@ const Wrapper = styled.nav`
   @media ${mq.phone} {
     position: fixed;
     left: -300px;
-    width: 300px;
+    width: 280px;
   }
 
   ${({ isVisible }) =>
@@ -115,7 +115,7 @@ function Sidebar() {
         <Container>
           <Header>
             <SidebarSectionHeader
-              fontSize="16px"
+              fontSize="15px"
               name="{user.nickname}"
               rightComponent={
                 <SearchButton>

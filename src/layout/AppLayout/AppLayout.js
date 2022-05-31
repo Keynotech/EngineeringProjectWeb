@@ -33,7 +33,7 @@ const Main = styled.main`
     sidebarVisibility &&
     css`
       @media ${mq.laptop} {
-        margin-left: 300px;
+        margin-left: 280px;
       }
     `}
 `

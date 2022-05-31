@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const SectionName = styled.span`
   flex: 1;
   font-weight: 700;
-  font-size: ${(props) => props.fontSize || "16px"};
+  font-size: ${(props) => props.fontSize || "14px"};
 `
 const RightWrapper = styled.span`
   display: flex;

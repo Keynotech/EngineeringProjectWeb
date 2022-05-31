@@ -36,7 +36,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  padding: 5px 10px 5px 20px;
+  padding: 4px 10px 4px 20px;
 `
 
 const IconWrapper = styled.span`
@@ -44,7 +44,7 @@ const IconWrapper = styled.span`
   align-items: center;
   justify-content: center;
   width: 28px;
-  height: 24px;
+  height: 28px;
   margin-right: 5px;
   font-size: 18px;
   color: ${(props) => props.theme.textSecondary};
@@ -68,6 +68,9 @@ const RouteName = styled.span`
   flex: 1;
   font-weight: 600;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   ${({ fontWeight }) =>
     fontWeight === "light" &&

@@ -20,7 +20,7 @@ import SidebarItem from "./SidebarItem"
 import { DropdownItemMenu } from "../../components/DropdownMenu"
 
 const TagsWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 30px;
 `
 
 const TagColor = styled.div`
