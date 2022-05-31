@@ -1,11 +1,7 @@
-import styled from "styled-components"
-import zIndex from "../../../utils/zIndex"
+import styled, { css } from "styled-components"
 
 export const Wrapper = styled.div`
   position: relative;
-  border-radius: 5px;
-  border: 1px solid ${(props) => props.theme.secondary};
-  background-color: ${(props) => props.theme.primary};
   margin-bottom: 20px;
   z-index: 801;
 `
@@ -14,14 +10,25 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px 15px;
 `
 
 export const Main = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justicy-content: center;
+  padding: 8px 15px;
+  background-color: ${(props) => props.theme.primary};
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
+  height: 40px;
   gap: 8px;
+  transition: background-color 0.3s;
+
+  ${({ isFocus }) =>
+    isFocus &&
+    css`
+      background-color: ${(props) => props.theme.background};
+    `};
 `
 
 export const Footer = styled.div`
@@ -63,6 +70,5 @@ export const Overlay = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: ${zIndex.level8};
-  opacity: 0.2;
+  z-index: 800;
 `

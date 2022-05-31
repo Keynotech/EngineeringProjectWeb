@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import TaskInput from "../TaskInput/TaskInput"
 import TaskListHeader from "./TaskListHeader"
 import GroupController from "./GroupController"
@@ -13,9 +13,14 @@ import ListSection from "./ListSection"
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom: 140px;
+`
+
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   min-height: 400px;
-  padding-bottom: 140px;
 `
 
 function TasksList({
@@ -68,23 +73,26 @@ function TasksList({
         {SortingController}
       </TaskListHeader>
 
-      {taskInputVisibility ? (
-        <TaskInput
-          project={inputProjectVal}
-          dueDate={inputDueDateVal}
-          tag={inputTagVal}
-          priority={inputPriorityVal}
-        />
-      ) : null}
-      {tasks.isSuccess && sections && sections.length
-        ? sections.map((section) => (
-            <ListSection
-              key={section.key}
-              title={section.name}
-              array={section.array}
-            />
-          ))
-        : null}
+      <ListContainer taskInputIsOpen={taskInputVisibility}>
+        {taskInputVisibility ? (
+          <TaskInput
+            project={inputProjectVal}
+            dueDate={inputDueDateVal}
+            tag={inputTagVal}
+            priority={inputPriorityVal}
+          />
+        ) : null}
+
+        {tasks.isSuccess && sections && sections.length
+          ? sections.map((section) => (
+              <ListSection
+                key={section.key}
+                title={section.name}
+                array={section.array}
+              />
+            ))
+          : null}
+      </ListContainer>
     </Wrapper>
   )
 }

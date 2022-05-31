@@ -42,7 +42,6 @@ function TaskItem({ task }) {
   // Selectors
   // ===========================================================================
   const displayTasksDetails = useSelector((state) => state.tasks.displayDetails)
-
   // State Hooks
   // ===========================================================================
   const [isFile, setIsFile] = useState(false)

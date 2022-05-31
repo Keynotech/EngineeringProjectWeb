@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react"
+import React, { useState } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useDispatch, useSelector } from "react-redux"
@@ -25,6 +25,10 @@ import useCreateTask from "../../../hooks/mutation/useCreateTask"
 import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
 
 function TaskInput({ priority, project, tag, dueDate }) {
+  // Local state
+  // ===========================================================================
+  const [isFocus, setFocus] = useState(false)
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -35,10 +39,6 @@ function TaskInput({ priority, project, tag, dueDate }) {
   // Mutations
   // ===========================================================================
   const createTask = useCreateTask()
-
-  // State Hooks
-  // ===========================================================================
-  // const isOpen = useSelector((state) => state.layout.taskInputVisibility)
 
   // Validation
   // ===========================================================================
@@ -78,14 +78,13 @@ function TaskInput({ priority, project, tag, dueDate }) {
   return (
     <>
       <Overlay
-        onClick={(e) => {
-          e.stopPropagation()
+        onClick={() => {
           _hideTaskInput()
         }}
       />
       <Wrapper>
         <Form onSubmit={formik.handleSubmit}>
-          <Main>
+          <Main isFocus={isFocus}>
             {formik.values.dueDate ? (
               <DatePropertie
                 displayIcon={false}
@@ -94,14 +93,16 @@ function TaskInput({ priority, project, tag, dueDate }) {
               />
             ) : null}
             <TextInput
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
               id="title"
               name="title"
               value={formik.values.title}
               onChange={(val) => {
                 formik.setFieldValue("title", val)
               }}
-              placeholder="Create new task"
-              fontSize="16px"
+              placeholder="Create new task, press enter to save."
+              fontSize="18px"
               autoFocus
               multiline={false}
               maxLength={100}
@@ -140,20 +141,6 @@ function TaskInput({ priority, project, tag, dueDate }) {
               />
             </PropertiesContainer>
           </Main>
-          <Footer>
-            <Buttons>
-              <CancelButton
-                type="button"
-                text="Cancel"
-                onClick={_hideTaskInput}
-              />
-              <SubmitButton
-                text="Create"
-                type="submit"
-                disabled={!(formik.isValid && formik.dirty)}
-              />
-            </Buttons>
-          </Footer>
         </Form>
       </Wrapper>
     </>
