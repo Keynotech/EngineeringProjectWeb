@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { add } from "date-fns"
-import OutsideClickHandler from "react-outside-click-handler"
 import { CalendarPicker } from "@mui/x-date-pickers"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
@@ -54,7 +54,7 @@ function DatePicker({
 
   const togglePopover = (e) => {
     if (isOpen) {
-      handleClose()
+      handleClose(e)
     } else {
       handleOpen(e)
     }
@@ -103,11 +103,7 @@ function DatePicker({
   }
 
   return (
-    <OutsideClickHandler
-      disabled={!isOpen}
-      useCapture={useCapture}
-      onOutsideClick={handleClose}
-    >
+    <>
       <DatePropertie
         onClick={togglePopover}
         value={value}
@@ -117,7 +113,8 @@ function DatePicker({
         backgroundColor={backgroundColor}
         border={border}
       />
-      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+
+      <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Calendar
             showDaysOutsideCurrentMonth
@@ -159,7 +156,7 @@ function DatePicker({
           </OptionsWrapper>
         </LocalizationProvider>
       </Popover>
-    </OutsideClickHandler>
+    </>
   )
 }
 

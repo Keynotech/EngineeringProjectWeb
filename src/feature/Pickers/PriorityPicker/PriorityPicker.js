@@ -1,7 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
 import PropTypes from "prop-types"
-import OutsideClickHandler from "react-outside-click-handler"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import Popover from "../../../components/Popover/Popover"
@@ -32,7 +31,6 @@ const Item = styled.div`
 function PriorityPicker({
   value,
   onChange,
-  useCapture,
   displayIcon,
   displayValue,
   iconSize,
@@ -74,11 +72,7 @@ function PriorityPicker({
   }
 
   return (
-    <OutsideClickHandler
-      disabled={!isOpen}
-      useCapture={useCapture}
-      onOutsideClick={handleClose}
-    >
+    <>
       <PriorityPropertie
         prioritiesData={prioritiesData}
         value={value}
@@ -89,7 +83,7 @@ function PriorityPicker({
         backgroundColor={backgroundColor}
         border={border}
       />
-      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+      <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
           {prioritiesData.map((priority) => (
             <Item
@@ -105,23 +99,18 @@ function PriorityPicker({
           ))}
         </Wrapper>
       </Popover>
-    </OutsideClickHandler>
+    </>
   )
 }
 
 PriorityPicker.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  useCapture: PropTypes.bool,
   displayIcon: PropTypes.bool,
   displayValue: PropTypes.bool,
   iconSize: PropTypes.number,
   backgroundColor: PropTypes.string,
   border: PropTypes.string,
-}
-
-PriorityPicker.defaultProps = {
-  useCapture: false,
 }
 
 export default PriorityPicker

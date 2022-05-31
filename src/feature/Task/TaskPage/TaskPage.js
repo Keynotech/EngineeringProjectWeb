@@ -38,8 +38,6 @@ import {
   AttachmentsContainer,
   AttachmentItem,
   AttachmentItemInner,
-  MenuContainer,
-  MenuItem,
 } from "./TaskPage.style"
 import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
@@ -182,13 +180,11 @@ function TaskPage() {
         <DetailsContainer>
           <PropertiesContainer>
             <ProjectPicker
-              useCapture
               onChange={changeProject}
               value={task.data.project}
               border={`1px solid ${theme.tertiary} `}
             />
             <PriorityPicker
-              useCapture
               onChange={changePriority}
               value={task.data.priority}
               border={`1px solid ${theme.tertiary} `}
@@ -197,12 +193,10 @@ function TaskPage() {
             <DatePicker
               onChange={changeDueDate}
               value={task.data.dueDate}
-              useCapture
               border={`1px solid ${theme.tertiary} `}
             />
 
             <TagPicker
-              useCapture
               onChange={changeTags}
               currentTags={task.data.tags}
               border={`1px solid ${theme.tertiary} `}
@@ -258,7 +252,9 @@ function TaskPage() {
 
               <DropdownMenu
                 isOpen={menuIsOpen}
-                outsideClick={() => toggleMenu(false)}
+                outsideClick={() => {
+                  toggleMenu(false)
+                }}
                 toggle={
                   <MoreHorizIcon
                     color="inherit"

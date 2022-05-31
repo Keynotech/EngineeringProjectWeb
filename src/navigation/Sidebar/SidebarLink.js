@@ -7,7 +7,11 @@ import styled, { css } from "styled-components"
 import { NavLink } from "react-router-dom"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import PropTypes from "prop-types"
-import { hideSidebar, hideTaskPage } from "../../store/features/layoutSlice"
+import {
+  hideSidebar,
+  hideTaskInput,
+  hideTaskPage,
+} from "../../store/features/layoutSlice"
 import { size } from "../../utils/mq"
 import { DropdownMenu } from "../../components/DropdownMenu"
 
@@ -96,6 +100,7 @@ function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
   const dispatch = useDispatch()
   const _hideTaskPage = () => dispatch(hideTaskPage())
   const _hideSidebar = () => dispatch(hideSidebar())
+  const _hideTaskInput = () => dispatch(hideTaskInput())
 
   const hideSidebarOnMobile = () => {
     if (window.innerWidth <= size.laptop) {
@@ -131,6 +136,7 @@ function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
   const _onClick = () => {
     _hideTaskPage()
     hideSidebarOnMobile()
+    _hideTaskInput()
   }
 
   return (

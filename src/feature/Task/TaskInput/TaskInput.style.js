@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import zIndex from "../../../utils/zIndex"
 
 export const Wrapper = styled.div`
   position: relative;
@@ -6,6 +7,7 @@ export const Wrapper = styled.div`
   border: 1px solid ${(props) => props.theme.secondary};
   background-color: ${(props) => props.theme.primary};
   margin-bottom: 20px;
+  z-index: 801;
 `
 
 export const Form = styled.form`
@@ -53,4 +55,14 @@ export const Buttons = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 8px;
+`
+
+export const Overlay = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: ${zIndex.level8};
+  opacity: 0.2;
 `

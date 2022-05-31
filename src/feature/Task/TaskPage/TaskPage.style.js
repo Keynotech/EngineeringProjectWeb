@@ -46,6 +46,7 @@ export const DetailsContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
   color: ${(props) => props.theme.textSecondary};

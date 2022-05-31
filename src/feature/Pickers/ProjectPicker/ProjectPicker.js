@@ -1,6 +1,5 @@
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
-import OutsideClickHandler from "react-outside-click-handler"
 import styled, { css } from "styled-components"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import { useDispatch } from "react-redux"
@@ -50,7 +49,6 @@ const AddNewTag = styled.div`
 function ProjectPicker({
   value,
   onChange,
-  useCapture,
   displayIcon,
   displayValue,
   iconSize,
@@ -60,9 +58,6 @@ function ProjectPicker({
   // Query
   // ===========================================================================
   const projects = useProjectsQuery()
-
-  // Refs
-  // ===========================================================================
 
   // State hooks
   // ===========================================================================
@@ -95,11 +90,7 @@ function ProjectPicker({
   const _showProjectInput = () => dispatch(showProjectInput())
 
   return (
-    <OutsideClickHandler
-      useCapture={useCapture}
-      disabled={!isOpen}
-      onOutsideClick={handleClose}
-    >
+    <>
       <ProjectPropertie
         value={value}
         onClick={togglePopover}
@@ -109,7 +100,7 @@ function ProjectPicker({
         backgroundColor={backgroundColor}
         border={border}
       />
-      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+      <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
           <Item
             isActive={value === null || false}
@@ -149,23 +140,18 @@ function ProjectPicker({
           </Item>
         </Wrapper>
       </Popover>
-    </OutsideClickHandler>
+    </>
   )
 }
 
 ProjectPicker.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  useCapture: PropTypes.bool,
   displayIcon: PropTypes.bool,
   displayValue: PropTypes.bool,
   iconSize: PropTypes.number,
   backgroundColor: PropTypes.string,
   border: PropTypes.string,
-}
-
-ProjectPicker.defaultProps = {
-  useCapture: false,
 }
 
 export default React.memo(ProjectPicker)

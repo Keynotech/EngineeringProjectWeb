@@ -1,6 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
-import OutsideClickHandler from "react-outside-click-handler"
 import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
@@ -44,7 +44,6 @@ const AddNewTag = styled.div`
 function TagPicker({
   currentTags,
   onChange,
-  useCapture,
   displayIcon,
   displayValue,
   iconSize,
@@ -54,9 +53,6 @@ function TagPicker({
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
-
-  // Refs
-  // ===========================================================================
 
   // State hooks
   // ===========================================================================
@@ -73,14 +69,14 @@ function TagPicker({
   }
 
   const handleClose = () => {
+    onChange(selectedTags)
     setAnchorEl(null)
     setIsOpen(false)
-    onChange(selectedTags)
   }
 
   const togglePopover = (e) => {
     if (isOpen) {
-      handleClose()
+      handleClose(e)
     } else {
       handleOpen(e)
     }
@@ -104,11 +100,7 @@ function TagPicker({
   const _showTagInput = () => dispatch(showTagInput())
 
   return (
-    <OutsideClickHandler
-      useCapture={useCapture}
-      disabled={!isOpen}
-      onOutsideClick={handleClose}
-    >
+    <>
       <TagPropertie
         onClick={togglePopover}
         displayIcon={displayIcon}
@@ -117,11 +109,11 @@ function TagPicker({
         backgroundColor={backgroundColor}
         border={border}
       />
-      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+      <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
           {tags.isSuccess
             ? tags.data.map((tag) => (
-                <Item onClick={() => handleChange(tag._id)} key={tag._id}>
+                <Item onClick={(e) => handleChange(tag._id)} key={tag._id}>
                   <TagItem showMenu={false} tagId={tag._id} />
                   <Checkbox
                     id="tag-picker-select"
@@ -145,23 +137,18 @@ function TagPicker({
           </Item>
         </Wrapper>
       </Popover>
-    </OutsideClickHandler>
+    </>
   )
 }
 
 TagPicker.propTypes = {
   currentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
-  useCapture: PropTypes.bool,
   displayIcon: PropTypes.bool,
   displayValue: PropTypes.bool,
   iconSize: PropTypes.number,
   backgroundColor: PropTypes.string,
   border: PropTypes.string,
-}
-
-TagPicker.defaultProps = {
-  useCapture: false,
 }
 
 export default React.memo(TagPicker)

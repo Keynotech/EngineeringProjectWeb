@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
-import OutsideClickHandler from "react-outside-click-handler"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useDispatch, useSelector } from "react-redux"
@@ -12,6 +12,7 @@ import {
   PropertiesContainer,
   Buttons,
   Footer,
+  Overlay,
 } from "./TaskInput.style"
 import { hideTaskInput } from "../../../store/features/layoutSlice"
 import TextInput from "../../../components/TextInput/TextInput"
@@ -27,7 +28,9 @@ function TaskInput({ priority, project, tag, dueDate }) {
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
-  const _hideTaskInput = () => dispatch(hideTaskInput())
+  const _hideTaskInput = () => {
+    dispatch(hideTaskInput())
+  }
 
   // Mutations
   // ===========================================================================
@@ -35,7 +38,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
 
   // State Hooks
   // ===========================================================================
-  const isOpen = useSelector((state) => state.layout.taskInputVisibility)
+  // const isOpen = useSelector((state) => state.layout.taskInputVisibility)
 
   // Validation
   // ===========================================================================
@@ -65,7 +68,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
         tags: values.tags,
         project: values.project,
       })
-      _hideTaskInput()
+      formik.resetForm()
     },
   })
 
@@ -73,83 +76,87 @@ function TaskInput({ priority, project, tag, dueDate }) {
   const theme = useTheme()
 
   return (
-    <div>
-      <OutsideClickHandler disabled={!isOpen} onOutsideClick={_hideTaskInput}>
-        <Wrapper>
-          <Form onSubmit={formik.handleSubmit}>
-            <Main>
-              {formik.values.dueDate ? (
-                <DatePropertie
-                  displayIcon={false}
-                  backgroundColor={theme.tertiary}
-                  value={formik.values.dueDate}
-                />
-              ) : null}
-              <TextInput
-                id="title"
-                name="title"
-                value={formik.values.title}
-                onChange={(val) => {
-                  formik.setFieldValue("title", val)
-                }}
-                placeholder="Create new task"
-                fontSize="16px"
-                autoFocus
-                multiline={false}
-                maxLength={100}
+    <>
+      <Overlay
+        onClick={(e) => {
+          e.stopPropagation()
+          _hideTaskInput()
+        }}
+      />
+      <Wrapper>
+        <Form onSubmit={formik.handleSubmit}>
+          <Main>
+            {formik.values.dueDate ? (
+              <DatePropertie
+                displayIcon={false}
+                backgroundColor={theme.tertiary}
+                value={formik.values.dueDate}
               />
-              <PropertiesContainer>
-                <PriorityPicker
-                  id="priority"
-                  name="priority"
-                  value={formik.values.priority}
-                  onChange={(val) => {
-                    formik.setFieldValue("priority", val)
-                  }}
-                  displayValue={false}
-                  iconSize={20}
-                />
-                <DatePicker
-                  id="dueDate"
-                  name="dueDate"
-                  value={formik.values.dueDate}
-                  onChange={(val) => {
-                    formik.setFieldValue("dueDate", val)
-                  }}
-                  displayValue={false}
-                  iconSize={20}
-                />
-                <TagPicker
-                  id="tags"
-                  name="tags"
-                  currentTags={formik.values.tags}
-                  onChange={(val) => {
-                    formik.setFieldValue("tags", val)
-                  }}
-                  displayValue={false}
-                  sa
-                  iconSize={20}
-                />
-              </PropertiesContainer>
-            </Main>
-            <Footer>
-              <Buttons>
-                <CancelButton
-                  type="button"
-                  text="Cancel"
-                  onClick={_hideTaskInput}
-                />
-                <SubmitButton
-                  text="Create"
-                  type="submit"
-                  disabled={!(formik.isValid && formik.dirty)}
-                />
-              </Buttons>
-            </Footer>
-          </Form>
-        </Wrapper>
-      </OutsideClickHandler>
-    </div>
+            ) : null}
+            <TextInput
+              id="title"
+              name="title"
+              value={formik.values.title}
+              onChange={(val) => {
+                formik.setFieldValue("title", val)
+              }}
+              placeholder="Create new task"
+              fontSize="16px"
+              autoFocus
+              multiline={false}
+              maxLength={100}
+            />
+            <PropertiesContainer>
+              <PriorityPicker
+                id="priority"
+                name="priority"
+                value={formik.values.priority}
+                onChange={(val) => {
+                  formik.setFieldValue("priority", val)
+                }}
+                displayValue={false}
+                iconSize={20}
+              />
+              <DatePicker
+                id="dueDate"
+                name="dueDate"
+                value={formik.values.dueDate}
+                onChange={(val) => {
+                  formik.setFieldValue("dueDate", val)
+                }}
+                displayValue={false}
+                iconSize={20}
+              />
+              <TagPicker
+                id="tags"
+                name="tags"
+                currentTags={formik.values.tags}
+                onChange={(val) => {
+                  formik.setFieldValue("tags", val)
+                }}
+                displayValue={false}
+                sa
+                iconSize={20}
+              />
+            </PropertiesContainer>
+          </Main>
+          <Footer>
+            <Buttons>
+              <CancelButton
+                type="button"
+                text="Cancel"
+                onClick={_hideTaskInput}
+              />
+              <SubmitButton
+                text="Create"
+                type="submit"
+                disabled={!(formik.isValid && formik.dirty)}
+              />
+            </Buttons>
+          </Footer>
+        </Form>
+      </Wrapper>
+    </>
   )
 }
 

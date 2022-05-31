@@ -14,7 +14,7 @@ function App() {
   const queryClient = new QueryClient()
 
   const isDarkMode = useSelector((state) => state.theme.isDarkMode)
-  const windowDragDetect = useWindowDragDetect()
+  useWindowDragDetect()
 
   return (
     <QueryClientProvider client={queryClient}>
