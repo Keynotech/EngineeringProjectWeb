@@ -2,7 +2,7 @@
 import React, { useState } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 import { useTheme } from "styled-components"
 import {
@@ -10,19 +10,17 @@ import {
   Form,
   Main,
   PropertiesContainer,
-  Buttons,
-  Footer,
   Overlay,
 } from "./TaskInput.style"
 import { hideTaskInput } from "../../../store/features/layoutSlice"
 import TextInput from "../../../components/TextInput/TextInput"
 import DatePicker from "../../Pickers/DatePicker/DatePicker"
 import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
-import SubmitButton from "../../../components/button/SubmitButton"
-import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../Pickers/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
 import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
+import ProjectPicker from "../../Pickers/ProjectPicker/ProjectPicker"
+import ProjectPropertie from "../../Pickers/ProjectPicker/ProjectPropertie"
 
 function TaskInput({ priority, project, tag, dueDate }) {
   // Local state
@@ -77,11 +75,6 @@ function TaskInput({ priority, project, tag, dueDate }) {
 
   return (
     <>
-      <Overlay
-        onClick={() => {
-          _hideTaskInput()
-        }}
-      />
       <Wrapper>
         <Form onSubmit={formik.handleSubmit}>
           <Main isFocus={isFocus}>
@@ -92,6 +85,14 @@ function TaskInput({ priority, project, tag, dueDate }) {
                 value={formik.values.dueDate}
               />
             ) : null}
+            {formik.values.project ? (
+              <ProjectPropertie
+                displayIcon={false}
+                backgroundColor={theme.tertiary}
+                value={formik.values.project}
+              />
+            ) : null}
+
             <TextInput
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
@@ -108,6 +109,16 @@ function TaskInput({ priority, project, tag, dueDate }) {
               maxLength={100}
             />
             <PropertiesContainer>
+              <ProjectPicker
+                id="project"
+                name="project"
+                value={formik.values.project}
+                onChange={(val) => {
+                  formik.setFieldValue("project", val)
+                }}
+                displayValue={false}
+                iconSize={20}
+              />
               <PriorityPicker
                 id="priority"
                 name="priority"
@@ -143,6 +154,11 @@ function TaskInput({ priority, project, tag, dueDate }) {
           </Main>
         </Form>
       </Wrapper>
+      <Overlay
+        onClick={() => {
+          _hideTaskInput()
+        }}
+      />
     </>
   )
 }
@@ -156,7 +172,7 @@ TaskInput.propTypes = {
 
 TaskInput.defaultProps = {
   priority: 1,
-  project: "",
+  project: null,
   tag: [],
   dueDate: null,
 }

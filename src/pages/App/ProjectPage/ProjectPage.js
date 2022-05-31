@@ -18,6 +18,7 @@ function ProjectPage() {
         tasks={tasksQuery}
         listName={project.projectName}
         listIcon={<InboxOutlinedIcon fontSize="inherit" />}
+        inputProjectVal={projectId}
       />
     </MainLayout>
   )
