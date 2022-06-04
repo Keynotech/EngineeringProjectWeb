@@ -11,6 +11,8 @@ import useWindowSize from "../../hooks/useWindowSize"
 import { size, mq } from "../../utils/mq"
 import TagEdit from "../../feature/Tag/TagInput/TagEdit"
 import ProjectEdit from "../../feature/Project/ProjectInput/ProjectEdit"
+import useProjectsQuery from "../../hooks/query/useProjectsQuery"
+import useTagsQuery from "../../hooks/query/useTagsQuery"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -38,7 +40,21 @@ const Main = styled.main`
     `}
 `
 
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 function AppLayout() {
+  // Queries
+  // ===========================================================================
+
+  const projects = useProjectsQuery()
+  const tags = useTagsQuery()
+
   // State hooks
   // ===========================================================================
   const windowSize = useWindowSize()
@@ -92,16 +108,24 @@ function AppLayout() {
 
   return (
     <Wrapper>
-      <Container>
-        <Sidebar />
-        <Main sidebarVisibility={sidebarVisibility}>
-          <Outlet />
-        </Main>
-      </Container>
-      {tagInputVisibility ? <TagInput /> : null}
-      {tagEditVisibility ? <TagEdit /> : null}
-      {projectInputVisibility ? <ProjectInput /> : null}
-      {projectEditVisibility ? <ProjectEdit /> : null}
+      {projects.isSuccess && tags.isSuccess ? (
+        <>
+          <Container>
+            <Sidebar />
+            <Main sidebarVisibility={sidebarVisibility}>
+              <Outlet />
+            </Main>
+          </Container>
+          {tagInputVisibility ? <TagInput /> : null}
+          {tagEditVisibility ? <TagEdit /> : null}
+          {projectInputVisibility ? <ProjectInput /> : null}
+          {projectEditVisibility ? <ProjectEdit /> : null}
+        </>
+      ) : (
+        <Loading>
+          <h2>Loading </h2>
+        </Loading>
+      )}
     </Wrapper>
   )
 }

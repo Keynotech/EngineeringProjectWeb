@@ -1,4 +1,4 @@
-import task from "../../../utils/types/task"
+import task from "../../../../utils/types/task"
 
 function groupByPriority({ arr, key }) {
   let sectionByPropertie = []
