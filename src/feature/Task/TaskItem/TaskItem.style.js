@@ -80,6 +80,8 @@ const TagsContainer = styled.div`
 const ProjectInfo = styled.div`
   flex-shrink: 1;
   overflow: hidden;
+  position: relative;
+  left: -6px;
 `
 
 const Description = styled.div`

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import React from "react"
+import React, { useEffect } from "react"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import useGetTaskByTag from "../../../hooks/query/useGetTaskByTag"
 import TaskList from "../../../feature/Task/TaskList/TaskList"
 import MainLayout from "../../../layout/MainLayout/MainLayout"
@@ -12,14 +12,24 @@ function TagPage() {
   const tag = useSingleTagQuery(tagId)
   const tasksQuery = useGetTaskByTag(tagId)
 
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (tag === undefined || null) {
+      navigate("/inbox")
+    }
+  }, [tag])
+
   return (
     <MainLayout>
-      <TaskList
-        tasks={tasksQuery}
-        listName={tag.tagName}
-        listIcon={<InboxOutlinedIcon fontSize="inherit" />}
-        inputTagVal={[tagId]}
-      />
+      {tag ? (
+        <TaskList
+          tasks={tasksQuery}
+          listName={tag.tagName}
+          listIcon={<InboxOutlinedIcon fontSize="inherit" />}
+          inputTagVal={[tagId]}
+        />
+      ) : null}
     </MainLayout>
   )
 }
