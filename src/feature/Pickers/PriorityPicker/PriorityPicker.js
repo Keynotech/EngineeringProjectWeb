@@ -4,7 +4,8 @@ import PropTypes from "prop-types"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import Popover from "../../../components/Popover/Popover"
-import PriorityPropertie from "./PriorityPropertie"
+// import PriorityPropertie from "./PriorityPropertie"
+import PriorityPropertie from "../../Propertie/PriorityPropertie/PriorityPropertie"
 
 const Wrapper = styled.div`
   width: 200px;
@@ -28,15 +29,7 @@ const Item = styled.div`
   }
 `
 
-function PriorityPicker({
-  value,
-  onChange,
-  displayIcon,
-  displayValue,
-  iconSize,
-  backgroundColor,
-  border,
-}) {
+function PriorityPicker({ value, onChange, variant }) {
   // Others
   // ===========================================================================
   const theme = useTheme()
@@ -77,11 +70,7 @@ function PriorityPicker({
         prioritiesData={prioritiesData}
         value={value}
         onClick={togglePopover}
-        displayIcon={displayIcon}
-        displayValue={displayValue}
-        iconSize={iconSize}
-        backgroundColor={backgroundColor}
-        border={border}
+        variant={variant}
       />
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
@@ -104,13 +93,9 @@ function PriorityPicker({
 }
 
 PriorityPicker.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  displayIcon: PropTypes.bool,
-  displayValue: PropTypes.bool,
-  iconSize: PropTypes.number,
-  backgroundColor: PropTypes.string,
-  border: PropTypes.string,
+  variant: PropTypes.string,
 }
 
 export default PriorityPicker

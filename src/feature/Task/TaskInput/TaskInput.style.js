@@ -17,7 +17,7 @@ export const Main = styled.div`
   flex-direction: row;
   align-items: center;
   justicy-content: center;
-  padding: 8px 15px;
+  padding: 8px 15px 8px 15px;
   background-color: ${(props) => props.theme.primary};
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
   height: 40px;

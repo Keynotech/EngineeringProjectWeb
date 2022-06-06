@@ -8,7 +8,7 @@ import PropTypes from "prop-types"
 import ProjectItem from "../../Project/ProjectItem/ProjectItem"
 import useProjectsQuery from "../../../hooks/query/useProjectsQuery"
 import { showProjectInput } from "../../../store/features/layoutSlice"
-import ProjectPropertie from "./ProjectPropertie"
+import ProjectPropertie from "../../Propertie/ProjectPropertie/ProjectPropertie"
 import Popover from "../../../components/Popover/Popover"
 
 const Wrapper = styled.ul`
@@ -46,15 +46,7 @@ const AddNewTag = styled.div`
   justify-content: center;
 `
 
-function ProjectPicker({
-  value,
-  onChange,
-  displayIcon,
-  displayValue,
-  iconSize,
-  backgroundColor,
-  border,
-}) {
+function ProjectPicker({ value, onChange, variant }) {
   // Query
   // ===========================================================================
   const projects = useProjectsQuery()
@@ -94,11 +86,7 @@ function ProjectPicker({
       <ProjectPropertie
         value={value}
         onClick={togglePopover}
-        displayIcon={displayIcon}
-        displayValue={displayValue}
-        iconSize={iconSize}
-        backgroundColor={backgroundColor}
-        border={border}
+        variant={variant}
       />
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
@@ -147,11 +135,7 @@ function ProjectPicker({
 ProjectPicker.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  displayIcon: PropTypes.bool,
-  displayValue: PropTypes.bool,
-  iconSize: PropTypes.number,
-  backgroundColor: PropTypes.string,
-  border: PropTypes.string,
+  variant: PropTypes.oneOf(["icon", "standard", "medium"]),
 }
 
 export default React.memo(ProjectPicker)

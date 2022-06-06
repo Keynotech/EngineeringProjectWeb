@@ -18,7 +18,8 @@ import DatePicker from "../../Pickers/DatePicker/DatePicker"
 import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
 import TagPicker from "../../Pickers/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
-import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
+// import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
+import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
 import ProjectPicker from "../../Pickers/ProjectPicker/ProjectPicker"
 import ProjectPropertie from "../../Pickers/ProjectPicker/ProjectPropertie"
 
@@ -78,13 +79,6 @@ function TaskInput({ priority, project, tag, dueDate }) {
       <Wrapper>
         <Form onSubmit={formik.handleSubmit}>
           <Main isFocus={isFocus}>
-            {formik.values.dueDate ? (
-              <DatePropertie
-                displayIcon={false}
-                backgroundColor={theme.tertiary}
-                value={formik.values.dueDate}
-              />
-            ) : null}
             {formik.values.project ? (
               <ProjectPropertie
                 displayIcon={false}
@@ -109,6 +103,15 @@ function TaskInput({ priority, project, tag, dueDate }) {
               maxLength={100}
             />
             <PropertiesContainer>
+              <DatePicker
+                id="dueDate"
+                name="dueDate"
+                value={formik.values.dueDate}
+                onChange={(val) => {
+                  formik.setFieldValue("dueDate", val)
+                }}
+                variant="standard"
+              />
               <ProjectPicker
                 id="project"
                 name="project"
@@ -116,8 +119,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
                 onChange={(val) => {
                   formik.setFieldValue("project", val)
                 }}
-                displayValue={false}
-                iconSize={20}
+                variant="icon"
               />
               <PriorityPicker
                 id="priority"
@@ -126,19 +128,9 @@ function TaskInput({ priority, project, tag, dueDate }) {
                 onChange={(val) => {
                   formik.setFieldValue("priority", val)
                 }}
-                displayValue={false}
-                iconSize={20}
+                variant="icon"
               />
-              <DatePicker
-                id="dueDate"
-                name="dueDate"
-                value={formik.values.dueDate}
-                onChange={(val) => {
-                  formik.setFieldValue("dueDate", val)
-                }}
-                displayValue={false}
-                iconSize={20}
-              />
+
               <TagPicker
                 id="tags"
                 name="tags"
@@ -146,9 +138,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
                 onChange={(val) => {
                   formik.setFieldValue("tags", val)
                 }}
-                displayValue={false}
-                sa
-                iconSize={20}
+                variant="icon"
               />
             </PropertiesContainer>
           </Main>

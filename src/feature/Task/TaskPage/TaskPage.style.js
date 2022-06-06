@@ -7,7 +7,6 @@ export const Wrapper = styled.div`
   overflow-y: auto;
   background-color: ${(props) => props.theme.background};
   border-left: 1px solid ${(props) => props.theme.tertiary};
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -20,39 +19,41 @@ export const Container = styled.div`
   height: 100%;
 `
 
-export const MainContainer = styled.div`
+export const HeaderContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
   justify-content: space-between;
   padding: 15px 15px;
   margin-bottom: 10px;
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
-export const IconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 32px;
-  color: ${(props) => props.theme.textTertiary};
-`
 
 export const TitleContainer = styled.div`
-  flex: 1;
-  min-height: 32px;
-  padding: 0 15px;
+  min-height: 24px;
 `
 
 export const DetailsContainer = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: space-between;
   gap: 20px;
   color: ${(props) => props.theme.textSecondary};
   background-color: ${(props) => props.theme.background};
   padding: 0 15px;
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
 `
+
+export const PropertiesContainer = styled.section`
+  flex-wrap: wrap;
+  display: flex;
+`
+
+export const PropertieList = styled.div`
+  flex-wrap: wrap;
+  width: 50%;
+`
+
 export const SectionWrapper = styled.div`
   flex: 1;
   display: flex;
@@ -71,12 +72,6 @@ export const SectionHeader = styled.span`
   font-weight: 600;
 `
 
-export const PropertiesContainer = styled.section`
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-`
-
 export const TagsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -86,6 +81,7 @@ export const TagsContainer = styled.div`
 `
 
 export const Footer = styled.div`
+  position: sticky;
   width: 100%;
   bottom: 0;
   font-size: 12px;
@@ -99,7 +95,6 @@ export const FooterContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.textTertiary};
 `
 
@@ -148,28 +143,5 @@ export const AttachmentItemInner = styled.div`
       text-decoration: underline;
       text-decoration-color: ${(props) => props.theme.textTertiary};
     }
-  }
-`
-
-export const MenuContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-export const MenuItem = styled.button`
-  display: flex;
-  width: 100%;
-  overflow: visible;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
-  padding: 8px 20px 8px 12px;
-  box-sizing: border-box;
-  font-size: 14px;
-  color: ${(props) => props.theme.textTertiary};
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => props.theme.secondary};
   }
 `

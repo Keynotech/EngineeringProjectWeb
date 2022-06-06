@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
@@ -9,7 +10,7 @@ import Checkbox from "../../../components/button/Checkbox"
 import TagItem from "../../Tag/TagItem/TagItem"
 import useTagsQuery from "../../../hooks/query/useTagsQuery"
 import { showTagInput } from "../../../store/features/layoutSlice"
-import TagPropertie from "./TagPropertie"
+import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
 
 const Wrapper = styled.ul`
@@ -41,15 +42,7 @@ const AddNewTag = styled.div`
   justify-content: center;
 `
 
-function TagPicker({
-  currentTags,
-  onChange,
-  displayIcon,
-  displayValue,
-  iconSize,
-  backgroundColor,
-  border,
-}) {
+function TagPicker({ value, currentTags, onChange, variant }) {
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
@@ -101,19 +94,12 @@ function TagPicker({
 
   return (
     <>
-      <TagPropertie
-        onClick={togglePopover}
-        displayIcon={displayIcon}
-        displayValue={displayValue}
-        iconSize={iconSize}
-        backgroundColor={backgroundColor}
-        border={border}
-      />
+      <TagPropertie onClick={togglePopover} variant={variant} value={value} />
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
           {tags.isSuccess
             ? tags.data.map((tag) => (
-                <Item onClick={(e) => handleChange(tag._id)} key={tag._id}>
+                <Item onClick={() => handleChange(tag._id)} key={tag._id}>
                   <TagItem showMenu={false} tagId={tag._id} />
                   <Checkbox
                     id="tag-picker-select"
@@ -144,11 +130,7 @@ function TagPicker({
 TagPicker.propTypes = {
   currentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
-  displayIcon: PropTypes.bool,
-  displayValue: PropTypes.bool,
-  iconSize: PropTypes.number,
-  backgroundColor: PropTypes.string,
-  border: PropTypes.string,
+  variant: PropTypes.oneOf(["icon", "standard", "medium"]),
 }
 
 export default React.memo(TagPicker)

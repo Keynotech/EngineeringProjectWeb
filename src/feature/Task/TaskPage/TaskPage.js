@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
-import KeyboardTabIcon from "@mui/icons-material/KeyboardTab"
+import CloseIcon from "@mui/icons-material/Close"
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
 import ForwardOutlinedIcon from "@mui/icons-material/ForwardOutlined"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
@@ -24,13 +24,13 @@ import { formatDateTimeToDisplay } from "../../../utils/dateConvert"
 import {
   Wrapper,
   Container,
-  MainContainer,
-  IconContainer,
+  HeaderContainer,
   TitleContainer,
   DetailsContainer,
   SectionWrapper,
   SectionHeader,
   PropertiesContainer,
+  PropertieList,
   SectionContainer,
   Footer,
   TagsContainer,
@@ -145,14 +145,22 @@ function TaskPage() {
     <Wrapper>
       <Container>
         {isOpen ? <FileUpload ref={fileUploadRef} taskId={taskId} /> : null}
-        <MainContainer>
-          <IconContainer>
-            <Checkbox
-              checked={task.data.status}
-              onChange={changeStatus}
-              priority={task.data.priority}
-            />
-          </IconContainer>
+        <HeaderContainer>
+          <Checkbox
+            checked={task.data.status}
+            onChange={changeStatus}
+            priority={task.data.priority}
+          />
+
+          <CloseIcon
+            onClick={() => {
+              goBack()
+              _hideTaskPage()
+            }}
+            sx={{ cursor: "pointer", color: theme.textTertiary }}
+          />
+        </HeaderContainer>
+        <DetailsContainer>
           <TitleContainer>
             <TextInput
               id="task-title"
@@ -160,49 +168,42 @@ function TaskPage() {
               value={task.data.title}
               onChange={changeTitle}
               placeholder="Task title"
+              maxLength={100}
               multiline
-              maxRows={2}
-              fontSize="18px"
-              fontWeight={600}
+              maxRows={3}
+              fontSize="22px"
+              fontWeight={500}
             />
           </TitleContainer>
-          <IconContainer>
-            <KeyboardTabIcon
-              onClick={() => {
-                goBack()
-                _hideTaskPage()
-              }}
-              color="inherit"
-              sx={{ cursor: "pointer" }}
-            />
-          </IconContainer>
-        </MainContainer>
-        <DetailsContainer>
           <PropertiesContainer>
-            <ProjectPicker
-              onChange={changeProject}
-              value={task.data.project}
-              border={`1px solid ${theme.tertiary} `}
-            />
-            <PriorityPicker
-              onChange={changePriority}
-              value={task.data.priority}
-              border={`1px solid ${theme.tertiary} `}
-            />
-
-            <DatePicker
-              onChange={changeDueDate}
-              value={task.data.dueDate}
-              border={`1px solid ${theme.tertiary} `}
-            />
-
-            <TagPicker
-              onChange={changeTags}
-              currentTags={task.data.tags}
-              border={`1px solid ${theme.tertiary} `}
-            />
+            <PropertieList>
+              <DatePicker
+                onChange={changeDueDate}
+                value={task.data.dueDate}
+                variant="medium"
+              />
+              <PriorityPicker
+                onChange={changePriority}
+                value={task.data.priority}
+                variant="medium"
+              />
+            </PropertieList>
+            <PropertieList>
+              <ProjectPicker
+                onChange={changeProject}
+                variant="medium"
+                value={task.data.project}
+              />
+              <TagPicker
+                onChange={changeTags}
+                variant="medium"
+                currentTags={task.data.tags}
+                value={`${task.data.tags.length} ${
+                  task.data.tags.length !== 1 ? "tags" : "tag"
+                }`}
+              />
+            </PropertieList>
           </PropertiesContainer>
-
           <SectionWrapper>
             <SectionContainer>
               <TextInput
@@ -220,31 +221,31 @@ function TaskPage() {
             <SectionContainer>
               <TagsContainer>{tags}</TagsContainer>
             </SectionContainer>
-
-            <SectionContainer>
-              <SectionHeader>Attachments</SectionHeader>
-              <AttachmentsContainer>
-                <AttachmentItem onClick={openUpload} isFile={false}>
-                  <AttachmentItemInner isFile={false}>
-                    <FileUploadOutlinedIcon color="inherit" />
-                    <p>Upload file</p>
-                  </AttachmentItemInner>
-                </AttachmentItem>
-                {task.data.files?.map((file) => (
-                  <div key={file._id}>
-                    <AttachmentItem isFile>
-                      <AttachmentItemInner isFile>
-                        <p>{file._id}</p>
-                      </AttachmentItemInner>
-                    </AttachmentItem>
-                    <button onClick={() => deleteFile(file._id)} type="button">
-                      Delete file
-                    </button>
-                  </div>
-                ))}
-              </AttachmentsContainer>
-            </SectionContainer>
           </SectionWrapper>
+
+          <SectionContainer>
+            <SectionHeader>Attachments</SectionHeader>
+            <AttachmentsContainer>
+              <AttachmentItem onClick={openUpload} isFile={false}>
+                <AttachmentItemInner isFile={false}>
+                  <FileUploadOutlinedIcon color="inherit" />
+                  <p>Upload file</p>
+                </AttachmentItemInner>
+              </AttachmentItem>
+              {task.data.files?.map((file) => (
+                <div key={file._id}>
+                  <AttachmentItem isFile>
+                    <AttachmentItemInner isFile>
+                      <p>{file._id}</p>
+                    </AttachmentItemInner>
+                  </AttachmentItem>
+                  <button onClick={() => deleteFile(file._id)} type="button">
+                    Delete file
+                  </button>
+                </div>
+              ))}
+            </AttachmentsContainer>
+          </SectionContainer>
 
           <Footer>
             <FooterContainer>
@@ -300,3 +301,9 @@ function TaskPage() {
 }
 
 export default TaskPage
+
+/*
+
+ 
+
+*/

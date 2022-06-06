@@ -13,7 +13,8 @@ import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
 import Popover from "../../../components/Popover/Popover"
 import DateOption from "./DateOption"
-import DatePropertie from "./DatePropertie"
+// import DatePropertie from "./DatePropertie"
+import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
 
 const Calendar = styled(CalendarPicker)`
   max-width: 290px;
@@ -29,16 +30,7 @@ const OptionsWrapper = styled.div`
   margin-bottom: 14px;
 `
 
-function DatePicker({
-  value,
-  onChange,
-  useCapture,
-  displayIcon,
-  displayValue,
-  iconSize,
-  backgroundColor,
-  border,
-}) {
+function DatePicker({ value, onChange, backgroundColor, variant }) {
   const [isOpen, setIsOpen] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -107,11 +99,8 @@ function DatePicker({
       <DatePropertie
         onClick={togglePopover}
         value={value}
-        displayIcon={displayIcon}
-        displayValue={displayValue}
-        iconSize={iconSize}
         backgroundColor={backgroundColor}
-        border={border}
+        variant={variant}
       />
 
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
@@ -163,17 +152,13 @@ function DatePicker({
 DatePicker.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  useCapture: PropTypes.bool,
-  displayIcon: PropTypes.bool,
-  displayValue: PropTypes.bool,
-  iconSize: PropTypes.number,
   backgroundColor: PropTypes.string,
-  border: PropTypes.string,
+  variant: PropTypes.oneOf(["icon", "standard", "medium"]),
 }
 
 DatePicker.defaultProps = {
   value: "",
-  useCapture: false,
+  variant: "standard",
 }
 
 export default DatePicker

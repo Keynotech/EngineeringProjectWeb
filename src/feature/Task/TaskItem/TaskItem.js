@@ -22,7 +22,7 @@ import {
   TagsContainer,
 } from "./TaskItem.style"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
-import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
+import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
 import ProjectPropertie from "../../Pickers/ProjectPicker/ProjectPropertie"
 import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
 import Chip from "../../../components/Chip/Chip"
@@ -112,6 +112,7 @@ function TaskItem({ task }) {
               <DatePropertie
                 backgroundColor={theme.tertiary}
                 value={task.dueDate}
+                variant="standard"
                 displayIcon={false}
               />
             ) : null}
