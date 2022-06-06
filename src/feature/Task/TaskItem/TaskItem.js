@@ -14,19 +14,21 @@ import {
   StyledLink,
   CheckboxContainer,
   MainContainer,
+  MainWrapper,
   Title,
   PropertiesIcons,
   ProjectInfo,
-  Description,
-  DescriptionInner,
+  AdditionalContainer,
   TagsContainer,
 } from "./TaskItem.style"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
-import ProjectPropertie from "../../Pickers/ProjectPicker/ProjectPropertie"
+import ProjectPropertie from "../../Propertie/ProjectPropertie/ProjectPropertie"
 import useGetTaskTags from "../../../hooks/query/useGetTaskTags"
+import useWindowSize from "../../../hooks/useWindowSize"
 import Chip from "../../../components/Chip/Chip"
 import { useNavigate } from "react-router-dom"
+import { size } from "../../../utils/mq"
 
 function TaskItem({ task }) {
   // Query
@@ -66,29 +68,43 @@ function TaskItem({ task }) {
   // ===========================================================================
   const theme = useTheme()
   const navigate = useNavigate()
+  const windowSize = useWindowSize()
 
   let tags = null
   if (taskTags) {
-    tags = taskTags.map((tag) => (
-      <Chip
-        onClick={() => {
-          navigate(`/tag/${tag._id}`)
-          _hideTaskPage()
-        }}
-        label={tag.tagName}
-        key={tag._id}
-        variant="outlined"
-        size="small"
-        clickable
-      />
-    ))
+    if (windowSize.width < size.tablet) {
+      tags = (
+        <Chip
+          label={`${task.tags.length} tags`}
+          variant="outlined"
+          size="small"
+        />
+      )
+    } else {
+      tags = taskTags.map((tag) => (
+        <Chip
+          onClick={() => {
+            _hideTaskPage()
+            navigate(`/tag/${tag._id}`)
+          }}
+          label={tag.tagName}
+          key={tag._id}
+          variant="outlined"
+          size="small"
+          clickable
+        />
+      ))
+    }
   }
 
-  const project = (
-    <ProjectInfo>
-      <ProjectPropertie value={task.project} />
-    </ProjectInfo>
-  )
+  let project = null
+  if (task.project) {
+    project = (
+      <ProjectInfo>
+        <ProjectPropertie displayIcon={false} value={task.project} />
+      </ProjectInfo>
+    )
+  }
 
   return (
     <motion.div
@@ -97,44 +113,39 @@ function TaskItem({ task }) {
       exit={{ x: 500, opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Wrapper>
-        <CheckboxContainer>
-          <Checkbox
-            checked={task.status}
-            onChange={_toggleStatus}
-            priority={task.priority}
-          />
-        </CheckboxContainer>
-
-        <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
-          <MainContainer>
-            {task.dueDate ? (
-              <DatePropertie
-                backgroundColor={theme.tertiary}
-                value={task.dueDate}
-                variant="standard"
-                displayIcon={false}
-              />
-            ) : null}
-
-            <Title>{task.title}</Title>
-
-            <PropertiesIcons>
-              {isFile ? (
-                <InsertDriveFileOutlinedIcon fontSize="inherit" />
+      <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
+        <Wrapper>
+          <CheckboxContainer>
+            <Checkbox
+              checked={task.status}
+              onChange={_toggleStatus}
+              priority={task.priority}
+            />
+          </CheckboxContainer>
+          <MainWrapper>
+            <MainContainer>
+              <Title>{task.title}</Title>
+              <PropertiesIcons>
+                {isFile ? (
+                  <InsertDriveFileOutlinedIcon fontSize="inherit" />
+                ) : null}
+              </PropertiesIcons>
+              <TagsContainer>{tags}</TagsContainer>
+            </MainContainer>
+            <AdditionalContainer>
+              {task.dueDate ? (
+                <DatePropertie
+                  backgroundColor={theme.tertiary}
+                  value={task.dueDate}
+                  variant="standard"
+                  displayIcon={false}
+                />
               ) : null}
-            </PropertiesIcons>
-            <TagsContainer>{tags}</TagsContainer>
-            {project}
-          </MainContainer>
-
-          {displayTasksDetails && task.description ? (
-            <Description>
-              <DescriptionInner>{task.description}</DescriptionInner>
-            </Description>
-          ) : null}
-        </StyledLink>
-      </Wrapper>
+              {project}
+            </AdditionalContainer>
+          </MainWrapper>
+        </Wrapper>
+      </StyledLink>
     </motion.div>
   )
 }

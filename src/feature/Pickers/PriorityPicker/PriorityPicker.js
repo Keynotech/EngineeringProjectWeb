@@ -9,7 +9,7 @@ import PriorityPropertie from "../../Propertie/PriorityPropertie/PriorityPropert
 
 const Wrapper = styled.div`
   width: 200px;
-  max-width: 100vw;
+  max-width: 90vw;
 `
 
 const Item = styled.div`

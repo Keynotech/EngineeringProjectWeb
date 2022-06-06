@@ -182,17 +182,17 @@ function TaskPage() {
                 value={task.data.dueDate}
                 variant="medium"
               />
-              <PriorityPicker
-                onChange={changePriority}
-                value={task.data.priority}
-                variant="medium"
-              />
-            </PropertieList>
-            <PropertieList>
               <ProjectPicker
                 onChange={changeProject}
                 variant="medium"
                 value={task.data.project}
+              />
+            </PropertieList>
+            <PropertieList style={{ paddingLeft: "8px" }}>
+              <PriorityPicker
+                onChange={changePriority}
+                value={task.data.priority}
+                variant="medium"
               />
               <TagPicker
                 onChange={changeTags}
@@ -204,97 +204,94 @@ function TaskPage() {
               />
             </PropertieList>
           </PropertiesContainer>
-          <SectionWrapper>
-            <SectionContainer>
-              <TextInput
-                id="task-description"
-                name="task-description"
-                value={task.data.description}
-                onChange={changeDesc}
-                placeholder="Description"
-                multiline
-                maxRows={15}
-                fontSize="14px"
-              />
-            </SectionContainer>
-
-            <SectionContainer>
-              <TagsContainer>{tags}</TagsContainer>
-            </SectionContainer>
-          </SectionWrapper>
 
           <SectionContainer>
-            <SectionHeader>Attachments</SectionHeader>
+            <TextInput
+              id="task-description"
+              name="task-description"
+              value={task.data.description}
+              onChange={changeDesc}
+              placeholder="Description"
+              multiline
+              maxRows={15}
+              fontSize="14px"
+            />
+          </SectionContainer>
+
+          <SectionContainer>
+            <TagsContainer>{tags}</TagsContainer>
+          </SectionContainer>
+          <SectionContainer>
+            <SectionHeader>
+              Attachments{" "}
+              {task.data.files ? `(${task.data.files.length})` : null}
+            </SectionHeader>
+
             <AttachmentsContainer>
+              {task.data.files?.map((file) => (
+                <AttachmentItem isFile key={file._id}>
+                  <AttachmentItemInner isFile>
+                    <p>{file.file[0].originalname}</p>
+                    <button onClick={() => deleteFile(file._id)} type="button">
+                      Delete file
+                    </button>
+                  </AttachmentItemInner>
+                </AttachmentItem>
+              ))}
               <AttachmentItem onClick={openUpload} isFile={false}>
                 <AttachmentItemInner isFile={false}>
                   <FileUploadOutlinedIcon color="inherit" />
                   <p>Upload file</p>
                 </AttachmentItemInner>
               </AttachmentItem>
-              {task.data.files?.map((file) => (
-                <div key={file._id}>
-                  <AttachmentItem isFile>
-                    <AttachmentItemInner isFile>
-                      <p>{file._id}</p>
-                    </AttachmentItemInner>
-                  </AttachmentItem>
-                  <button onClick={() => deleteFile(file._id)} type="button">
-                    Delete file
-                  </button>
-                </div>
-              ))}
             </AttachmentsContainer>
           </SectionContainer>
+        </DetailsContainer>
 
-          <Footer>
-            <FooterContainer>
-              <div>Updated at {formatDateTimeToDisplay(task.data.updated)}</div>
+        <Footer>
+          <FooterContainer>
+            <div>Updated at {formatDateTimeToDisplay(task.data.updated)}</div>
 
-              <DropdownMenu
-                isOpen={menuIsOpen}
-                outsideClick={() => {
-                  toggleMenu(false)
-                }}
-                toggle={
-                  <MoreHorizIcon
+            <DropdownMenu
+              isOpen={menuIsOpen}
+              outsideClick={() => {
+                toggleMenu(false)
+              }}
+              toggle={
+                <MoreHorizIcon
+                  color="inherit"
+                  sx={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => toggleMenu(!menuIsOpen)}
+                />
+              }
+            >
+              <DropdownItemMenu
+                leftIcon={
+                  <ContentCopyOutlinedIcon color="inherit" fontSize="inehrit" />
+                }
+                label="Duplicate tag"
+              />
+              <DropdownItemMenu
+                leftIcon={
+                  <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />
+                }
+                label="Go to project"
+              />
+              <DropdownItemMenu
+                leftIcon={
+                  <DeleteOutlineOutlinedIcon
                     color="inherit"
-                    sx={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => toggleMenu(!menuIsOpen)}
+                    fontSize="inehrit"
                   />
                 }
-              >
-                <DropdownItemMenu
-                  leftIcon={
-                    <ContentCopyOutlinedIcon
-                      color="inherit"
-                      fontSize="inehrit"
-                    />
-                  }
-                  label="Duplicate tag"
-                />
-                <DropdownItemMenu
-                  leftIcon={
-                    <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />
-                  }
-                  label="Go to project"
-                />
-                <DropdownItemMenu
-                  leftIcon={
-                    <DeleteOutlineOutlinedIcon
-                      color="inherit"
-                      fontSize="inehrit"
-                    />
-                  }
-                  label="Delete task"
-                  onClick={deleteTask}
-                />
-              </DropdownMenu>
-            </FooterContainer>
-          </Footer>
-        </DetailsContainer>
+                label="Delete task"
+                onClick={deleteTask}
+              />
+            </DropdownMenu>
+          </FooterContainer>
+        </Footer>
       </Container>
     </Wrapper>
   ) : null

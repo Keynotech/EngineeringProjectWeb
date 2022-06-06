@@ -4,8 +4,8 @@ import { getAll } from "../../api/tags"
 function useTagsQuery() {
   const queryClient = useQueryClient()
   const data = useQuery(["tags"], getAll, {
-    staleTime: 2 * 60 * 1000,
-    cacheTime: 10 * 60 * 1000,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   })
   if (data.isSuccess) {
     data.data.forEach((e) => {

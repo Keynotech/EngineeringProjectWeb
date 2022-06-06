@@ -9,7 +9,7 @@ import IconPropertie from "../../../components/PropertieLayout/IconPropertie"
 import StandardPropertie from "../../../components/PropertieLayout/StandardPropertie"
 import useSingleProjectQuery from "../../../hooks/query/useSingleProjectQuery"
 
-function ProjectPropertie({ value, onClick, variant }) {
+function ProjectPropertie({ value, onClick, variant, displayIcon }) {
   const project = useSingleProjectQuery(value)
 
   if (variant === "icon") {
@@ -35,8 +35,8 @@ function ProjectPropertie({ value, onClick, variant }) {
     <StandardPropertie
       icon={<InboxOutlinedIcon fontSize="inherit" color="inherit" />}
       onClick={onClick}
-      label="Project"
       value={project ? project.projectName : "Inbox"}
+      displayIcon={displayIcon}
     />
   )
 }
@@ -45,6 +45,7 @@ ProjectPropertie.propTypes = {
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(["icon", "standard", "medium"]),
   value: PropTypes.string,
+  displayIcon: PropTypes.bool,
 }
 
 export default ProjectPropertie

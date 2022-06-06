@@ -13,27 +13,26 @@ import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
 
-const Wrapper = styled.ul`
+const Wrapper = styled.div`
   min-width: 200px;
-  max-width: 100vw;
+  max-width: 90vw;
 `
 
-const Item = styled.div`
+const ItemWrapper = styled.div`
   display: flex;
-  width: 100%;
-  overflow: visible;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
   padding: 8px 12px;
-  box-sizing: border-box;
-  font-size: 14px;
+  width: 100%;
   cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
   }
+`
+
+const WrapperTagPropertie = styled.div`
+  width: 95%;
+  padding-right: 8px;
 `
 
 const AddNewTag = styled.div`
@@ -99,17 +98,22 @@ function TagPicker({ value, currentTags, onChange, variant }) {
         <Wrapper>
           {tags.isSuccess
             ? tags.data.map((tag) => (
-                <Item onClick={() => handleChange(tag._id)} key={tag._id}>
-                  <TagItem showMenu={false} tagId={tag._id} />
+                <ItemWrapper
+                  onClick={() => handleChange(tag._id)}
+                  key={tag._id}
+                >
+                  <WrapperTagPropertie>
+                    <TagItem showMenu={false} tagId={tag._id} />
+                  </WrapperTagPropertie>
                   <Checkbox
                     id="tag-picker-select"
                     onChange={() => handleChange(tag._id)}
                     checked={selectedTags.indexOf(tag._id) > -1}
                   />
-                </Item>
+                </ItemWrapper>
               ))
             : null}
-          <Item onClick={_showTagInput}>
+          <ItemWrapper onClick={_showTagInput}>
             <AddNewTag>
               <AddIcon
                 sx={{
@@ -120,7 +124,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
               />
               Create new tag
             </AddNewTag>
-          </Item>
+          </ItemWrapper>
         </Wrapper>
       </Popover>
     </>

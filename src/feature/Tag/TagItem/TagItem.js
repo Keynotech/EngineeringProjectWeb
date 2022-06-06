@@ -41,6 +41,7 @@ const Title = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
 `
 
 const Menu = styled.div`

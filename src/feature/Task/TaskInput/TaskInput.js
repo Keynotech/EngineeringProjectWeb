@@ -79,14 +79,6 @@ function TaskInput({ priority, project, tag, dueDate }) {
       <Wrapper>
         <Form onSubmit={formik.handleSubmit}>
           <Main isFocus={isFocus}>
-            {formik.values.project ? (
-              <ProjectPropertie
-                displayIcon={false}
-                backgroundColor={theme.tertiary}
-                value={formik.values.project}
-              />
-            ) : null}
-
             <TextInput
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}

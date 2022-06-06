@@ -2,7 +2,7 @@ import styled, { css } from "styled-components"
 
 export const Wrapper = styled.div`
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   z-index: 801;
 `
 
@@ -16,8 +16,8 @@ export const Main = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justicy-content: center;
-  padding: 8px 15px 8px 15px;
+  justify-content: center;
+  padding: 8px 4px;
   background-color: ${(props) => props.theme.primary};
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
   height: 40px;

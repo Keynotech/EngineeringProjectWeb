@@ -7,8 +7,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  flex-shrink: 0;
-  padding: 4px 6px;
+  padding: 2px 6px;
   border-radius: 4px;
   cursor: pointer;
   color: ${(props) => props.color || props.theme.textTertiary};
@@ -18,6 +17,9 @@ const Wrapper = styled.div`
 const Value = styled.span`
   font-size: 12px;
   font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 function StandardPropertie({

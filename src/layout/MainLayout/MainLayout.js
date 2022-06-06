@@ -29,7 +29,7 @@ const ChildContainer = styled.div`
   }
 `
 const OutletContainer = styled.div`
-  z-index: ${zIndex.level2};
+  z-index: ${zIndex.level9};
   position: absolute;
   width: 100vw;
   visibility: hidden;

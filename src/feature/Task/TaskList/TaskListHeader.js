@@ -10,11 +10,9 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   gap: 10px;
-  padding: 15px 0px;
   color: ${(props) => props.theme.textSecondary};
   background-color: ${(props) => props.theme.background};
-  height: 32px;
-  border-bottom: 1px solid transparent;
+  height: 64px;
 `
 
 const TextContainer = styled.div`

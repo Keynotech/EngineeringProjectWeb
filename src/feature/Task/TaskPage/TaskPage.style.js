@@ -34,8 +34,7 @@ export const TitleContainer = styled.div`
 export const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
   color: ${(props) => props.theme.textSecondary};
   background-color: ${(props) => props.theme.background};
   padding: 0 15px;
@@ -94,27 +93,27 @@ export const FooterContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 8px 15px;
   color: ${(props) => props.theme.textTertiary};
 `
 
 export const AttachmentsContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  overflow-x: auto;
+  flex-direction: column;
+  overflow-y: auto;
   gap: 8px;
 `
 
 export const AttachmentItem = styled.div`
-  flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 12px 12px;
   border-radius: 5px;
   border: 2px dotted ${(props) => props.theme.tertiary};
-  width: 100px;
-  height: 80px;
+  width: 100%;
+  max-width: 100%;
+  height: 40px;
   margin-bottom: 8px;
 
   svg {
@@ -130,12 +129,14 @@ export const AttachmentItem = styled.div`
 export const AttachmentItemInner = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: column;
-  overflow-y: auto;
-  max-height: 100%;
-  word-break: break-all;
+  flex-direction: row;
+  min-width: 0px;
+  max-width: 100%;
 
   p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 12px;
     color: ${(props) => props.theme.textTertiary};
 
