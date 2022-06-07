@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
-import { add } from "date-fns"
+import { add, format } from "date-fns"
 import { CalendarPicker } from "@mui/x-date-pickers"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
@@ -13,6 +14,8 @@ import DoNotDisturbOutlinedIcon from "@mui/icons-material/DoNotDisturbOutlined"
 import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
 import Popover from "../../../components/Popover/Popover"
+import CancelButton from "../../../components/button/CancelButton"
+import SubmitButton from "../../../components/button/SubmitButton"
 import DateOption from "./DateOption"
 import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
 
@@ -23,6 +26,16 @@ const Calendar = styled(CalendarPicker)`
   }
 `
 
+const DisplayValue = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding: 0 10px;
+  height: 40px;
+  width: 100%;
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
+`
+
 const OptionsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,17 +43,29 @@ const OptionsWrapper = styled.div`
   margin-bottom: 14px;
 `
 
+const ButtonsWrapper = styled.div`
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+`
+
 function DatePicker({ value, onChange, backgroundColor, variant }) {
+  const [date, setDate] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const { t } = useTranslation()
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget)
+    setDate(value)
     setIsOpen(true)
   }
 
   const handleClose = () => {
+    onChange(date)
     setAnchorEl(null)
     setIsOpen(false)
   }
@@ -79,23 +104,19 @@ function DatePicker({ value, onChange, backgroundColor, variant }) {
   ]
 
   const setTomorrow = () => {
-    onChange(dates[0].value.toISOString())
-    setIsOpen(false)
+    setDate(dates[0].value.toISOString())
   }
 
   const setNextWeek = () => {
-    onChange(dates[1].value.toISOString())
-    setIsOpen(false)
+    setDate(dates[1].value.toISOString())
   }
 
   const setNextMonth = () => {
-    onChange(dates[2].value.toISOString())
-    setIsOpen(false)
+    setDate(dates[2].value.toISOString())
   }
 
   const setNoDate = () => {
-    onChange(dates[3].value)
-    setIsOpen(false)
+    setDate(dates[3].value)
   }
 
   return (
@@ -109,14 +130,17 @@ function DatePicker({ value, onChange, backgroundColor, variant }) {
 
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DisplayValue>
+            {date ? format(new Date(date), "LLL do yyyy") : "Select date"}
+          </DisplayValue>
           <Calendar
+            disableHighlightToday
             showDaysOutsideCurrentMonth
             allowSameDateSelection
             minDate={new Date()}
             value={value}
             onChange={(newValue) => {
-              onChange(newValue.toISOString())
-              setIsOpen(false)
+              setDate(newValue.toISOString())
             }}
           />
           <OptionsWrapper>
@@ -147,6 +171,24 @@ function DatePicker({ value, onChange, backgroundColor, variant }) {
               value={dates[3].value}
             />
           </OptionsWrapper>
+          <ButtonsWrapper>
+            <CancelButton
+              style={{ width: "100%" }}
+              type="button"
+              onClick={() => setIsOpen(false)}
+              text={t("cancel")}
+            />
+            <SubmitButton
+              style={{ width: "100%" }}
+              text="Done"
+              type="submit"
+              disabled={false}
+              onClick={() => {
+                onChange(date)
+                setIsOpen(false)
+              }}
+            />
+          </ButtonsWrapper>
         </LocalizationProvider>
       </Popover>
     </>

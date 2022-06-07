@@ -92,7 +92,7 @@ function TaskItem({ task }) {
         />
       )
     } else {
-      tags = taskTags.map((tag) => (
+      tags = taskTags?.map((tag) => (
         <Chip
           onClick={() => {
             _hideTaskPage()

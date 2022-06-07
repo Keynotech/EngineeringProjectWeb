@@ -130,7 +130,7 @@ function TaskPage() {
 
   let tags = null
   if (taskTags) {
-    tags = taskTags.map((tag) => (
+    tags = taskTags?.map((tag) => (
       <Chip
         onClick={() => navigate(`/tag/${tag._id}/tasks/${taskId}`)}
         label={tag.tagName}
