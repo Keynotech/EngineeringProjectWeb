@@ -8,7 +8,7 @@ function useUpdateTask(taskId) {
     onMutate: async (edited) => {
       await queryClient.cancelQueries(["tasks"])
 
-      const snapshotOfPreviousTasks = queryClient.getQueryData("tweets")
+      const snapshotOfPreviousTasks = queryClient.getQueryData(["tasks"])
 
       queryClient.setQueryData(["tasks"], (previousTasks) =>
         previousTasks.map((task) => {

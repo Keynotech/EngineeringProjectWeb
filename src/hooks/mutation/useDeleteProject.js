@@ -6,14 +6,11 @@ function useDeleteTag() {
 
   return useMutation((projectId) => del(projectId), {
     onMutate: async (projectId) => {
-      queryClient.invalidateQueries(["tasks"])
-      const previousProjects = queryClient.getQueryData(["projects"])
-      const deletedProjectIndex = previousProjects.findIndex(
-        (project) => project._id === projectId
+      await queryClient.cancelQueries(["projects"])
+
+      queryClient.setQueryData(["projects"], (previousProjects) =>
+        previousProjects.filter((project) => project._id !== projectId)
       )
-      const removedProject = [...previousProjects]
-      removedProject.splice(deletedProjectIndex, 1)
-      queryClient.setQueryData(["projects"], removedProject)
     },
     onSuccess: (projectId) => {
       queryClient.invalidateQueries(["projects", projectId])

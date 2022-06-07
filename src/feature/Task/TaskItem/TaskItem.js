@@ -91,21 +91,21 @@ function TaskItem({ task }) {
           size="small"
         />
       )
+    } else {
+      tags = taskTags.map((tag) => (
+        <Chip
+          onClick={() => {
+            _hideTaskPage()
+            navigate(`/tag/${tag._id}`)
+          }}
+          label={tag.tagName}
+          key={tag._id}
+          variant="outlined"
+          size="small"
+          clickable
+        />
+      ))
     }
-  } else {
-    tags = taskTags.map((tag) => (
-      <Chip
-        onClick={() => {
-          _hideTaskPage()
-          navigate(`/tag/${tag._id}`)
-        }}
-        label={tag.tagName}
-        key={tag._id}
-        variant="outlined"
-        size="small"
-        clickable
-      />
-    ))
   }
 
   let project = null

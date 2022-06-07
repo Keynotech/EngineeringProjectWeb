@@ -10,13 +10,11 @@ function useDeleteTask(taskId) {
 
   return useMutation(() => del(taskId), {
     onMutate: async () => {
-      const previousTasks = queryClient.getQueryData(["tasks"])
-      const deletedTaskIndex = previousTasks.findIndex(
-        (task) => task._id === taskId
+      await queryClient.cancelQueries(["tasks"])
+
+      queryClient.setQueryData(["tasks"], (previousTasks) =>
+        previousTasks.filter((task) => task._id !== taskId)
       )
-      const removedTasks = [...previousTasks]
-      removedTasks.splice(deletedTaskIndex, 1)
-      queryClient.setQueryData(["tasks"], removedTasks)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

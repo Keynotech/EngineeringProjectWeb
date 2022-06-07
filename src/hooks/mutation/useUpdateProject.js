@@ -7,26 +7,35 @@ function useUpdateProject(projectId) {
   return useMutation((props) => patch({ projectId, props }), {
     onMutate: async (edited) => {
       await queryClient.cancelQueries(["projects"])
-      await queryClient.cancelQueries(["projects", projectId])
-      const previousProjects = await queryClient.getQueryData(["projects"])
-      const index = previousProjects.findIndex((tag) => tag._id === projectId)
-      const previousProject = previousProjects[index]
-      const updatedProject = { ...previousProject, ...edited }
-      const updatedTagsList = [...previousProjects]
-      updatedTagsList[index] = updatedProject
-      queryClient.setQueryData(["projects"], updatedTagsList)
-      queryClient.setQueryData(["projects", projectId], updatedProject)
 
-      return { updatedProject, previousProjects }
+      const snapshotOfPreviousProjects = queryClient.getQueryData(["projects"])
+
+      queryClient.setQueryData(["projects"], (previousProjects) =>
+        previousProjects.map((project) => {
+          if (project._id === projectId) {
+            return {
+              ...project,
+              ...edited,
+            }
+          }
+          return project
+        })
+      )
+
+      queryClient.setQueryData(["projects", projectId], (previousProject) => ({
+        ...previousProject,
+        ...edited,
+      }))
+
+      return { snapshotOfPreviousProjects }
     },
 
-    onError: ({ updatedProject, previousProjects }) => {
-      queryClient.setQueryData(["projects", projectId], updatedProject)
-      queryClient.setQueryData(["projects"], previousProjects)
+    onError: ({ snapshotOfPreviousProjects }) => {
+      queryClient.setQueryData(["projects"], snapshotOfPreviousProjects)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["projects", projectId])
       queryClient.invalidateQueries(["projects"])
+      queryClient.invalidateQueries(["tasks"])
     },
   })
 }

@@ -9,11 +9,8 @@ function useDeleteFile(taskId) {
   return useMutation((fileId) => del({ taskId, fileId }), {
     onMutate: async (fileId) => {
       const task = queryClient.getQueryData(["tasks", taskId])
-      const removedFileIndex = task.files.findIndex(
-        (file) => file._id === fileId
-      )
-      const updatedFilesList = [...task.files]
-      updatedFilesList.splice(removedFileIndex, 1)
+      const updatedFilesList = task.files.filter((file) => file._id !== fileId)
+
       updateTask.mutate({ files: updatedFilesList })
     },
     onSuccess: () => {

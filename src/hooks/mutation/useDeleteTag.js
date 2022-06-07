@@ -6,11 +6,11 @@ function useDeleteTag() {
 
   return useMutation((tagId) => del(tagId), {
     onMutate: async (tagId) => {
-      const previousTags = queryClient.getQueryData(["tags"])
-      const deletedTagIndex = previousTags.findIndex((tag) => tag._id === tagId)
-      const removedTags = [...previousTags]
-      removedTags.splice(deletedTagIndex, 1)
-      queryClient.setQueryData(["tags"], removedTags)
+      await queryClient.cancelQueries(["tags"])
+
+      queryClient.setQueryData(["tags"], (previousTags) =>
+        previousTags.filter((tag) => tag._id !== tagId)
+      )
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
