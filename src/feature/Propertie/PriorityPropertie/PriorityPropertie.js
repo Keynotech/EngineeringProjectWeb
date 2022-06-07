@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
 import StarIcon from "@mui/icons-material/Star"
 import { useTheme } from "styled-components"
@@ -11,6 +12,7 @@ import StandardPropertie from "../../../components/PropertieLayout/StandardPrope
 
 function PriorityPropertie({ value, onClick, variant, prioritiesData }) {
   const theme = useTheme()
+  const { t } = useTranslation()
   const [selectedColor, setSelectedColor] = useState(theme.priority1)
 
   useEffect(() => {
@@ -31,7 +33,7 @@ function PriorityPropertie({ value, onClick, variant, prioritiesData }) {
       <MediumPropertie
         icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
         onClick={onClick}
-        label="Priority"
+        label={t("picker.priority.priority")}
         value={prioritiesData.find((priority) => priority.value === value).name}
       />
     )
@@ -41,7 +43,7 @@ function PriorityPropertie({ value, onClick, variant, prioritiesData }) {
     <StandardPropertie
       icon={<StarIcon fontSize="inherit" sx={{ color: selectedColor }} />}
       onClick={onClick}
-      label="Priority"
+      label={t("picker.priority.priority")}
       value={prioritiesData.find((priority) => priority.value === value).name}
     />
   )

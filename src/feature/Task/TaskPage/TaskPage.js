@@ -4,6 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 import React, { useState, useEffect, useRef } from "react"
+import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
@@ -57,6 +58,7 @@ function TaskPage() {
   const theme = useTheme()
   const navigate = useNavigate()
   const goBack = () => navigate("../")
+  const { t } = useTranslation()
 
   // Queries
   // ===========================================================================
@@ -167,7 +169,7 @@ function TaskPage() {
               name="task-title"
               value={task.data.title}
               onChange={changeTitle}
-              placeholder="Task title"
+              placeholder={t("task.title")}
               maxLength={100}
               multiline
               maxRows={3}
@@ -211,7 +213,7 @@ function TaskPage() {
               name="task-description"
               value={task.data.description}
               onChange={changeDesc}
-              placeholder="Description"
+              placeholder={t("task.desc")}
               multiline
               maxRows={15}
               fontSize="14px"
@@ -223,7 +225,7 @@ function TaskPage() {
           </SectionContainer>
           <SectionContainer>
             <SectionHeader>
-              Attachments{" "}
+              {t("attachments.attachments")}{" "}
               {task.data.files ? `(${task.data.files.length})` : null}
             </SectionHeader>
 
@@ -233,7 +235,7 @@ function TaskPage() {
                   <AttachmentItemInner isFile>
                     <p>{file.file[0].originalname}</p>
                     <button onClick={() => deleteFile(file._id)} type="button">
-                      Delete file
+                      {t("attachments.delete")}
                     </button>
                   </AttachmentItemInner>
                 </AttachmentItem>
@@ -241,7 +243,7 @@ function TaskPage() {
               <AttachmentItem onClick={openUpload} isFile={false}>
                 <AttachmentItemInner isFile={false}>
                   <FileUploadOutlinedIcon color="inherit" />
-                  <p>Upload file</p>
+                  <p> {t("attachments.upload")}</p>
                 </AttachmentItemInner>
               </AttachmentItem>
             </AttachmentsContainer>
@@ -250,7 +252,9 @@ function TaskPage() {
 
         <Footer>
           <FooterContainer>
-            <div>Updated at {formatDateTimeToDisplay(task.data.updated)}</div>
+            <div>
+              {t("task.updatedAt")} {formatDateTimeToDisplay(task.data.updated)}
+            </div>
 
             <DropdownMenu
               isOpen={menuIsOpen}
@@ -271,13 +275,13 @@ function TaskPage() {
                 leftIcon={
                   <ContentCopyOutlinedIcon color="inherit" fontSize="inehrit" />
                 }
-                label="Duplicate tag"
+                label={t("task.taskMenu.duplicate")}
               />
               <DropdownItemMenu
                 leftIcon={
                   <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />
                 }
-                label="Go to project"
+                label={t("task.taskMenu.goToProject")}
               />
               <DropdownItemMenu
                 leftIcon={
@@ -286,7 +290,7 @@ function TaskPage() {
                     fontSize="inehrit"
                   />
                 }
-                label="Delete task"
+                label={t("task.taskMenu.delete")}
                 onClick={deleteTask}
               />
             </DropdownMenu>

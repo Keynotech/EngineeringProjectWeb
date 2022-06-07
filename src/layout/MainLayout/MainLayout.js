@@ -22,6 +22,10 @@ const ChildContainer = styled.div`
   padding: 0 12px;
   transition: padding 0.2s cubic-bezier(0.42, 0, 1, 1);
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media ${mq.tablet} {
     min-width: 320px;
     max-width: 100%;

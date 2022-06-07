@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unneeded-ternary */
 import React, { useEffect } from "react"
+import { useTranslation } from "react-i18next"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import styled, { css } from "styled-components"
@@ -49,10 +50,15 @@ const Footer = styled.div`
 `
 
 function TagInputLayout({ onSubmit, submitText, onCancel, tag, dialogName }) {
+  const { t } = useTranslation()
+
   // Validation
   // ===========================================================================
   const CreateTagSchema = Yup.object().shape({
-    tagName: Yup.string().min(1, "").max(50, "Max 50 characters").required(),
+    tagName: Yup.string()
+      .min(1, "")
+      .max(50, t("validation.max50Cha"))
+      .required(),
   })
 
   // Forms
@@ -79,7 +85,7 @@ function TagInputLayout({ onSubmit, submitText, onCancel, tag, dialogName }) {
   return (
     <Dialog icon={<Icon />} dialogName={dialogName} onOutsideClick={onCancel}>
       <Form onSubmit={formik.handleSubmit}>
-        <Label htmlFor="tagName">Tag name</Label>
+        <Label htmlFor="tagName">{t("tags.tagName")}</Label>
         <PropertieInput>
           <TextInput
             id="tagName"
@@ -88,7 +94,7 @@ function TagInputLayout({ onSubmit, submitText, onCancel, tag, dialogName }) {
             onChange={(val) => {
               formik.setFieldValue("tagName", val)
             }}
-            placeholder="Tag name"
+            placeholder={t("tags.tagName")}
             fontSize="14px"
             multiline={false}
             autoFocus
@@ -96,7 +102,7 @@ function TagInputLayout({ onSubmit, submitText, onCancel, tag, dialogName }) {
           />
         </PropertieInput>
         <Footer>
-          <CancelButton type="button" onClick={onCancel} text="Cancel" />
+          <CancelButton type="button" onClick={onCancel} text={t("cancel")} />
           <SubmitButton
             disabled={!(formik.isValid && formik.dirty)}
             text={submitText}

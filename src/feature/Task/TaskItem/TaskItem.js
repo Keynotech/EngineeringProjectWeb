@@ -2,6 +2,7 @@
 /* eslint-disable import/order */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
+import { useTranslation } from "react-i18next"
 import { motion } from "framer-motion"
 import { useSelector, useDispatch } from "react-redux"
 import PropTypes from "prop-types"
@@ -69,32 +70,42 @@ function TaskItem({ task }) {
   const theme = useTheme()
   const navigate = useNavigate()
   const windowSize = useWindowSize()
+  const { t } = useTranslation()
 
   let tags = null
   if (taskTags) {
     if (windowSize.width < size.tablet) {
+      let translation
+      const tagsCount = task.tags.length
+      if (tagsCount === 0 || tagsCount > 4) {
+        translation = t("tags.tags2")
+      } else if (tags === 1) {
+        translation = t("tags.tag")
+      } else {
+        translation = t("tags.tags")
+      }
       tags = (
         <Chip
-          label={`${task.tags.length} tags`}
+          label={`${tagsCount} ${translation}`}
           variant="outlined"
           size="small"
         />
       )
-    } else {
-      tags = taskTags.map((tag) => (
-        <Chip
-          onClick={() => {
-            _hideTaskPage()
-            navigate(`/tag/${tag._id}`)
-          }}
-          label={tag.tagName}
-          key={tag._id}
-          variant="outlined"
-          size="small"
-          clickable
-        />
-      ))
     }
+  } else {
+    tags = taskTags.map((tag) => (
+      <Chip
+        onClick={() => {
+          _hideTaskPage()
+          navigate(`/tag/${tag._id}`)
+        }}
+        label={tag.tagName}
+        key={tag._id}
+        variant="outlined"
+        size="small"
+        clickable
+      />
+    ))
   }
 
   let project = null

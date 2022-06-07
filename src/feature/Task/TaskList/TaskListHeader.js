@@ -5,6 +5,7 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleSidebar } from "../../../store/features/layoutSlice"
+import zIndex from "../../../utils/zIndex"
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const Wrapper = styled.div`
   color: ${(props) => props.theme.textSecondary};
   background-color: ${(props) => props.theme.background};
   height: 64px;
+  z-index: ${zIndex.level1};
 `
 
 const TextContainer = styled.div`

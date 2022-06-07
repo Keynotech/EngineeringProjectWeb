@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unneeded-ternary */
 import React, { useEffect } from "react"
+import { useTranslation } from "react-i18next"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import styled, { css } from "styled-components"
@@ -55,12 +56,14 @@ function ProjectInputLayout({
   project,
   dialogName,
 }) {
+  const { t } = useTranslation()
+
   // Validation
   // ===========================================================================
   const CreateProjectSchema = Yup.object().shape({
     projectName: Yup.string()
       .min(1, "")
-      .max(50, "Max 50 characters")
+      .max(50, t("validation.max50Cha"))
       .required(),
   })
 
@@ -88,7 +91,7 @@ function ProjectInputLayout({
   return (
     <Dialog icon={<Icon />} dialogName={dialogName} onOutsideClick={onCancel}>
       <Form onSubmit={formik.handleSubmit}>
-        <Label htmlFor="projectName">Project name</Label>
+        <Label htmlFor="projectName">{t("project.projectName")}</Label>
         <PropertieInput>
           <TextInput
             id="projectName"
@@ -97,7 +100,7 @@ function ProjectInputLayout({
             onChange={(val) => {
               formik.setFieldValue("projectName", val)
             }}
-            placeholder="Project name"
+            placeholder={t("project.projectName")}
             fontSize="14px"
             multiline={false}
             autoFocus
@@ -105,7 +108,7 @@ function ProjectInputLayout({
           />
         </PropertieInput>
         <Footer>
-          <CancelButton type="button" onClick={onCancel} text="Cancel" />
+          <CancelButton type="button" onClick={onCancel} text={t("cancel")} />
           <SubmitButton
             disabled={!(formik.isValid && formik.dirty)}
             text={submitText}

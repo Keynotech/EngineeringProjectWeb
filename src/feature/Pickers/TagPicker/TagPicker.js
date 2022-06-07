@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
@@ -91,6 +92,8 @@ function TagPicker({ value, currentTags, onChange, variant }) {
   const dispatch = useDispatch()
   const _showTagInput = () => dispatch(showTagInput())
 
+  const { t } = useTranslation()
+
   return (
     <>
       <TagPropertie onClick={togglePopover} variant={variant} value={value} />
@@ -122,7 +125,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
                   marginRight: "16px",
                 }}
               />
-              Create new tag
+              {t("tags.create")}
             </AddNewTag>
           </ItemWrapper>
         </Wrapper>

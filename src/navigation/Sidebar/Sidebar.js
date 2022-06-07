@@ -1,4 +1,5 @@
 import React from "react"
+import { useTranslation } from "react-i18next"
 import styled, { css, useTheme } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
@@ -120,7 +121,7 @@ const SidebarHeaderButtons = styled.div`
 function Sidebar() {
   // Others
   // ===========================================================================
-
+  const { t } = useTranslation()
   const theme = useTheme()
 
   // Dispatch
@@ -158,16 +159,16 @@ function Sidebar() {
           <SidebarList>
             <SidebarLink
               icon={<InboxOutlinedIcon fontSize="inherit" />}
-              name="Inbox"
+              name={t("sidebar.inbox")}
               route="/inbox"
             />
             <SidebarLink
               icon={<TodayOutlinedIcon fontSize="inherit" />}
-              name="Today"
+              name={t("sidebar.today")}
               route="/today"
             />
             <SidebarLink
-              route="/week"
+              route={t("sidebar.upcoming")}
               name="Current Week"
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />

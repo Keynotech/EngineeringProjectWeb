@@ -2,8 +2,8 @@ import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import Backend from "i18next-xhr-backend"
 import LanguageDetector from "i18next-browser-languagedetector"
-import translationEN from "./translations/en/translations.json"
-import translationPL from "./translations/pl/translations.json"
+import translationEN from "./translations/en.json"
+import translationPL from "./translations/pl.json"
 
 const fallbackLng = ["en"]
 const availableLanguages = ["en", "pl"]
@@ -23,6 +23,7 @@ i18n
   .use(initReactI18next) // pass the i18n instance to react-i18next.
   .init({
     resources,
+    lng: "en",
     fallbackLng, // fallback language is english.
 
     detection: {

@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import styled, { css } from "styled-components"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import { useDispatch } from "react-redux"
@@ -80,6 +81,8 @@ function ProjectPicker({ value, onChange, variant }) {
   const dispatch = useDispatch()
   const _showProjectInput = () => dispatch(showProjectInput())
 
+  const { t } = useTranslation()
+
   return (
     <>
       <ProjectPropertie
@@ -127,7 +130,7 @@ function ProjectPicker({ value, onChange, variant }) {
                 marginRight: "12px",
               }}
             />
-            Create new project
+            {t("project.create")}
           </Item>
         </Wrapper>
       </Popover>

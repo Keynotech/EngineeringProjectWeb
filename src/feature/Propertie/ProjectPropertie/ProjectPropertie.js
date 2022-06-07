@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react"
+import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import MediumPropertie from "../../../components/PropertieLayout/MediumPropertie"
@@ -10,6 +11,7 @@ import StandardPropertie from "../../../components/PropertieLayout/StandardPrope
 import useSingleProjectQuery from "../../../hooks/query/useSingleProjectQuery"
 
 function ProjectPropertie({ value, onClick, variant, displayIcon }) {
+  const { t } = useTranslation()
   const project = useSingleProjectQuery(value)
 
   if (variant === "icon") {
@@ -25,7 +27,7 @@ function ProjectPropertie({ value, onClick, variant, displayIcon }) {
       <MediumPropertie
         icon={<InboxOutlinedIcon fontSize="inherit" color="inherit" />}
         onClick={onClick}
-        label="Project"
+        label={t("picker.project.project")}
         value={project ? project.projectName : "Inbox"}
       />
     )

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { useDispatch } from "react-redux"
@@ -73,6 +74,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
 
   // Others  // ===========================================================================
   const theme = useTheme()
+  const { t, i18n } = useTranslation()
 
   return (
     <>
@@ -88,7 +90,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
               onChange={(val) => {
                 formik.setFieldValue("title", val)
               }}
-              placeholder="Create new task, press enter to save."
+              placeholder={t("task.inputPlaceholder")}
               fontSize="18px"
               autoFocus
               multiline={false}

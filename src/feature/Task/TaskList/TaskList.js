@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import styled, { css } from "styled-components"
 import TaskInput from "../TaskInput/TaskInput"
@@ -32,16 +33,17 @@ function TasksList({
   inputTagVal,
   inputDueDateVal,
 }) {
+  const { t } = useTranslation()
   const [sections, setSections] = useState()
   const onGroupChange = (data) => {
     setSections(data)
   }
 
   const groupOptions = [
-    { name: "Default", key: "default" },
-    { name: "Due date", key: "dueDate" },
-    { name: "Created date", key: "createdAt" },
-    { name: "Priority", key: "priority" },
+    { name: t("task.groupOptions.default"), key: "default" },
+    { name: t("task.groupOptions.dueDate"), key: "dueDate" },
+    { name: t("task.groupOptions.createdDate"), key: "createdAt" },
+    { name: t("task.groupOptions.priority"), key: "priority" },
   ]
 
   // Selectors

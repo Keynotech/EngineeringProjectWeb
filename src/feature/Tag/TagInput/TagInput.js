@@ -1,5 +1,6 @@
 /* eslint-disable no-unneeded-ternary */
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import TagInputLayout from "./TagInput.layout"
 import useCreateTag from "../../../hooks/mutation/useCreateTag"
@@ -22,12 +23,14 @@ function TagInput() {
     _hideTagInput()
   }
 
+  const { t } = useTranslation()
+
   return (
     <TagInputLayout
       onCancel={_hideTagInput}
       onSubmit={onSubmit}
-      dialogName="Create tag"
-      submitText="Create"
+      dialogName={t("tags.create")}
+      submitText={t("create")}
     />
   )
 }

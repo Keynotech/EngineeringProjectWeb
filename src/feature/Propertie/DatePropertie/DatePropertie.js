@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react"
+import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined"
 import { useTheme } from "styled-components"
@@ -19,6 +20,7 @@ function DatePropertie({
 }) {
   const { date, overdue } = useDatePropertie({ value })
   const theme = useTheme()
+  const { t } = useTranslation()
 
   const color = overdue === true ? theme.textError : null
 
@@ -35,7 +37,7 @@ function DatePropertie({
       <MediumPropertie
         icon={<CalendarTodayOutlinedIcon fontSize="inherit" color="inherit" />}
         onClick={onClick}
-        label="Due date"
+        label={t("picker.date.dueDate")}
         value={date}
         color={color}
       />
@@ -46,7 +48,7 @@ function DatePropertie({
     <StandardPropertie
       icon={<CalendarTodayOutlinedIcon fontSize="inherit" color="inherit" />}
       onClick={onClick}
-      label="Due date"
+      label={t("picker.date.dueDate")}
       value={date}
       color={color}
       displayIcon={displayIcon}

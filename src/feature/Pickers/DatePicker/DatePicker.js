@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
 import { add } from "date-fns"
 import { CalendarPicker } from "@mui/x-date-pickers"
@@ -13,7 +14,6 @@ import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined"
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
 import Popover from "../../../components/Popover/Popover"
 import DateOption from "./DateOption"
-// import DatePropertie from "./DatePropertie"
 import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
 
 const Calendar = styled(CalendarPicker)`
@@ -33,6 +33,7 @@ const OptionsWrapper = styled.div`
 function DatePicker({ value, onChange, backgroundColor, variant }) {
   const [isOpen, setIsOpen] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const { t } = useTranslation()
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget)
@@ -54,24 +55,27 @@ function DatePicker({ value, onChange, backgroundColor, variant }) {
 
   const dates = [
     {
-      title: "Tomorrow",
+      title: t("picker.date.tomorrow"),
       value: add(new Date(), {
         days: 1,
       }),
     },
     {
-      title: "Next Week",
+      title: t("picker.date.nextWeek"),
       value: add(new Date(), {
         weeks: 1,
       }),
     },
     {
-      title: "Next Month",
+      title: t("picker.date.nextMonth"),
       value: add(new Date(), {
         months: 1,
       }),
     },
-    { title: value ? "Remove date" : "No date", value: null },
+    {
+      title: value ? t("picker.date.remove") : t("picker.date.noDate"),
+      value: null,
+    },
   ]
 
   const setTomorrow = () => {

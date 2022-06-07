@@ -1,4 +1,5 @@
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import { AnimatePresence, motion } from "framer-motion"
 import styled from "styled-components"
@@ -33,6 +34,7 @@ const TagColor = styled.div`
 function SidebarProjectList() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   // Query
   // ===========================================================================
@@ -62,7 +64,7 @@ function SidebarProjectList() {
 
   return (
     <TagsWrapper>
-      <SidebarSectionHeader name="Projects" />
+      <SidebarSectionHeader name={t("sidebar.projects")} />
 
       {projects.isSuccess ? (
         <SidebarList>
@@ -89,7 +91,7 @@ function SidebarProjectList() {
                             fontSize="inehrit"
                           />
                         }
-                        label="Edit project"
+                        label={t("project.edit")}
                         onClick={() => {
                           openProjectEdit(project._id)
                         }}
@@ -101,7 +103,7 @@ function SidebarProjectList() {
                             fontSize="inehrit"
                           />
                         }
-                        label="Delete project"
+                        label={t("project.delete")}
                         onClick={() => deleteProject(project._id)}
                       />
                     </>
@@ -113,7 +115,7 @@ function SidebarProjectList() {
             <SidebarItem
               as="div"
               icon={<AddIcon fontSize="inherit" />}
-              name="Create new project"
+              name={t("project.create")}
               fontWeight="light"
               onClick={_showProjectInput}
               clickable

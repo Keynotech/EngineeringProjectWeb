@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
@@ -33,12 +34,13 @@ function PriorityPicker({ value, onChange, variant }) {
   // Others
   // ===========================================================================
   const theme = useTheme()
+  const { t } = useTranslation()
 
   const prioritiesData = [
-    { name: "Urgent", value: 4, color: theme.priority4 },
-    { name: "High", value: 3, color: theme.priority3 },
-    { name: "Medium", value: 2, color: theme.priority2 },
-    { name: "Low", value: 1, color: theme.priority1 },
+    { name: t("picker.priority.urgent"), value: 4, color: theme.priority4 },
+    { name: t("picker.priority.high"), value: 3, color: theme.priority3 },
+    { name: t("picker.priority.medium"), value: 2, color: theme.priority2 },
+    { name: t("picker.priority.low"), value: 1, color: theme.priority1 },
   ]
 
   // State Hooks
