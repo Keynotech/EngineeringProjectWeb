@@ -1,8 +1,9 @@
 import React from "react"
-import styled, { css } from "styled-components"
+import styled, { css, useTheme } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
+import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import SearchIcon from "@mui/icons-material/Search"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import SidebarLink from "./SidebarLink"
@@ -96,9 +97,31 @@ const SearchButton = styled.span`
   background-color: ${(props) => props.theme.tertiary};
 `
 
+const SidebarToggle = styled.div`
+  ${({ isSidebarVisible }) =>
+    !isSidebarVisible &&
+    css`
+      visibility: visible;
+      transform: scaleX(-1);
+    `}
+
+  @media ${mq.phone} {
+    display: none;
+  }
+`
+
+const SidebarHeaderButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+`
+
 function Sidebar() {
-  // State Hooks
+  // Others
   // ===========================================================================
+
+  const theme = useTheme()
 
   // Dispatch
   // ===========================================================================
@@ -118,9 +141,17 @@ function Sidebar() {
               fontSize="15px"
               name="{user.nickname}"
               rightComponent={
-                <SearchButton>
-                  <SearchIcon />
-                </SearchButton>
+                <SidebarHeaderButtons>
+                  <SearchButton>
+                    <SearchIcon />
+                  </SearchButton>
+                  <SidebarToggle
+                    onClick={_hideSidebar}
+                    isSidebarVisible={isVisible}
+                  >
+                    <MenuOpenIcon sx={{ color: theme.textTertiary }} />
+                  </SidebarToggle>
+                </SidebarHeaderButtons>
               }
             />
           </Header>

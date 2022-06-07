@@ -1,10 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from "react"
-import styled, { css } from "styled-components"
+import styled, { css, useTheme } from "styled-components"
 import { Outlet } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
+import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import Sidebar from "../../navigation/Sidebar/Sidebar"
-import { hideSidebar, showSidebar } from "../../store/features/layoutSlice"
+import {
+  hideSidebar,
+  showSidebar,
+  toggleSidebar,
+} from "../../store/features/layoutSlice"
 import TagInput from "../../feature/Tag/TagInput/TagInput"
 import ProjectInput from "../../feature/Project/ProjectInput/ProjectInput"
 import useWindowSize from "../../hooks/useWindowSize"
@@ -30,6 +35,7 @@ const Main = styled.main`
   margin-left: 0px;
   transition: margin-left 0.25s cubic-bezier(0.42, 0, 1, 1);
   height: 100%;
+  position: relative;
 
   ${({ sidebarVisibility }) =>
     sidebarVisibility &&
@@ -54,6 +60,7 @@ function AppLayout() {
 
   const projects = useProjectsQuery()
   const tags = useTagsQuery()
+  const theme = useTheme()
 
   // State hooks
   // ===========================================================================

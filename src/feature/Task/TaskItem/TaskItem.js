@@ -132,17 +132,19 @@ function TaskItem({ task }) {
               </PropertiesIcons>
               <TagsContainer>{tags}</TagsContainer>
             </MainContainer>
-            <AdditionalContainer>
-              {task.dueDate ? (
-                <DatePropertie
-                  backgroundColor={theme.tertiary}
-                  value={task.dueDate}
-                  variant="standard"
-                  displayIcon={false}
-                />
-              ) : null}
-              {project}
-            </AdditionalContainer>
+            {task.dueDate || project ? (
+              <AdditionalContainer>
+                {task.dueDate ? (
+                  <DatePropertie
+                    backgroundColor={theme.tertiary}
+                    value={task.dueDate}
+                    variant="standard"
+                    displayIcon={false}
+                  />
+                ) : null}
+                {project}
+              </AdditionalContainer>
+            ) : null}
           </MainWrapper>
         </Wrapper>
       </StyledLink>
