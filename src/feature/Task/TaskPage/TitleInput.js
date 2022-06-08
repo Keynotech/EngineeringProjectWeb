@@ -1,17 +1,20 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react"
 import { Input } from "@mui/material"
 import PropTypes from "prop-types"
+import { useFormik } from "formik"
+import * as Yup from "yup"
+import OutsideClickHandler from "react-outside-click-handler"
 import styled, { css, useTheme } from "styled-components"
 import CancelButton from "../../../components/button/CancelButton"
 import SubmitButton from "../../../components/button/SubmitButton"
-import useWindowSize from "../../../hooks/useWindowSize"
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
   background-color: ${(props) => props.theme.background};
   transition: all 0.3s;
@@ -20,13 +23,12 @@ const Wrapper = styled.div`
     isFocus &&
     css`
       position: absolute;
-      z-index: 9999;
       left: 0;
       right: 0;
-      top: 48px;
-      bottom: 0;
-      padding: 0px 15px;
-      border-top: 1px solid ${(props) => props.theme.tertiary};
+      top: 0;
+      z-index: 9999;
+      padding: 20px 15px;
+      border-bottom: 1px solid ${(props) => props.theme.tertiary};
     `};
 `
 
@@ -37,8 +39,7 @@ const InputContainer = styled.div`
   ${({ isFocus }) =>
     isFocus &&
     css`
-      border-radius: 8px;
-      border: 1px solid ${(props) => props.theme.tertiary};
+      min-height: 48px;
     `};
 `
 
@@ -48,15 +49,7 @@ const ButtonsContainer = styled.div`
   gap: 10px;
   justify-content: flex-end;
   align-items: center;
-  opacity: 0;
   margin-top: 10px;
-  transition: height 0.25s;
-
-  ${({ isFocus }) =>
-    isFocus &&
-    css`
-      opacity: 1;
-    `};
 `
 
 function TitleInput({
@@ -64,7 +57,6 @@ function TitleInput({
   onChange,
   multiline,
   minRows,
-  maxRows,
   placeholder,
   fontSize,
   fontWeight,
@@ -73,80 +65,108 @@ function TitleInput({
   name,
   maxLength,
 }) {
-  const theme = useTheme()
-  const [inputValue, setInputValue] = useState("")
+  // Local state
+  // ===========================================================================
   const [isFocus, setIsFocus] = useState(false)
-  const windowSize = useWindowSize()
 
-  const handleChange = (event) => {
-    setInputValue(event.target.value)
-  }
+  // Handlers
+  // ===========================================================================
 
   const onCancel = () => {
-    setInputValue(value)
+    formik.setFieldValue("title", value)
     setIsFocus(false)
   }
 
-  const onSubmit = () => {
-    onChange(inputValue)
+  const onSubmit = (val) => {
+    onChange(val)
     setIsFocus(false)
   }
+
+  // Validation
+  // ===========================================================================
+
+  const CreateTaskSchema = Yup.object().shape({
+    title: Yup.string().max(100, "Max 100 characters").required(""),
+  })
+
+  // Forms
+  // ===========================================================================
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+    },
+    validationSchema: CreateTaskSchema,
+
+    onSubmit: (values) => {
+      onSubmit(values.title)
+    },
+  })
+
+  // Effect Hooks
+  // ===========================================================================
 
   useEffect(() => {
-    setInputValue(value)
-    setIsFocus(false)
+    if (value) {
+      formik.setFieldValue("title", value)
+    }
   }, [value])
 
+  // Others
+  // ===========================================================================
+  const theme = useTheme()
+
   return (
-    <Wrapper isFocus={isFocus}>
-      <InputContainer isFocus={isFocus}>
-        <Input
-          id={id}
-          name={name}
-          value={inputValue}
-          onChange={handleChange}
-          placeholder={placeholder}
-          multiline={multiline}
-          minRows={minRows}
-          maxRows={maxRows}
-          inputProps={{
-            maxLength,
-          }}
-          disableUnderline
-          fullWidth
-          onFocus={() => setIsFocus(true)}
-          autoFocus={autoFocus}
-          sx={{
-            padding: "8px",
-            margin: 0,
-            fontSize: { fontSize },
-            color: theme.textSecondary,
-            fontWeight,
-            "& 	.MuiInput-input	": {
+    <OutsideClickHandler
+      disabled={!isFocus}
+      onOutsideClick={onCancel}
+      useCapture={false}
+    >
+      <Wrapper isFocus={isFocus} onSubmit={formik.handleSubmit}>
+        <InputContainer isFocus={isFocus}>
+          <Input
+            id="title"
+            name="title"
+            value={formik.values.title}
+            onChange={(e) => {
+              formik.setFieldValue("title", e.target.value)
+            }}
+            placeholder={placeholder}
+            multiline={multiline}
+            minRows={minRows}
+            inputProps={{
+              maxLength,
+            }}
+            disableUnderline
+            fullWidth
+            onFocus={() => setIsFocus(true)}
+            autoFocus={autoFocus}
+            sx={{
               padding: 0,
-              lineHeight: "16px",
-            },
-            fontFamily:
-              "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple Color Emoji,Helvetica,Arial,sans-serif,Segoe UI Emoji,Segoe UI Symbol;",
-          }}
-        />
-      </InputContainer>
-      <ButtonsContainer isFocus={isFocus}>
-        <CancelButton
-          type="button"
-          onClick={onCancel}
-          text="Cancel"
-          style={{ width: "100%" }}
-        />
-        <SubmitButton
-          disabled={false}
-          text="Submit"
-          type="button"
-          onClick={onSubmit}
-          style={{ width: "100%" }}
-        />
-      </ButtonsContainer>
-    </Wrapper>
+              margin: 0,
+              fontSize: { fontSize },
+              color: theme.textSecondary,
+              fontWeight,
+              "& 	.MuiInput-input	": {
+                padding: 0,
+                lineHeight: "24px",
+              },
+              fontFamily:
+                "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple Color Emoji,Helvetica,Arial,sans-serif,Segoe UI Emoji,Segoe UI Symbol;",
+            }}
+          />
+        </InputContainer>
+        {isFocus ? (
+          <ButtonsContainer>
+            <CancelButton type="button" onClick={onCancel} text="Cancel" />
+            <SubmitButton
+              disabled={!(formik.isValid && formik.dirty)}
+              text="Submit"
+              type="submit"
+            />
+          </ButtonsContainer>
+        ) : null}
+      </Wrapper>
+    </OutsideClickHandler>
   )
 }
 TitleInput.propTypes = {
@@ -156,7 +176,6 @@ TitleInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   multiline: PropTypes.bool,
   minRows: PropTypes.number,
-  maxRows: PropTypes.number,
   placeholder: PropTypes.string,
   fontSize: PropTypes.string,
   autoFocus: PropTypes.bool,
@@ -168,7 +187,6 @@ TitleInput.defaultProps = {
   value: "",
   multiline: true,
   minRows: 1,
-  maxRows: 3,
   placeholder: "",
   fontSize: "12px",
   fontWeight: 400,

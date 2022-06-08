@@ -173,7 +173,6 @@ function TaskPage() {
               placeholder={t("task.title")}
               maxLength={100}
               multiline
-              maxRows={3}
               fontSize="22px"
               fontWeight={500}
             />

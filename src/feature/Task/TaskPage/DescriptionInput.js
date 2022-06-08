@@ -1,6 +1,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react"
+import OutsideClickHandler from "react-outside-click-handler"
 import { Input } from "@mui/material"
 import PropTypes from "prop-types"
 import styled, { css, useTheme } from "styled-components"
@@ -15,6 +16,7 @@ const Wrapper = styled.div`
   justify-content: center;
   gap: 10px;
   background-color: ${(props) => props.theme.background};
+  padding: 0;
   transition: all 0.3s;
 
   ${({ isFocus }) =>
@@ -24,10 +26,9 @@ const Wrapper = styled.div`
       z-index: 9999;
       left: 0;
       right: 0;
-      top: 48px;
+      top: 0;
       bottom: 0;
       padding: 0px 15px;
-      border-top: 1px solid ${(props) => props.theme.tertiary};
     `};
 `
 
@@ -49,15 +50,7 @@ const ButtonsContainer = styled.div`
   gap: 10px;
   justify-content: flex-end;
   align-items: center;
-  opacity: 0;
   margin-top: 10px;
-  transition: height 0.25s;
-
-  ${({ isFocus }) =>
-    isFocus &&
-    css`
-      opacity: 1;
-    `};
 `
 
 const UnsavedContainer = styled.span`
@@ -80,18 +73,9 @@ function DescriptionInput({
 }) {
   // Local state
   // ===========================================================================
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState(value)
   const [isSaved, setIsSaved] = useState(true)
   const [isFocus, setIsFocus] = useState(false)
-
-  // Hooks
-  // ===========================================================================
-
-  useEffect(() => {
-    setInputValue(value)
-    setIsFocus(false)
-    setIsSaved(true)
-  }, [value])
 
   // Handlers
   // ===========================================================================
@@ -113,70 +97,74 @@ function DescriptionInput({
     setIsFocus(false)
   }
 
-  const onBlur = () => {
-    setIsSaved(false)
-  }
-
-  // Others  // ===========================================================================
+  // Others
+  // ===========================================================================
   const theme = useTheme()
   const windowSize = useWindowSize()
-  const maxRows = windowSize.height / 26
+  const maxRows = windowSize.height / 24
 
   return (
-    <Wrapper isFocus={isFocus}>
-      <SectionHeader>
-        Description{" "}
-        {isSaved ? null : <UnsavedContainer>Unsaved</UnsavedContainer>}
-      </SectionHeader>
-      <InputContainer isFocus={isFocus}>
-        <Input
-          id={id}
-          name={name}
-          value={inputValue}
-          onChange={handleChange}
-          placeholder={placeholder}
-          multiline={multiline}
-          minRows={minRows}
-          maxRows={maxRows}
-          inputProps={{
-            maxLength,
-          }}
-          disableUnderline
-          fullWidth
-          onFocus={() => setIsFocus(true)}
-          onBlur={onBlur}
-          autoFocus={autoFocus}
-          sx={{
-            padding: "8px",
-            margin: 0,
-            fontSize: { fontSize },
-            color: theme.textSecondary,
-            fontWeight,
-            "& 	.MuiInput-input	": {
-              padding: 0,
-              lineHeight: "16px",
-            },
-            fontFamily:
-              "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple Color Emoji,Helvetica,Arial,sans-serif,Segoe UI Emoji,Segoe UI Symbol;",
-          }}
-        />
-      </InputContainer>
-      <ButtonsContainer isFocus={isFocus}>
-        <CancelButton
-          type="button"
-          onClick={onCancel}
-          text="Cancel"
-          style={{ width: "100%" }}
-        />
-        <SubmitButton
-          disabled={false}
-          text="Submit"
-          type="button"
-          onClick={onSubmit}
-          style={{ width: "100%" }}
-        />
-      </ButtonsContainer>
-    </Wrapper>
+    <OutsideClickHandler
+      disabled={!isFocus}
+      onOutsideClick={onCancel}
+      useCapture={false}
+    >
+      <Wrapper isFocus={isFocus}>
+        <SectionHeader>
+          Description{" "}
+          {isSaved ? null : <UnsavedContainer>Unsaved</UnsavedContainer>}
+        </SectionHeader>
+        <InputContainer isFocus={isFocus}>
+          <Input
+            id={id}
+            name={name}
+            value={inputValue}
+            onChange={handleChange}
+            placeholder={placeholder}
+            multiline={multiline}
+            minRows={minRows}
+            maxRows={maxRows}
+            inputProps={{
+              maxLength,
+            }}
+            disableUnderline
+            fullWidth
+            onFocus={() => setIsFocus(true)}
+            autoFocus={autoFocus}
+            sx={{
+              padding: "8px",
+              margin: 0,
+              fontSize: { fontSize },
+              color: theme.textSecondary,
+              fontWeight,
+              "& 	.MuiInput-input	": {
+                padding: 0,
+                lineHeight: "16px",
+              },
+              fontFamily:
+                "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Apple Color Emoji,Helvetica,Arial,sans-serif,Segoe UI Emoji,Segoe UI Symbol;",
+            }}
+          />
+        </InputContainer>
+        {isFocus ? (
+          <ButtonsContainer>
+            <CancelButton
+              type="button"
+              onClick={onCancel}
+              text="Cancel"
+              style={{ width: "100%" }}
+            />
+            <SubmitButton
+              disabled={false}
+              text="Submit"
+              type="button"
+              onClick={onSubmit}
+              style={{ width: "100%" }}
+            />
+          </ButtonsContainer>
+        ) : null}
+      </Wrapper>
+    </OutsideClickHandler>
   )
 }
 DescriptionInput.propTypes = {
