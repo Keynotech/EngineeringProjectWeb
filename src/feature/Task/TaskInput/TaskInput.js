@@ -42,7 +42,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
 
   // Validation
   // ===========================================================================
-  const CreateTagSchema = Yup.object().shape({
+  const CreateTaskSchema = Yup.object().shape({
     title: Yup.string().max(100, "Max 100 characters").required(""),
   })
 
@@ -57,7 +57,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
       tags: tag,
       project,
     },
-    validationSchema: CreateTagSchema,
+    validationSchema: CreateTaskSchema,
 
     onSubmit: (values) => {
       createTask.mutate({
@@ -74,7 +74,7 @@ function TaskInput({ priority, project, tag, dueDate }) {
 
   // Others  // ===========================================================================
   const theme = useTheme()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <>

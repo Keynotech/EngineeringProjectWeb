@@ -98,8 +98,8 @@ function TaskItem({ task }) {
             _hideTaskPage()
             navigate(`/tag/${tag._id}`)
           }}
-          label={tag.tagName}
-          key={tag._id}
+          label={tag?.tagName}
+          key={tag?._id}
           variant="outlined"
           size="small"
           clickable

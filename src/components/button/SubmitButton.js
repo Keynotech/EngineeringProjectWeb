@@ -4,12 +4,13 @@ import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
 
 const Button = styled.button`
-  padding: 6px 12px;
+  padding: 8px 16px;
   border: 1px solid ${(props) => props.theme.brandColor};
   background-color: ${(props) => props.theme.brandColor};
   color: ${(props) => props.theme.background};
   border-radius: 5px;
   transition: background-color 0.4s, border 0.4s;
+  font-weight: 600;
 
   ${({ disabled }) =>
     disabled &&

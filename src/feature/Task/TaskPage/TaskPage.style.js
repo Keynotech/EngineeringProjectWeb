@@ -41,6 +41,7 @@ export const DetailsContainer = styled.div`
   width: 100%;
   box-sizing: border-box;
   flex: 1;
+  position: relative;
 `
 
 export const PropertiesContainer = styled.section`

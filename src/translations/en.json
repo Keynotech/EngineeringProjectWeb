@@ -1,6 +1,6 @@
 {
     "task": {
-        "title": "Title",
+        "title": "Task title",
         "desc": "Description",
         "createdAt": "Created at",
         "updatedAt": "Updated at",

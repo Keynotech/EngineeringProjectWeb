@@ -4,11 +4,12 @@ import styled from "styled-components"
 import PropTypes from "prop-types"
 
 const Button = styled.button`
-  padding: 6px 12px;
+  padding: 8px 16px;
   border: 1px solid ${(props) => props.theme.tertiary};
   background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.textTertiary};
   border-radius: 5px;
+  font-weight: 600;
 `
 
 function CancelButton({ text, onClick, type, style }) {

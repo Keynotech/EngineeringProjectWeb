@@ -16,7 +16,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import { useTheme } from "styled-components"
 import { hideTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../TaskCheckbox/TaskCheckbox"
-import TextInput from "../../../components/TextInput/TextInput"
+import TitleInput from "./TitleInput"
+import DescriptionInput from "./DescriptionInput"
 import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
 import DatePicker from "../../Pickers/DatePicker/DatePicker"
 import TagPicker from "../../Pickers/TagPicker/TagPicker"
@@ -92,8 +93,8 @@ function TaskPage() {
     goBack()
   }
   const changeDesc = (value) =>
-    updateTaskMutation.mutate({ description: value }) // [TODO] mutates each time the user makes a change
-  const changeTitle = (value) => updateTaskMutation.mutate({ title: value }) // [TODO] mutates each time the user makes a change
+    updateTaskMutation.mutate({ description: value })
+  const changeTitle = (value) => updateTaskMutation.mutate({ title: value })
   const changePriority = (value) =>
     updateTaskMutation.mutate({ priority: value })
   const changeDueDate = (value) => updateTaskMutation.mutate({ dueDate: value })
@@ -133,8 +134,8 @@ function TaskPage() {
     tags = taskTags?.map((tag) => (
       <Chip
         onClick={() => navigate(`/tag/${tag._id}/tasks/${taskId}`)}
-        label={tag.tagName}
-        key={tag._id}
+        label={tag?.tagName}
+        key={tag?._id}
         variant="outlined"
         size="small"
         clickable
@@ -164,7 +165,7 @@ function TaskPage() {
         </HeaderContainer>
         <DetailsContainer>
           <TitleContainer>
-            <TextInput
+            <TitleInput
               id="task-title"
               name="task-title"
               value={task.data.title}
@@ -208,14 +209,16 @@ function TaskPage() {
           </PropertiesContainer>
 
           <SectionContainer>
-            <TextInput
+            <DescriptionInput
               id="task-description"
               name="task-description"
               value={task.data.description}
               onChange={changeDesc}
               placeholder={t("task.desc")}
               multiline
-              maxRows={15}
+              maxRows={20}
+              minRows={10}
+              maxLength={10000}
               fontSize="14px"
             />
           </SectionContainer>
