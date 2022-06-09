@@ -59,6 +59,7 @@ const PropertiesIcons = styled.div`
 const AdditionalContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   height: 22px;
   gap: 6px;
   min-width: 0px;

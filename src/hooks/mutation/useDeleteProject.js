@@ -12,8 +12,7 @@ function useDeleteProject() {
         previousProjects.filter((project) => project._id !== projectId)
       )
     },
-    onSuccess: (projectId) => {
-      queryClient.invalidateQueries(["projects", projectId])
+    onSuccess: () => {
       queryClient.invalidateQueries(["projects"])
       queryClient.invalidateQueries(["tasks"])
     },

@@ -7,7 +7,7 @@ function useGroupByFolders(folders, projects) {
     },
   ]
 
-  folders.forEach((folder) => {
+  folders?.forEach((folder) => {
     sectionByFolders.push({
       key: folder._id,
       name: folder.folderName,
@@ -15,7 +15,7 @@ function useGroupByFolders(folders, projects) {
     })
   })
 
-  projects.forEach((project) => {
+  projects?.forEach((project) => {
     if (project.folder === null || project.folder === undefined) {
       const index = sectionByFolders.findIndex(
         (section) => section.key === null

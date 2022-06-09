@@ -2,8 +2,7 @@ import fetchWithError from "./fetchWithError"
 
 const API_URL = `http://localhost:5000/projects`
 
-const post = async ({ projectName, folder }) => {
-  console.log(folder)
+const post = async ({ projectName, folder }) =>
   fetchWithError(API_URL, {
     method: "POST",
     headers: {
@@ -11,7 +10,6 @@ const post = async ({ projectName, folder }) => {
     },
     body: JSON.stringify({ projectName, folder }),
   })
-}
 
 const getAll = async () => fetchWithError(`${API_URL}`)
 

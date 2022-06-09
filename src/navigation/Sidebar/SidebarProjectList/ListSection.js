@@ -50,14 +50,16 @@ function ListSection({ section }) {
   const deleteProjectMutation = useDeleteProject()
   const deleteProject = (projectId) => {
     deleteProjectMutation.mutate(projectId)
-    if (location.pathname === `/project/${projectId}`) {
+    const currentLocation = location.pathname.split("/")
+
+    if (currentLocation[2] === projectId) {
       navigate("inbox")
     }
   }
 
   const deleteFolderMutation = useDeleteFolder()
   const deleteFolder = (folderId) => {
-    deleteProjectMutation.mutate(folderId)
+    deleteFolderMutation.mutate(folderId)
   }
 
   // Locale State
