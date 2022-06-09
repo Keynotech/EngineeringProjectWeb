@@ -23,10 +23,17 @@
         "upload": "Upload files",
         "uploadPlaceholder":"Drop files here to add them to task"
     },
-
+    "folders": {
+        "folderName": "Folder name",
+        "create": "Create new folder",
+        "delete": "Delete folder",
+        "edit": "Edit folder",
+        "addProject": "Add project to folder"
+    },
     "project": {
         "projectName": "Project name",
-        "create": "Createw new project",
+        "folder": "Folder",
+        "create": "Create new project",
         "delete": "Delete project",
         "edit": "Edit project"
     },
@@ -57,6 +64,11 @@
         },
         "project": {
             "project": "Project"
+        },
+        "folder": {
+            "folder":"Folder",
+            "none": "None"
+
         },
         "tag": {
             "addTag": "Add tag"

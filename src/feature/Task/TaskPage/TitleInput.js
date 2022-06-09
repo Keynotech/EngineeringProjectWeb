@@ -98,7 +98,9 @@ function TitleInput({
     validationSchema: CreateTaskSchema,
 
     onSubmit: (values) => {
-      onSubmit(values.title)
+      const valueToSubmit = values.title.replace(/^\s+|\s+$/g, "")
+      formik.setFieldValue("title", valueToSubmit)
+      onSubmit(valueToSubmit)
     },
   })
 
@@ -106,9 +108,7 @@ function TitleInput({
   // ===========================================================================
 
   useEffect(() => {
-    if (value) {
-      formik.setFieldValue("title", value)
-    }
+    formik.setFieldValue("title", value)
   }, [value])
 
   // Others
@@ -133,6 +133,7 @@ function TitleInput({
             placeholder={placeholder}
             multiline={multiline}
             minRows={minRows}
+            maxRows={10}
             inputProps={{
               maxLength,
             }}

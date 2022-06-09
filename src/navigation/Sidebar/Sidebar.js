@@ -12,7 +12,7 @@ import { hideSidebar } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
 import SidebarList from "./SidebarList"
-import SidebarProjectList from "./SidebarProjectList"
+import SidebarProjectList from "./SidebarProjectList/SidebarProjectList"
 import SidebarTagList from "./SidebarTagList"
 import SidebarSectionHeader from "./SidebarSectionHeader"
 
@@ -22,7 +22,7 @@ const Wrapper = styled.nav`
   left: -100vw;
   height: 100vh;
   overflow-y: auto;
-  z-index: ${zIndex.level9};
+  z-index: ${zIndex.level2};
   background-color: ${(props) => props.theme.primary};
   border-right: 1px solid ${(props) => props.theme.tertiary};
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);

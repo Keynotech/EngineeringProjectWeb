@@ -23,9 +23,18 @@
         "upload": "Dodaj pliki",
         "uploadPlaceholder": "Upuść pliki tutaj, aby dodać je do zadania"
     },
+    "folders": {
+        "folderName": "Nazwa folderu",
+        "create":"Utwórz nowy folder",
+        "delete": "Usuń folder",
+        "edit": "Edytuj folder",
+        "addProject": "Dodaj projekt do folderu"
+
+    },
 
     "project": {
         "projectName": "Nazwa projektu",
+        "folder": "Folder",
         "create": "Utwórz nowy projekt",
         "delete": "Usuń projekt",
         "edit": "Edytuj projekt"
@@ -57,6 +66,10 @@
         },
         "project": {
             "project": "Projekt"
+        },
+        "folder": {
+            "folder":"Folder",
+            "none": "Bez folderu"
         },
         "tag": {
             "addTag": "Add tag"

@@ -18,6 +18,8 @@ import TagEdit from "../../feature/Tag/TagInput/TagEdit"
 import ProjectEdit from "../../feature/Project/ProjectInput/ProjectEdit"
 import useProjectsQuery from "../../hooks/query/useProjectsQuery"
 import useTagsQuery from "../../hooks/query/useTagsQuery"
+import FolderInput from "../../feature/Folder/FolderInput/FolderInput"
+import useFoldersQuery from "../../hooks/query/useFoldersQuery"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -60,6 +62,7 @@ function AppLayout() {
 
   const projects = useProjectsQuery()
   const tags = useTagsQuery()
+  const folders = useFoldersQuery()
   const theme = useTheme()
 
   // State hooks
@@ -81,6 +84,10 @@ function AppLayout() {
 
   const projectInputVisibility = useSelector(
     (state) => state.layout.projectInputVisibility
+  )
+
+  const folderInputVisibility = useSelector(
+    (state) => state.layout.folderInputVisibility
   )
 
   const tagEditVisibility = useSelector((state) => state.tagEditPage.visibility)
@@ -115,7 +122,7 @@ function AppLayout() {
 
   return (
     <Wrapper>
-      {projects.isSuccess && tags.isSuccess ? (
+      {folders.isSuccess && projects.isSuccess && tags.isSuccess ? (
         <>
           <Container>
             <Sidebar />
@@ -127,6 +134,7 @@ function AppLayout() {
           {tagEditVisibility ? <TagEdit /> : null}
           {projectInputVisibility ? <ProjectInput /> : null}
           {projectEditVisibility ? <ProjectEdit /> : null}
+          {folderInputVisibility ? <FolderInput /> : null}
         </>
       ) : (
         <Loading>

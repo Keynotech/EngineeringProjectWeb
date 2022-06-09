@@ -97,6 +97,10 @@ function DescriptionInput({
     setIsFocus(false)
   }
 
+  useEffect(() => {
+    setInputValue(value)
+  }, [value])
+
   // Others
   // ===========================================================================
   const theme = useTheme()

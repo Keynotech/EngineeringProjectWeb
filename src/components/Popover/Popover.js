@@ -9,7 +9,8 @@ import zIndex from "../../utils/zIndex"
 
 const PopoverWrapper = styled.div`
   text-align: center;
-  z-index: ${zIndex.level9};
+  z-index: ${zIndex.level10};
+  overflow-y: auto;
   border-radius: 10px;
   background-color: ${(props) => props.theme.background};
   border: 1px solid ${(props) => props.theme.tertiary};

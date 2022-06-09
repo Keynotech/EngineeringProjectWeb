@@ -8,4 +8,5 @@ export default {
   level7: 700,
   level8: 800,
   level9: 900,
+  level10: 1000,
 }

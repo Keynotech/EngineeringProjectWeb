@@ -9,7 +9,6 @@ import TextInput from "../../../components/TextInput/TextInput"
 import CancelButton from "../../../components/button/CancelButton"
 import SubmitButton from "../../../components/button/SubmitButton"
 import Dialog from "../../../components/Dialog/Dialog"
-import FolderPicker from "../../Pickers/FolderPicker/FolderPicker"
 
 const Icon = styled.span`
   width: 12px;
@@ -50,19 +49,19 @@ const Footer = styled.div`
   align-items: center;
 `
 
-function ProjectInputLayout({
+function FolderInputLayout({
   onSubmit,
   submitText,
   onCancel,
-  project,
+  folder,
   dialogName,
 }) {
   const { t } = useTranslation()
 
   // Validation
   // ===========================================================================
-  const CreateProjectSchema = Yup.object().shape({
-    projectName: Yup.string()
+  const CreateFolderSchema = Yup.object().shape({
+    folderName: Yup.string()
       .min(1, "")
       .max(50, t("validation.max50Cha"))
       .required(),
@@ -72,10 +71,9 @@ function ProjectInputLayout({
   // ===========================================================================
   const formik = useFormik({
     initialValues: {
-      projectName: "",
-      folder: null,
+      folderName: "",
     },
-    validationSchema: CreateProjectSchema,
+    validationSchema: CreateFolderSchema,
     onSubmit: (values) => {
       onSubmit({ values })
     },
@@ -85,40 +83,28 @@ function ProjectInputLayout({
   // ===========================================================================
 
   useEffect(() => {
-    if (project) {
-      formik.setFieldValue("projectName", project.projectName)
-      formik.setFieldValue("folder", project.folder)
+    if (folder) {
+      formik.setFieldValue("folderName", folder.folderName)
     }
-  }, [project])
+  }, [folder])
 
   return (
     <Dialog icon={<Icon />} dialogName={dialogName} onOutsideClick={onCancel}>
       <Form onSubmit={formik.handleSubmit}>
-        <Label htmlFor="projectName">{t("project.projectName")}</Label>
+        <Label htmlFor="folderName">{t("folders.folderName")}</Label>
         <PropertieInput>
           <TextInput
-            id="projectName"
-            name="projectName"
-            value={formik.values.projectName}
+            id="folderName"
+            name="folderName"
+            value={formik.values.folderName}
             onChange={(val) => {
-              formik.setFieldValue("projectName", val)
+              formik.setFieldValue("folderName", val)
             }}
-            placeholder={t("project.projectName")}
+            placeholder={t("folders.folderName")}
             fontSize="14px"
             multiline={false}
             autoFocus
             maxLength={50}
-          />
-        </PropertieInput>
-        <Label htmlFor="projectName">{t("project.folder")}</Label>
-        <PropertieInput style={{ position: "relative", left: "-6px" }}>
-          <FolderPicker
-            id="folder"
-            name="folder"
-            value={formik.values.folder}
-            onChange={(val) => {
-              formik.setFieldValue("folder", val)
-            }}
           />
         </PropertieInput>
         <Footer>
@@ -134,4 +120,4 @@ function ProjectInputLayout({
   )
 }
 
-export default ProjectInputLayout
+export default FolderInputLayout

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query"
 import { del } from "../../api/projects"
 
-function useDeleteTag() {
+function useDeleteProject() {
   const queryClient = useQueryClient()
 
   return useMutation((projectId) => del(projectId), {
@@ -20,4 +20,4 @@ function useDeleteTag() {
   })
 }
 
-export default useDeleteTag
+export default useDeleteProject

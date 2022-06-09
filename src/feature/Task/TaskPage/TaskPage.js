@@ -216,15 +216,13 @@ function TaskPage() {
               placeholder={t("task.desc")}
               multiline
               maxRows={20}
-              minRows={10}
+              minRows={5}
               maxLength={10000}
               fontSize="14px"
             />
-          </SectionContainer>
-
-          <SectionContainer>
             <TagsContainer>{tags}</TagsContainer>
           </SectionContainer>
+
           <SectionContainer>
             <SectionHeader>
               {t("attachments.attachments")}{" "}

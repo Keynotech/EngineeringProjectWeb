@@ -7,9 +7,9 @@ import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
 import PropTypes from "prop-types"
+import { useQueryClient } from "react-query"
 import Checkbox from "../../../components/button/Checkbox"
 import TagItem from "../../Tag/TagItem/TagItem"
-import useTagsQuery from "../../../hooks/query/useTagsQuery"
 import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
@@ -45,7 +45,8 @@ const AddNewTag = styled.div`
 function TagPicker({ value, currentTags, onChange, variant }) {
   // Query
   // ===========================================================================
-  const tags = useTagsQuery()
+  const queryClient = useQueryClient()
+  const tags = queryClient.getQueryData(["tags"])
 
   // State hooks
   // ===========================================================================
@@ -99,8 +100,8 @@ function TagPicker({ value, currentTags, onChange, variant }) {
       <TagPropertie onClick={togglePopover} variant={variant} value={value} />
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
-          {tags.isSuccess
-            ? tags.data.map((tag) => (
+          {tags
+            ? tags.map((tag) => (
                 <ItemWrapper
                   onClick={() => handleChange(tag._id)}
                   key={tag._id}
