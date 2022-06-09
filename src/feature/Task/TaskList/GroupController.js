@@ -29,6 +29,10 @@ function GroupController({ data, onGroupChange, groupOptions }) {
     onGroupChange,
   })
 
+  if (groupOptions.length < 2) {
+    return null
+  }
+
   return (
     <TaskMenu>
       {groupOptions.map((group) => (
