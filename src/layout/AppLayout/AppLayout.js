@@ -20,6 +20,7 @@ import useProjectsQuery from "../../hooks/query/useProjectsQuery"
 import useTagsQuery from "../../hooks/query/useTagsQuery"
 import FolderInput from "../../feature/Folder/FolderInput/FolderInput"
 import useFoldersQuery from "../../hooks/query/useFoldersQuery"
+import useTasksQuery from "../../hooks/query/useTasksQuery"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -63,6 +64,7 @@ function AppLayout() {
   const projects = useProjectsQuery()
   const tags = useTagsQuery()
   const folders = useFoldersQuery()
+  const tasks = useTasksQuery()
   const theme = useTheme()
 
   // State hooks
@@ -122,7 +124,10 @@ function AppLayout() {
 
   return (
     <Wrapper>
-      {folders.isSuccess && projects.isSuccess && tags.isSuccess ? (
+      {folders.isSuccess &&
+      projects.isSuccess &&
+      tags.isSuccess &&
+      tasks.isSuccess ? (
         <>
           <Container>
             <Sidebar />

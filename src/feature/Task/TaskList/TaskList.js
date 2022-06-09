@@ -32,19 +32,13 @@ function TasksList({
   inputProjectVal,
   inputTagVal,
   inputDueDateVal,
+  groupOptions,
 }) {
   const { t } = useTranslation()
   const [sections, setSections] = useState()
   const onGroupChange = (data) => {
     setSections(data)
   }
-
-  const groupOptions = [
-    { name: t("task.groupOptions.default"), key: "default" },
-    { name: t("task.groupOptions.dueDate"), key: "dueDate" },
-    { name: t("task.groupOptions.createdDate"), key: "createdAt" },
-    { name: t("task.groupOptions.priority"), key: "priority" },
-  ]
 
   // Selectors
   // ===========================================================================
