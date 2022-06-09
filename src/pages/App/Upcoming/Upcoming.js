@@ -4,15 +4,12 @@ import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import Header from "../../../feature/Task/TaskList/TaskListHeader"
 import MainLayout from "../../../layout/MainLayout/MainLayout"
 
-function CurrentWeek() {
+function Upcoming() {
   return (
     <MainLayout>
-      <Header
-        icon={<InboxOutlinedIcon fontSize="inherit" />}
-        name="Current Week"
-      />
+      <Header icon={<InboxOutlinedIcon fontSize="inherit" />} name="Upcoming" />
     </MainLayout>
   )
 }
 
-export default CurrentWeek
+export default Upcoming

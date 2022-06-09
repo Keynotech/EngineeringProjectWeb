@@ -125,7 +125,12 @@ function FolderPicker({ value, onChange, variant }) {
                 </ItemWrapper>
               ))
             : null}
-          <Item onClick={_showFolderInput}>
+          <Item
+            onClick={() => {
+              _showFolderInput()
+              setIsOpen(false)
+            }}
+          >
             <AddIcon
               sx={{
                 fontSize: "18px",

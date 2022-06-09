@@ -36,7 +36,9 @@ function useUpdateTask(taskId) {
       queryClient.setQueryData(["tasks"], snapshotOfPreviousTasks)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["tasks"])
+      queryClient.invalidateQueries(["tasks"], { exact: true })
+      queryClient.invalidateQueries(["tasks", "byTag"])
+      queryClient.invalidateQueries(["tasks", "byProject"])
     },
   })
 }

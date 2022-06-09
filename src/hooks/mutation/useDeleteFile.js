@@ -23,3 +23,35 @@ function useDeleteFile(taskId) {
 }
 
 export default useDeleteFile
+
+/*
+
+import { useMutation, useQueryClient } from "react-query"
+import { del } from "../../api/file"
+
+function useDeleteFile(taskId) {
+  const queryClient = useQueryClient()
+
+  return useMutation((fileId) => del({ taskId, fileId }), {
+    onMutate: async (fileId) => {
+      await queryClient.cancelQueries(["tasks"])
+
+      const task = queryClient.getQueryData(["tasks", taskId])
+      const updatedFilesList = task.files.filter((file) => file._id !== fileId)
+      queryClient.setQueryData(["tasks", taskId], (prevTask) => ({
+        ...prevTask,
+        files: updatedFilesList,
+      }))
+      
+    },
+    onSuccess: () => {
+      queryClient.invalidateQuery(["tasks"])
+    },
+  })
+}
+
+export default useDeleteFile
+
+
+
+*/

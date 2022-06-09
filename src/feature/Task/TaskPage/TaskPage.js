@@ -233,7 +233,7 @@ function TaskPage() {
               {task.data.files?.map((file) => (
                 <AttachmentItem isFile key={file._id}>
                   <AttachmentItemInner isFile>
-                    <p>{file.file[0].originalname}</p>
+                    <span>{file.file[0].originalname}</span>
                     <button onClick={() => deleteFile(file._id)} type="button">
                       {t("attachments.delete")}
                     </button>

@@ -131,6 +131,7 @@ export const AttachmentItemInner = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
+  gap: 10px;
   min-width: 0px;
   max-width: 100%;
 

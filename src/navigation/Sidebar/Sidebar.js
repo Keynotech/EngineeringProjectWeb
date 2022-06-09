@@ -89,7 +89,7 @@ const Header = styled.div`
 `
 
 const SearchButton = styled.span`
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   height: 28px;
@@ -140,7 +140,7 @@ function Sidebar() {
           <Header>
             <SidebarSectionHeader
               fontSize="15px"
-              name="{user.nickname}"
+              name="sampleemail@amu.edu.pl"
               rightComponent={
                 <SidebarHeaderButtons>
                   <SearchButton>
@@ -168,8 +168,8 @@ function Sidebar() {
               route="/today"
             />
             <SidebarLink
-              route={t("sidebar.upcoming")}
-              name="Current Week"
+              route="/upcoming"
+              name={t("sidebar.upcoming")}
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
           </SidebarList>

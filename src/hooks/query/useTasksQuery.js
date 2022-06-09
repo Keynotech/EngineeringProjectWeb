@@ -5,7 +5,6 @@ function useTasksQuery() {
   const queryClient = useQueryClient()
 
   const data = useQuery(["tasks"], getAll, {
-    staleTime: Infinity,
     cacheTime: Infinity,
   })
   if (data.isSuccess) {

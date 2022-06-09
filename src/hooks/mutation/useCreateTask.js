@@ -18,9 +18,7 @@ function useCreateTask() {
         queryClient.invalidateQueries({
           queryKey: ["tasks"],
         })
-        const tasks = queryClient.getQueryData(["tasks"])
-        const updatedTasksList = [...tasks, data]
-        queryClient.setQueryData(["tasks"], updatedTasksList)
+        queryClient.setQueryData(["tasks"], (prevTasks) => [...prevTasks, data])
         queryClient.setQueryData(["tasks", data._id], data)
         navigate(`tasks/${data._id}`)
         _showTaskPage()

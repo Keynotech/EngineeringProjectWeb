@@ -122,7 +122,12 @@ function ProjectPicker({ value, onChange, variant }) {
                 </ItemWrapper>
               ))
             : null}
-          <Item onClick={_showProjectInput}>
+          <Item
+            onClick={() => {
+              _showProjectInput()
+              setIsOpen(false)
+            }}
+          >
             <AddIcon
               sx={{
                 fontSize: "18px",
