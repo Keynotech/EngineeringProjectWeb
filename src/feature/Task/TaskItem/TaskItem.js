@@ -125,7 +125,7 @@ function TaskItem({ task }) {
       transition={{ duration: 0.4 }}
     >
       <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
-        <Wrapper>
+        <Wrapper isDone={task.status}>
           <CheckboxContainer>
             <Checkbox
               checked={task.status}

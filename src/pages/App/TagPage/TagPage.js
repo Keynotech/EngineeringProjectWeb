@@ -34,6 +34,7 @@ function TagPage() {
       {tag ? (
         <TaskList
           tasks={tasksQuery}
+          groupOptions={groupOptions}
           listName={tag.tagName}
           listIcon={
             <InboxOutlinedIcon fontSize="inherit" groupOptions={groupOptions} />

@@ -1,43 +1,42 @@
 import { useMutation, useQueryClient } from "react-query"
-import { patch } from "../../api/projects"
+import { patch } from "../../api/folders"
 
-function useUpdateProject(projectId) {
+function useUpdateFolder(folderId) {
   const queryClient = useQueryClient()
 
-  return useMutation((props) => patch({ projectId, props }), {
+  return useMutation((props) => patch({ folderId, props }), {
     onMutate: async (edited) => {
-      await queryClient.cancelQueries(["projects"])
+      await queryClient.cancelQueries(["folders"])
 
-      const snapshotOfPreviousProjects = queryClient.getQueryData(["projects"])
+      const snapshotOfPreviousFolders = queryClient.getQueryData(["folders"])
 
-      queryClient.setQueryData(["projects"], (previousProjects) =>
-        previousProjects.map((project) => {
-          if (project._id === projectId) {
+      queryClient.setQueryData(["folders"], (previousFolders) =>
+        previousFolders.map((folder) => {
+          if (folder._id === folderId) {
             return {
-              ...project,
+              ...folder,
               ...edited,
             }
           }
-          return project
+          return folder
         })
       )
 
-      queryClient.setQueryData(["projects", projectId], (previousProject) => ({
-        ...previousProject,
+      queryClient.setQueryData(["folders", folderId], (previousFolder) => ({
+        ...previousFolder,
         ...edited,
       }))
 
-      return { snapshotOfPreviousProjects }
+      return { snapshotOfPreviousFolders }
     },
 
-    onError: ({ snapshotOfPreviousProjects }) => {
-      queryClient.setQueryData(["projects"], snapshotOfPreviousProjects)
+    onError: ({ snapshotOfPreviousFolders }) => {
+      queryClient.setQueryData(["folders"], snapshotOfPreviousFolders)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["projects"])
-      queryClient.invalidateQueries(["tasks"])
+      queryClient.invalidateQueries(["folders"])
     },
   })
 }
 
-export default useUpdateProject
+export default useUpdateFolder

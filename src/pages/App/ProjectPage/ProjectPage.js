@@ -34,6 +34,7 @@ function ProjectPage() {
       {project ? (
         <TaskList
           tasks={tasksQuery}
+          groupOptions={groupOptions}
           listName={project.projectName}
           listIcon={
             <InboxOutlinedIcon fontSize="inherit" groupOptions={groupOptions} />

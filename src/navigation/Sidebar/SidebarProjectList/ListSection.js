@@ -14,6 +14,10 @@ import {
   showProjectEdit,
   setProjectEditId,
 } from "../../../store/features/projectEditPageSlice"
+import {
+  showFolderEdit,
+  setFolderEditId,
+} from "../../../store/features/foldersSlice"
 import useDeleteProject from "../../../hooks/mutation/useDeleteProject"
 import useDeleteFolder from "../../../hooks/mutation/useDeleteFolder"
 import SidebarList from "../SidebarList"
@@ -46,6 +50,14 @@ function ListSection({ section }) {
   const openProjectEdit = (projectId) => {
     _setProjectEditId(projectId)
     _showProjectEdit()
+  }
+
+  const _setFolderEditId = (folderId) => dispatch(setFolderEditId(folderId))
+  const _showFolderEdit = () => dispatch(showFolderEdit())
+
+  const openFolderEdit = (folderId) => {
+    _setFolderEditId(folderId)
+    _showFolderEdit()
   }
   // Mutations
   // ===========================================================================
@@ -91,13 +103,22 @@ function ListSection({ section }) {
         key={section.key}
         onClick={() => toggleIsOpen(!isOpen)}
         menuContent={
-          <DropdownItemMenu
-            leftIcon={
-              <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />
-            }
-            label={t("folders.delete")}
-            onClick={() => deleteFolder(section.key)}
-          />
+          <>
+            <DropdownItemMenu
+              leftIcon={<EditOutlinedIcon color="inherit" fontSize="inehrit" />}
+              label={t("folders.edit")}
+              onClick={() => {
+                openFolderEdit(section.key)
+              }}
+            />
+            <DropdownItemMenu
+              leftIcon={
+                <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />
+              }
+              label={t("folders.delete")}
+              onClick={() => deleteFolder(section.key)}
+            />
+          </>
         }
       />
     )

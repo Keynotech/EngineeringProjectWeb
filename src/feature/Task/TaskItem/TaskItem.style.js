@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
 import { mq } from "../../../utils/mq"
 
@@ -13,6 +13,13 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
+  transition: opacity 0.25s;
+
+  ${({ isDone }) =>
+    isDone &&
+    css`
+      opacity: 0.5;
+    `};
 `
 
 const CheckboxContainer = styled.div`

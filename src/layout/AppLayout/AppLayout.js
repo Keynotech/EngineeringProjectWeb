@@ -21,6 +21,7 @@ import useTagsQuery from "../../hooks/query/useTagsQuery"
 import FolderInput from "../../feature/Folder/FolderInput/FolderInput"
 import useFoldersQuery from "../../hooks/query/useFoldersQuery"
 import useTasksQuery from "../../hooks/query/useTasksQuery"
+import FolderEdit from "../../feature/Folder/FolderInput/FolderEdit"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -92,6 +93,10 @@ function AppLayout() {
     (state) => state.layout.folderInputVisibility
   )
 
+  const foldersEditVisibility = useSelector(
+    (state) => state.folders.foldersEditVisibility
+  )
+
   const tagEditVisibility = useSelector((state) => state.tagEditPage.visibility)
 
   const projectEditVisibility = useSelector(
@@ -140,6 +145,7 @@ function AppLayout() {
           {projectInputVisibility ? <ProjectInput /> : null}
           {projectEditVisibility ? <ProjectEdit /> : null}
           {folderInputVisibility ? <FolderInput /> : null}
+          {foldersEditVisibility ? <FolderEdit /> : null}
         </>
       ) : (
         <Loading>
