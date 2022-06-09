@@ -9,6 +9,7 @@ import ListSection from "./ListSection"
 import NewListMenu from "./NewListMenu"
 
 const Wrapper = styled.div`
+  width: 100%;
   margin-top: 30px;
 `
 

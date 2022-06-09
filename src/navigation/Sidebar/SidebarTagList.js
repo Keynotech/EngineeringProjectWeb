@@ -57,7 +57,9 @@ function SidebarTagList() {
   const deleteTagMutation = useDeleteTag()
   const deleteTag = (tagId) => {
     deleteTagMutation.mutate(tagId)
-    if (location.pathname === `/tag/${tagId}`) {
+    const currentLocation = location.pathname.split("/")
+
+    if (currentLocation[2] === tagId) {
       navigate("inbox")
     }
   }

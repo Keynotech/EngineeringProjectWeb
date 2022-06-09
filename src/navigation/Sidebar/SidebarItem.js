@@ -9,6 +9,7 @@ import { DropdownMenu } from "../../components/DropdownMenu"
 
 const Wrapper = styled.div`
   min-height: 28px;
+  width: 100%;
 
   &:hover {
     background-color: ${(props) => props.theme.tertiary};

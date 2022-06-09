@@ -21,7 +21,9 @@ import SidebarLink from "../SidebarLink"
 import SidebarItem from "../SidebarItem"
 import { DropdownItemMenu } from "../../../components/DropdownMenu"
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  width: 100%;
+`
 
 const ProjectIcon = styled.div`
   width: 12px;
