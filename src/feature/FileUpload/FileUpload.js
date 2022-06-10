@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState, useImperativeHandle, forwardRef } from "react"
+import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useDropzone } from "react-dropzone"
 import { onDragLeave } from "../../store/features/windowDragEnterSlice"
@@ -57,6 +58,7 @@ function FileUpload(props, ref) {
     openUpload: () => open(),
   }))
 
+  const { t } = useTranslation()
   return (
     <Wrapper
       {...getRootProps({ className: "dropzone" })}
@@ -70,8 +72,8 @@ function FileUpload(props, ref) {
       >
         <input {...getInputProps()} />
         <img src={uploadImage} alt="upload file" />
-        <Title>Add files</Title>
-        <SubTitle> Drop files here to add them to task</SubTitle>
+        <Title>{t("attachments.upload")}</Title>
+        <SubTitle> {t("attachments.uploadPlaceholder")}</SubTitle>
       </Container>
     </Wrapper>
   )

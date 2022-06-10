@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from "react"
+import React, { useRef } from "react"
 import styled from "styled-components"
-import OutsideClickHandler from "react-outside-click-handler"
 import Popover from "../Popover/Popover"
 
 const MenuContainer = styled.div`
@@ -29,24 +29,34 @@ function DropdownMenu({ isOpen, outsideClick, toggle, children }) {
   }
 
   const togglePopover = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     if (isOpen) {
-      e.preventDefault()
-      e.stopPropagation()
       handleClose()
     } else {
-      e.preventDefault()
-      e.stopPropagation()
       handleOpen(e)
     }
   }
 
+  const _outsideClick = () => {
+    if (outsideClick) {
+      outsideClick()
+      handleClose()
+    }
+  }
+
   return (
-    <OutsideClickHandler disabled={!isOpen} onOutsideClick={outsideClick}>
+    <>
       <ToggleContainer onClick={togglePopover}>{toggle}</ToggleContainer>
-      <Popover anchorEl={anchorEl} isOpen={isOpen}>
+      <Popover
+        anchorEl={anchorEl}
+        isOpen={isOpen}
+        handleClose={handleClose}
+        onOutsideClick={_outsideClick}
+      >
         <MenuContainer>{children}</MenuContainer>
       </Popover>
-    </OutsideClickHandler>
+    </>
   )
 }
 

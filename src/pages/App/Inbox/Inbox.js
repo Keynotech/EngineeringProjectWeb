@@ -1,24 +1,31 @@
 /* eslint-disable no-underscore-dangle */
 import React from "react"
-import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
+import { useTranslation } from "react-i18next"
 import useTasksQuery from "../../../hooks/query/useTasksQuery"
 import TaskList from "../../../feature/Task/TaskList/TaskList"
 import MainLayout from "../../../layout/MainLayout/MainLayout"
 
 function Inbox() {
-  const tasksQuery = useTasksQuery()
+  const { t } = useTranslation()
+
+  const tasksQuery = useTasksQuery((tasks) =>
+    tasks.filter((task) => task.project === null || undefined)
+  )
+
+  const groupOptions = [
+    { name: t("task.groupOptions.default"), key: "default" },
+    { name: t("task.groupOptions.dueDate"), key: "dueDate" },
+    { name: t("task.groupOptions.createdDate"), key: "createdAt" },
+    { name: t("task.groupOptions.priority"), key: "priority" },
+  ]
 
   return (
     <MainLayout>
-      {tasksQuery.isSuccess ? (
-        <TaskList
-          tasks={tasksQuery.data}
-          listName="Inbox"
-          listIcon={<InboxOutlinedIcon fontSize="inherit" />}
-        />
-      ) : (
-        <div />
-      )}
+      <TaskList
+        tasks={tasksQuery}
+        listName="Inbox"
+        groupOptions={groupOptions}
+      />
     </MainLayout>
   )
 }

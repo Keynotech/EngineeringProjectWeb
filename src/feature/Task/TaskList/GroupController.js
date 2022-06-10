@@ -3,7 +3,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import TaskMenu from "./TaskMenu"
-import useGroupBy from "../../../hooks/filters/useGroupBy/useGroupBy"
+import useGroupBy from "./useGroupBy/useGroupBy"
 
 const Button = styled.button`
   width: 200px;
@@ -28,6 +28,10 @@ function GroupController({ data, onGroupChange, groupOptions }) {
     groupOptions,
     onGroupChange,
   })
+
+  if (groupOptions.length < 2) {
+    return null
+  }
 
   return (
     <TaskMenu>

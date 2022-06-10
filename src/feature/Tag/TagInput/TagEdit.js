@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unneeded-ternary */
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { useSelector, useDispatch } from "react-redux"
 import TagInputLayout from "./TagInput.layout"
 import useSingleTagQuery from "../../../hooks/query/useSingleTagQuery"
@@ -23,13 +24,15 @@ function TagEdit() {
     _hideTagEdit()
   }
 
+  const { t } = useTranslation()
+
   return (
     <TagInputLayout
       onSubmit={onSubmit}
       onCancel={_hideTagEdit}
       tag={tag}
-      dialogName="Edit tag"
-      submitText="Save"
+      dialogName={t("tags.edit")}
+      submitText={t("save")}
     />
   )
 }

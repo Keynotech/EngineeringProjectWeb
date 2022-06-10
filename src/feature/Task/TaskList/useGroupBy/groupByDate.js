@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable dot-notation */
 /* eslint-disable no-lonely-if */
-import { formatDateToDisplay } from "../../../utils/dateConvert"
+import { formatDateToDisplay } from "../../../../utils/dateConvert"
 
 function groupByDate({ arr, key, nullKeyName }) {
   let sectionByPropertie = []

@@ -1,0 +1,91 @@
+{
+    "task": {
+        "title": "Task title",
+        "desc": "Description",
+        "createdAt": "Created at",
+        "updatedAt": "Updated at",
+        "inputPlaceholder": "Create new task, press ENTER to save",
+        "groupOptions": {
+            "default": "Default",
+            "dueDate": "Due date",
+            "createdDate" :"Created date",
+            "priority": "Priority"
+        },
+        "taskMenu": {
+            "duplicate": "Duplicate task",
+            "goToProject": "Go to project",
+            "delete": "Delete task"            
+        }
+    },
+    "attachments": {
+        "attachments": "Attachments",
+        "delete": "Delete file",
+        "upload": "Upload files",
+        "uploadPlaceholder":"Drop files here to add them to task"
+    },
+    "folders": {
+        "folderName": "Folder name",
+        "create": "Create new folder",
+        "delete": "Delete folder",
+        "edit": "Edit folder",
+        "addProject": "Add project to folder"
+    },
+    "project": {
+        "projectName": "Project name",
+        "folder": "Folder",
+        "create": "Create new project",
+        "delete": "Delete project",
+        "edit": "Edit project"
+    },
+    "tags": {
+        "create": "Create new tag",
+        "tags": "tags",
+        "tags2": "tags",
+        "tag": "tag",
+        "delete": "Delete tag",
+        "edit": "Edit tag",
+        "tagName": "Tag name"
+    },
+    "picker": {
+        "date": {
+            "tomorrow": "Tomorrow",
+            "nextWeek": "Next week",
+            "nextMonth": "Next month",
+            "remove": "Remove date",
+            "noDate": "No date",
+            "dueDate": "Due date"
+        },
+        "priority": {
+            "urgent": "Urgent",
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low",
+            "priority":"Priority"
+        },
+        "project": {
+            "project": "Project"
+        },
+        "folder": {
+            "folder":"Folder",
+            "none": "None"
+
+        },
+        "tag": {
+            "addTag": "Add tag"
+        }
+    },
+    "sidebar": {
+        "inbox": "Inbox",
+        "today": "Today",
+        "upcoming": "Upcoming",
+        "tags": "Tags",
+        "projects": "Projects"
+    },
+    "validation": {
+        "max50Cha": "Max 50 characters"
+    },
+    "create": "Create",
+    "cancel": "Cancel",
+    "submit":"Submit",
+    "save": "Save"
+}

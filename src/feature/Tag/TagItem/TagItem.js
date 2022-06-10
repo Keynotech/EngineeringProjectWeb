@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
@@ -41,6 +42,7 @@ const Title = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
 `
 
 const Menu = styled.div`
@@ -78,6 +80,8 @@ function TagItem({ tagId, showMenu }) {
     _showTagEdit()
   }
 
+  const { t } = useTranslation()
+
   return (
     <Wrapper
       onMouseEnter={() => toggleDisplayMenuBtn(true)}
@@ -107,14 +111,14 @@ function TagItem({ tagId, showMenu }) {
           >
             <DropdownItemMenu
               leftIcon={<EditOutlinedIcon color="inherit" fontSize="inehrit" />}
-              label="Edit tag"
+              label={t("tags.edit")}
               onClick={openTagEdit}
             />
             <DropdownItemMenu
               leftIcon={
                 <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />
               }
-              label="Delete tag"
+              label={t("tags.delete")}
               onClick={deleteTag}
             />
           </DropdownMenu>

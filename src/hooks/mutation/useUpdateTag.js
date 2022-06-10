@@ -7,25 +7,33 @@ function useUpdateTag(tagId) {
   return useMutation((props) => patch({ tagId, props }), {
     onMutate: async (edited) => {
       await queryClient.cancelQueries(["tags"])
-      await queryClient.cancelQueries(["tags", tagId])
-      const previousTags = await queryClient.getQueryData(["tags"])
-      const index = previousTags.findIndex((tag) => tag._id === tagId)
-      const previousTag = previousTags[index]
-      const updatedTag = { ...previousTag, ...edited }
-      const updatedTagsList = [...previousTags]
-      updatedTagsList[index] = updatedTag
-      queryClient.setQueryData(["tags"], updatedTagsList)
-      queryClient.setQueryData(["tags", tagId], updatedTag)
 
-      return { previousTag, previousTags }
+      const snapshotOfPreviousTags = queryClient.getQueryData(["tags"])
+
+      queryClient.setQueryData(["tags"], (previousTags) =>
+        previousTags.map((tag) => {
+          if (tag._id === tagId) {
+            return {
+              ...tag,
+              ...edited,
+            }
+          }
+          return tag
+        })
+      )
+
+      queryClient.setQueryData(["tags", tagId], (previousTag) => ({
+        ...previousTag,
+        ...edited,
+      }))
+
+      return { snapshotOfPreviousTags }
     },
 
-    onError: ({ previousTag, previousTags }) => {
-      queryClient.setQueryData(["tags", tagId], previousTag)
-      queryClient.setQueryData(["tags"], previousTags)
+    onError: ({ snapshotOfPreviousTags }) => {
+      queryClient.setQueryData(["tags"], snapshotOfPreviousTags)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["tags", tagId])
       queryClient.invalidateQueries(["tags"])
       queryClient.invalidateQueries(["tasks"])
     },

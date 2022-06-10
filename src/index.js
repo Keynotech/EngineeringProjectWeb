@@ -1,19 +1,22 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { StrictMode } from "react"
+import React, { StrictMode, Suspense } from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import store from "./store/store"
+import "./i18nextConf"
 
 const rootElement = document.getElementById("root")
 const root = createRoot(rootElement)
 
 root.render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Suspense fallback="loading">
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Suspense>
   </StrictMode>
 )
 

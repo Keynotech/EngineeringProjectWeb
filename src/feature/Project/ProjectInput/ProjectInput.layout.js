@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unneeded-ternary */
 import React, { useEffect } from "react"
+import { useTranslation } from "react-i18next"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import styled, { css } from "styled-components"
@@ -8,6 +9,7 @@ import TextInput from "../../../components/TextInput/TextInput"
 import CancelButton from "../../../components/button/CancelButton"
 import SubmitButton from "../../../components/button/SubmitButton"
 import Dialog from "../../../components/Dialog/Dialog"
+import FolderPicker from "../../Pickers/FolderPicker/FolderPicker"
 
 const Icon = styled.span`
   width: 12px;
@@ -55,12 +57,14 @@ function ProjectInputLayout({
   project,
   dialogName,
 }) {
+  const { t } = useTranslation()
+
   // Validation
   // ===========================================================================
   const CreateProjectSchema = Yup.object().shape({
     projectName: Yup.string()
       .min(1, "")
-      .max(50, "Max 50 characters")
+      .max(50, t("validation.max50Cha"))
       .required(),
   })
 
@@ -69,6 +73,7 @@ function ProjectInputLayout({
   const formik = useFormik({
     initialValues: {
       projectName: "",
+      folder: null,
     },
     validationSchema: CreateProjectSchema,
     onSubmit: (values) => {
@@ -82,13 +87,14 @@ function ProjectInputLayout({
   useEffect(() => {
     if (project) {
       formik.setFieldValue("projectName", project.projectName)
+      formik.setFieldValue("folder", project.folder)
     }
   }, [project])
 
   return (
     <Dialog icon={<Icon />} dialogName={dialogName} onOutsideClick={onCancel}>
       <Form onSubmit={formik.handleSubmit}>
-        <Label htmlFor="projectName">Project name</Label>
+        <Label htmlFor="projectName">{t("project.projectName")}</Label>
         <PropertieInput>
           <TextInput
             id="projectName"
@@ -97,15 +103,26 @@ function ProjectInputLayout({
             onChange={(val) => {
               formik.setFieldValue("projectName", val)
             }}
-            placeholder="Project name"
+            placeholder={t("project.projectName")}
             fontSize="14px"
             multiline={false}
             autoFocus
             maxLength={50}
           />
         </PropertieInput>
+        <Label htmlFor="projectName">{t("project.folder")}</Label>
+        <PropertieInput style={{ position: "relative", left: "-6px" }}>
+          <FolderPicker
+            id="folder"
+            name="folder"
+            value={formik.values.folder}
+            onChange={(val) => {
+              formik.setFieldValue("folder", val)
+            }}
+          />
+        </PropertieInput>
         <Footer>
-          <CancelButton type="button" onClick={onCancel} text="Cancel" />
+          <CancelButton type="button" onClick={onCancel} text={t("cancel")} />
           <SubmitButton
             disabled={!(formik.isValid && formik.dirty)}
             text={submitText}

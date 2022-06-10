@@ -4,16 +4,17 @@ import styled from "styled-components"
 import PropTypes from "prop-types"
 
 const Button = styled.button`
-  padding: 4px 10px;
+  padding: 8px 16px;
   border: 1px solid ${(props) => props.theme.tertiary};
   background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.textTertiary};
   border-radius: 5px;
+  font-weight: 600;
 `
 
-function CancelButton({ text, onClick, type }) {
+function CancelButton({ text, onClick, type, style }) {
   return (
-    <Button type={type} onClick={onClick}>
+    <Button style={style} type={type} onClick={onClick}>
       {text}
     </Button>
   )
@@ -23,6 +24,7 @@ CancelButton.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   type: PropTypes.string.isRequired,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 export default CancelButton

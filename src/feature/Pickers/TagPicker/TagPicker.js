@@ -1,38 +1,39 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
-import OutsideClickHandler from "react-outside-click-handler"
+import { useTranslation } from "react-i18next"
 import styled from "styled-components"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
 import PropTypes from "prop-types"
+import { useQueryClient } from "react-query"
 import Checkbox from "../../../components/button/Checkbox"
 import TagItem from "../../Tag/TagItem/TagItem"
-import useTagsQuery from "../../../hooks/query/useTagsQuery"
 import { showTagInput } from "../../../store/features/layoutSlice"
-import TagPropertie from "./TagPropertie"
+import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
 
-const Wrapper = styled.ul`
+const Wrapper = styled.div`
   min-width: 200px;
-  max-width: 100vw;
+  max-width: 90vw;
 `
 
-const Item = styled.div`
+const ItemWrapper = styled.div`
   display: flex;
-  width: 100%;
-  overflow: visible;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
   padding: 8px 12px;
-  box-sizing: border-box;
-  font-size: 14px;
+  width: 100%;
   cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
   }
+`
+
+const WrapperTagPropertie = styled.div`
+  width: 95%;
+  padding-right: 8px;
 `
 
 const AddNewTag = styled.div`
@@ -41,22 +42,11 @@ const AddNewTag = styled.div`
   justify-content: center;
 `
 
-function TagPicker({
-  currentTags,
-  onChange,
-  useCapture,
-  displayIcon,
-  displayValue,
-  iconSize,
-  backgroundColor,
-  border,
-}) {
+function TagPicker({ value, currentTags, onChange, variant }) {
   // Query
   // ===========================================================================
-  const tags = useTagsQuery()
-
-  // Refs
-  // ===========================================================================
+  const queryClient = useQueryClient()
+  const tags = queryClient.getQueryData(["tags"])
 
   // State hooks
   // ===========================================================================
@@ -73,14 +63,14 @@ function TagPicker({
   }
 
   const handleClose = () => {
+    onChange(selectedTags)
     setAnchorEl(null)
     setIsOpen(false)
-    onChange(selectedTags)
   }
 
   const togglePopover = (e) => {
     if (isOpen) {
-      handleClose()
+      handleClose(e)
     } else {
       handleOpen(e)
     }
@@ -103,35 +93,31 @@ function TagPicker({
   const dispatch = useDispatch()
   const _showTagInput = () => dispatch(showTagInput())
 
+  const { t } = useTranslation()
+
   return (
-    <OutsideClickHandler
-      useCapture={useCapture}
-      disabled={!isOpen}
-      onOutsideClick={handleClose}
-    >
-      <TagPropertie
-        onClick={togglePopover}
-        displayIcon={displayIcon}
-        displayValue={displayValue}
-        iconSize={iconSize}
-        backgroundColor={backgroundColor}
-        border={border}
-      />
-      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+    <>
+      <TagPropertie onClick={togglePopover} variant={variant} value={value} />
+      <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
-          {tags.isSuccess
-            ? tags.data.map((tag) => (
-                <Item onClick={() => handleChange(tag._id)} key={tag._id}>
-                  <TagItem showMenu={false} tagId={tag._id} />
+          {tags
+            ? tags.map((tag) => (
+                <ItemWrapper
+                  onClick={() => handleChange(tag._id)}
+                  key={tag._id}
+                >
+                  <WrapperTagPropertie>
+                    <TagItem showMenu={false} tagId={tag._id} />
+                  </WrapperTagPropertie>
                   <Checkbox
                     id="tag-picker-select"
                     onChange={() => handleChange(tag._id)}
                     checked={selectedTags.indexOf(tag._id) > -1}
                   />
-                </Item>
+                </ItemWrapper>
               ))
             : null}
-          <Item onClick={_showTagInput}>
+          <ItemWrapper onClick={_showTagInput}>
             <AddNewTag>
               <AddIcon
                 sx={{
@@ -140,28 +126,19 @@ function TagPicker({
                   marginRight: "16px",
                 }}
               />
-              Create new tag
+              {t("tags.create")}
             </AddNewTag>
-          </Item>
+          </ItemWrapper>
         </Wrapper>
       </Popover>
-    </OutsideClickHandler>
+    </>
   )
 }
 
 TagPicker.propTypes = {
   currentTags: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
-  useCapture: PropTypes.bool,
-  displayIcon: PropTypes.bool,
-  displayValue: PropTypes.bool,
-  iconSize: PropTypes.number,
-  backgroundColor: PropTypes.string,
-  border: PropTypes.string,
-}
-
-TagPicker.defaultProps = {
-  useCapture: false,
+  variant: PropTypes.oneOf(["icon", "standard", "medium"]),
 }
 
 export default React.memo(TagPicker)

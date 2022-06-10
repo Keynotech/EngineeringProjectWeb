@@ -1,14 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import OutsideClickHandler from "react-outside-click-handler"
 import styled from "styled-components"
+import zIndex from "../../utils/zIndex"
 
 const Overlay = styled.div`
   position: absolute;
-  z-index: 998;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
   top: 0;
   right: 0;
   bottom: 0;
@@ -24,14 +22,13 @@ const OverlayContainer = styled.div`
 `
 
 const DialogContainer = styled.div`
-  position: relative;
-  bottom: 48px;
+  position: absolute;
   width: min(460px, 95vw);
   height: auto;
   background-color: ${(props) => props.theme.background};
   border-radius: 10px;
   border: 1px solid ${(props) => props.theme.tertiary};
-  z-index: 9999;
+  z-index: ${zIndex.level9};
 `
 
 const Wrapper = styled.div`
@@ -50,6 +47,16 @@ const Header = styled.header`
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
 
+export const OutsideClick = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: ${zIndex.level8};
+  background-color: rgba(0, 0, 0, 0.4);
+`
+
 const Icon = styled.span``
 
 const Title = styled.span`
@@ -62,9 +69,9 @@ function Dialog({ icon, dialogName, onOutsideClick, children }) {
   // ===========================================================================
 
   return (
-    <Overlay>
-      <OverlayContainer>
-        <OutsideClickHandler onOutsideClick={onOutsideClick}>
+    <>
+      <Overlay>
+        <OverlayContainer>
           <DialogContainer>
             <Wrapper>
               <Header>
@@ -74,9 +81,10 @@ function Dialog({ icon, dialogName, onOutsideClick, children }) {
               {children}
             </Wrapper>
           </DialogContainer>
-        </OutsideClickHandler>
-      </OverlayContainer>
-    </Overlay>
+        </OverlayContainer>
+      </Overlay>
+      <OutsideClick onClick={onOutsideClick} />
+    </>
   )
 }
 

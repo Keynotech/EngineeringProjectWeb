@@ -1,4 +1,5 @@
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import { AnimatePresence, motion } from "framer-motion"
 import { useNavigate, useLocation } from "react-router-dom"
@@ -21,7 +22,7 @@ import SidebarItem from "./SidebarItem"
 import { DropdownItemMenu } from "../../components/DropdownMenu"
 
 const TagsWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 20px;
 `
 
 const TagColor = styled.div`
@@ -34,6 +35,7 @@ const TagColor = styled.div`
 function SidebarTagList() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
@@ -55,14 +57,16 @@ function SidebarTagList() {
   const deleteTagMutation = useDeleteTag()
   const deleteTag = (tagId) => {
     deleteTagMutation.mutate(tagId)
-    if (location.pathname === `/tag/${tagId}`) {
+    const currentLocation = location.pathname.split("/")
+
+    if (currentLocation[2] === tagId) {
       navigate("inbox")
     }
   }
 
   return (
     <TagsWrapper>
-      <SidebarSectionHeader name="Tags" />
+      <SidebarSectionHeader name={t("sidebar.tags")} />
 
       {tags.isSuccess ? (
         <SidebarList>
@@ -89,7 +93,7 @@ function SidebarTagList() {
                             fontSize="inehrit"
                           />
                         }
-                        label="Edit tag"
+                        label={t("tags.edit")}
                         onClick={() => openTagEdit(tag._id)}
                       />
                       <DropdownItemMenu
@@ -99,7 +103,7 @@ function SidebarTagList() {
                             fontSize="inehrit"
                           />
                         }
-                        label="Delete tag"
+                        label={t("tags.delete")}
                         onClick={() => deleteTag(tag._id)}
                       />
                     </>
@@ -111,7 +115,7 @@ function SidebarTagList() {
             <SidebarItem
               as="div"
               icon={<AddIcon fontSize="inherit" />}
-              name="Create new tag"
+              name={t("tags.create")}
               fontWeight="light"
               onClick={_showTagInput}
               clickable

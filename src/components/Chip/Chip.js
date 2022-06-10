@@ -6,7 +6,6 @@ import PropTypes from "prop-types"
 import ClearIcon from "@mui/icons-material/Clear"
 
 const ChipLabel = styled.span`
-  flex-shrink: 0;
   padding-left: 10px;
   padding-right: 10px;
   font-weight: 400;
@@ -42,10 +41,14 @@ const DeleteIconWrapper = styled.span`
   border-radius: 25px;
   margin-left: 5px;
   margin-right: 5px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.tertiary};
+  }
 `
 
 const ChipWrapper = styled.div`
-  max-width: 100%;
+  max-width: 100px;
   height: 24px;
   display: flex;
   flex-direction: row;

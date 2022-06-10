@@ -5,6 +5,7 @@ import tasksReducer from "./features/tasksSlice"
 import tagEditPageReducer from "./features/tagEditPageSlice"
 import projectEditPageSlice from "./features/projectEditPageSlice"
 import windowDragEnterReducer from "./features/windowDragEnterSlice"
+import foldersSliceReducer from "./features/foldersSlice"
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     windowDragEnter: windowDragEnterReducer,
     tagEditPage: tagEditPageReducer,
     projectEditPage: projectEditPageSlice,
+    folders: foldersSliceReducer,
   },
 })

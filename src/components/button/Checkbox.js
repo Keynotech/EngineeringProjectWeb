@@ -24,7 +24,11 @@ function Checkbox({ checked, onChange, color }) {
     <Button
       type="checkbox"
       checked={checked}
-      onClick={onChange}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onChange()
+      }}
       color={color || theme.priority1}
     />
   )

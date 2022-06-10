@@ -1,15 +1,16 @@
 /* eslint-disable react/require-default-props */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
-import OutsideClickHandler from "react-outside-click-handler"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import Popover from "../../../components/Popover/Popover"
-import PriorityPropertie from "./PriorityPropertie"
+// import PriorityPropertie from "./PriorityPropertie"
+import PriorityPropertie from "../../Propertie/PriorityPropertie/PriorityPropertie"
 
 const Wrapper = styled.div`
   width: 200px;
-  max-width: 100vw;
+  max-width: 90vw;
 `
 
 const Item = styled.div`
@@ -29,25 +30,17 @@ const Item = styled.div`
   }
 `
 
-function PriorityPicker({
-  value,
-  onChange,
-  useCapture,
-  displayIcon,
-  displayValue,
-  iconSize,
-  backgroundColor,
-  border,
-}) {
+function PriorityPicker({ value, onChange, variant }) {
   // Others
   // ===========================================================================
   const theme = useTheme()
+  const { t } = useTranslation()
 
   const prioritiesData = [
-    { name: "Urgent", value: 4, color: theme.priority4 },
-    { name: "High", value: 3, color: theme.priority3 },
-    { name: "Medium", value: 2, color: theme.priority2 },
-    { name: "Low", value: 1, color: theme.priority1 },
+    { name: t("picker.priority.urgent"), value: 4, color: theme.priority4 },
+    { name: t("picker.priority.high"), value: 3, color: theme.priority3 },
+    { name: t("picker.priority.medium"), value: 2, color: theme.priority2 },
+    { name: t("picker.priority.low"), value: 1, color: theme.priority1 },
   ]
 
   // State Hooks
@@ -74,22 +67,14 @@ function PriorityPicker({
   }
 
   return (
-    <OutsideClickHandler
-      disabled={!isOpen}
-      useCapture={useCapture}
-      onOutsideClick={handleClose}
-    >
+    <>
       <PriorityPropertie
         prioritiesData={prioritiesData}
         value={value}
         onClick={togglePopover}
-        displayIcon={displayIcon}
-        displayValue={displayValue}
-        iconSize={iconSize}
-        backgroundColor={backgroundColor}
-        border={border}
+        variant={variant}
       />
-      <Popover isOpen={isOpen} anchorEl={anchorEl}>
+      <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
           {prioritiesData.map((priority) => (
             <Item
@@ -105,23 +90,14 @@ function PriorityPicker({
           ))}
         </Wrapper>
       </Popover>
-    </OutsideClickHandler>
+    </>
   )
 }
 
 PriorityPicker.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  useCapture: PropTypes.bool,
-  displayIcon: PropTypes.bool,
-  displayValue: PropTypes.bool,
-  iconSize: PropTypes.number,
-  backgroundColor: PropTypes.string,
-  border: PropTypes.string,
-}
-
-PriorityPicker.defaultProps = {
-  useCapture: false,
+  variant: PropTypes.string,
 }
 
 export default PriorityPicker

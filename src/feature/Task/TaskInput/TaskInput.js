@@ -1,44 +1,48 @@
-import React from "react"
-import OutsideClickHandler from "react-outside-click-handler"
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import PropTypes from "prop-types"
 import { useTheme } from "styled-components"
 import {
   Wrapper,
   Form,
   Main,
   PropertiesContainer,
-  Buttons,
-  Footer,
+  Overlay,
 } from "./TaskInput.style"
 import { hideTaskInput } from "../../../store/features/layoutSlice"
 import TextInput from "../../../components/TextInput/TextInput"
 import DatePicker from "../../Pickers/DatePicker/DatePicker"
 import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
-import SubmitButton from "../../../components/button/SubmitButton"
-import CancelButton from "../../../components/button/CancelButton"
 import TagPicker from "../../Pickers/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
-import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
+// import DatePropertie from "../../Pickers/DatePicker/DatePropertie"
+import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
+import ProjectPicker from "../../Pickers/ProjectPicker/ProjectPicker"
+import ProjectPropertie from "../../Pickers/ProjectPicker/ProjectPropertie"
 
-function TaskInput() {
+function TaskInput({ priority, project, tag, dueDate }) {
+  // Local state
+  // ===========================================================================
+  const [isFocus, setFocus] = useState(false)
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
-  const _hideTaskInput = () => dispatch(hideTaskInput())
+  const _hideTaskInput = () => {
+    dispatch(hideTaskInput())
+  }
 
   // Mutations
   // ===========================================================================
   const createTask = useCreateTask()
 
-  // State Hooks
-  // ===========================================================================
-  const isOpen = useSelector((state) => state.layout.taskInputVisibility)
-
   // Validation
   // ===========================================================================
-  const CreateTagSchema = Yup.object().shape({
+  const CreateTaskSchema = Yup.object().shape({
     title: Yup.string().max(100, "Max 100 characters").required(""),
   })
 
@@ -48,12 +52,12 @@ function TaskInput() {
     initialValues: {
       title: "",
       status: false,
-      dueDate: null,
-      priority: 1,
-      tags: [],
-      project: null,
+      dueDate,
+      priority,
+      tags: tag,
+      project,
     },
-    validationSchema: CreateTagSchema,
+    validationSchema: CreateTaskSchema,
 
     onSubmit: (values) => {
       createTask.mutate({
@@ -64,92 +68,97 @@ function TaskInput() {
         tags: values.tags,
         project: values.project,
       })
-      _hideTaskInput()
+      formik.resetForm()
     },
   })
 
   // Others  // ===========================================================================
   const theme = useTheme()
+  const { t } = useTranslation()
 
   return (
-    <div>
-      <OutsideClickHandler disabled={!isOpen} onOutsideClick={_hideTaskInput}>
-        <Wrapper>
-          <Form onSubmit={formik.handleSubmit}>
-            <Main>
-              {formik.values.dueDate ? (
-                <DatePropertie
-                  displayIcon={false}
-                  backgroundColor={theme.tertiary}
-                  value={formik.values.dueDate}
-                />
-              ) : null}
-              <TextInput
-                id="title"
-                name="title"
-                value={formik.values.title}
+    <>
+      <Wrapper>
+        <Form onSubmit={formik.handleSubmit}>
+          <Main isFocus={isFocus}>
+            <TextInput
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              id="title"
+              name="title"
+              value={formik.values.title}
+              onChange={(val) => {
+                formik.setFieldValue("title", val)
+              }}
+              placeholder={t("task.inputPlaceholder")}
+              fontSize="18px"
+              autoFocus
+              multiline={false}
+              maxLength={100}
+            />
+            <PropertiesContainer>
+              <DatePicker
+                id="dueDate"
+                name="dueDate"
+                value={formik.values.dueDate}
                 onChange={(val) => {
-                  formik.setFieldValue("title", val)
+                  formik.setFieldValue("dueDate", val)
                 }}
-                placeholder="Create new task"
-                fontSize="16px"
-                autoFocus
-                multiline={false}
-                maxLength={100}
+                variant="standard"
               />
-              <PropertiesContainer>
-                <PriorityPicker
-                  id="priority"
-                  name="priority"
-                  value={formik.values.priority}
-                  onChange={(val) => {
-                    formik.setFieldValue("priority", val)
-                  }}
-                  displayValue={false}
-                  iconSize={20}
-                />
-                <DatePicker
-                  id="dueDate"
-                  name="dueDate"
-                  value={formik.values.dueDate}
-                  onChange={(val) => {
-                    formik.setFieldValue("dueDate", val)
-                  }}
-                  displayValue={false}
-                  iconSize={20}
-                />
-                <TagPicker
-                  id="tags"
-                  name="tags"
-                  currentTags={formik.values.tags}
-                  onChange={(val) => {
-                    formik.setFieldValue("tags", val)
-                  }}
-                  displayValue={false}
-                  sa
-                  iconSize={20}
-                />
-              </PropertiesContainer>
-            </Main>
-            <Footer>
-              <Buttons>
-                <CancelButton
-                  type="button"
-                  text="Cancel"
-                  onClick={_hideTaskInput}
-                />
-                <SubmitButton
-                  text="Create"
-                  type="submit"
-                  disabled={!(formik.isValid && formik.dirty)}
-                />
-              </Buttons>
-            </Footer>
-          </Form>
-        </Wrapper>
-      </OutsideClickHandler>
-    </div>
+              <ProjectPicker
+                id="project"
+                name="project"
+                value={formik.values.project}
+                onChange={(val) => {
+                  formik.setFieldValue("project", val)
+                }}
+                variant="icon"
+              />
+              <PriorityPicker
+                id="priority"
+                name="priority"
+                value={formik.values.priority}
+                onChange={(val) => {
+                  formik.setFieldValue("priority", val)
+                }}
+                variant="icon"
+              />
+
+              <TagPicker
+                id="tags"
+                name="tags"
+                currentTags={formik.values.tags}
+                onChange={(val) => {
+                  formik.setFieldValue("tags", val)
+                }}
+                variant="icon"
+              />
+            </PropertiesContainer>
+          </Main>
+        </Form>
+      </Wrapper>
+      <Overlay
+        onClick={() => {
+          _hideTaskInput()
+        }}
+      />
+    </>
   )
+}
+
+TaskInput.propTypes = {
+  priority: PropTypes.number,
+  project: PropTypes.string,
+  tag: PropTypes.arrayOf(PropTypes.string),
+  dueDate: PropTypes.oneOfType([Date, PropTypes.string]),
+}
+
+TaskInput.defaultProps = {
+  priority: 1,
+  project: null,
+  tag: [],
+  dueDate: null,
 }
 
 export default TaskInput

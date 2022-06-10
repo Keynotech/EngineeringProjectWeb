@@ -22,14 +22,18 @@ const ChildContainer = styled.div`
   padding: 0 12px;
   transition: padding 0.2s cubic-bezier(0.42, 0, 1, 1);
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media ${mq.tablet} {
     min-width: 320px;
     max-width: 100%;
-    padding: 0 30px;
+    padding: 0 40px;
   }
 `
 const OutletContainer = styled.div`
-  z-index: ${zIndex.level2};
+  z-index: ${zIndex.level9};
   position: absolute;
   width: 100vw;
   visibility: hidden;
@@ -72,7 +76,6 @@ const ButtonContainer = styled.div`
   width: 40px;
   height: 40px;
   z-index: ${zIndex.level1};
-  transition: right 0.25s cubic-bezier(0.42, 0, 1, 1);
 
   @media ${mq.tablet} {
     right: 40px;

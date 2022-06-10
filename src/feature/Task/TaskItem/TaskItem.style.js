@@ -1,51 +1,57 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
 import { mq } from "../../../utils/mq"
 
+const StyledLink = styled(Link)`
+  cursor: default;
+`
+
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   padding: 10px 8px;
-  box-sizing: border-box;
-  border-bottom: 1px solid ${(props) => props.theme.secondary};
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
+  transition: opacity 0.25s;
+
+  ${({ isDone }) =>
+    isDone &&
+    css`
+      opacity: 0.5;
+    `};
 `
 
 const CheckboxContainer = styled.div`
   display: flex;
+  height: 22px;
+  min-width: 32px;
   align-items: center;
-  height: 32px;
-  width: 32px;
 `
 
-const StyledLink = styled(Link)`
-  min-width: 0px;
-  max-width: 100%;
+const MainWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  cursor: default;
+  min-width: 0px;
+  max-width: 100%;
+  gap: 2px;
 `
 
 const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
-  height: 32px;
-  width: 100%;
+  gap: 6px;
+  height: 22px;
 `
+
 const Title = styled.span`
-  font-size: 12px;
+  font-size: 14px;
   color: ${(props) => props.theme.textPrimary};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  @media ${mq.laptop} {
-    font-size: 14px;
-  }
 `
 
 const PropertiesIcons = styled.div`
@@ -57,19 +63,39 @@ const PropertiesIcons = styled.div`
   font-size: 14px;
 `
 
-const TagsContainer = styled.div`
-  flex-shrink: 0;
+const AdditionalContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 8px;
-  overflow: hidden;
+  align-items: center;
+  height: 22px;
+  gap: 6px;
+  min-width: 0px;
+  max-width: 100%;
+`
+
+const TagsContainer = styled.div`
+  flex-shrink: 0;
+
+  @media ${mq.tablet} {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 1;
+    gap: 8px;
+    overflow: hidden;
+  }
 `
 
 const ProjectInfo = styled.div`
-  margin-left: auto;
+  flex-shrink: 1;
+  overflow: hidden;
+  position: relative;
+  left: -5px;
 `
 
 const Description = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -86,11 +112,13 @@ export {
   Wrapper,
   StyledLink,
   CheckboxContainer,
+  MainWrapper,
   MainContainer,
   Title,
   TagsContainer,
   PropertiesIcons,
   ProjectInfo,
+  AdditionalContainer,
   Description,
   DescriptionInner,
 }

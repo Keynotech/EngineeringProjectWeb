@@ -7,7 +7,11 @@ import styled, { css } from "styled-components"
 import { NavLink } from "react-router-dom"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import PropTypes from "prop-types"
-import { hideSidebar, hideTaskPage } from "../../store/features/layoutSlice"
+import {
+  hideSidebar,
+  hideTaskInput,
+  hideTaskPage,
+} from "../../store/features/layoutSlice"
 import { size } from "../../utils/mq"
 import { DropdownMenu } from "../../components/DropdownMenu"
 
@@ -32,7 +36,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  padding: 5px 10px 5px 20px;
+  padding: 4px 10px 4px 20px;
 `
 
 const IconWrapper = styled.span`
@@ -40,7 +44,7 @@ const IconWrapper = styled.span`
   align-items: center;
   justify-content: center;
   width: 28px;
-  height: 24px;
+  height: 28px;
   margin-right: 5px;
   font-size: 18px;
   color: ${(props) => props.theme.textSecondary};
@@ -64,6 +68,9 @@ const RouteName = styled.span`
   flex: 1;
   font-weight: 600;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   ${({ fontWeight }) =>
     fontWeight === "light" &&
@@ -96,6 +103,7 @@ function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
   const dispatch = useDispatch()
   const _hideTaskPage = () => dispatch(hideTaskPage())
   const _hideSidebar = () => dispatch(hideSidebar())
+  const _hideTaskInput = () => dispatch(hideTaskInput())
 
   const hideSidebarOnMobile = () => {
     if (window.innerWidth <= size.laptop) {
@@ -131,6 +139,7 @@ function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
   const _onClick = () => {
     _hideTaskPage()
     hideSidebarOnMobile()
+    _hideTaskInput()
   }
 
   return (

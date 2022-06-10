@@ -1,0 +1,91 @@
+{
+    "task": {
+        "title": "Nazwa zadania",
+        "desc": "Opis",
+        "createdAt": "Utworzono",
+        "updatedAt": "Zaktualizowano o",
+        "inputPlaceholder": "Utwórz nowe zadanie, naciśnij ENTER aby zapisać",
+        "groupOptions": {
+            "default": "Domyślne",
+            "dueDate": "Data wykonania",
+            "createdDate" :"Data utworzenia",
+            "priority": "Priorytet"
+        },
+        "taskMenu": {
+            "duplicate": "Duplicate task",
+            "goToProject": "Go to project",
+            "delete": "Delete task"            
+        }
+    },
+    "attachments": {
+        "attachments": "Załączniki",
+        "delete": "Usuń plik",
+        "upload": "Dodaj pliki",
+        "uploadPlaceholder": "Upuść pliki tutaj, aby dodać je do zadania"
+    },
+    "folders": {
+        "folderName": "Nazwa folderu",
+        "create":"Utwórz nowy folder",
+        "delete": "Usuń folder",
+        "edit": "Edytuj folder",
+        "addProject": "Dodaj projekt do folderu"
+    },
+
+    "project": {
+        "projectName": "Nazwa projektu",
+        "folder": "Folder",
+        "create": "Utwórz nowy projekt",
+        "delete": "Usuń projekt",
+        "edit": "Edytuj projekt"
+    },
+    "tags": {
+        "create": "Utwórz nowy tag",
+        "tags": "tagi",
+        "tags2": "tagów",
+        "tag": "tag",
+        "delete": "Usuń tag",
+        "edit": "Edytuj tag",
+        "tagName": "Nazwa tagu"
+    },
+    "picker": {
+        "date": {
+            "tomorrow": "Jutro",
+            "nextWeek": "Przyszły tydzień",
+            "nextMonth": "Przyszły miesiąc",
+            "remove": "Usuń termin",
+            "noDate": "Bez terminu",
+            "dueDate": "Data wykonania"
+        },
+        "priority": {
+            "urgent": "Urgent",
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low",
+            "priority":"Priorytet"
+        },
+        "project": {
+            "project": "Projekt"
+        },
+        "folder": {
+            "folder":"Folder",
+            "none": "Bez folderu"
+        },
+        "tag": {
+            "addTag": "Add tag"
+        }
+    },
+    "sidebar": {
+        "inbox": "Skrzynka",
+        "today": "Dzisiaj",
+        "upcoming": "Nadchodzące",
+        "tags": "Tagi",
+        "projects": "Projekty"
+    },
+    "validation": {
+        "max50Cha": "Maksymalnie 50 znaków"
+    },
+    "create": "Utwórz",
+    "cancel": "Anuluj",
+    "submit":"Zatwierdź",
+    "save": "Zapisz"
+}

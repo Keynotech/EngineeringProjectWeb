@@ -1,8 +1,10 @@
 import React from "react"
-import styled, { css } from "styled-components"
+import { useTranslation } from "react-i18next"
+import styled, { css, useTheme } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
+import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import SearchIcon from "@mui/icons-material/Search"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import SidebarLink from "./SidebarLink"
@@ -10,7 +12,7 @@ import { hideSidebar } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
 import SidebarList from "./SidebarList"
-import SidebarProjectList from "./SidebarProjectList"
+import SidebarProjectList from "./SidebarProjectList/SidebarProjectList"
 import SidebarTagList from "./SidebarTagList"
 import SidebarSectionHeader from "./SidebarSectionHeader"
 
@@ -20,7 +22,7 @@ const Wrapper = styled.nav`
   left: -100vw;
   height: 100vh;
   overflow-y: auto;
-  z-index: ${zIndex.level9};
+  z-index: ${zIndex.level2};
   background-color: ${(props) => props.theme.primary};
   border-right: 1px solid ${(props) => props.theme.tertiary};
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
@@ -29,7 +31,7 @@ const Wrapper = styled.nav`
   @media ${mq.phone} {
     position: fixed;
     left: -300px;
-    width: 300px;
+    width: 280px;
   }
 
   ${({ isVisible }) =>
@@ -87,7 +89,7 @@ const Header = styled.div`
 `
 
 const SearchButton = styled.span`
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   height: 28px;
@@ -96,9 +98,31 @@ const SearchButton = styled.span`
   background-color: ${(props) => props.theme.tertiary};
 `
 
+const SidebarToggle = styled.div`
+  ${({ isSidebarVisible }) =>
+    !isSidebarVisible &&
+    css`
+      visibility: visible;
+      transform: scaleX(-1);
+    `}
+
+  @media ${mq.phone} {
+    display: none;
+  }
+`
+
+const SidebarHeaderButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+`
+
 function Sidebar() {
-  // State Hooks
+  // Others
   // ===========================================================================
+  const { t } = useTranslation()
+  const theme = useTheme()
 
   // Dispatch
   // ===========================================================================
@@ -115,29 +139,37 @@ function Sidebar() {
         <Container>
           <Header>
             <SidebarSectionHeader
-              fontSize="16px"
-              name="{user.nickname}"
+              fontSize="15px"
+              name="sampleemail@amu.edu.pl"
               rightComponent={
-                <SearchButton>
-                  <SearchIcon />
-                </SearchButton>
+                <SidebarHeaderButtons>
+                  <SearchButton>
+                    <SearchIcon />
+                  </SearchButton>
+                  <SidebarToggle
+                    onClick={_hideSidebar}
+                    isSidebarVisible={isVisible}
+                  >
+                    <MenuOpenIcon sx={{ color: theme.textTertiary }} />
+                  </SidebarToggle>
+                </SidebarHeaderButtons>
               }
             />
           </Header>
           <SidebarList>
             <SidebarLink
               icon={<InboxOutlinedIcon fontSize="inherit" />}
-              name="Inbox"
+              name={t("sidebar.inbox")}
               route="/inbox"
             />
             <SidebarLink
               icon={<TodayOutlinedIcon fontSize="inherit" />}
-              name="Today"
+              name={t("sidebar.today")}
               route="/today"
             />
             <SidebarLink
-              route="/week"
-              name="Current Week"
+              route="/upcoming"
+              name={t("sidebar.upcoming")}
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
           </SidebarList>

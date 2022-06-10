@@ -1,11 +1,12 @@
 import { useQuery, useQueryClient } from "react-query"
 import { getAll } from "../../api/tasks"
 
-function useTasksQuery() {
+function useTasksQuery(filter) {
   const queryClient = useQueryClient()
 
   const data = useQuery(["tasks"], getAll, {
-    cacheTime: 60 * 5 * 1000,
+    cacheTime: Infinity,
+    select: filter || null,
   })
   if (data.isSuccess) {
     data.data.forEach((e) => {

@@ -3,8 +3,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import TaskInput from "../TaskInput/TaskInput"
 import TaskListHeader from "./TaskListHeader"
 import GroupController from "./GroupController"
@@ -13,23 +14,31 @@ import ListSection from "./ListSection"
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  min-height: 400px;
   padding-bottom: 140px;
 `
 
-function TasksList({ tasks, listName, listIcon }) {
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 400px;
+`
+
+function TasksList({
+  tasks,
+  listName,
+  listIcon,
+  inputPriorityVal,
+  inputProjectVal,
+  inputTagVal,
+  inputDueDateVal,
+  groupOptions,
+}) {
+  const { t } = useTranslation()
   const [sections, setSections] = useState()
   const onGroupChange = (data) => {
     setSections(data)
   }
-
-  const groupOptions = [
-    { name: "Default", key: "default" },
-    { name: "Due date", key: "dueDate" },
-    { name: "Created date", key: "createdAt" },
-    { name: "Priority", key: "priority" },
-  ]
 
   // Selectors
   // ===========================================================================
@@ -37,30 +46,49 @@ function TasksList({ tasks, listName, listIcon }) {
     (state) => state.layout.taskInputVisibility
   )
 
+  let SortingController = null
+  if (tasks.isSuccess) {
+    SortingController = (
+      <GroupController
+        data={tasks.isSuccess ? tasks.data : null}
+        onGroupChange={onGroupChange}
+        groupOptions={groupOptions}
+      />
+    )
+  }
+
+  const tasksCounter = `${tasks.isSuccess ? tasks.data.length : 0} tasks`
+
   return (
     <Wrapper>
       <TaskListHeader
         name={listName}
         icon={listIcon}
-        additionaInfo={`${tasks.length} tasks`}
+        additionaInfo={tasksCounter}
       >
-        <GroupController
-          data={tasks}
-          onGroupChange={onGroupChange}
-          groupOptions={groupOptions}
-        />
+        {SortingController}
       </TaskListHeader>
 
-      {taskInputVisibility ? <TaskInput /> : null}
-      {sections && sections.length
-        ? sections.map((section) => (
-            <ListSection
-              key={section.key}
-              title={section.name}
-              array={section.array}
-            />
-          ))
-        : null}
+      <ListContainer taskInputIsOpen={taskInputVisibility}>
+        {taskInputVisibility ? (
+          <TaskInput
+            project={inputProjectVal}
+            dueDate={inputDueDateVal}
+            tag={inputTagVal}
+            priority={inputPriorityVal}
+          />
+        ) : null}
+
+        {tasks.isSuccess && sections && sections.length
+          ? sections.map((section) => (
+              <ListSection
+                key={section.key}
+                title={section.name}
+                array={section.array}
+              />
+            ))
+          : null}
+      </ListContainer>
     </Wrapper>
   )
 }
