@@ -117,7 +117,12 @@ function TagPicker({ value, currentTags, onChange, variant }) {
                 </ItemWrapper>
               ))
             : null}
-          <ItemWrapper onClick={_showTagInput}>
+          <ItemWrapper
+            onClick={() => {
+              _showTagInput()
+              setIsOpen(false)
+            }}
+          >
             <AddNewTag>
               <AddIcon
                 sx={{
