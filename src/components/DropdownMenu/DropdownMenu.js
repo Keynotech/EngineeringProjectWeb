@@ -54,7 +54,7 @@ function DropdownMenu({ isOpen, outsideClick, toggle, children }) {
         handleClose={handleClose}
         onOutsideClick={_outsideClick}
       >
-        <MenuContainer>{children}</MenuContainer>
+        <MenuContainer onClick={_outsideClick}>{children}</MenuContainer>
       </Popover>
     </>
   )

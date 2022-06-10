@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import { AnimatePresence, motion } from "framer-motion"
@@ -36,6 +36,7 @@ function SidebarTagList() {
   const location = useLocation()
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const ref = useRef()
   // Query
   // ===========================================================================
   const tags = useTagsQuery()
@@ -80,6 +81,7 @@ function SidebarTagList() {
                 transition={{ duration: 0.4 }}
               >
                 <SidebarLink
+                  ref={ref}
                   icon={<TagColor color={tag.color} />}
                   name={tag.tagName}
                   route={`tag/${tag._id}`}
@@ -94,7 +96,10 @@ function SidebarTagList() {
                           />
                         }
                         label={t("tags.edit")}
-                        onClick={() => openTagEdit(tag._id)}
+                        onClick={() => {
+                          ref.current.hideMenu()
+                          openTagEdit(tag._id)
+                        }}
                       />
                       <DropdownItemMenu
                         leftIcon={
@@ -104,7 +109,10 @@ function SidebarTagList() {
                           />
                         }
                         label={t("tags.delete")}
-                        onClick={() => deleteTag(tag._id)}
+                        onClick={() => {
+                          ref.current.hideMenu()
+                          deleteTag(tag._id)
+                        }}
                       />
                     </>
                   }

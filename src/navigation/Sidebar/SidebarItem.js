@@ -1,10 +1,9 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/prop-types */
 
-import React, { useState } from "react"
+import React, { useState, forwardRef, useImperativeHandle } from "react"
 import styled, { css } from "styled-components"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
-import PropTypes from "prop-types"
 import { DropdownMenu } from "../../components/DropdownMenu"
 
 const Wrapper = styled.div`
@@ -70,14 +69,8 @@ const RouteName = styled.span`
     `};
 `
 
-function SidebarItem({
-  icon,
-  name,
-  menuContent,
-  fontWeight,
-  onClick,
-  clickable,
-}) {
+const SidebarItem = forwardRef((props, ref) => {
+  const { icon, name, menuContent, fontWeight, onClick, clickable } = props
   const [displayMenuBtn, toggleDisplayMenuBtn] = useState(false)
   const [menuIsOpen, toggleMenu] = useState(false)
 
@@ -96,6 +89,12 @@ function SidebarItem({
     }
   }
 
+  useImperativeHandle(ref, () => ({
+    hideMenu: () => {
+      toggleMenu(false)
+    },
+  }))
+
   let menu = null
   if (menuContent) {
     menu = (
@@ -110,6 +109,7 @@ function SidebarItem({
                 cursor: "pointer",
               }}
               onClick={() => {
+                toggleDisplayMenuBtn(false)
                 toggleMenu(!menuIsOpen)
               }}
             />
@@ -141,18 +141,6 @@ function SidebarItem({
       </Container>
     </Wrapper>
   )
-}
-
-SidebarItem.propTypes = {
-  icon: PropTypes.element.isRequired,
-  name: PropTypes.string.isRequired,
-  fontWeight: PropTypes.oneOf(["light", "bold"]),
-  clickable: PropTypes.bool,
-}
-
-SidebarItem.defaultProps = {
-  fontWeight: "bold",
-  clickable: false,
-}
+})
 
 export default SidebarItem

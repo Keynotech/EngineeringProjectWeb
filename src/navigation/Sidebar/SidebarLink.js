@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/prop-types */
 
-import React, { useState } from "react"
+import React, { useState, forwardRef, useImperativeHandle } from "react"
 import { useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
 import { NavLink } from "react-router-dom"
@@ -79,7 +80,8 @@ const RouteName = styled.span`
     `};
 `
 
-function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
+const SidebarLink = forwardRef((props, ref) => {
+  const { icon, name, route, menuContent, fontWeight, as } = props
   const [displayMenuBtn, toggleDisplayMenuBtn] = useState(false)
   const [menuIsOpen, toggleMenu] = useState(false)
 
@@ -97,6 +99,12 @@ function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
       toggleDisplayMenuBtn(false)
     }
   }
+
+  useImperativeHandle(ref, () => ({
+    hideMenu: () => {
+      toggleMenu(false)
+    },
+  }))
 
   // Dispatch
   // ===========================================================================
@@ -125,6 +133,7 @@ function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
                 cursor: "pointer",
               }}
               onClick={() => {
+                toggleDisplayMenuBtn(false)
                 toggleMenu(!menuIsOpen)
               }}
             />
@@ -153,17 +162,6 @@ function SidebarLink({ icon, name, route, menuContent, fontWeight, as }) {
       </Link>
     </Wrapper>
   )
-}
-
-SidebarLink.propTypes = {
-  icon: PropTypes.element.isRequired,
-  name: PropTypes.string.isRequired,
-  route: PropTypes.string,
-  fontWeight: PropTypes.oneOf(["light", "bold"]),
-}
-
-SidebarLink.defaultProps = {
-  fontWeight: "bold",
-}
+})
 
 export default SidebarLink

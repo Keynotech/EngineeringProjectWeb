@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef, createRef } from "react"
 import { useDispatch } from "react-redux"
 import { useTranslation } from "react-i18next"
 import { useNavigate, useLocation } from "react-router-dom"
@@ -40,6 +40,8 @@ function ListSection({ section }) {
   const location = useLocation()
   const navigate = useNavigate()
   const { t } = useTranslation()
+
+  const ref = createRef()
 
   // Dispatch
   // ===========================================================================
@@ -90,6 +92,7 @@ function ListSection({ section }) {
   if (section.key) {
     folderName = (
       <SidebarItem
+        ref={ref}
         as="div"
         icon={
           isOpen ? (
@@ -108,6 +111,7 @@ function ListSection({ section }) {
               leftIcon={<EditOutlinedIcon color="inherit" fontSize="inehrit" />}
               label={t("folders.edit")}
               onClick={() => {
+                ref.current.hideMenu()
                 openFolderEdit(section.key)
               }}
             />
@@ -116,7 +120,10 @@ function ListSection({ section }) {
                 <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />
               }
               label={t("folders.delete")}
-              onClick={() => deleteFolder(section.key)}
+              onClick={() => {
+                ref.current.hideMenu()
+                deleteFolder(section.key)
+              }}
             />
           </>
         }
