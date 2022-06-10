@@ -129,6 +129,18 @@ function TaskPage() {
     }
   }, [task.isError])
 
+  // TaskMenuFunction
+  // ===========================================================================
+
+  const goToProject = () => {
+    _hideTaskPage()
+    if (task.project !== null) {
+      navigate(`/project/${task.project}`)
+    } else {
+      navigate("/inbox")
+    }
+  }
+
   let tags = null
   if (taskTags) {
     tags = taskTags?.map((tag) => (
@@ -273,15 +285,10 @@ function TaskPage() {
             >
               <DropdownItemMenu
                 leftIcon={
-                  <ContentCopyOutlinedIcon color="inherit" fontSize="inehrit" />
-                }
-                label={t("task.taskMenu.duplicate")}
-              />
-              <DropdownItemMenu
-                leftIcon={
                   <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />
                 }
                 label={t("task.taskMenu.goToProject")}
+                onClick={goToProject}
               />
               <DropdownItemMenu
                 leftIcon={
@@ -304,7 +311,12 @@ function TaskPage() {
 export default TaskPage
 
 /*
-
+          <DropdownItemMenu
+                leftIcon={
+                  <ContentCopyOutlinedIcon color="inherit" fontSize="inehrit" />
+                }
+                label={t("task.taskMenu.duplicate")}
+              />
  
 
 */

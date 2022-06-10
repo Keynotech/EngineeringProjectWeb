@@ -1,9 +1,10 @@
 import styled, { css } from "styled-components"
+import zIndex from "../../../utils/zIndex"
 
 export const Wrapper = styled.div`
   position: relative;
   margin-bottom: 40px;
-  z-index: 801;
+  z-index: ${zIndex.level8};
 `
 
 export const Form = styled.form`
@@ -69,5 +70,5 @@ export const Overlay = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 800;
+  z-index: ${zIndex.level7};
 `
