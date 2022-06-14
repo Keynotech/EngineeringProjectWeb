@@ -34,10 +34,12 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+  gap: 14px;
   padding: 4px 10px 4px 15px;
+  width: 100%;
 `
 
 const IconWrapper = styled.span`
@@ -46,7 +48,6 @@ const IconWrapper = styled.span`
   justify-content: center;
   width: 28px;
   height: 28px;
-  margin-right: 5px;
   font-size: 18px;
   color: ${(props) => props.theme.textSecondary};
 `

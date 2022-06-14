@@ -3,10 +3,10 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
 import MenuOpenIcon from "@mui/icons-material/MenuOpen"
-import { Avatar } from "@mui/material"
 import styled, { css, useTheme } from "styled-components"
-import { hideSidebar } from "../../store/features/layoutSlice"
-import { mq } from "../../utils/mq"
+import { hideSidebar } from "../../../store/features/layoutSlice"
+import { mq } from "../../../utils/mq"
+import UserAvatar from "./UserAvatar"
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,37 +59,6 @@ const ButtonsContainer = styled.div`
   height: 100%;
 `
 
-function stringToColor(string) {
-  let hash = 0
-  let i
-
-  /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash)
-  }
-
-  let color = "#"
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff
-    color += `00${value.toString(16)}`.slice(-2)
-  }
-  /* eslint-enable no-bitwise */
-  return color
-}
-
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-      height: 24,
-      width: 24,
-      fontSize: "14px",
-    },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[0][1]}`,
-  }
-}
-
 function SidebarHeader() {
   // Dispatch
   // ===========================================================================
@@ -113,7 +82,7 @@ function SidebarHeader() {
         alignItems="center"
         background="green"
       >
-        <Avatar variant="rounded" {...stringAvatar("sampleemail@amu.edu.pl")} />
+        <UserAvatar />
         <UserName>sampleemail@amu.edu.pl</UserName>
         <ButtonsContainer>
           <SettingsButton>

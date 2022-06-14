@@ -12,7 +12,7 @@ import zIndex from "../../utils/zIndex"
 import SidebarList from "./SidebarList"
 import SidebarProjectList from "./SidebarProjectList/SidebarProjectList"
 import SidebarTagList from "./SidebarTagList/SidebarTagList"
-import SidebarHeader from "./SidebarHeader"
+import SidebarHeader from "./SidebarHeader/SidebarHeader"
 
 const Wrapper = styled.nav`
   position: absolute;
