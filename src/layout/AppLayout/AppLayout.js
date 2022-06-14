@@ -3,13 +3,9 @@ import React, { useEffect } from "react"
 import styled, { css, useTheme } from "styled-components"
 import { Outlet } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import MenuOpenIcon from "@mui/icons-material/MenuOpen"
+import LoadingScreen from "./LoadingScreen"
 import Sidebar from "../../navigation/Sidebar/Sidebar"
-import {
-  hideSidebar,
-  showSidebar,
-  toggleSidebar,
-} from "../../store/features/layoutSlice"
+import { hideSidebar, showSidebar } from "../../store/features/layoutSlice"
 import TagInput from "../../feature/Tag/TagInput/TagInput"
 import ProjectInput from "../../feature/Project/ProjectInput/ProjectInput"
 import useWindowSize from "../../hooks/useWindowSize"
@@ -48,14 +44,6 @@ const Main = styled.main`
         margin-left: 280px;
       }
     `}
-`
-
-const Loading = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 function AppLayout() {
@@ -148,9 +136,7 @@ function AppLayout() {
           {foldersEditVisibility ? <FolderEdit /> : null}
         </>
       ) : (
-        <Loading>
-          <h2>Loading </h2>
-        </Loading>
+        <LoadingScreen />
       )}
     </Wrapper>
   )
