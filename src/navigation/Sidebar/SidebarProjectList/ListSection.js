@@ -40,9 +40,6 @@ function ListSection({ section }) {
   const location = useLocation()
   const navigate = useNavigate()
   const { t } = useTranslation()
-
-  const ref = createRef()
-
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -90,9 +87,10 @@ function ListSection({ section }) {
 
   let folderName = null
   if (section.key) {
+    const refFolder = createRef()
     folderName = (
       <SidebarItem
-        ref={ref}
+        ref={refFolder}
         as="div"
         icon={
           isOpen ? (
@@ -111,7 +109,7 @@ function ListSection({ section }) {
               leftIcon={<EditOutlinedIcon color="inherit" fontSize="inehrit" />}
               label={t("folders.edit")}
               onClick={() => {
-                ref.current.hideMenu()
+                refFolder.current.hideMenu()
                 openFolderEdit(section.key)
               }}
             />
@@ -121,7 +119,7 @@ function ListSection({ section }) {
               }
               label={t("folders.delete")}
               onClick={() => {
-                ref.current.hideMenu()
+                refFolder.current.hideMenu()
                 deleteFolder(section.key)
               }}
             />
@@ -133,6 +131,7 @@ function ListSection({ section }) {
 
   let projectList = null
   if (section.key === null) {
+    const refProject = createRef()
     projectList = (
       <SidebarList style={{ marginBottom: "20px" }}>
         <AnimatePresence>
@@ -145,6 +144,7 @@ function ListSection({ section }) {
               transition={{ duration: 0.4 }}
             >
               <SidebarLink
+                ref={refProject}
                 icon={<ProjectIcon />}
                 name={project.projectName}
                 route={`project/${project._id}`}
@@ -157,6 +157,7 @@ function ListSection({ section }) {
                       }
                       label={t("project.edit")}
                       onClick={() => {
+                        refProject.current.hideMenu()
                         openProjectEdit(project._id)
                       }}
                     />
@@ -168,7 +169,10 @@ function ListSection({ section }) {
                         />
                       }
                       label={t("project.delete")}
-                      onClick={() => deleteProject(project._id)}
+                      onClick={() => {
+                        refProject.current.hideMenu()
+                        deleteProject(project._id)
+                      }}
                     />
                   </>
                 }
