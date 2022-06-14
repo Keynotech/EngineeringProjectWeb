@@ -138,9 +138,9 @@ function ListSection({ section }) {
           {section.array.map((project) => (
             <motion.div
               key={project._id}
-              initial={{ x: 200, opacity: 0 }}
+              initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: 200, opacity: 0 }}
+              exit={{ x: 100, opacity: 0 }}
               transition={{ duration: 0.4 }}
             >
               <SidebarLink
@@ -190,9 +190,9 @@ function ListSection({ section }) {
             {section.array.map((project) => (
               <motion.div
                 key={project._id}
-                initial={{ x: 200, opacity: 0 }}
+                initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 200, opacity: 0 }}
+                exit={{ x: 100, opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
                 <SidebarLink
