@@ -1,11 +1,11 @@
 /* eslint-disable react/require-default-props */
-import React, { useState } from "react"
+import React from "react"
 import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
 import styled, { useTheme } from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import Popover from "../../../components/Popover/Popover"
-// import PriorityPropertie from "./PriorityPropertie"
+import useIsOpen from "../../../hooks/useIsOpen"
 import PriorityPropertie from "../../Propertie/PriorityPropertie/PriorityPropertie"
 
 const Wrapper = styled.div`
@@ -45,17 +45,17 @@ function PriorityPicker({ value, onChange, variant }) {
 
   // State Hooks
   // ===========================================================================
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, hide, show } = useIsOpen()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget)
-    setIsOpen(true)
+    show()
   }
 
   const handleClose = () => {
     setAnchorEl(null)
-    setIsOpen(false)
+    hide()
   }
 
   const togglePopover = (e) => {
@@ -80,7 +80,7 @@ function PriorityPicker({ value, onChange, variant }) {
             <Item
               onClick={() => {
                 onChange(priority.value)
-                setIsOpen(false)
+                hide()
               }}
               key={priority.value}
             >

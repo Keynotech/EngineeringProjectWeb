@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React, { useState } from "react"
+import React from "react"
 import { useTranslation } from "react-i18next"
 import styled, { css } from "styled-components"
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb"
@@ -11,6 +11,7 @@ import FolderItem from "../../Folder/FolderItem/FolderItem"
 import { showFolderInput } from "../../../store/features/layoutSlice"
 import FolderPropertie from "../../Propertie/FolderPropertie/FolderPropertie"
 import Popover from "../../../components/Popover/Popover"
+import useIsOpen from "../../../hooks/useIsOpen"
 
 const Wrapper = styled.div`
   min-width: 200px;
@@ -54,19 +55,19 @@ function FolderPicker({ value, onChange, variant }) {
 
   // State hooks
   // ===========================================================================
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, hide, show } = useIsOpen()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   // Handlers
   // ===========================================================================
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget)
-    setIsOpen(true)
+    show()
   }
 
   const handleClose = () => {
     setAnchorEl(null)
-    setIsOpen(false)
+    hide()
   }
 
   const togglePopover = (e) => {
@@ -97,7 +98,7 @@ function FolderPicker({ value, onChange, variant }) {
             isActive={value === null || false}
             onClick={() => {
               onChange(null)
-              setIsOpen(false)
+              hide()
             }}
           >
             <DoNotDisturbIcon
@@ -117,7 +118,7 @@ function FolderPicker({ value, onChange, variant }) {
                   isActive={folder._id === value || false}
                   onClick={() => {
                     onChange(folder._id)
-                    setIsOpen(false)
+                    hide()
                   }}
                   key={folder._id}
                 >
@@ -128,7 +129,7 @@ function FolderPicker({ value, onChange, variant }) {
           <Item
             onClick={() => {
               _showFolderInput()
-              setIsOpen(false)
+              hide()
             }}
           >
             <AddIcon

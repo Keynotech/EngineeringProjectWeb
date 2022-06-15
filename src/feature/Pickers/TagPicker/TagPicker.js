@@ -13,6 +13,7 @@ import TagItem from "../../Tag/TagItem/TagItem"
 import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
+import useIsOpen from "../../../hooks/useIsOpen"
 
 const Wrapper = styled.div`
   min-width: 200px;
@@ -51,7 +52,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
   // State hooks
   // ===========================================================================
   const [selectedTags, setSelectedTags] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, hide, show } = useIsOpen()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   // Handlers
@@ -59,13 +60,13 @@ function TagPicker({ value, currentTags, onChange, variant }) {
   const handleOpen = (event) => {
     setSelectedTags([...currentTags] || [])
     setAnchorEl(event.currentTarget)
-    setIsOpen(true)
+    show()
   }
 
   const handleClose = () => {
     onChange(selectedTags)
     setAnchorEl(null)
-    setIsOpen(false)
+    hide()
   }
 
   const togglePopover = (e) => {
@@ -120,7 +121,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
           <ItemWrapper
             onClick={() => {
               _showTagInput()
-              setIsOpen(false)
+              hide()
             }}
           >
             <AddNewTag>
