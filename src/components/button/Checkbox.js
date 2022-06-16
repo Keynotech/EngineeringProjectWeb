@@ -41,3 +41,59 @@ Checkbox.propTypes = {
 }
 
 export default Checkbox
+
+/*
+
+import React from "react"
+import PropTypes from "prop-types"
+import styled, { css, useTheme } from "styled-components"
+import { Checkbox as CheckbouxMUI } from "@mui/material"
+
+const Button = styled.button`
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  background-color: ${(props) => props.theme.background};
+  border-radius: 5px;
+  border: 2px solid ${(props) => props.color};
+  ${({ checked }) =>
+    checked &&
+    css`
+      background-color: ${(props) => props.color};
+    `}
+`
+
+function Checkbox({ checked, onChange, color }) {
+  const theme = useTheme()
+
+  return (
+    <CheckbouxMUI
+      type="checkbox"
+      checked={checked}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onChange()
+      }}
+      sx={{
+        color: color || theme.priority1,
+        "&.MuiCheckbox-root": {
+          color: color || theme.priority1,
+          "&:hover": {
+            backgroundColor: "transparent !important",
+          },
+        },
+      }}
+    />
+  )
+}
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  color: PropTypes.string,
+}
+
+export default Checkbox
+
+*/
