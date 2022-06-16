@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import { useSelector } from "react-redux"
 import { Outlet } from "react-router-dom"
@@ -36,8 +37,8 @@ const OutletContainer = styled.div`
   z-index: ${zIndex.level9};
   position: absolute;
   width: 100vw;
-  visibility: hidden;
 
+  display: none;
   @media ${mq.tablet} {
     position: relative;
     width: 0px;
@@ -50,7 +51,7 @@ const OutletContainer = styled.div`
   ${({ taskPageVisibility }) =>
     taskPageVisibility &&
     css`
-      visibility: visible;
+      display: block;
       @media ${mq.tablet} {
         width: 400px;
       }
@@ -70,6 +71,7 @@ const OutletContainer = styled.div`
 `
 
 const ButtonContainer = styled.div`
+  display: none;
   position: fixed;
   bottom: 40px;
   right: 20px;
@@ -118,9 +120,6 @@ function MainLayout({ children }) {
       <OutletContainer taskPageVisibility={taskPageVisibility}>
         <Outlet />
       </OutletContainer>
-      <ButtonContainer taskPageVisibility={taskPageVisibility}>
-        <NewTaskButton />
-      </ButtonContainer>
     </Wrapper>
   )
 }

@@ -18,6 +18,7 @@ import FolderInput from "../../feature/Folder/FolderInput/FolderInput"
 import useFoldersQuery from "../../hooks/query/useFoldersQuery"
 import useTasksQuery from "../../hooks/query/useTasksQuery"
 import FolderEdit from "../../feature/Folder/FolderInput/FolderEdit"
+import useWindowDragDetect from "../../hooks/useWindowDragDetect"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -59,6 +60,7 @@ function AppLayout() {
   // State hooks
   // ===========================================================================
   const windowSize = useWindowSize()
+  useWindowDragDetect()
 
   // Selectors
   // ===========================================================================

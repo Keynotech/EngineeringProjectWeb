@@ -16,6 +16,8 @@ import useIsOpen from "../../../hooks/useIsOpen"
 const Wrapper = styled.div`
   min-width: 200px;
   max-width: 90vw;
+  max-height: 50vh;
+  overflow-y: auto;
 `
 
 const Item = styled.div`
