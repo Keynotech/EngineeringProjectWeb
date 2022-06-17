@@ -1,8 +1,14 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 import PropTypes from "prop-types"
 import { useTheme } from "styled-components"
 import Checkbox from "../../../components/button/Checkbox"
+
+const checkboxVariants = {
+  hover: { scale: 1.05 },
+  pressed: { scale: 0.95 },
+}
 
 function TaskCheckbox({ checked, onChange, priority }) {
   const [color, setColor] = useState()
@@ -31,7 +37,15 @@ function TaskCheckbox({ checked, onChange, priority }) {
     }
   }, [priority])
 
-  return <Checkbox checked={checked} onChange={onChange} color={color} />
+  return (
+    <motion.div
+      whileHover="hover"
+      whileTap="pressed"
+      variants={checkboxVariants}
+    >
+      <Checkbox checked={checked} onChange={onChange} color={color} />
+    </motion.div>
+  )
 }
 
 TaskCheckbox.propTypes = {

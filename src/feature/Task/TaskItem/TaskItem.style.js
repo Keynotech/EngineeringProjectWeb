@@ -9,7 +9,7 @@ const StyledLink = styled(Link)`
 const Wrapper = styled.div`
   padding: 10px 8px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: row;
   justify-content: flex-start;
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 const CheckboxContainer = styled.div`
   display: flex;
   height: 22px;
-  min-width: 32px;
+  min-width: 42px;
   align-items: center;
 `
 

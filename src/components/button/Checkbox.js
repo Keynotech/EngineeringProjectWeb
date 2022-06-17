@@ -2,6 +2,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled, { css, useTheme } from "styled-components"
+import CheckIcon from "@mui/icons-material/Check"
 
 const Button = styled.button`
   width: 18px;
@@ -30,7 +31,11 @@ function Checkbox({ checked, onChange, color }) {
         onChange()
       }}
       color={color || theme.priority1}
-    />
+    >
+      {checked ? (
+        <CheckIcon sx={{ fontSize: "14px", color: theme.primary }} />
+      ) : null}
+    </Button>
   )
 }
 
@@ -46,8 +51,53 @@ export default Checkbox
 
 import React from "react"
 import PropTypes from "prop-types"
-import styled, { css, useTheme } from "styled-components"
+import { useTheme } from "styled-components"
 import { Checkbox as CheckbouxMUI } from "@mui/material"
+
+function Checkbox({ checked, onChange, color }) {
+  const theme = useTheme()
+
+  return (
+    <CheckbouxMUI
+      type="checkbox"
+      checked={checked}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onChange()
+      }}
+      sx={{
+        color: color || theme.priority1,
+        "&.MuiCheckbox-root": {
+          color: color || theme.priority1,
+             height: "20px",
+    boxSizing: "border-box" /
+          "&:hover": {
+            backgroundColor: "transparent !important",
+          },
+        },
+      }}
+    />
+  )
+}
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  color: PropTypes.string,
+}
+
+export default Checkbox
+
+*/
+
+/*
+
+
+
+import React from "react"
+import PropTypes from "prop-types"
+import styled, { css, useTheme } from "styled-components"
 
 const Button = styled.button`
   width: 18px;
@@ -67,7 +117,7 @@ function Checkbox({ checked, onChange, color }) {
   const theme = useTheme()
 
   return (
-    <CheckbouxMUI
+    <Button
       type="checkbox"
       checked={checked}
       onClick={(e) => {
@@ -75,15 +125,7 @@ function Checkbox({ checked, onChange, color }) {
         e.stopPropagation()
         onChange()
       }}
-      sx={{
-        color: color || theme.priority1,
-        "&.MuiCheckbox-root": {
-          color: color || theme.priority1,
-          "&:hover": {
-            backgroundColor: "transparent !important",
-          },
-        },
-      }}
+      color={color || theme.priority1}
     />
   )
 }
