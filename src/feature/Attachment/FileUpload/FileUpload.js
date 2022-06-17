@@ -6,10 +6,10 @@ import React, { useState, useImperativeHandle, forwardRef } from "react"
 import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useDropzone } from "react-dropzone"
-import { onDragLeave } from "../../store/features/windowDragEnterSlice"
+import { onDragLeave } from "../../../store/features/windowDragEnterSlice"
 import { Wrapper, Container, Title, SubTitle } from "./FileUpload.style"
-import useUploadFile from "../../hooks/mutation/useUploadFile"
-import uploadImage from "../../assets/images/undraw_add_files_re_v09g.svg"
+import useUploadFile from "../../../hooks/mutation/useUploadFile"
+import uploadImage from "../../../assets/images/undraw_add_files_re_v09g.svg"
 
 function FileUpload(props, ref) {
   const { taskId } = props

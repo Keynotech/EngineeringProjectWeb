@@ -7,10 +7,8 @@ import React, { useState, useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
-import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import CloseIcon from "@mui/icons-material/Close"
-import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
 import ForwardOutlinedIcon from "@mui/icons-material/ForwardOutlined"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import { useTheme } from "styled-components"
@@ -29,7 +27,6 @@ import {
   HeaderContainer,
   TitleContainer,
   DetailsContainer,
-  SectionWrapper,
   SectionHeader,
   PropertiesContainer,
   PropertieList,
@@ -37,15 +34,12 @@ import {
   Footer,
   TagsContainer,
   FooterContainer,
-  AttachmentsContainer,
-  AttachmentItem,
-  AttachmentItemInner,
 } from "./TaskPage.style"
+import AttachmentList from "../../Attachment/AttachmentList"
 import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
-import useDeleteFile from "../../../hooks/mutation/useDeleteFile"
-import FileUpload from "../../FileUpload/FileUpload"
+import FileUpload from "../../Attachment/FileUpload/FileUpload"
 import {
   DropdownMenu,
   DropdownItemMenu,
@@ -85,9 +79,7 @@ function TaskPage() {
   // ===========================================================================
   const updateTaskMutation = useUpdateTask(taskId)
   const deleteTaskMutation = useDeleteTask(taskId)
-  const deleteTaskFileMutation = useDeleteFile(taskId)
 
-  const deleteFile = (fileId) => deleteTaskFileMutation.mutate(fileId)
   const deleteTask = () => {
     deleteTaskMutation.mutate()
     goBack()
@@ -237,33 +229,17 @@ function TaskPage() {
               <TagsContainer>{tags}</TagsContainer>
             </SectionContainer>
 
-            <SectionContainer>
+            <SectionContainer style={{ marginTop: "auto" }}>
               <SectionHeader>
                 {t("attachments.attachments")}{" "}
                 {task.data.files ? `(${task.data.files.length})` : null}
               </SectionHeader>
 
-              <AttachmentsContainer>
-                {task.data.files?.map((file) => (
-                  <AttachmentItem isFile key={file._id}>
-                    <AttachmentItemInner isFile>
-                      <span>{file.file[0].originalname}</span>
-                      <button
-                        onClick={() => deleteFile(file._id)}
-                        type="button"
-                      >
-                        {t("attachments.delete")}
-                      </button>
-                    </AttachmentItemInner>
-                  </AttachmentItem>
-                ))}
-                <AttachmentItem onClick={openUpload} isFile={false}>
-                  <AttachmentItemInner isFile={false}>
-                    <FileUploadOutlinedIcon color="inherit" />
-                    <p> {t("attachments.upload")}</p>
-                  </AttachmentItemInner>
-                </AttachmentItem>
-              </AttachmentsContainer>
+              <AttachmentList
+                attachments={task.data.files}
+                taskId={task.data._id}
+                openUpload={openUpload}
+              />
             </SectionContainer>
           </DetailsContainer>
 
