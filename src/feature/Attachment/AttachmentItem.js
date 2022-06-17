@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import styled, { css } from "styled-components"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
       border: 1px solid ${(props) => props.theme.tertiary};
     `}
 `
-export const InnerWrapper = styled.div`
+const InnerWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;

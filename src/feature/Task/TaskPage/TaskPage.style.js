@@ -22,7 +22,10 @@ export const Container = styled.div`
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 15px 15px;
+  align-items: center;
+  min-height: 48px;
+  max-height: 48px;
+  padding: 0 15px;
   margin-bottom: 10px;
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
@@ -80,6 +83,7 @@ export const Footer = styled.div`
   font-size: 12px;
   background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.textTertiary};
+  border-top: 1px solid ${(props) => props.theme.tertiary};
 `
 
 export const FooterContainer = styled.div`

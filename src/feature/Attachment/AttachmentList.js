@@ -6,7 +6,7 @@ import styled from "styled-components"
 import useDeleteFile from "../../hooks/mutation/useDeleteFile"
 import AttachmentItem from "./AttachmentItem"
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -30,7 +30,6 @@ function AttachmentList({ attachments, taskId, openUpload }) {
   return (
     <Wrapper>
       <AnimatePresence>
-        <AttachmentItem uploadFunc={openUpload} />
         {attachments.map((attachment) => (
           <AttachmentItem
             key={attachment._id}
@@ -39,6 +38,7 @@ function AttachmentList({ attachments, taskId, openUpload }) {
             deleteFunc={() => deleteFile(attachment._id)}
           />
         ))}
+        <AttachmentItem uploadFunc={openUpload} />
       </AnimatePresence>
     </Wrapper>
   )

@@ -163,8 +163,8 @@ function TaskPage() {
 
             <CloseIcon
               onClick={() => {
-                goBack()
                 _hideTaskPage()
+                goBack()
               }}
               sx={{ cursor: "pointer", color: theme.textTertiary }}
             />
@@ -229,7 +229,7 @@ function TaskPage() {
               <TagsContainer>{tags}</TagsContainer>
             </SectionContainer>
 
-            <SectionContainer style={{ marginTop: "auto" }}>
+            <SectionContainer>
               <SectionHeader>
                 {t("attachments.attachments")}{" "}
                 {task.data.files ? `(${task.data.files.length})` : null}
