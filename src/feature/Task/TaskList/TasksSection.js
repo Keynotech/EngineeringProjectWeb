@@ -19,7 +19,7 @@ const SectionTitle = styled.h2`
   padding-bottom: 10px;
 `
 
-function ListSection({ title, array }) {
+function TasksSection({ title, array }) {
   let sectionName = null
   if (title) {
     sectionName = <SectionTitle>{title}</SectionTitle>
@@ -37,4 +37,4 @@ function ListSection({ title, array }) {
   )
 }
 
-export default ListSection
+export default TasksSection

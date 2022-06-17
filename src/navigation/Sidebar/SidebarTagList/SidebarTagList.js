@@ -67,13 +67,16 @@ function SidebarTagList() {
 
   return (
     <TagsWrapper>
-      <SidebarSectionHeader name={t("sidebar.tags")} />
+      <motion.div layout>
+        <SidebarSectionHeader name={t("sidebar.tags")} />
+      </motion.div>
 
       {tags.isSuccess ? (
         <SidebarList>
           <AnimatePresence>
             {tags.data.map((tag) => (
               <motion.div
+                layout
                 key={tag._id}
                 initial={{ x: 200, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -120,14 +123,16 @@ function SidebarTagList() {
               </motion.div>
             ))}
 
-            <SidebarItem
-              as="div"
-              icon={<AddIcon fontSize="inherit" />}
-              name={t("tags.create")}
-              fontWeight="light"
-              onClick={_showTagInput}
-              clickable
-            />
+            <motion.div layout>
+              <SidebarItem
+                as="div"
+                icon={<AddIcon fontSize="inherit" />}
+                name={t("tags.create")}
+                fontWeight="light"
+                onClick={_showTagInput}
+                clickable
+              />
+            </motion.div>
           </AnimatePresence>
         </SidebarList>
       ) : null}

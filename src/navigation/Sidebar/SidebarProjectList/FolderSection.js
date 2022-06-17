@@ -36,7 +36,7 @@ const ProjectIcon = styled.div`
   border: 2px solid ${(props) => props.theme.textTertiary};
 `
 
-function ListSection({ section }) {
+function FolderSection({ section }) {
   const location = useLocation()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -89,43 +89,56 @@ function ListSection({ section }) {
   if (section.key) {
     const refFolder = createRef()
     folderName = (
-      <SidebarItem
-        ref={refFolder}
-        as="div"
-        icon={
-          isOpen ? (
-            <FolderOpenIcon fontSize="inherit" />
-          ) : (
-            <FolderIcon fontSize="inherit" />
-          )
-        }
-        name={section.name}
-        fontWeight="light"
-        key={section.key}
-        onClick={() => toggleIsOpen(!isOpen)}
-        menuContent={
-          <>
-            <DropdownItemMenu
-              leftIcon={<EditOutlinedIcon color="inherit" fontSize="inehrit" />}
-              label={t("folders.edit")}
-              onClick={() => {
-                refFolder.current.hideMenu()
-                openFolderEdit(section.key)
-              }}
-            />
-            <DropdownItemMenu
-              leftIcon={
-                <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />
-              }
-              label={t("folders.delete")}
-              onClick={() => {
-                refFolder.current.hideMenu()
-                deleteFolder(section.key)
-              }}
-            />
-          </>
-        }
-      />
+      <motion.div
+        layout
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: 100, opacity: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <SidebarItem
+          ref={refFolder}
+          as="div"
+          icon={
+            isOpen ? (
+              <FolderOpenIcon fontSize="inherit" />
+            ) : (
+              <FolderIcon fontSize="inherit" />
+            )
+          }
+          name={section.name}
+          fontWeight="light"
+          key={section.key}
+          onClick={() => toggleIsOpen(!isOpen)}
+          menuContent={
+            <>
+              <DropdownItemMenu
+                leftIcon={
+                  <EditOutlinedIcon color="inherit" fontSize="inehrit" />
+                }
+                label={t("folders.edit")}
+                onClick={() => {
+                  refFolder.current.hideMenu()
+                  openFolderEdit(section.key)
+                }}
+              />
+              <DropdownItemMenu
+                leftIcon={
+                  <DeleteOutlineOutlinedIcon
+                    color="inherit"
+                    fontSize="inehrit"
+                  />
+                }
+                label={t("folders.delete")}
+                onClick={() => {
+                  refFolder.current.hideMenu()
+                  deleteFolder(section.key)
+                }}
+              />
+            </>
+          }
+        />
+      </motion.div>
     )
   }
 
@@ -137,6 +150,7 @@ function ListSection({ section }) {
         <AnimatePresence>
           {section.array.map((project) => (
             <motion.div
+              layout
               key={project._id}
               initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -189,6 +203,7 @@ function ListSection({ section }) {
           <AnimatePresence>
             {section.array.map((project) => (
               <motion.div
+                layout
                 key={project._id}
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -243,4 +258,4 @@ function ListSection({ section }) {
   )
 }
 
-export default ListSection
+export default FolderSection

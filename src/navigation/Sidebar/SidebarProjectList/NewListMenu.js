@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
+import { motion } from "framer-motion"
 import AddIcon from "@mui/icons-material/Add"
 import FolderIcon from "@mui/icons-material/Folder"
 import styled from "styled-components"
@@ -33,15 +34,17 @@ function NewListMenu() {
       isOpen={menuIsOpen}
       outsideClick={() => toggleMenu(false)}
       toggle={
-        <SidebarItem
-          as="div"
-          icon={<AddIcon fontSize="inherit" />}
-          name="Createw new list"
-          fontWeight="light"
-          onClick={() => toggleMenu(!menuIsOpen)}
-          clickable
-          key="create-new-list"
-        />
+        <motion.div layout style={{ width: "100%" }}>
+          <SidebarItem
+            as="div"
+            icon={<AddIcon fontSize="inherit" />}
+            name="Createw new list"
+            fontWeight="light"
+            onClick={() => toggleMenu(!menuIsOpen)}
+            clickable
+            key="create-new-list"
+          />
+        </motion.div>
       }
     >
       <>

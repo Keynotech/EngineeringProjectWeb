@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
+import { LayoutGroup } from "framer-motion"
 import SidebarLink from "./SidebarLink"
 import { hideSidebar } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
@@ -115,8 +116,10 @@ function Sidebar() {
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
           </SidebarList>
-          <SidebarProjectList />
-          <SidebarTagList />
+          <LayoutGroup>
+            <SidebarProjectList />
+            <SidebarTagList />
+          </LayoutGroup>
         </Container>
       </Wrapper>
       <Backdrop isVisible={isVisible} onClick={_hideSidebar} />
