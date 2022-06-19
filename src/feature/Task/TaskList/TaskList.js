@@ -68,7 +68,6 @@ function TasksList({
       >
         {SortingController}
       </TaskListHeader>
-
       <ListContainer taskInputIsOpen={taskInputVisibility}>
         {taskInputVisibility ? (
           <TaskInput
@@ -78,7 +77,6 @@ function TasksList({
             priority={inputPriorityVal}
           />
         ) : null}
-
         {tasks.isSuccess && sections && sections.length
           ? sections.map((section) => (
               <TasksSection

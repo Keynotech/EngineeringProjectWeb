@@ -4,6 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 import React, { useState, useEffect, useRef } from "react"
+import { motion } from "framer-motion"
 import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
@@ -149,145 +150,151 @@ function TaskPage() {
   }
 
   return task && task.isSuccess ? (
-    <>
-      {isOpen ? <FileUpload ref={fileUploadRef} taskId={taskId} /> : null}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ x: [300, 0], opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <>
+        {isOpen ? <FileUpload ref={fileUploadRef} taskId={taskId} /> : null}
 
-      <Wrapper>
-        <Container>
-          <HeaderContainer>
-            <Checkbox
-              checked={task.data.status}
-              onChange={changeStatus}
-              priority={task.data.priority}
-            />
-
-            <CloseIcon
-              onClick={() => {
-                _hideTaskPage()
-                goBack()
-              }}
-              sx={{ cursor: "pointer", color: theme.textTertiary }}
-            />
-          </HeaderContainer>
-          <DetailsContainer>
-            <TitleContainer>
-              <TitleInput
-                id="task-title"
-                name="task-title"
-                value={task.data.title}
-                onChange={changeTitle}
-                placeholder={t("task.title")}
-                maxLength={100}
-                multiline
-                fontSize="22px"
-                fontWeight={500}
+        <Wrapper>
+          <Container>
+            <HeaderContainer>
+              <Checkbox
+                checked={task.data.status}
+                onChange={changeStatus}
+                priority={task.data.priority}
               />
-            </TitleContainer>
-            <PropertiesContainer>
-              <PropertieList>
-                <DatePicker
-                  onChange={changeDueDate}
-                  value={task.data.dueDate}
-                  variant="medium"
-                />
-                <ProjectPicker
-                  onChange={changeProject}
-                  variant="medium"
-                  value={task.data.project}
-                />
-              </PropertieList>
-              <PropertieList style={{ paddingLeft: "8px" }}>
-                <PriorityPicker
-                  onChange={changePriority}
-                  value={task.data.priority}
-                  variant="medium"
-                />
-                <TagPicker
-                  onChange={changeTags}
-                  variant="medium"
-                  currentTags={task.data.tags}
-                  value={`${task.data.tags.length} ${
-                    task.data.tags.length !== 1 ? "tags" : "tag"
-                  }`}
-                />
-              </PropertieList>
-            </PropertiesContainer>
 
-            <SectionContainer>
-              <DescriptionInput
-                id="task-description"
-                name="task-description"
-                value={task.data.description}
-                onChange={changeDesc}
-                placeholder={t("task.desc")}
-                multiline
-                maxRows={20}
-                minRows={5}
-                maxLength={10000}
-                fontSize="14px"
-              />
-              <TagsContainer>{tags}</TagsContainer>
-            </SectionContainer>
-
-            <SectionContainer>
-              <SectionHeader>
-                {t("attachments.attachments")}{" "}
-                {task.data.files ? `(${task.data.files.length})` : null}
-              </SectionHeader>
-
-              <AttachmentList
-                attachments={task.data.files}
-                taskId={task.data._id}
-                openUpload={openUpload}
-              />
-            </SectionContainer>
-          </DetailsContainer>
-
-          <Footer>
-            <FooterContainer>
-              <div>
-                {t("task.updatedAt")}{" "}
-                {formatDateTimeToDisplay(task.data.updated)}
-              </div>
-
-              <DropdownMenu
-                isOpen={menuIsOpen}
-                outsideClick={() => {
-                  toggleMenu(false)
+              <CloseIcon
+                onClick={() => {
+                  _hideTaskPage()
+                  goBack()
                 }}
-                toggle={
-                  <MoreHorizIcon
-                    color="inherit"
-                    sx={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => toggleMenu(!menuIsOpen)}
-                  />
-                }
-              >
-                <DropdownItemMenu
-                  leftIcon={
-                    <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />
-                  }
-                  label={t("task.taskMenu.goToProject")}
-                  onClick={goToProject}
+                sx={{ cursor: "pointer", color: theme.textTertiary }}
+              />
+            </HeaderContainer>
+            <DetailsContainer>
+              <TitleContainer>
+                <TitleInput
+                  id="task-title"
+                  name="task-title"
+                  value={task.data.title}
+                  onChange={changeTitle}
+                  placeholder={t("task.title")}
+                  maxLength={100}
+                  multiline
+                  fontSize="22px"
+                  fontWeight={500}
                 />
-                <DropdownItemMenu
-                  leftIcon={
-                    <DeleteOutlineOutlinedIcon
+              </TitleContainer>
+              <PropertiesContainer>
+                <PropertieList>
+                  <DatePicker
+                    onChange={changeDueDate}
+                    value={task.data.dueDate}
+                    variant="medium"
+                  />
+                  <ProjectPicker
+                    onChange={changeProject}
+                    variant="medium"
+                    value={task.data.project}
+                  />
+                </PropertieList>
+                <PropertieList style={{ paddingLeft: "8px" }}>
+                  <PriorityPicker
+                    onChange={changePriority}
+                    value={task.data.priority}
+                    variant="medium"
+                  />
+                  <TagPicker
+                    onChange={changeTags}
+                    variant="medium"
+                    currentTags={task.data.tags}
+                    value={`${task.data.tags.length} ${
+                      task.data.tags.length !== 1 ? "tags" : "tag"
+                    }`}
+                  />
+                </PropertieList>
+              </PropertiesContainer>
+
+              <SectionContainer>
+                <DescriptionInput
+                  id="task-description"
+                  name="task-description"
+                  value={task.data.description}
+                  onChange={changeDesc}
+                  placeholder={t("task.desc")}
+                  multiline
+                  maxRows={20}
+                  minRows={5}
+                  maxLength={10000}
+                  fontSize="14px"
+                />
+                <TagsContainer>{tags}</TagsContainer>
+              </SectionContainer>
+
+              <SectionContainer>
+                <SectionHeader>
+                  {t("attachments.attachments")}{" "}
+                  {task.data.files ? `(${task.data.files.length})` : null}
+                </SectionHeader>
+
+                <AttachmentList
+                  attachments={task.data.files}
+                  taskId={task.data._id}
+                  openUpload={openUpload}
+                />
+              </SectionContainer>
+            </DetailsContainer>
+
+            <Footer>
+              <FooterContainer>
+                <div>
+                  {t("task.updatedAt")}{" "}
+                  {formatDateTimeToDisplay(task.data.updated)}
+                </div>
+
+                <DropdownMenu
+                  isOpen={menuIsOpen}
+                  outsideClick={() => {
+                    toggleMenu(false)
+                  }}
+                  toggle={
+                    <MoreHorizIcon
                       color="inherit"
-                      fontSize="inehrit"
+                      sx={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => toggleMenu(!menuIsOpen)}
                     />
                   }
-                  label={t("task.taskMenu.delete")}
-                  onClick={deleteTask}
-                />
-              </DropdownMenu>
-            </FooterContainer>
-          </Footer>
-        </Container>
-      </Wrapper>
-    </>
+                >
+                  <DropdownItemMenu
+                    leftIcon={
+                      <ForwardOutlinedIcon color="inherit" fontSize="inehrit" />
+                    }
+                    label={t("task.taskMenu.goToProject")}
+                    onClick={goToProject}
+                  />
+                  <DropdownItemMenu
+                    leftIcon={
+                      <DeleteOutlineOutlinedIcon
+                        color="inherit"
+                        fontSize="inehrit"
+                      />
+                    }
+                    label={t("task.taskMenu.delete")}
+                    onClick={deleteTask}
+                  />
+                </DropdownMenu>
+              </FooterContainer>
+            </Footer>
+          </Container>
+        </Wrapper>
+      </>
+    </motion.div>
   ) : null
 }
 

@@ -89,11 +89,14 @@ function TaskItem({ task }) {
         />
       )
     } else {
+      const navigateToTags = (tagId) => {
+        _hideTaskPage()
+        navigate(`/tag/${tagId}`)
+      }
       tags = taskTags?.map((tag) => (
         <Chip
           onClick={() => {
-            _hideTaskPage()
-            navigate(`/tag/${tag._id}`)
+            navigateToTags(tag._id)
           }}
           label={tag?.tagName}
           key={tag?._id}
@@ -118,7 +121,7 @@ function TaskItem({ task }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ x: [300, -20, 0], opacity: 1, duration: 0.4 }}
-      exit={{ x: 500, opacity: 0, duration: 0.4 }}
+      exit={{ opacity: 0, duration: 0.4 }}
     >
       <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
         <Wrapper isDone={task.status}>
