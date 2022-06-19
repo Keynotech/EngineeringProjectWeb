@@ -127,8 +127,8 @@ function TaskPage() {
 
   const goToProject = () => {
     _hideTaskPage()
-    if (task.project !== null) {
-      navigate(`/project/${task.project}`)
+    if (task.data.project !== null) {
+      navigate(`/project/${task.data.project}`)
     } else {
       navigate("/inbox")
     }
