@@ -121,7 +121,7 @@ function ProjectPicker({ value, onChange, variant }) {
                   }}
                   key={project._id}
                 >
-                  <ProjectItem projectId={project._id} />
+                  <ProjectItem project={project} />
                 </ItemWrapper>
               ))
             : null}

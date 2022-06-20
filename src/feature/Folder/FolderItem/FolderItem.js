@@ -2,7 +2,6 @@
 import React from "react"
 import styled from "styled-components"
 import FolderIcon from "@mui/icons-material/Folder"
-import useSingleFolderQuery from "../../../hooks/query/useSingleFolderQuery"
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,9 +26,7 @@ const Title = styled.span`
   text-align: left;
 `
 
-function FolderItem({ folderId, icon }) {
-  const folder = useSingleFolderQuery(folderId)
-
+function FolderItem({ folder, icon }) {
   return (
     <Wrapper>
       <IconWrapper>

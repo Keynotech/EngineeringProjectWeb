@@ -110,7 +110,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
                   key={tag._id}
                 >
                   <WrapperTagPropertie>
-                    <TagItem tagId={tag._id} />
+                    <TagItem tag={tag} />
                   </WrapperTagPropertie>
                   <Checkbox
                     id="tag-picker-select"

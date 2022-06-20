@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import styled from "styled-components"
-import useSingleProjectQuery from "../../../hooks/query/useSingleProjectQuery"
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,9 +30,7 @@ const Title = styled.span`
   text-align: left;
 `
 
-function ProjectItem({ projectId }) {
-  const project = useSingleProjectQuery(projectId)
-
+function ProjectItem({ project }) {
   return (
     <Wrapper>
       <IconWrapper>

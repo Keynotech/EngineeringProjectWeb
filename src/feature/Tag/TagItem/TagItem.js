@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
 import styled from "styled-components"
-import useSingleTagQuery from "../../../hooks/query/useSingleTagQuery"
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,9 +30,7 @@ const Title = styled.span`
   text-align: left;
 `
 
-function TagItem({ tagId }) {
-  const tag = useSingleTagQuery(tagId)
-
+function TagItem({ tag }) {
   return (
     <Wrapper>
       <IconWrapper>

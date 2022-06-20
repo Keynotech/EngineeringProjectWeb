@@ -124,7 +124,7 @@ function FolderPicker({ value, onChange, variant }) {
                   }}
                   key={folder._id}
                 >
-                  <FolderItem folderId={folder._id} />
+                  <FolderItem folder={folder} />
                 </ItemWrapper>
               ))
             : null}
