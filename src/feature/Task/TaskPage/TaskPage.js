@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import CloseIcon from "@mui/icons-material/Close"
 import ForwardOutlinedIcon from "@mui/icons-material/ForwardOutlined"
@@ -39,6 +40,7 @@ import {
 import AttachmentList from "../../Attachment/AttachmentList"
 import useSingleTaskQuery from "../../../hooks/query/useSingleTaskQuery"
 import useDeleteTask from "../../../hooks/mutation/useDeleteTask"
+import useDuplicateTask from "../../../hooks/mutation/useDuplicateTask"
 import useUpdateTask from "../../../hooks/mutation/useUpdateTask"
 import FileUpload from "../../Attachment/FileUpload/FileUpload"
 import {
@@ -80,10 +82,15 @@ function TaskPage() {
   // ===========================================================================
   const updateTaskMutation = useUpdateTask(taskId)
   const deleteTaskMutation = useDeleteTask(taskId)
+  const duplicateTaskMutation = useDuplicateTask()
 
   const deleteTask = () => {
     deleteTaskMutation.mutate()
     goBack()
+  }
+  const duplicateTask = () => {
+    const taskData = task.data
+    duplicateTaskMutation.mutate(taskData)
   }
   const changeDesc = (value) =>
     updateTaskMutation.mutate({ description: value })
@@ -93,7 +100,7 @@ function TaskPage() {
   const changeDueDate = (value) => updateTaskMutation.mutate({ dueDate: value })
   const changeStatus = () =>
     updateTaskMutation.mutate({ status: !task.data.status })
-  const changeTags = (value) => updateTaskMutation.mutate({ tags: value }) // [TODO] mutates every time, even if the data hasnt changed
+  const changeTags = (value) => updateTaskMutation.mutate({ tags: value })
   const changeProject = (value) => updateTaskMutation.mutate({ project: value })
   const removeTag = (tagId) => {
     const index = task.data.tags.findIndex((tag) => tag === tagId)
@@ -103,6 +110,7 @@ function TaskPage() {
     ]
     updateTaskMutation.mutate({ tags: newData })
   }
+
   // ref
   // ===========================================================================
   const fileUploadRef = useRef()
@@ -133,6 +141,9 @@ function TaskPage() {
       navigate("/inbox")
     }
   }
+
+  // Tags List
+  // ===========================================================================
 
   let tags = null
   if (taskTags) {
@@ -277,6 +288,16 @@ function TaskPage() {
                     }
                     label={t("task.taskMenu.goToProject")}
                     onClick={goToProject}
+                  />
+                  <DropdownItemMenu
+                    leftIcon={
+                      <ContentCopyOutlinedIcon
+                        color="inherit"
+                        fontSize="inehrit"
+                      />
+                    }
+                    label={t("task.taskMenu.duplicate")}
+                    onClick={duplicateTask}
                   />
                   <DropdownItemMenu
                     leftIcon={
