@@ -12,6 +12,7 @@ import { showProjectInput } from "../../../store/features/layoutSlice"
 import ProjectPropertie from "../../Propertie/ProjectPropertie/ProjectPropertie"
 import Popover from "../../../components/Popover/Popover"
 import useIsOpen from "../../../hooks/useIsOpen"
+import PickerItem from "../PickerItem"
 
 const Wrapper = styled.div`
   min-width: 200px;
@@ -25,18 +26,7 @@ const Item = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding: 8px 12px;
-
-  &:hover {
-    background-color: ${(props) => props.theme.secondary};
-  }
-`
-
-const ItemWrapper = styled.div`
   width: 100%;
-  padding: 8px 12px;
-  font-size: 14px;
-  cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
@@ -95,25 +85,18 @@ function ProjectPicker({ value, onChange, variant }) {
       />
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
-          <Item
-            isActive={value === null || false}
+          <PickerItem
+            name="Inbox"
+            icon={<InboxOutlinedIcon fontSize="inherit" />}
             onClick={() => {
               onChange(null)
               hide()
             }}
-          >
-            <InboxOutlinedIcon
-              sx={{
-                fontSize: "18px",
-                marginLeft: "-2px",
-                marginRight: "12px",
-              }}
-            />
-            <span style={{ flex: 1, textAlign: "left" }}>Inbox</span>
-          </Item>
+            isActive={value === null || false}
+          />
           {projects.isSuccess
             ? projects.data.map((project) => (
-                <ItemWrapper
+                <Item
                   isActive={project._id === value || false}
                   onClick={() => {
                     onChange(project._id)
@@ -122,24 +105,17 @@ function ProjectPicker({ value, onChange, variant }) {
                   key={project._id}
                 >
                   <ProjectItem project={project} />
-                </ItemWrapper>
+                </Item>
               ))
             : null}
-          <Item
+          <PickerItem
+            name={t("project.create")}
+            icon={<AddIcon fontSize="inherit" />}
             onClick={() => {
               _showProjectInput()
               hide()
             }}
-          >
-            <AddIcon
-              sx={{
-                fontSize: "18px",
-                marginLeft: "-2px",
-                marginRight: "12px",
-              }}
-            />
-            {t("project.create")}
-          </Item>
+          />
         </Wrapper>
       </Popover>
     </>

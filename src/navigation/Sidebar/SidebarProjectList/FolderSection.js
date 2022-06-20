@@ -30,9 +30,9 @@ const Wrapper = styled.div`
 `
 
 const ProjectIcon = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
   border: 2px solid ${(props) => props.theme.textTertiary};
 `
 

@@ -29,7 +29,7 @@ import Chip from "../../../components/Chip/Chip"
 import { useNavigate } from "react-router-dom"
 import { size } from "../../../utils/mq"
 
-function TaskItem({ task, displayCheckbox }) {
+function TaskItem({ task, displayCheckbox, disableTag }) {
   // Query
   // ===========================================================================
   const taskTags = useGetTaskTags(task ? task.tags : [])
@@ -100,6 +100,7 @@ function TaskItem({ task, displayCheckbox }) {
           variant="outlined"
           size="small"
           clickable
+          disable={disableTag}
         />
       ))
     }
@@ -161,10 +162,12 @@ TaskItem.propTypes = {
     description: PropTypes.string,
   }).isRequired,
   displayCheckbox: PropTypes.bool,
+  disableTag: PropTypes.bool,
 }
 
 TaskItem.defaultProps = {
   displayCheckbox: true,
+  disableTag: false,
 }
 
 export default TaskItem

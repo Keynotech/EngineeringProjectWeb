@@ -7,27 +7,11 @@ import StarIcon from "@mui/icons-material/Star"
 import Popover from "../../../components/Popover/Popover"
 import useIsOpen from "../../../hooks/useIsOpen"
 import PriorityPropertie from "../../Propertie/PriorityPropertie/PriorityPropertie"
+import PickerItem from "../PickerItem"
 
 const Wrapper = styled.div`
   width: 200px;
   max-width: 90vw;
-`
-
-const Item = styled.div`
-  display: flex;
-  width: 100%;
-  overflow: visible;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
-  padding: 8px 12px;
-  box-sizing: border-box;
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => props.theme.secondary};
-  }
 `
 
 function PriorityPicker({ value, onChange, variant }) {
@@ -77,16 +61,18 @@ function PriorityPicker({ value, onChange, variant }) {
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
           {prioritiesData.map((priority) => (
-            <Item
+            <PickerItem
+              isActive={value === priority.value || false}
+              key={priority.value}
               onClick={() => {
                 onChange(priority.value)
                 hide()
               }}
-              key={priority.value}
-            >
-              <StarIcon sx={{ fontSize: "18px", color: priority.color }} />
-              {priority.name}
-            </Item>
+              icon={
+                <StarIcon fontSize="inherit" sx={{ color: priority.color }} />
+              }
+              name={priority.name}
+            />
           ))}
         </Wrapper>
       </Popover>

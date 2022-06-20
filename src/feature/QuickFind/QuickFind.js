@@ -16,20 +16,15 @@ import TagItem from "../Tag/TagItem/TagItem"
 const Wrapper = styled.div`
   width: min(600px, 90vw);
   height: min(600px, 90vh);
-`
-
-const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px 15px;
-  width: 100%;
-  height: 100%;
 `
 
 const Input = styled.div`
   width: 100%;
   height: 48px;
+  padding: 8px 15px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,11 +58,13 @@ const SearchResultWrapper = styled.div`
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
+  padding: 8px 15px;
 `
 
-const SearchResultHeader = styled.span`
-  font-weight: 600;
-  font-size: 16px;
+const SearchResultList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
 function QuickFind() {
@@ -141,76 +138,73 @@ function QuickFind() {
   return (
     <Dialog onOutsideClick={hide} dialogName="Quick find">
       <Wrapper>
-        <Container>
-          <Input>
-            <SearchIcon sx={{ fontSize: "18px" }} />
-            <TextInput
-              autoFocus
-              multiline={false}
-              id="quick-find"
-              name="quick-find"
-              placeholder="Search"
-              value={searchText}
-              fontSize="16px"
-              onChange={(val) => setSearchText(val)}
+        <Input>
+          <SearchIcon sx={{ fontSize: "18px" }} />
+          <TextInput
+            autoFocus
+            multiline={false}
+            id="quick-find"
+            name="quick-find"
+            placeholder="Search"
+            value={searchText}
+            fontSize="16px"
+            onChange={(val) => setSearchText(val)}
+          />
+          <ClearIcon
+            onClick={clearSearch}
+            sx={{ fontSize: "18px", cursor: "pointer" }}
+          />
+        </Input>
+
+        {!searchText ? (
+          <EmptySearch>
+            <Image
+              alt="loading-screen"
+              src={`${process.env.PUBLIC_URL}/assets/undraw_searching_re_3ra9.svg`}
             />
-            <ClearIcon
-              onClick={clearSearch}
-              sx={{ fontSize: "18px", cursor: "pointer" }}
-            />
-          </Input>
-          {!searchText ? (
-            <EmptySearch>
-              <Image
-                alt="loading-screen"
-                src={`${process.env.PUBLIC_URL}/assets/undraw_searching_re_3ra9.svg`}
-              />
-              <EmptySearchLabel>
-                Search tasks, projects and tags
-              </EmptySearchLabel>
-            </EmptySearch>
-          ) : (
-            <SearchResultWrapper>
-              {searchedTasks.length ? (
-                <>
-                  <SearchResultHeader>Tasks</SearchResultHeader>
-                  {searchedTasks.map((task) => (
-                    <button type="button" onClick={() => goToTaskPage(task)}>
-                      <TaskItem
-                        displayCheckbox={false}
-                        key={task._id}
-                        task={task}
-                      />
-                    </button>
-                  ))}
-                </>
-              ) : null}
-              {searchedProjects.length ? (
-                <>
-                  <SearchResultHeader>Projects</SearchResultHeader>
-                  {searchedProjects.map((project) => (
-                    <button
-                      type="button"
-                      onClick={() => goToProjectPage(project)}
-                    >
-                      <ProjectItem key={project._id} projectId={project._id} />
-                    </button>
-                  ))}
-                </>
-              ) : null}
-              {searchedTags.length ? (
-                <>
-                  <SearchResultHeader>Tags</SearchResultHeader>
-                  {searchedTags.map((tag) => (
-                    <button type="button" onClick={() => goToTagPage(tag)}>
-                      <TagItem key={tag._id} tagId={tag._id} />
-                    </button>
-                  ))}
-                </>
-              ) : null}
-            </SearchResultWrapper>
-          )}
-        </Container>
+            <EmptySearchLabel>Search tasks, projects and tags</EmptySearchLabel>
+          </EmptySearch>
+        ) : (
+          <SearchResultWrapper>
+            {searchedTasks.length
+              ? searchedTasks.map((task) => (
+                  <button
+                    key={task._id}
+                    type="button"
+                    onClick={() => goToTaskPage(task)}
+                  >
+                    <TaskItem task={task} disableTag />
+                  </button>
+                ))
+              : null}
+            {searchedProjects.length ? (
+              <SearchResultList>
+                {searchedProjects.map((project) => (
+                  <button
+                    key={project._id}
+                    type="button"
+                    onClick={() => goToProjectPage(project)}
+                  >
+                    <ProjectItem project={project} />
+                  </button>
+                ))}
+              </SearchResultList>
+            ) : null}
+            {searchedTags.length ? (
+              <SearchResultList>
+                {searchedTags.map((tag) => (
+                  <button
+                    key={tag._id}
+                    type="button"
+                    onClick={() => goToTagPage(tag)}
+                  >
+                    <TagItem tag={tag} />
+                  </button>
+                ))}
+              </SearchResultList>
+            ) : null}
+          </SearchResultWrapper>
+        )}
       </Wrapper>
     </Dialog>
   )

@@ -3,15 +3,18 @@ import React from "react"
 import styled from "styled-components"
 
 const Wrapper = styled.div`
+  padding: 10px 8px;
   display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
 `
 
 const IconWrapper = styled.div`
   display: flex;
+  height: 22px;
+  min-width: 42px;
   align-items: center;
-  width: 20px;
-  max-height: 24px;
-  margin-right: 12px;
 `
 
 const Icon = styled.span`

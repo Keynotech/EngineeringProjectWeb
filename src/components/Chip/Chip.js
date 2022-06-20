@@ -114,6 +114,7 @@ function Chip({
   onClick,
   clickable,
   size,
+  disable,
 }) {
   const ownerState = {
     variant: variantProp,
@@ -146,7 +147,7 @@ function Chip({
   const _onClick = (e) => {
     e.stopPropagation()
     e.preventDefault()
-    if (onClick) {
+    if (onClick && !disable) {
       onClick()
     }
   }
@@ -168,12 +169,14 @@ Chip.propTypes = {
   onClick: PropTypes.func,
   clickable: PropTypes.bool,
   size: PropTypes.string,
+  disable: PropTypes.bool,
 }
 
 Chip.defaultProps = {
   icon: null,
   variant: "filled",
   clickable: false,
+  disable: false,
 }
 
 export default Chip

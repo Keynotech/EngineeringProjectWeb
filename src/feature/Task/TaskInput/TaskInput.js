@@ -19,9 +19,7 @@ import DatePicker from "../../Pickers/DatePicker/DatePicker"
 import PriorityPicker from "../../Pickers/PriorityPicker/PriorityPicker"
 import TagPicker from "../../Pickers/TagPicker/TagPicker"
 import useCreateTask from "../../../hooks/mutation/useCreateTask"
-import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
 import ProjectPicker from "../../Pickers/ProjectPicker/ProjectPicker"
-import ProjectPropertie from "../../Pickers/ProjectPicker/ProjectPropertie"
 
 function TaskInput({ priority, project, tag, dueDate }) {
   // Local state

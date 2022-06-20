@@ -14,6 +14,7 @@ import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
 import useIsOpen from "../../../hooks/useIsOpen"
+import PickerItem from "../PickerItem"
 
 const Wrapper = styled.div`
   min-width: 200px;
@@ -25,9 +26,10 @@ const Wrapper = styled.div`
 const ItemWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 8px 12px;
+  align-items: center;
   width: 100%;
   cursor: pointer;
+  padding-right: 6px;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
@@ -37,12 +39,6 @@ const ItemWrapper = styled.div`
 const WrapperTagPropertie = styled.div`
   width: 95%;
   padding-right: 8px;
-`
-
-const AddNewTag = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 function TagPicker({ value, currentTags, onChange, variant }) {
@@ -120,23 +116,14 @@ function TagPicker({ value, currentTags, onChange, variant }) {
                 </ItemWrapper>
               ))
             : null}
-          <ItemWrapper
+          <PickerItem
             onClick={() => {
               _showTagInput()
               hide()
             }}
-          >
-            <AddNewTag>
-              <AddIcon
-                sx={{
-                  fontSize: "18px",
-                  marginLeft: "-2px",
-                  marginRight: "16px",
-                }}
-              />
-              {t("tags.create")}
-            </AddNewTag>
-          </ItemWrapper>
+            icon={<AddIcon fontSize="inherit" />}
+            name={t("tags.create")}
+          />
         </Wrapper>
       </Popover>
     </>

@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 14px;
-  padding: 8px 12px;
+  padding: 10px 8px;
   font-size: 14px;
   cursor: pointer;
 

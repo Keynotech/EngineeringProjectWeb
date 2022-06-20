@@ -12,6 +12,7 @@ import { showFolderInput } from "../../../store/features/layoutSlice"
 import FolderPropertie from "../../Propertie/FolderPropertie/FolderPropertie"
 import Popover from "../../../components/Popover/Popover"
 import useIsOpen from "../../../hooks/useIsOpen"
+import PickerItem from "../PickerItem"
 
 const Wrapper = styled.div`
   min-width: 200px;
@@ -20,23 +21,11 @@ const Wrapper = styled.div`
   overflow-y: auto;
 `
 
-const Item = styled.div`
+const ItemWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding: 8px 12px;
-
-  &:hover {
-    background-color: ${(props) => props.theme.secondary};
-  }
-`
-
-const ItemWrapper = styled.div`
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 14px;
-  cursor: pointer;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
@@ -96,24 +85,15 @@ function FolderPicker({ value, onChange, variant }) {
       />
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
-          <Item
+          <PickerItem
+            icon={<DoNotDisturbIcon fontSize="inherit" />}
             isActive={value === null || false}
             onClick={() => {
               onChange(null)
               hide()
             }}
-          >
-            <DoNotDisturbIcon
-              sx={{
-                fontSize: "18px",
-                marginLeft: "-2px",
-                marginRight: "12px",
-              }}
-            />
-            <span style={{ flex: 1, textAlign: "left" }}>
-              {t("picker.folder.none")}
-            </span>
-          </Item>
+            name={t("picker.folder.none")}
+          />
           {folders
             ? folders.map((folder) => (
                 <ItemWrapper
@@ -128,21 +108,15 @@ function FolderPicker({ value, onChange, variant }) {
                 </ItemWrapper>
               ))
             : null}
-          <Item
+
+          <PickerItem
             onClick={() => {
               _showFolderInput()
               hide()
             }}
-          >
-            <AddIcon
-              sx={{
-                fontSize: "18px",
-                marginLeft: "-2px",
-                marginRight: "12px",
-              }}
-            />
-            {t("folders.create")}
-          </Item>
+            icon={<AddIcon fontSize="inherit" />}
+            name={t("folders.create")}
+          />
         </Wrapper>
       </Popover>
     </>

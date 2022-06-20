@@ -4,16 +4,18 @@ import styled from "styled-components"
 import FolderIcon from "@mui/icons-material/Folder"
 
 const Wrapper = styled.div`
+  padding: 10px 8px;
   display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
 `
 
 const IconWrapper = styled.div`
   display: flex;
+  height: 22px;
+  min-width: 42px;
   align-items: center;
-  width: 20px;
-  max-height: 24px;
-  margin-right: 8px;
-  font-size: 16px;
   color: ${(props) => props.theme.textTertiary};
 `
 

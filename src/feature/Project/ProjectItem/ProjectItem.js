@@ -3,22 +3,25 @@ import React from "react"
 import styled from "styled-components"
 
 const Wrapper = styled.div`
+  padding: 10px 8px;
   display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
 `
 
 const IconWrapper = styled.div`
   display: flex;
+  height: 22px;
+  min-width: 42px;
   align-items: center;
-  width: 20px;
-  max-height: 24px;
-  margin-right: 8px;
 `
 
-const Icon = styled.span`
-  width: 12px;
-  height: 12px;
-  border-radius: 25px;
-  background-color: ${(props) => props.theme.tertiary};
+const Icon = styled.div`
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  border: 2px solid ${(props) => props.theme.textTertiary};
 `
 
 const Title = styled.span`
