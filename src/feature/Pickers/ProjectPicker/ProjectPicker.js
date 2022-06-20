@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React, { useState } from "react"
+import React from "react"
 import { useTranslation } from "react-i18next"
 import styled, { css } from "styled-components"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
@@ -11,10 +11,13 @@ import useProjectsQuery from "../../../hooks/query/useProjectsQuery"
 import { showProjectInput } from "../../../store/features/layoutSlice"
 import ProjectPropertie from "../../Propertie/ProjectPropertie/ProjectPropertie"
 import Popover from "../../../components/Popover/Popover"
+import useIsOpen from "../../../hooks/useIsOpen"
 
 const Wrapper = styled.div`
   min-width: 200px;
   max-width: 90vw;
+  max-height: 50vh;
+  overflow-y: auto;
 `
 
 const Item = styled.div`
@@ -53,19 +56,19 @@ function ProjectPicker({ value, onChange, variant }) {
 
   // State hooks
   // ===========================================================================
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, hide, show } = useIsOpen()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   // Handlers
   // ===========================================================================
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget)
-    setIsOpen(true)
+    show()
   }
 
   const handleClose = () => {
     setAnchorEl(null)
-    setIsOpen(false)
+    hide()
   }
 
   const togglePopover = (e) => {
@@ -96,7 +99,7 @@ function ProjectPicker({ value, onChange, variant }) {
             isActive={value === null || false}
             onClick={() => {
               onChange(null)
-              setIsOpen(false)
+              hide()
             }}
           >
             <InboxOutlinedIcon
@@ -114,7 +117,7 @@ function ProjectPicker({ value, onChange, variant }) {
                   isActive={project._id === value || false}
                   onClick={() => {
                     onChange(project._id)
-                    setIsOpen(false)
+                    hide()
                   }}
                   key={project._id}
                 >
@@ -125,7 +128,7 @@ function ProjectPicker({ value, onChange, variant }) {
           <Item
             onClick={() => {
               _showProjectInput()
-              setIsOpen(false)
+              hide()
             }}
           >
             <AddIcon

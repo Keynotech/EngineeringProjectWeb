@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react"
 import styled, { css } from "styled-components"
-import TaskMenu from "./TaskMenu"
+import TaskMenuBtn from "./TaskMenuBtn"
 import useGroupBy from "./useGroupBy/useGroupBy"
 
 const Button = styled.button`
@@ -34,7 +34,7 @@ function GroupController({ data, onGroupChange, groupOptions }) {
   }
 
   return (
-    <TaskMenu>
+    <TaskMenuBtn>
       {groupOptions.map((group) => (
         <Button
           key={group.name}
@@ -45,7 +45,7 @@ function GroupController({ data, onGroupChange, groupOptions }) {
           {group.name}
         </Button>
       ))}
-    </TaskMenu>
+    </TaskMenuBtn>
   )
 }
 

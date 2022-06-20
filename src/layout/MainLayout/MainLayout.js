@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { Outlet } from "react-router-dom"
 import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
+import { AnimatePresence } from "framer-motion"
 import NewTaskButton from "../../feature/Task/NewTaskButton/NewTaskButton"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
@@ -36,37 +37,30 @@ const OutletContainer = styled.div`
   z-index: ${zIndex.level9};
   position: absolute;
   width: 100vw;
-  visibility: hidden;
 
   @media ${mq.tablet} {
     position: relative;
-    width: 0px;
   }
 
   @media ${mq.laptop} {
     z-index: 0;
   }
 
-  ${({ taskPageVisibility }) =>
-    taskPageVisibility &&
-    css`
-      visibility: visible;
-      @media ${mq.tablet} {
-        width: 400px;
-      }
+  @media ${mq.tablet} {
+    width: 400px;
+  }
 
-      @media ${mq.desktop} {
-        width: 450px;
-      }
+  @media ${mq.desktop} {
+    width: 450px;
+  }
 
-      @media ${mq.desktopL} {
-        width: 600px;
-      }
+  @media ${mq.desktopL} {
+    width: 600px;
+  }
 
-      @media ${mq.desktopXL} {
-        width: 800px;
-      }
-    `}
+  @media ${mq.desktopXL} {
+    width: 800px;
+  }
 `
 
 const ButtonContainer = styled.div`
@@ -111,17 +105,21 @@ function MainLayout({ children }) {
   )
 
   return (
-    <Wrapper>
-      <ChildContainer taskPageVisibility={taskPageVisibility}>
-        {children}
-      </ChildContainer>
-      <OutletContainer taskPageVisibility={taskPageVisibility}>
-        <Outlet />
-      </OutletContainer>
-      <ButtonContainer taskPageVisibility={taskPageVisibility}>
-        <NewTaskButton />
-      </ButtonContainer>
-    </Wrapper>
+    <AnimatePresence>
+      <Wrapper>
+        <ChildContainer taskPageVisibility={taskPageVisibility}>
+          {children}
+        </ChildContainer>
+        {taskPageVisibility && (
+          <OutletContainer>
+            <Outlet />
+          </OutletContainer>
+        )}
+        <ButtonContainer taskPageVisibility={taskPageVisibility}>
+          <NewTaskButton />
+        </ButtonContainer>
+      </Wrapper>
+    </AnimatePresence>
   )
 }
 

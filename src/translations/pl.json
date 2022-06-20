@@ -12,10 +12,11 @@
             "priority": "Priorytet"
         },
         "taskMenu": {
-            "duplicate": "Duplicate task",
-            "goToProject": "Go to project",
-            "delete": "Delete task"            
-        }
+            "duplicate": "Duplikuj zadanie",
+            "goToProject": "Przejdź do strony projektu",
+            "delete": "Usuń zadanie"    
+        },
+        "overdue": "Zaległe"
     },
     "attachments": {
         "attachments": "Załączniki",

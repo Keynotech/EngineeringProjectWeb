@@ -5,7 +5,7 @@ import styled from "styled-components"
 import useProjectsQuery from "../../../hooks/query/useProjectsQuery"
 import useFoldersQuery from "../../../hooks/query/useFoldersQuery"
 import useGroupByFolders from "./useGroupByFolders"
-import ListSection from "./ListSection"
+import FolderSection from "./FolderSection"
 import NewListMenu from "./NewListMenu"
 
 const Wrapper = styled.div`
@@ -36,7 +36,7 @@ function SidebarProjectList() {
     <Wrapper>
       {sections.length
         ? sections.map((section) => (
-            <ListSection key={section.key} section={section} />
+            <FolderSection key={section.key} section={section} />
           ))
         : null}
       <NewListMenu />

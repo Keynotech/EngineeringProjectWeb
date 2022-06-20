@@ -1,20 +1,19 @@
 import React from "react"
 import { useTranslation } from "react-i18next"
-import styled, { css, useTheme } from "styled-components"
+import styled, { css } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
-import MenuOpenIcon from "@mui/icons-material/MenuOpen"
-import SearchIcon from "@mui/icons-material/Search"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
+import { LayoutGroup } from "framer-motion"
 import SidebarLink from "./SidebarLink"
 import { hideSidebar } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
 import SidebarList from "./SidebarList"
 import SidebarProjectList from "./SidebarProjectList/SidebarProjectList"
-import SidebarTagList from "./SidebarTagList"
-import SidebarSectionHeader from "./SidebarSectionHeader"
+import SidebarTagList from "./SidebarTagList/SidebarTagList"
+import SidebarHeader from "./SidebarHeader/SidebarHeader"
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -81,48 +80,10 @@ const Backdrop = styled.div`
   }
 `
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 48px;
-  margin-bottom: 5px;
-`
-
-const SearchButton = styled.span`
-  display: none;
-  align-items: center;
-  justify-content: center;
-  height: 28px;
-  width: 28px;
-  border-radius: 25px;
-  background-color: ${(props) => props.theme.tertiary};
-`
-
-const SidebarToggle = styled.div`
-  ${({ isSidebarVisible }) =>
-    !isSidebarVisible &&
-    css`
-      visibility: visible;
-      transform: scaleX(-1);
-    `}
-
-  @media ${mq.phone} {
-    display: none;
-  }
-`
-
-const SidebarHeaderButtons = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-`
-
 function Sidebar() {
   // Others
   // ===========================================================================
   const { t } = useTranslation()
-  const theme = useTheme()
 
   // Dispatch
   // ===========================================================================
@@ -137,25 +98,7 @@ function Sidebar() {
     <>
       <Wrapper isVisible={isVisible}>
         <Container>
-          <Header>
-            <SidebarSectionHeader
-              fontSize="15px"
-              name="sampleemail@amu.edu.pl"
-              rightComponent={
-                <SidebarHeaderButtons>
-                  <SearchButton>
-                    <SearchIcon />
-                  </SearchButton>
-                  <SidebarToggle
-                    onClick={_hideSidebar}
-                    isSidebarVisible={isVisible}
-                  >
-                    <MenuOpenIcon sx={{ color: theme.textTertiary }} />
-                  </SidebarToggle>
-                </SidebarHeaderButtons>
-              }
-            />
-          </Header>
+          <SidebarHeader />
           <SidebarList>
             <SidebarLink
               icon={<InboxOutlinedIcon fontSize="inherit" />}
@@ -173,8 +116,10 @@ function Sidebar() {
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />
           </SidebarList>
-          <SidebarProjectList />
-          <SidebarTagList />
+          <LayoutGroup>
+            <SidebarProjectList />
+            <SidebarTagList />
+          </LayoutGroup>
         </Container>
       </Wrapper>
       <Backdrop isVisible={isVisible} onClick={_hideSidebar} />

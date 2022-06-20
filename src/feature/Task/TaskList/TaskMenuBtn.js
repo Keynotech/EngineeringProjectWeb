@@ -20,7 +20,7 @@ const ToggleWrapper = styled.div`
   }
 `
 
-function TaskMenu({ children }) {
+function TaskMenuBtn({ children }) {
   // Local State
   // ===========================================================================
   const [menuIsOpen, toggleMenu] = useState(false)
@@ -40,8 +40,8 @@ function TaskMenu({ children }) {
   )
 }
 
-TaskMenu.propTypes = {
+TaskMenuBtn.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default TaskMenu
+export default TaskMenuBtn

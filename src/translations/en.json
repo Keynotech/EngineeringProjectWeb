@@ -15,7 +15,9 @@
             "duplicate": "Duplicate task",
             "goToProject": "Go to project",
             "delete": "Delete task"            
-        }
+        },
+        "overdue": "Overdue"
+
     },
     "attachments": {
         "attachments": "Attachments",

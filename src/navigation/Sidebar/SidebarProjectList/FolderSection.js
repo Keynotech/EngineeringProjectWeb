@@ -36,13 +36,10 @@ const ProjectIcon = styled.div`
   border: 2px solid ${(props) => props.theme.textTertiary};
 `
 
-function ListSection({ section }) {
+function FolderSection({ section }) {
   const location = useLocation()
   const navigate = useNavigate()
   const { t } = useTranslation()
-
-  const ref = createRef()
-
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -90,61 +87,78 @@ function ListSection({ section }) {
 
   let folderName = null
   if (section.key) {
+    const refFolder = createRef()
     folderName = (
-      <SidebarItem
-        ref={ref}
-        as="div"
-        icon={
-          isOpen ? (
-            <FolderOpenIcon fontSize="inherit" />
-          ) : (
-            <FolderIcon fontSize="inherit" />
-          )
-        }
-        name={section.name}
-        fontWeight="light"
-        key={section.key}
-        onClick={() => toggleIsOpen(!isOpen)}
-        menuContent={
-          <>
-            <DropdownItemMenu
-              leftIcon={<EditOutlinedIcon color="inherit" fontSize="inehrit" />}
-              label={t("folders.edit")}
-              onClick={() => {
-                ref.current.hideMenu()
-                openFolderEdit(section.key)
-              }}
-            />
-            <DropdownItemMenu
-              leftIcon={
-                <DeleteOutlineOutlinedIcon color="inherit" fontSize="inehrit" />
-              }
-              label={t("folders.delete")}
-              onClick={() => {
-                ref.current.hideMenu()
-                deleteFolder(section.key)
-              }}
-            />
-          </>
-        }
-      />
+      <motion.div
+        layout
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: 100, opacity: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <SidebarItem
+          ref={refFolder}
+          as="div"
+          icon={
+            isOpen ? (
+              <FolderOpenIcon fontSize="inherit" />
+            ) : (
+              <FolderIcon fontSize="inherit" />
+            )
+          }
+          name={section.name}
+          fontWeight="light"
+          key={section.key}
+          onClick={() => toggleIsOpen(!isOpen)}
+          menuContent={
+            <>
+              <DropdownItemMenu
+                leftIcon={
+                  <EditOutlinedIcon color="inherit" fontSize="inehrit" />
+                }
+                label={t("folders.edit")}
+                onClick={() => {
+                  refFolder.current.hideMenu()
+                  openFolderEdit(section.key)
+                }}
+              />
+              <DropdownItemMenu
+                leftIcon={
+                  <DeleteOutlineOutlinedIcon
+                    color="inherit"
+                    fontSize="inehrit"
+                  />
+                }
+                label={t("folders.delete")}
+                onClick={() => {
+                  refFolder.current.hideMenu()
+                  deleteFolder(section.key)
+                }}
+              />
+            </>
+          }
+        />
+      </motion.div>
     )
   }
 
   let projectList = null
   if (section.key === null) {
+    const refProject = createRef()
     projectList = (
       <SidebarList style={{ marginBottom: "20px" }}>
         <AnimatePresence>
           {section.array.map((project) => (
             <motion.div
+              layout
               key={project._id}
-              initial={{ x: 200, opacity: 0 }}
+              initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: 200, opacity: 0 }}
+              exit={{ x: 100, opacity: 0 }}
               transition={{ duration: 0.4 }}
             >
               <SidebarLink
+                ref={refProject}
                 icon={<ProjectIcon />}
                 name={project.projectName}
                 route={`project/${project._id}`}
@@ -157,6 +171,7 @@ function ListSection({ section }) {
                       }
                       label={t("project.edit")}
                       onClick={() => {
+                        refProject.current.hideMenu()
                         openProjectEdit(project._id)
                       }}
                     />
@@ -168,7 +183,10 @@ function ListSection({ section }) {
                         />
                       }
                       label={t("project.delete")}
-                      onClick={() => deleteProject(project._id)}
+                      onClick={() => {
+                        refProject.current.hideMenu()
+                        deleteProject(project._id)
+                      }}
                     />
                   </>
                 }
@@ -185,10 +203,11 @@ function ListSection({ section }) {
           <AnimatePresence>
             {section.array.map((project) => (
               <motion.div
+                layout
                 key={project._id}
-                initial={{ x: 200, opacity: 0 }}
+                initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 200, opacity: 0 }}
+                exit={{ x: 100, opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
                 <SidebarLink
@@ -239,4 +258,4 @@ function ListSection({ section }) {
   )
 }
 
-export default ListSection
+export default FolderSection

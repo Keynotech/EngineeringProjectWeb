@@ -13,10 +13,13 @@ import TagItem from "../../Tag/TagItem/TagItem"
 import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
+import useIsOpen from "../../../hooks/useIsOpen"
 
 const Wrapper = styled.div`
   min-width: 200px;
   max-width: 90vw;
+  max-height: 50vh;
+  overflow-y: auto;
 `
 
 const ItemWrapper = styled.div`
@@ -51,7 +54,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
   // State hooks
   // ===========================================================================
   const [selectedTags, setSelectedTags] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, hide, show } = useIsOpen()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   // Handlers
@@ -59,13 +62,13 @@ function TagPicker({ value, currentTags, onChange, variant }) {
   const handleOpen = (event) => {
     setSelectedTags([...currentTags] || [])
     setAnchorEl(event.currentTarget)
-    setIsOpen(true)
+    show()
   }
 
   const handleClose = () => {
     onChange(selectedTags)
     setAnchorEl(null)
-    setIsOpen(false)
+    hide()
   }
 
   const togglePopover = (e) => {
@@ -107,7 +110,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
                   key={tag._id}
                 >
                   <WrapperTagPropertie>
-                    <TagItem showMenu={false} tagId={tag._id} />
+                    <TagItem tagId={tag._id} />
                   </WrapperTagPropertie>
                   <Checkbox
                     id="tag-picker-select"
@@ -120,7 +123,7 @@ function TagPicker({ value, currentTags, onChange, variant }) {
           <ItemWrapper
             onClick={() => {
               _showTagInput()
-              setIsOpen(false)
+              hide()
             }}
           >
             <AddNewTag>

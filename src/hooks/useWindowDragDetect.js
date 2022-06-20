@@ -38,9 +38,12 @@ function useWindowDragDetect() {
       _onDragLeave()
     }
 
-    document.addEventListener("dragleave", (e) => handleDragLeave(e))
+    document.body.addEventListener("dragleave", (e) => handleDragLeave(e))
 
-    document.addEventListener("dragenter", (e) => handleDragEnter(e))
+    /* Prevent browser from loading drag-drop file */
+    document.body.addEventListener("dragover", (e) => {
+      handleDragEnter(e)
+    })
 
     document.addEventListener("drop", (e) => handleDropInvalid(e))
 

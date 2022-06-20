@@ -54,8 +54,6 @@ function Popover({ children, isOpen, anchorEl, onOutsideClick }) {
     ],
   })
 
-  if (!isOpen) return null
-
   return isOpen
     ? ReactDOM.createPortal(
         <>

@@ -26,7 +26,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  padding: 4px 10px 4px 20px;
+  padding: 4px 10px 4px 15px;
 `
 
 const IconWrapper = styled.span`

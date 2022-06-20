@@ -3,13 +3,9 @@ import React, { useEffect } from "react"
 import styled, { css, useTheme } from "styled-components"
 import { Outlet } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import MenuOpenIcon from "@mui/icons-material/MenuOpen"
+import LoadingScreen from "./LoadingScreen"
 import Sidebar from "../../navigation/Sidebar/Sidebar"
-import {
-  hideSidebar,
-  showSidebar,
-  toggleSidebar,
-} from "../../store/features/layoutSlice"
+import { hideSidebar, showSidebar } from "../../store/features/layoutSlice"
 import TagInput from "../../feature/Tag/TagInput/TagInput"
 import ProjectInput from "../../feature/Project/ProjectInput/ProjectInput"
 import useWindowSize from "../../hooks/useWindowSize"
@@ -22,6 +18,7 @@ import FolderInput from "../../feature/Folder/FolderInput/FolderInput"
 import useFoldersQuery from "../../hooks/query/useFoldersQuery"
 import useTasksQuery from "../../hooks/query/useTasksQuery"
 import FolderEdit from "../../feature/Folder/FolderInput/FolderEdit"
+import useWindowDragDetect from "../../hooks/useWindowDragDetect"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -50,14 +47,6 @@ const Main = styled.main`
     `}
 `
 
-const Loading = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
 function AppLayout() {
   // Queries
   // ===========================================================================
@@ -71,6 +60,7 @@ function AppLayout() {
   // State hooks
   // ===========================================================================
   const windowSize = useWindowSize()
+  useWindowDragDetect()
 
   // Selectors
   // ===========================================================================
@@ -148,9 +138,7 @@ function AppLayout() {
           {foldersEditVisibility ? <FolderEdit /> : null}
         </>
       ) : (
-        <Loading>
-          <h2>Loading </h2>
-        </Loading>
+        <LoadingScreen />
       )}
     </Wrapper>
   )

@@ -9,7 +9,7 @@ import styled, { css } from "styled-components"
 import TaskInput from "../TaskInput/TaskInput"
 import TaskListHeader from "./TaskListHeader"
 import GroupController from "./GroupController"
-import ListSection from "./ListSection"
+import TasksSection from "./TasksSection"
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,7 +68,6 @@ function TasksList({
       >
         {SortingController}
       </TaskListHeader>
-
       <ListContainer taskInputIsOpen={taskInputVisibility}>
         {taskInputVisibility ? (
           <TaskInput
@@ -78,10 +77,9 @@ function TasksList({
             priority={inputPriorityVal}
           />
         ) : null}
-
         {tasks.isSuccess && sections && sections.length
           ? sections.map((section) => (
-              <ListSection
+              <TasksSection
                 key={section.key}
                 title={section.name}
                 array={section.array}

@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
@@ -18,6 +19,7 @@ import CancelButton from "../../../components/button/CancelButton"
 import SubmitButton from "../../../components/button/SubmitButton"
 import DateOption from "./DateOption"
 import DatePropertie from "../../Propertie/DatePropertie/DatePropertie"
+import useIsOpen from "../../../hooks/useIsOpen"
 
 const Calendar = styled(CalendarPicker)`
   max-width: 290px;
@@ -54,20 +56,20 @@ const ButtonsWrapper = styled.div`
 
 function DatePicker({ value, onChange, backgroundColor, variant }) {
   const [date, setDate] = useState(null)
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, hide, show } = useIsOpen()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const { t } = useTranslation()
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget)
     setDate(value)
-    setIsOpen(true)
+    show()
   }
 
   const handleClose = () => {
     onChange(date)
     setAnchorEl(null)
-    setIsOpen(false)
+    hide(false)
   }
 
   const togglePopover = (e) => {
@@ -175,7 +177,7 @@ function DatePicker({ value, onChange, backgroundColor, variant }) {
             <CancelButton
               style={{ width: "100%" }}
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={hide}
               text={t("cancel")}
             />
             <SubmitButton
@@ -185,7 +187,7 @@ function DatePicker({ value, onChange, backgroundColor, variant }) {
               disabled={false}
               onClick={() => {
                 onChange(date)
-                setIsOpen(false)
+                hide()
               }}
             />
           </ButtonsWrapper>

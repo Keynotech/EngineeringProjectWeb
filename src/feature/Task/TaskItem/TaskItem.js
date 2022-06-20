@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { motion } from "framer-motion"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import { useTheme } from "styled-components"
@@ -42,9 +42,6 @@ function TaskItem({ task }) {
   const _showTaskPage = () => dispatch(showTaskPage())
   const _hideTaskPage = () => dispatch(hideTaskPage())
 
-  // Selectors
-  // ===========================================================================
-  const displayTasksDetails = useSelector((state) => state.tasks.displayDetails)
   // State Hooks
   // ===========================================================================
   const [isFile, setIsFile] = useState(false)
@@ -92,11 +89,14 @@ function TaskItem({ task }) {
         />
       )
     } else {
+      const navigateToTags = (tagId) => {
+        _hideTaskPage()
+        navigate(`/tag/${tagId}`)
+      }
       tags = taskTags?.map((tag) => (
         <Chip
           onClick={() => {
-            _hideTaskPage()
-            navigate(`/tag/${tag._id}`)
+            navigateToTags(tag._id)
           }}
           label={tag?.tagName}
           key={tag?._id}
@@ -120,9 +120,8 @@ function TaskItem({ task }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ x: [300, -20, 0], opacity: 1 }}
-      exit={{ x: 500, opacity: 0 }}
-      transition={{ duration: 0.4 }}
+      animate={{ x: [300, -20, 0], opacity: 1, duration: 0.4 }}
+      exit={{ opacity: 0, duration: 0.4 }}
     >
       <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
         <Wrapper isDone={task.status}>
@@ -143,6 +142,7 @@ function TaskItem({ task }) {
               </PropertiesIcons>
               <TagsContainer>{tags}</TagsContainer>
             </MainContainer>
+
             {task.dueDate || project ? (
               <AdditionalContainer>
                 {task.dueDate ? (

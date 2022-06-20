@@ -1,8 +1,9 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react"
-import groupByDate from "./groupByDate"
+import groupByCreatedDate from "./groupByCreatedDate"
 import groupByPriority from "./groupByPriority"
+import groupByDueDate from "./groupByDueDate"
 
 function useGroupBy({ data, groupOptions, onGroupChange }) {
   const [groupOption, setGroupOption] = useState(groupOptions[0])
@@ -14,11 +15,10 @@ function useGroupBy({ data, groupOptions, onGroupChange }) {
     if (key === "default") {
       arrByPropertie = [{ key: "default", name: null, array: data }]
     } else if (key === "createdAt") {
-      const nullKeyName = ""
-      arrByPropertie = groupByDate({ arr, key, nullKeyName })
+      arrByPropertie = groupByCreatedDate({ arr, key })
     } else if (key === "dueDate") {
       const nullKeyName = "No due date"
-      arrByPropertie = groupByDate({ arr, key, nullKeyName })
+      arrByPropertie = groupByDueDate({ arr, key, nullKeyName })
     } else if (key === "priority") {
       arrByPropertie = groupByPriority({ arr, key })
     }

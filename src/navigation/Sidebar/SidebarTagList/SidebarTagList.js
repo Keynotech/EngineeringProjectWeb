@@ -7,19 +7,19 @@ import styled from "styled-components"
 import AddIcon from "@mui/icons-material/Add"
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
-import { showTagInput } from "../../store/features/layoutSlice"
+import { showTagInput } from "../../../store/features/layoutSlice"
 import {
   showTagEdit,
   setTagEditId,
-} from "../../store/features/tagEditPageSlice"
+} from "../../../store/features/tagEditPageSlice"
 
-import useTagsQuery from "../../hooks/query/useTagsQuery"
-import useDeleteTag from "../../hooks/mutation/useDeleteTag"
-import SidebarSectionHeader from "./SidebarSectionHeader"
-import SidebarList from "./SidebarList"
-import SidebarLink from "./SidebarLink"
-import SidebarItem from "./SidebarItem"
-import { DropdownItemMenu } from "../../components/DropdownMenu"
+import useTagsQuery from "../../../hooks/query/useTagsQuery"
+import useDeleteTag from "../../../hooks/mutation/useDeleteTag"
+import SidebarSectionHeader from "../SidebarSectionHeader"
+import SidebarList from "../SidebarList"
+import SidebarLink from "../SidebarLink"
+import SidebarItem from "../SidebarItem"
+import { DropdownItemMenu } from "../../../components/DropdownMenu"
 
 const TagsWrapper = styled.div`
   margin-top: 20px;
@@ -67,13 +67,16 @@ function SidebarTagList() {
 
   return (
     <TagsWrapper>
-      <SidebarSectionHeader name={t("sidebar.tags")} />
+      <motion.div layout>
+        <SidebarSectionHeader name={t("sidebar.tags")} />
+      </motion.div>
 
       {tags.isSuccess ? (
         <SidebarList>
           <AnimatePresence>
             {tags.data.map((tag) => (
               <motion.div
+                layout
                 key={tag._id}
                 initial={{ x: 200, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -120,14 +123,16 @@ function SidebarTagList() {
               </motion.div>
             ))}
 
-            <SidebarItem
-              as="div"
-              icon={<AddIcon fontSize="inherit" />}
-              name={t("tags.create")}
-              fontWeight="light"
-              onClick={_showTagInput}
-              clickable
-            />
+            <motion.div layout>
+              <SidebarItem
+                as="div"
+                icon={<AddIcon fontSize="inherit" />}
+                name={t("tags.create")}
+                fontWeight="light"
+                onClick={_showTagInput}
+                clickable
+              />
+            </motion.div>
           </AnimatePresence>
         </SidebarList>
       ) : null}
