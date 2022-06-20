@@ -26,7 +26,7 @@ const Icon = styled.span`
 
 const Form = styled.form`
   display: flex;
-  width: 460px;
+  width: min(460px, 95vw);
   flex-direction: column;
   gap: 8px;
   padding: 8px 15px;

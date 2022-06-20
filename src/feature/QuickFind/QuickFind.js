@@ -68,7 +68,18 @@ const SearchResultList = styled.div`
   justify-content: center;
 `
 
-const SearchItem = styled.span``
+const SearchItem = styled.span`
+  &:hover {
+    background-color: ${(props) => props.theme.secondary};
+  }
+`
+
+const SearchItemBorder = styled.span`
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
+  &:hover {
+    background-color: ${(props) => props.theme.secondary};
+  }
+`
 
 function QuickFind() {
   const { t } = useTranslation()
@@ -184,26 +195,26 @@ function QuickFind() {
             {searchedProjects.length ? (
               <SearchResultList>
                 {searchedProjects.map((project) => (
-                  <SearchItem
+                  <SearchItemBorder
                     key={project._id}
                     type="button"
                     onClick={() => goToProjectPage(project)}
                   >
                     <ProjectItem project={project} />
-                  </SearchItem>
+                  </SearchItemBorder>
                 ))}
               </SearchResultList>
             ) : null}
             {searchedTags.length ? (
               <SearchResultList>
                 {searchedTags.map((tag) => (
-                  <SearchItem
+                  <SearchItemBorder
                     key={tag._id}
                     type="button"
                     onClick={() => goToTagPage(tag)}
                   >
                     <TagItem tag={tag} />
-                  </SearchItem>
+                  </SearchItemBorder>
                 ))}
               </SearchResultList>
             ) : null}

@@ -25,6 +25,8 @@ const TextContainer = styled.div`
   flex: 1;
   height: 24px;
   align-items: center;
+  min-width: 0px;
+  max-width: 100%;
 `
 
 const Name = styled.span`
@@ -32,6 +34,9 @@ const Name = styled.span`
   font-size: 20px;
   line-height: 1.1;
   color: ${(props) => props.theme.textPrimary};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Info = styled.span`
@@ -41,9 +46,13 @@ const Info = styled.span`
   padding-left: 14px;
   color: ${(props) => props.theme.textTertiary};
   opacity: 0.8;
+  white-space: nowrap;
 `
 
 const SidebarToggle = styled.div`
+  height: 64px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   transition: transform 0.25s;
   ${({ isSidebarVisible }) =>

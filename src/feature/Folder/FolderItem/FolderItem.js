@@ -9,6 +9,8 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: flex-start;
+  min-width: 0px;
+  max-width: 100%;
 `
 
 const IconWrapper = styled.div`
