@@ -85,6 +85,12 @@
     "validation": {
         "max50Cha": "Maksymalnie 50 znaków"
     },
+    "quickFind": {
+        "title": "Szybkie wyszukiwanie",
+        "search": "Szukaj",
+        "searchItems": "Szukaj zadań, tagów i projektów"
+
+    },
     "create": "Utwórz",
     "cancel": "Anuluj",
     "submit":"Zatwierdź",

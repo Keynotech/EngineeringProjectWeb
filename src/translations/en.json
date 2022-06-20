@@ -86,6 +86,12 @@
     "validation": {
         "max50Cha": "Max 50 characters"
     },
+    "quickFind": {
+        "title": "Quick find",
+        "search": "Search",
+        "results": "results",
+        "searchItems": "Search tasks, tags and projects"
+    },
     "create": "Create",
     "cancel": "Cancel",
     "submit":"Submit",

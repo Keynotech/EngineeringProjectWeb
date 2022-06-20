@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import ClearIcon from "@mui/icons-material/Clear"
 import { useQueryClient } from "react-query"
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import Dialog from "../../components/Dialog/Dialog"
 import TextInput from "../../components/TextInput/TextInput"
 import { hideQuickFind, showTaskPage } from "../../store/features/layoutSlice"
@@ -67,7 +68,10 @@ const SearchResultList = styled.div`
   justify-content: center;
 `
 
+const SearchItem = styled.span``
+
 function QuickFind() {
+  const { t } = useTranslation()
   // Local State
   // ===========================================================================
   const [searchText, setSearchText] = useState("")
@@ -136,7 +140,7 @@ function QuickFind() {
   }, [searchText])
 
   return (
-    <Dialog onOutsideClick={hide} dialogName="Quick find">
+    <Dialog onOutsideClick={hide} dialogName={t("quickFind.title")}>
       <Wrapper>
         <Input>
           <SearchIcon sx={{ fontSize: "18px" }} />
@@ -145,7 +149,7 @@ function QuickFind() {
             multiline={false}
             id="quick-find"
             name="quick-find"
-            placeholder="Search"
+            placeholder={t("quickFind.search")}
             value={searchText}
             fontSize="16px"
             onChange={(val) => setSearchText(val)}
@@ -162,44 +166,44 @@ function QuickFind() {
               alt="loading-screen"
               src={`${process.env.PUBLIC_URL}/assets/undraw_searching_re_3ra9.svg`}
             />
-            <EmptySearchLabel>Search tasks, projects and tags</EmptySearchLabel>
+            <EmptySearchLabel>{t("quickFind.searchItems")}</EmptySearchLabel>
           </EmptySearch>
         ) : (
           <SearchResultWrapper>
             {searchedTasks.length
               ? searchedTasks.map((task) => (
-                  <button
+                  <SearchItem
                     key={task._id}
                     type="button"
                     onClick={() => goToTaskPage(task)}
                   >
                     <TaskItem task={task} disableTag />
-                  </button>
+                  </SearchItem>
                 ))
               : null}
             {searchedProjects.length ? (
               <SearchResultList>
                 {searchedProjects.map((project) => (
-                  <button
+                  <SearchItem
                     key={project._id}
                     type="button"
                     onClick={() => goToProjectPage(project)}
                   >
                     <ProjectItem project={project} />
-                  </button>
+                  </SearchItem>
                 ))}
               </SearchResultList>
             ) : null}
             {searchedTags.length ? (
               <SearchResultList>
                 {searchedTags.map((tag) => (
-                  <button
+                  <SearchItem
                     key={tag._id}
                     type="button"
                     onClick={() => goToTagPage(tag)}
                   >
                     <TagItem tag={tag} />
-                  </button>
+                  </SearchItem>
                 ))}
               </SearchResultList>
             ) : null}
