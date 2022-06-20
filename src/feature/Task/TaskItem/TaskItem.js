@@ -3,16 +3,14 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { motion } from "framer-motion"
 import { useDispatch } from "react-redux"
 import PropTypes from "prop-types"
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined"
 import { useTheme } from "styled-components"
-import { hideTaskPage, showTaskPage } from "../../../store/features/layoutSlice"
+import { hideTaskPage } from "../../../store/features/layoutSlice"
 import Checkbox from "../TaskCheckbox/TaskCheckbox"
 import {
   Wrapper,
-  StyledLink,
   CheckboxContainer,
   MainContainer,
   MainWrapper,
@@ -31,7 +29,7 @@ import Chip from "../../../components/Chip/Chip"
 import { useNavigate } from "react-router-dom"
 import { size } from "../../../utils/mq"
 
-function TaskItem({ task }) {
+function TaskItem({ task, displayCheckbox }) {
   // Query
   // ===========================================================================
   const taskTags = useGetTaskTags(task ? task.tags : [])
@@ -39,7 +37,6 @@ function TaskItem({ task }) {
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
-  const _showTaskPage = () => dispatch(showTaskPage())
   const _hideTaskPage = () => dispatch(hideTaskPage())
 
   // State Hooks
@@ -118,48 +115,40 @@ function TaskItem({ task }) {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ x: [300, -20, 0], opacity: 1, duration: 0.4 }}
-      exit={{ opacity: 0, duration: 0.4 }}
-    >
-      <StyledLink to={`tasks/${task._id}`} onClick={_showTaskPage}>
-        <Wrapper isDone={task.status}>
-          <CheckboxContainer>
-            <Checkbox
-              checked={task.status}
-              onChange={_toggleStatus}
-              priority={task.priority}
-            />
-          </CheckboxContainer>
-          <MainWrapper>
-            <MainContainer>
-              <Title>{task.title}</Title>
-              <PropertiesIcons>
-                {isFile ? (
-                  <InsertDriveFileOutlinedIcon fontSize="inherit" />
-                ) : null}
-              </PropertiesIcons>
-              <TagsContainer>{tags}</TagsContainer>
-            </MainContainer>
+    <Wrapper isDone={task.status}>
+      {displayCheckbox ? (
+        <CheckboxContainer>
+          <Checkbox
+            checked={task.status}
+            onChange={_toggleStatus}
+            priority={task.priority}
+          />
+        </CheckboxContainer>
+      ) : null}
+      <MainWrapper>
+        <MainContainer>
+          <Title>{task.title}</Title>
+          <PropertiesIcons>
+            {isFile ? <InsertDriveFileOutlinedIcon fontSize="inherit" /> : null}
+          </PropertiesIcons>
+          <TagsContainer>{tags}</TagsContainer>
+        </MainContainer>
 
-            {task.dueDate || project ? (
-              <AdditionalContainer>
-                {task.dueDate ? (
-                  <DatePropertie
-                    backgroundColor={theme.tertiary}
-                    value={task.dueDate}
-                    variant="standard"
-                    displayIcon={false}
-                  />
-                ) : null}
-                {project}
-              </AdditionalContainer>
+        {task.dueDate || project ? (
+          <AdditionalContainer>
+            {task.dueDate ? (
+              <DatePropertie
+                backgroundColor={theme.tertiary}
+                value={task.dueDate}
+                variant="standard"
+                displayIcon={false}
+              />
             ) : null}
-          </MainWrapper>
-        </Wrapper>
-      </StyledLink>
-    </motion.div>
+            {project}
+          </AdditionalContainer>
+        ) : null}
+      </MainWrapper>
+    </Wrapper>
   )
 }
 
@@ -171,6 +160,11 @@ TaskItem.propTypes = {
     priority: PropTypes.number,
     description: PropTypes.string,
   }).isRequired,
+  displayCheckbox: PropTypes.bool,
+}
+
+TaskItem.defaultProps = {
+  displayCheckbox: true,
 }
 
 export default TaskItem

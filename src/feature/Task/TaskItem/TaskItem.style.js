@@ -1,10 +1,5 @@
 import styled, { css } from "styled-components"
-import { Link } from "react-router-dom"
 import { mq } from "../../../utils/mq"
-
-const StyledLink = styled(Link)`
-  cursor: default;
-`
 
 const Wrapper = styled.div`
   padding: 10px 8px;
@@ -110,7 +105,6 @@ const DescriptionInner = styled.span`
 
 export {
   Wrapper,
-  StyledLink,
   CheckboxContainer,
   MainWrapper,
   MainContainer,

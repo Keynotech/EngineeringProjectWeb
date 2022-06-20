@@ -19,6 +19,7 @@ import useFoldersQuery from "../../hooks/query/useFoldersQuery"
 import useTasksQuery from "../../hooks/query/useTasksQuery"
 import FolderEdit from "../../feature/Folder/FolderInput/FolderEdit"
 import useWindowDragDetect from "../../hooks/useWindowDragDetect"
+import QuickFind from "../../feature/QuickFind/QuickFind"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -93,6 +94,10 @@ function AppLayout() {
     (state) => state.projectEditPage.visibility
   )
 
+  const quickFindVisibility = useSelector(
+    (state) => state.layout.quickFindVisibility
+  )
+
   // Dispatch
   // ===========================================================================
   const dispatch = useDispatch()
@@ -130,12 +135,13 @@ function AppLayout() {
               <Outlet />
             </Main>
           </Container>
-          {tagInputVisibility ? <TagInput /> : null}
-          {tagEditVisibility ? <TagEdit /> : null}
-          {projectInputVisibility ? <ProjectInput /> : null}
-          {projectEditVisibility ? <ProjectEdit /> : null}
-          {folderInputVisibility ? <FolderInput /> : null}
-          {foldersEditVisibility ? <FolderEdit /> : null}
+          {tagInputVisibility && <TagInput />}
+          {tagEditVisibility && <TagEdit />}
+          {projectInputVisibility && <ProjectInput />}
+          {projectEditVisibility && <ProjectEdit />}
+          {folderInputVisibility && <FolderInput />}
+          {foldersEditVisibility && <FolderEdit />}
+          {quickFindVisibility && <QuickFind />}
         </>
       ) : (
         <LoadingScreen />

@@ -2,18 +2,20 @@ import React from "react"
 import { useTranslation } from "react-i18next"
 import styled, { css } from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
+import SearchIcon from "@mui/icons-material/Search"
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined"
 import CalendarViewWeekOutlinedIcon from "@mui/icons-material/CalendarViewWeekOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import { LayoutGroup } from "framer-motion"
 import SidebarLink from "./SidebarLink"
-import { hideSidebar } from "../../store/features/layoutSlice"
+import { hideSidebar, showQuickFind } from "../../store/features/layoutSlice"
 import { mq } from "../../utils/mq"
 import zIndex from "../../utils/zIndex"
 import SidebarList from "./SidebarList"
 import SidebarProjectList from "./SidebarProjectList/SidebarProjectList"
 import SidebarTagList from "./SidebarTagList/SidebarTagList"
 import SidebarHeader from "./SidebarHeader/SidebarHeader"
+import SidebarItem from "./SidebarItem"
 
 const Wrapper = styled.nav`
   position: absolute;
@@ -89,6 +91,7 @@ function Sidebar() {
   // ===========================================================================
   const dispatch = useDispatch()
   const _hideSidebar = () => dispatch(hideSidebar())
+  const _showQuickFind = () => dispatch(showQuickFind())
 
   // Selectors
   // ===========================================================================
@@ -100,6 +103,12 @@ function Sidebar() {
         <Container>
           <SidebarHeader />
           <SidebarList>
+            <SidebarItem
+              icon={<SearchIcon fontSize="inehrit" />}
+              name="Quick Find"
+              onClick={_showQuickFind}
+              clickable
+            />
             <SidebarLink
               icon={<InboxOutlinedIcon fontSize="inherit" />}
               name={t("sidebar.inbox")}

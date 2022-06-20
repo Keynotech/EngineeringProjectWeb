@@ -23,7 +23,6 @@ const OverlayContainer = styled.div`
 
 const DialogContainer = styled.div`
   position: absolute;
-  width: min(460px, 95vw);
   height: auto;
   background-color: ${(props) => props.theme.background};
   border-radius: 10px;
