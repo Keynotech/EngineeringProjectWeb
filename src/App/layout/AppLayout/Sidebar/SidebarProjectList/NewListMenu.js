@@ -6,11 +6,14 @@ import FolderIcon from "@mui/icons-material/Folder"
 import styled from "styled-components"
 import { useTranslation } from "react-i18next"
 import SidebarItem from "../SidebarItem"
-import { DropdownMenu, DropdownItemMenu } from "../../components/DropdownMenu"
+import {
+  DropdownMenu,
+  DropdownItemMenu,
+} from "../../../../components/DropdownMenu"
 import {
   showFolderInput,
   showProjectInput,
-} from "../../store/features/layoutSlice"
+} from "../../../../store/features/layoutSlice"
 
 const ProjectIcon = styled.div`
   width: 12px;

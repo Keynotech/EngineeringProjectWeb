@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import styled, { css } from "styled-components"
-import { toggleSidebar } from "../store/features/layoutSlice"
+import { toggleSidebar } from "../../../store/features/layoutSlice"
 
 const Hamburger = styled.div`
   display: flex;

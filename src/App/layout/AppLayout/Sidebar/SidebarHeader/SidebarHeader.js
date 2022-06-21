@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux"
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
 import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import styled, { css, useTheme } from "styled-components"
-import { hideSidebar } from "../../store/features/layoutSlice"
-import { mq } from "../../../utils/mq"
+import { hideSidebar } from "../../../../store/features/layoutSlice"
+import { mq } from "../../../../../utils/mq"
 import UserAvatar from "./UserAvatar"
 
 const Wrapper = styled.div`

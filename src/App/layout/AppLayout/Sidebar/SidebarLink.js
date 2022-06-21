@@ -12,9 +12,9 @@ import {
   hideSidebar,
   hideTaskInput,
   hideTaskPage,
-} from "../store/features/layoutSlice"
-import { size } from "../../utils/mq"
-import { DropdownMenu } from "../components/DropdownMenu"
+} from "../../../store/features/layoutSlice"
+import { size } from "../../../../utils/mq"
+import { DropdownMenu } from "../../../components/DropdownMenu"
 
 const Link = styled(NavLink)`
   display: inline-block;

@@ -2,8 +2,8 @@
 /* eslint-disable no-use-before-define */
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import useProjectsQuery from "../../hooks/query/useProjectsQuery"
-import useFoldersQuery from "../../hooks/query/useFoldersQuery"
+import useProjectsQuery from "../../../../hooks/query/useProjectsQuery"
+import useFoldersQuery from "../../../../hooks/query/useFoldersQuery"
 import useGroupByFolders from "./useGroupByFolders"
 import FolderSection from "./FolderSection"
 import NewListMenu from "./NewListMenu"

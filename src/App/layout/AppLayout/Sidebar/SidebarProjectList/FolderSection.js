@@ -13,17 +13,17 @@ import styled from "styled-components"
 import {
   showProjectEdit,
   setProjectEditId,
-} from "../../store/features/projectEditPageSlice"
+} from "../../../../store/features/projectEditPageSlice"
 import {
   showFolderEdit,
   setFolderEditId,
-} from "../../store/features/foldersSlice"
-import useDeleteProject from "../../hooks/mutation/useDeleteProject"
-import useDeleteFolder from "../../hooks/mutation/useDeleteFolder"
+} from "../../../../store/features/foldersSlice"
+import useDeleteProject from "../../../../hooks/mutation/useDeleteProject"
+import useDeleteFolder from "../../../../hooks/mutation/useDeleteFolder"
 import SidebarList from "../SidebarList"
 import SidebarLink from "../SidebarLink"
 import SidebarItem from "../SidebarItem"
-import { DropdownItemMenu } from "../../components/DropdownMenu"
+import { DropdownItemMenu } from "../../../../components/DropdownMenu"
 
 const Wrapper = styled.div`
   width: 100%;

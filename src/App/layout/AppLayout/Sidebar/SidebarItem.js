@@ -4,7 +4,7 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react"
 import styled, { css } from "styled-components"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
-import { DropdownMenu } from "../components/DropdownMenu"
+import { DropdownMenu } from "../../../components/DropdownMenu"
 
 const Wrapper = styled.div`
   min-height: 28px;
