@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import styled from "styled-components"
+import CloseIcon from "@mui/icons-material/Close"
+import styled, { useTheme } from "styled-components"
 import zIndex from "../../utils/zIndex"
 
 const Overlay = styled.div`
@@ -41,9 +42,10 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 8px 15px;
-  min-height: 24px;
+  padding: 0px 15px;
+  min-height: 40px;
   border-bottom: 1px solid ${(props) => props.theme.tertiary};
+  position: relative;
 `
 
 export const OutsideClick = styled.div`
@@ -63,7 +65,26 @@ const Title = styled.span`
   font-size: 16px;
 `
 
+const CloseButtonWrapper = styled.button`
+  width: 32px;
+  height: 32px;
+  border-radius: 15px;
+  position: absolute;
+  right: 8px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.secondary};
+  }
+`
+
+const CloseButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 function Dialog({ icon, dialogName, onOutsideClick, children }) {
+  const theme = useTheme()
   // Effect Hooks
   // ===========================================================================
 
@@ -76,6 +97,14 @@ function Dialog({ icon, dialogName, onOutsideClick, children }) {
               <Header>
                 {icon ? <Icon>{icon}</Icon> : null}
                 {dialogName ? <Title>{dialogName}</Title> : null}
+                <CloseButtonWrapper>
+                  <CloseButton>
+                    <CloseIcon
+                      sx={{ fontSize: "18px", color: theme.textTertiary }}
+                      onClick={onOutsideClick}
+                    />
+                  </CloseButton>
+                </CloseButtonWrapper>
               </Header>
               {children}
             </Wrapper>
