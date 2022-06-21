@@ -1,12 +1,12 @@
 import React from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import Today from "../pages/App/Today/Today"
-import Inbox from "../pages/App/Inbox/Inbox"
-import Upcoming from "../pages/App/Upcoming/Upcoming"
-import AppLayout from "../layout/AppLayout/AppLayout"
-import TaskPage from "../feature/Task/TaskPage/TaskPage"
-import TagPage from "../pages/App/TagPage/TagPage"
-import ProjectPage from "../pages/App/ProjectPage/ProjectPage"
+import Today from "../App/pages/Today/Today"
+import Inbox from "../App/pages/Inbox/Inbox"
+import Upcoming from "../App/pages/Upcoming/Upcoming"
+import AppLayout from "../App/layout/AppLayout/AppLayout"
+import TaskPage from "../App/feature/Task/TaskPage/TaskPage"
+import TagPage from "../App/pages/TagPage/TagPage"
+import ProjectPage from "../App/pages/ProjectPage/ProjectPage"
 
 function Navigation() {
   return (
