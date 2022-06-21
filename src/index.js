@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
-import store from "./App/store/store"
+import store from "./store/store"
 import "./i18nextConf"
 
 const rootElement = document.getElementById("root")

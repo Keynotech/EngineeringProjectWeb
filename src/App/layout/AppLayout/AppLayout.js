@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from "react"
 import styled, { css, useTheme } from "styled-components"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import LoadingScreen from "./LoadingScreen"
 import Sidebar from "./Sidebar/Sidebar"
@@ -48,7 +49,7 @@ const Main = styled.main`
     `}
 `
 
-function AppLayout() {
+function AppLayout({ user }) {
   // Queries
   // ===========================================================================
 
@@ -57,6 +58,7 @@ function AppLayout() {
   const folders = useFoldersQuery()
   const tasks = useTasksQuery()
   const theme = useTheme()
+  const navigate = useNavigate()
 
   // State hooks
   // ===========================================================================
@@ -106,6 +108,12 @@ function AppLayout() {
 
   // Effect Hooks
   // ===========================================================================
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth")
+    }
+  }, [user])
 
   useEffect(() => {
     if (
