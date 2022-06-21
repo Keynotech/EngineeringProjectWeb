@@ -7,7 +7,9 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  padding: 10px 8px;
+  height: 36px;
+  padding: 0 8px;
+  width: 100%;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
@@ -37,13 +39,20 @@ const NameWrapper = styled.span`
   text-align: left;
 `
 
-function PickerItem({ name, icon, onClick, isActive }) {
+const RightComponentWrapper = styled.div``
+
+function SingleItem({ name, icon, onClick, isActive, rightComponent }) {
+  let rightComp = null
+  if (rightComponent) {
+    rightComp = <RightComponentWrapper>{rightComponent}</RightComponentWrapper>
+  }
   return (
     <Wrapper onClick={onClick} isActive={isActive}>
       <IconWrapper>{icon}</IconWrapper>
       <NameWrapper>{name}</NameWrapper>
+      {rightComp}
     </Wrapper>
   )
 }
 
-export default PickerItem
+export default SingleItem

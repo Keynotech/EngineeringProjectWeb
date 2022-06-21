@@ -7,11 +7,11 @@ import StarIcon from "@mui/icons-material/Star"
 import Popover from "../../../components/Popover/Popover"
 import useIsOpen from "../../../hooks/useIsOpen"
 import PriorityPropertie from "../../Propertie/PriorityPropertie/PriorityPropertie"
-import PickerItem from "../PickerItem"
+import SingleItem from "../../../components/SingleItem/SingleItem"
 
 const Wrapper = styled.div`
   width: 200px;
-  max-width: 90vw;
+  max-width: min(290px, 90vw);
 `
 
 function PriorityPicker({ value, onChange, variant }) {
@@ -61,7 +61,7 @@ function PriorityPicker({ value, onChange, variant }) {
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
           {prioritiesData.map((priority) => (
-            <PickerItem
+            <SingleItem
               isActive={value === priority.value || false}
               key={priority.value}
               onClick={() => {

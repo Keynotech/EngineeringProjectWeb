@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import SearchIcon from "@mui/icons-material/Search"
 import ClearIcon from "@mui/icons-material/Clear"
 import { useQueryClient } from "react-query"
@@ -11,8 +11,9 @@ import Dialog from "../../components/Dialog/Dialog"
 import TextInput from "../../components/TextInput/TextInput"
 import { hideQuickFind, showTaskPage } from "../../store/features/layoutSlice"
 import TaskItem from "../Task/TaskItem/TaskItem"
-import ProjectItem from "../Project/ProjectItem/ProjectItem"
-import TagItem from "../Tag/TagItem/TagItem"
+import ProjectIcon from "../Project/ProjectIcon/ProjectIcon"
+import TagIcon from "../Tag/TagIcon/TagIcon"
+import SingleItem from "../../components/SingleItem/SingleItem"
 
 const Wrapper = styled.div`
   width: min(600px, 90vw);
@@ -51,7 +52,7 @@ const EmptySearchLabel = styled.span`
 
 const Image = styled.img`
   position: absolute;
-  transform: scale(50%);
+  transform: scale(0.5);
 `
 
 const SearchResultWrapper = styled.div`
@@ -72,13 +73,18 @@ const SearchItem = styled.span`
   &:hover {
     background-color: ${(props) => props.theme.secondary};
   }
-`
 
-const SearchItemBorder = styled.span`
-  border-bottom: 1px solid ${(props) => props.theme.tertiary};
-  &:hover {
-    background-color: ${(props) => props.theme.secondary};
-  }
+  ${({ border }) =>
+    border &&
+    css`
+      border-bottom: 1px solid ${(props) => props.theme.tertiary};
+    `};
+
+  ${({ padding }) =>
+    padding &&
+    css`
+      padding: 10px 0px;
+    `};
 `
 
 function QuickFind() {
@@ -188,33 +194,40 @@ function QuickFind() {
                     type="button"
                     onClick={() => goToTaskPage(task)}
                   >
-                    <TaskItem task={task} disableTag />
+                    <TaskItem displayCheckbox={false} task={task} disableTag />
                   </SearchItem>
                 ))
               : null}
             {searchedProjects.length ? (
               <SearchResultList>
                 {searchedProjects.map((project) => (
-                  <SearchItemBorder
+                  <SearchItem
+                    border
+                    padding
                     key={project._id}
                     type="button"
                     onClick={() => goToProjectPage(project)}
                   >
-                    <ProjectItem project={project} />
-                  </SearchItemBorder>
+                    <SingleItem
+                      name={project.projectName}
+                      icon={<ProjectIcon />}
+                    />
+                  </SearchItem>
                 ))}
               </SearchResultList>
             ) : null}
             {searchedTags.length ? (
               <SearchResultList>
                 {searchedTags.map((tag) => (
-                  <SearchItemBorder
+                  <SearchItem
+                    border
+                    padding
                     key={tag._id}
                     type="button"
                     onClick={() => goToTagPage(tag)}
                   >
-                    <TagItem tag={tag} />
-                  </SearchItemBorder>
+                    <SingleItem name={tag.tagName} icon={<TagIcon />} />
+                  </SearchItem>
                 ))}
               </SearchResultList>
             ) : null}

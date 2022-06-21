@@ -1,41 +1,22 @@
 /* eslint-disable react/require-default-props */
 import React from "react"
 import { useTranslation } from "react-i18next"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb"
 import { useDispatch } from "react-redux"
 import AddIcon from "@mui/icons-material/Add"
 import PropTypes from "prop-types"
 import { useQueryClient } from "react-query"
-import FolderItem from "../../Folder/FolderItem/FolderItem"
 import { showFolderInput } from "../../../store/features/layoutSlice"
 import FolderPropertie from "../../Propertie/FolderPropertie/FolderPropertie"
 import Popover from "../../../components/Popover/Popover"
 import useIsOpen from "../../../hooks/useIsOpen"
-import PickerItem from "../PickerItem"
+import SingleItem from "../../../components/SingleItem/SingleItem"
 
 const Wrapper = styled.div`
-  min-width: 200px;
-  max-width: 90vw;
+  width: min(290px, 90vw);
   max-height: 50vh;
   overflow-y: auto;
-`
-
-const ItemWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-
-  &:hover {
-    background-color: ${(props) => props.theme.secondary};
-  }
-
-  ${({ isActive }) =>
-    isActive &&
-    css`
-      background-color: ${(props) => props.theme.secondary};
-    `};
 `
 
 function FolderPicker({ value, onChange, variant }) {
@@ -85,7 +66,7 @@ function FolderPicker({ value, onChange, variant }) {
       />
       <Popover isOpen={isOpen} anchorEl={anchorEl} onOutsideClick={handleClose}>
         <Wrapper>
-          <PickerItem
+          <SingleItem
             icon={<DoNotDisturbIcon fontSize="inherit" />}
             isActive={value === null || false}
             onClick={() => {
@@ -96,20 +77,19 @@ function FolderPicker({ value, onChange, variant }) {
           />
           {folders
             ? folders.map((folder) => (
-                <ItemWrapper
+                <SingleItem
+                  name={folder.folderName}
                   isActive={folder._id === value || false}
                   onClick={() => {
                     onChange(folder._id)
                     hide()
                   }}
                   key={folder._id}
-                >
-                  <FolderItem folder={folder} />
-                </ItemWrapper>
+                />
               ))
             : null}
 
-          <PickerItem
+          <SingleItem
             onClick={() => {
               _showFolderInput()
               hide()

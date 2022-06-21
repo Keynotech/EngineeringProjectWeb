@@ -9,16 +9,15 @@ import AddIcon from "@mui/icons-material/Add"
 import PropTypes from "prop-types"
 import { useQueryClient } from "react-query"
 import Checkbox from "../../../components/button/Checkbox"
-import TagItem from "../../Tag/TagItem/TagItem"
+import TagIcon from "../../Tag/TagIcon/TagIcon"
 import { showTagInput } from "../../../store/features/layoutSlice"
 import TagPropertie from "../../Propertie/TagPropertie/TagPropertie"
 import Popover from "../../../components/Popover/Popover"
 import useIsOpen from "../../../hooks/useIsOpen"
-import PickerItem from "../PickerItem"
+import SingleItem from "../../../components/SingleItem/SingleItem"
 
 const Wrapper = styled.div`
-  min-width: 200px;
-  max-width: 90vw;
+  width: min(290px, 90vw);
   max-height: 50vh;
   overflow-y: auto;
 `
@@ -27,18 +26,13 @@ const ItemWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
+  justify-content: space-between;
   cursor: pointer;
   padding-right: 6px;
 
   &:hover {
     background-color: ${(props) => props.theme.secondary};
   }
-`
-
-const WrapperTagPropertie = styled.div`
-  width: 95%;
-  padding-right: 8px;
 `
 
 function TagPicker({ value, currentTags, onChange, variant }) {
@@ -101,22 +95,22 @@ function TagPicker({ value, currentTags, onChange, variant }) {
         <Wrapper>
           {tags
             ? tags.map((tag) => (
-                <ItemWrapper
+                <SingleItem
                   onClick={() => handleChange(tag._id)}
                   key={tag._id}
-                >
-                  <WrapperTagPropertie>
-                    <TagItem tag={tag} />
-                  </WrapperTagPropertie>
-                  <Checkbox
-                    id="tag-picker-select"
-                    onChange={() => handleChange(tag._id)}
-                    checked={selectedTags.indexOf(tag._id) > -1}
-                  />
-                </ItemWrapper>
+                  name={tag.tagName}
+                  icon={<TagIcon />}
+                  rightComponent={
+                    <Checkbox
+                      id="tag-picker-select"
+                      onChange={() => handleChange(tag._id)}
+                      checked={selectedTags.indexOf(tag._id) > -1}
+                    />
+                  }
+                />
               ))
             : null}
-          <PickerItem
+          <SingleItem
             onClick={() => {
               _showTagInput()
               hide()
