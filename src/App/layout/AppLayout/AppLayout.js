@@ -110,12 +110,6 @@ function AppLayout({ user }) {
   // ===========================================================================
 
   useEffect(() => {
-    if (!user) {
-      navigate("/auth")
-    }
-  }, [user])
-
-  useEffect(() => {
     if (
       (windowSize.width < size.laptop && taskPageVisibility === true) ||
       windowSize.width < size.laptop

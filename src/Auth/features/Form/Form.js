@@ -61,6 +61,8 @@ const SocialButtonsWraper = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid ${(props) => props.theme.tertiary};
 `
 
 function FormSocialAuth() {
@@ -94,9 +96,20 @@ const TermsAccept = styled.span`
   }
 `
 
-function FormInput({ submitText, onSubmit, displayTerms }) {
-  let terms = null
+const PasswordResetLink = styled.button`
+  color: ${(props) => props.theme.textTertiary};
+  text-decoration: underline;
+  text-align: left;
+`
 
+function FormInput({
+  submitText,
+  onSubmit,
+  displayTerms,
+  displayPasswordReset,
+}) {
+  let terms = null
+  let passwordReset = null
   if (displayTerms) {
     terms = (
       <TermsAccept>
@@ -108,6 +121,16 @@ function FormInput({ submitText, onSubmit, displayTerms }) {
       </TermsAccept>
     )
   }
+
+  if (displayPasswordReset) {
+    const navigate = useNavigate()
+    passwordReset = (
+      <PasswordResetLink type="button" onClick={() => navigate("/auth/reset")}>
+        {" Don't remember password?"}
+      </PasswordResetLink>
+    )
+  }
+
   return (
     <InputWrapper>
       <EmailInput value="" onChange={() => console.log("change")} />
@@ -125,6 +148,7 @@ function FormInput({ submitText, onSubmit, displayTerms }) {
           onSubmit()
         }}
       />
+      {passwordReset}
       {terms}
     </InputWrapper>
   )
@@ -136,7 +160,7 @@ const FormContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 50px;
+  gap: 20px;
 `
 
 function Form({ children, title }) {

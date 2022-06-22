@@ -14,6 +14,7 @@ const FormWrapper = styled.div`
     width: 50%;
   }
 `
+
 function FormContent({ children }) {
   return <FormWrapper>{children}</FormWrapper>
 }
