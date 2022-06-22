@@ -4,23 +4,22 @@ import {
   FormContent,
   FormImage,
 } from "../../components/layout/FormBody"
-import SignUpForm from "./SignUpForm"
+import PasswordResetForm from "./PassworedResetForm"
 
-function SignUpPage() {
+function PasswordResetPage() {
   return (
     <FormBody>
       <FormContent>
-        <SignUpForm />
+        <PasswordResetForm />
       </FormContent>
       <FormImage>
         <img
           width="100%"
           alt="loading-screen"
-          src={`${process.env.PUBLIC_URL}/assets/undraw_authentication_re_svpt.svg`}
+          src={`${process.env.PUBLIC_URL}/assets/undraw_forgot_password_re_hxwm.svg`}
         />
       </FormImage>
     </FormBody>
   )
 }
-
-export default SignUpPage
+export default PasswordResetPage

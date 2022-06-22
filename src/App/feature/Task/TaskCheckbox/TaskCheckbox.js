@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import PropTypes from "prop-types"
 import { useTheme } from "styled-components"
-import Checkbox from "../../../components/Checkbox/Checkbox"
+import Checkbox from "../../../../components/Checkbox/Checkbox"
 
 const checkboxVariants = {
   hover: { scale: 1.05 },

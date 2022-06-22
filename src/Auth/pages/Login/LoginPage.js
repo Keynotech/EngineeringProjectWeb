@@ -1,26 +1,27 @@
 import React from "react"
+// import FormLayout from "../../components/layout/FormLayout"
 import {
   FormBody,
   FormContent,
   FormImage,
 } from "../../components/layout/FormBody"
-import SignUpForm from "./SignUpForm"
+import LoginForm from "./LoginForm"
 
-function SignUpPage() {
+function LoginPage() {
   return (
     <FormBody>
       <FormContent>
-        <SignUpForm />
+        <LoginForm />
       </FormContent>
       <FormImage>
         <img
           width="100%"
           alt="loading-screen"
-          src={`${process.env.PUBLIC_URL}/assets/undraw_authentication_re_svpt.svg`}
+          src={`${process.env.PUBLIC_URL}/assets/undraw_enter_uhqk.svg`}
         />
       </FormImage>
     </FormBody>
   )
 }
 
-export default SignUpPage
+export default LoginPage

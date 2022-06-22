@@ -19,6 +19,7 @@ function TextInput({
   id,
   name,
   maxLength,
+  type,
 }) {
   const theme = useTheme()
 
@@ -26,6 +27,7 @@ function TextInput({
 
   return (
     <Input
+      type={type}
       id={id}
       name={name}
       value={value}
@@ -46,6 +48,7 @@ function TextInput({
         margin: 0,
         fontSize: { fontSize },
         color: theme.textSecondary,
+        background: theme.background,
         fontWeight,
         resize: "none",
         "& 	.MuiInput-input	": {
@@ -71,6 +74,7 @@ TextInput.propTypes = {
   autoFocus: PropTypes.bool,
   fontWeight: PropTypes.number,
   maxLength: PropTypes.number,
+  type: PropTypes.string,
 }
 
 TextInput.defaultProps = {
@@ -81,6 +85,7 @@ TextInput.defaultProps = {
   fontSize: "12px",
   fontWeight: 400,
   autoFocus: false,
+  type: "text",
 }
 
 export default TextInput

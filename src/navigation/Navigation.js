@@ -8,7 +8,10 @@ import AppLayout from "../App/layout/AppLayout/AppLayout"
 import TaskPage from "../App/feature/Task/TaskPage/TaskPage"
 import TagPage from "../App/pages/TagPage/TagPage"
 import ProjectPage from "../App/pages/ProjectPage/ProjectPage"
-import AuthPageLayout from "../Auth/layout/AuthPageLayout"
+import AuthPageLayout from "../Auth/components/layout/AuthPageLayout"
+import LoginPage from "../Auth/pages/Login/LoginPage"
+import SignUpPage from "../Auth/pages/SignUp/SignUpPage"
+import PasswordResetPage from "../Auth/pages/PasswordReset/PasswordResetPage"
 
 function Navigation() {
   const user = useSelector((state) => state.auth.userToken)
@@ -19,9 +22,10 @@ function Navigation() {
         <Route path="*" element={<Navigate replace to="/" />} />
         <Route path="/" element={<Navigate replace to="/auth" />} />
         <Route path="/auth" element={<AuthPageLayout user={user} />}>
-          <Route path="login" />
-          <Route path="signup" />
-          <Route path="reset" />
+          <Route path="/auth" element={<Navigate replace to="signup" />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignUpPage />} />
+          <Route path="reset" element={<PasswordResetPage />} />
         </Route>
         <Route path="/app" element={<AppLayout user={user} />}>
           <Route path="/app" element={<Navigate replace to="today" />} />
