@@ -17,10 +17,7 @@ function useDeleteTask(taskId) {
       )
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["tasks"],
-        refetchActive: false,
-      })
+      queryClient.invalidateQueries(["tasks"])
       _hideTaskPage()
     },
   })
