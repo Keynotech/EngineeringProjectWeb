@@ -197,6 +197,7 @@ function FolderSection({ section }) {
       </SidebarList>
     )
   } else {
+    const refProject = createRef()
     projectList = (
       <SidebarList>
         {isOpen ? (
@@ -211,6 +212,7 @@ function FolderSection({ section }) {
                 transition={{ duration: 0.4 }}
               >
                 <SidebarLink
+                  ref={refProject}
                   icon={<ProjectIcon />}
                   name={project.projectName}
                   route={`project/${project._id}`}
@@ -226,6 +228,7 @@ function FolderSection({ section }) {
                         }
                         label={t("project.edit")}
                         onClick={() => {
+                          refProject.current.hideMenu()
                           openProjectEdit(project._id)
                         }}
                       />
@@ -237,7 +240,10 @@ function FolderSection({ section }) {
                           />
                         }
                         label={t("project.delete")}
-                        onClick={() => deleteProject(project._id)}
+                        onClick={() => {
+                          refProject.current.hideMenu()
+                          deleteProject(project._id)
+                        }}
                       />
                     </>
                   }
