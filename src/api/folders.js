@@ -1,6 +1,6 @@
 import fetchWithError from "./fetchWithError"
 
-const API_URL = `http://localhost:5000/folders`
+const API_URL = `${process.env.REACT_APP_API_URL}/folders`
 
 const post = async ({ folderName }) =>
   fetchWithError(API_URL, {

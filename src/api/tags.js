@@ -1,6 +1,6 @@
 import fetchWithError from "./fetchWithError"
 
-const API_URL = `http://localhost:5000/tags`
+const API_URL = `${process.env.REACT_APP_API_URL}/tags`
 
 const post = async ({ tagName }) =>
   fetchWithError(API_URL, {
