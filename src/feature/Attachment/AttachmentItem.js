@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { useTranslation } from "react-i18next"
 import styled, { css } from "styled-components"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
+import { downloadFile } from "../../api/file"
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,8 +77,12 @@ const InnerUpload = styled.div`
   }
 `
 
-function AttachmentItem({ name, deleteFunc, uploadFunc }) {
+function AttachmentItem({ fileId, taskId, name, deleteFunc, uploadFunc }) {
   const { t } = useTranslation()
+  const deleteFile = (e) => {
+    e.stopPropagation()
+    deleteFunc()
+  }
 
   if (uploadFunc) {
     return (
@@ -104,10 +109,13 @@ function AttachmentItem({ name, deleteFunc, uploadFunc }) {
       animate={{ x: [400, -20, 0], opacity: 1, duration: 0.25 }}
       exit={{ x: 400, opacity: 0, duration: 0.2 }}
     >
-      <Wrapper isFile>
+      <Wrapper
+        onClick={() => downloadFile({ taskId, fileId, filename: name })}
+        isFile
+      >
         <InnerWrapper>
           <p>{name}</p>
-          <button type="button" onClick={deleteFunc}>
+          <button type="button" onClick={deleteFile}>
             {t("attachments.delete")}
           </button>
         </InnerWrapper>

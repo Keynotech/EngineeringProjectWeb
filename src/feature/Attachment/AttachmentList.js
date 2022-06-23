@@ -34,6 +34,8 @@ function AttachmentList({ attachments, taskId, openUpload }) {
           <AttachmentItem
             key={attachment._id}
             id={attachment._id}
+            fileId={attachment._id}
+            taskId={taskId}
             name={attachment.file[0].originalname}
             deleteFunc={() => deleteFile(attachment._id)}
           />

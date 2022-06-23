@@ -1,5 +1,4 @@
-import Axios from "axios"
-import FileDownload from "js-file-download"
+// import FileDownload from "js-file-download"
 import fetchWithError from "./fetchWithError"
 
 const API_URL = `http://localhost:5000/tasks`
@@ -16,13 +15,18 @@ const del = async ({ taskId, fileId }) =>
   })
 
 const downloadFile = async ({ taskId, fileId, filename }) => {
-  Axios({
-    url: `API_URL/${taskId}/${fileId}`,
+  fetch(`${API_URL}/${taskId}/${fileId}`, {
     method: "GET",
     responseType: "blob",
-  }).then((res) => {
-    FileDownload(res.data, filename)
   })
+    .then((res) => res.blob())
+    .then((blob) => {
+      const link = document.createElement("a")
+      link.href = URL.createObjectURL(blob)
+      link.setAttribute("download", filename)
+      document.body.appendChild(link)
+      link.click()
+    })
 }
 
 export { post, del, downloadFile }
