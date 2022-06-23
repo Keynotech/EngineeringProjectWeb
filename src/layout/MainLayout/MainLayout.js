@@ -34,8 +34,13 @@ const ChildContainer = styled.div`
   }
 `
 const OutletContainer = styled.div`
-  z-index: ${zIndex.level1};
+  z-index: ${zIndex.level4};
   position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
   width: 100vw;
 
   @media ${mq.tablet} {
@@ -79,6 +84,7 @@ const ButtonContainer = styled.div`
     taskPageVisibility &&
     css`
       @media ${mq.tablet} {
+        display: block;
         right: 420px;
         transition: none;
       }
