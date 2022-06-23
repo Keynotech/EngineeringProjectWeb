@@ -28,7 +28,7 @@ const DialogContainer = styled.div`
   background-color: ${(props) => props.theme.background};
   border-radius: 10px;
   border: 1px solid ${(props) => props.theme.tertiary};
-  z-index: ${zIndex.level9};
+  z-index: ${zIndex.level8};
 `
 
 const Wrapper = styled.div`
@@ -54,7 +54,7 @@ export const OutsideClick = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: ${zIndex.level8};
+  z-index: ${zIndex.level7};
   background-color: rgba(0, 0, 0, 0.4);
 `
 

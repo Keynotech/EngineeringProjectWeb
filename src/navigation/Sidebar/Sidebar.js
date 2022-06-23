@@ -23,7 +23,7 @@ const Wrapper = styled.nav`
   left: -100vw;
   height: 100vh;
   overflow-y: auto;
-  z-index: ${zIndex.level2};
+  z-index: ${zIndex.level3};
   background-color: ${(props) => props.theme.primary};
   border-right: 1px solid ${(props) => props.theme.tertiary};
   transition: left 0.25s cubic-bezier(0.42, 0, 1, 1);
@@ -64,7 +64,7 @@ const Backdrop = styled.div`
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: ${zIndex.leve9};
+    z-index: ${zIndex.level2};
     background-color: rgba(0, 0, 0, 0.5);
     transition: all 0.25s cubic-bezier(0.42, 0, 1, 1);
     opacity: 0;

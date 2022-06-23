@@ -4,7 +4,7 @@ import zIndex from "../../../utils/zIndex"
 export const Wrapper = styled.div`
   position: relative;
   margin-bottom: 40px;
-  z-index: ${zIndex.level8};
+  z-index: ${zIndex.level3};
 `
 
 export const Form = styled.form`
@@ -70,5 +70,5 @@ export const Overlay = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: ${zIndex.level7};
+  z-index: ${zIndex.level2};
 `

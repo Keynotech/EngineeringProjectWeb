@@ -23,6 +23,7 @@ import useIsOpen from "../../../hooks/useIsOpen"
 
 const Calendar = styled(CalendarPicker)`
   max-width: 290px;
+
   & .PrivatePickersSlideTransition-root {
     min-height: 200px;
   }
