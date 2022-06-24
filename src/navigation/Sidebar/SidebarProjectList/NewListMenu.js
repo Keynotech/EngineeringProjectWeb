@@ -38,7 +38,7 @@ function NewListMenu() {
           <SidebarItem
             as="div"
             icon={<AddIcon fontSize="inherit" />}
-            name="Createw new list"
+            name={t("list.newList")}
             fontWeight="light"
             onClick={() => toggleMenu(!menuIsOpen)}
             clickable

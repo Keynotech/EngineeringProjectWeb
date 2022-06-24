@@ -25,6 +25,9 @@
         "upload": "Upload files",
         "uploadPlaceholder":"Drop files here to add them to task"
     },
+    "list": {
+        "newList": "Create new list"
+    },
     "folders": {
         "folderName": "Folder name",
         "create": "Create new folder",
@@ -77,6 +80,7 @@
         }
     },
     "sidebar": {
+        "quickFind": "Quick find",
         "inbox": "Inbox",
         "today": "Today",
         "upcoming": "Upcoming",

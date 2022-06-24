@@ -31,7 +31,7 @@ function ProjectEdit() {
       onCancel={_hideProjectEdit}
       project={project}
       dialogName={t("project.edit")}
-      submitText="Save"
+      submitText={t("save")}
     />
   )
 }

@@ -20,7 +20,7 @@ function Today() {
     <MainLayout>
       <TaskList
         tasks={tasksQuery}
-        listName="Today"
+        listName={t("sidebar.today")}
         inputDueDateVal={new Date().toISOString()}
         groupOptions={groupOptions}
       />

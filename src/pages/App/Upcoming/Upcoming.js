@@ -19,7 +19,7 @@ function Upcoming() {
     <MainLayout>
       <TaskList
         tasks={tasksQuery}
-        listName="Upcoming"
+        listName={t("sidebar.upcoming")}
         groupOptions={groupOptions}
       />
     </MainLayout>

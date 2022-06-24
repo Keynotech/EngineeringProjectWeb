@@ -24,6 +24,9 @@
         "upload": "Dodaj pliki",
         "uploadPlaceholder": "Upuść pliki tutaj, aby dodać je do zadania"
     },
+    "list": {
+        "newList": "Utwórz nową listę"
+    },
     "folders": {
         "folderName": "Nazwa folderu",
         "create":"Utwórz nowy folder",
@@ -76,6 +79,7 @@
         }
     },
     "sidebar": {
+        "quickFind": "Szybkie wyszukiwanie",
         "inbox": "Skrzynka",
         "today": "Dzisiaj",
         "upcoming": "Nadchodzące",

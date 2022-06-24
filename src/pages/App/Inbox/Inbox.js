@@ -23,7 +23,7 @@ function Inbox() {
     <MainLayout>
       <TaskList
         tasks={tasksQuery}
-        listName="Inbox"
+        listName={t("sidebar.inbox")}
         groupOptions={groupOptions}
       />
     </MainLayout>

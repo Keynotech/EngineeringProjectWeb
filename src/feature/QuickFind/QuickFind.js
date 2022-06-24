@@ -17,10 +17,12 @@ import SingleItem from "../../components/SingleItem/SingleItem"
 
 const Wrapper = styled.div`
   width: min(600px, 90vw);
-  height: min(600px, 90vh);
+  min-height: 200px;
+  max-height: min(600px, 90vh);
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
 `
 
 const Input = styled.div`
@@ -38,22 +40,17 @@ const EmptySearch = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   flex-direction: column;
+  gap: 20px;
   padding: 40px 0;
-  position: relative;
 `
 
 const EmptySearchLabel = styled.span`
   font-size: 22px;
-  position: relative;
-  bottom: 40px;
 `
 
-const Image = styled.img`
-  position: absolute;
-  transform: scale(0.5);
-`
+const Image = styled.img``
 
 const SearchResultWrapper = styled.div`
   display: flex;
@@ -180,6 +177,7 @@ function QuickFind() {
         {!searchText ? (
           <EmptySearch>
             <Image
+              width="50%"
               alt="loading-screen"
               src={`${process.env.PUBLIC_URL}/assets/undraw_searching_re_3ra9.svg`}
             />

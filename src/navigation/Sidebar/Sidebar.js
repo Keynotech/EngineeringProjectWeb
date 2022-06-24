@@ -105,7 +105,7 @@ function Sidebar() {
           <SidebarList>
             <SidebarItem
               icon={<SearchIcon fontSize="inehrit" />}
-              name="Quick Find"
+              name={t("sidebar.quickFind")}
               onClick={_showQuickFind}
               clickable
             />
