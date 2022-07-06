@@ -20,12 +20,6 @@ const Container = styled.div`
 `
 
 function AuthPageLayout() {
-  /*
-  if (user) {
-    const navigate = useNavigate()
-    navigate("/app")
-  }
-  */
   return (
     <Wrapper>
       <Container>

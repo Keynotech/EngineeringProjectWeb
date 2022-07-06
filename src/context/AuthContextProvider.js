@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable import/no-anonymous-default-export */
@@ -11,7 +12,7 @@ export default ({ children }) => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged(async () => {
+    firebaseAuth.onAuthStateChanged(async (user) => {
       try {
         if (user) {
           // User is signed in.
@@ -24,9 +25,6 @@ export default ({ children }) => {
         console.error(error)
       }
     })
-    return () => {
-      unsubscribe()
-    }
   }, [])
 
   return (

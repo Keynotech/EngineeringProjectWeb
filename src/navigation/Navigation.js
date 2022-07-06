@@ -11,12 +11,8 @@ import AuthPageLayout from "../Auth/components/layout/AuthPageLayout"
 import LoginPage from "../Auth/pages/Login/LoginPage"
 import SignUpPage from "../Auth/pages/SignUp/SignUpPage"
 import PasswordResetPage from "../Auth/pages/PasswordReset/PasswordResetPage"
-import { useAuthContext } from "../context/AuthContextProvider"
 
 function Navigation() {
-  const auth = useAuthContext()
-  console.log(auth)
-
   return (
     <BrowserRouter>
       <Routes>

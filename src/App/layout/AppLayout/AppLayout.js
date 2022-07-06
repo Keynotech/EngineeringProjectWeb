@@ -21,6 +21,7 @@ import useTasksQuery from "../../hooks/query/useTasksQuery"
 import FolderEdit from "../../feature/Folder/FolderInput/FolderEdit"
 import useWindowDragDetect from "../../hooks/useWindowDragDetect"
 import QuickFind from "../../feature/QuickFind/QuickFind"
+import { useAuthContext } from "../../../context/AuthContextProvider"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -50,9 +51,11 @@ const Main = styled.main`
 `
 
 function AppLayout() {
-  // Queries
+  // User
   // ===========================================================================
 
+  // Queries
+  // ===========================================================================
   const projects = useProjectsQuery()
   const tags = useTagsQuery()
   const folders = useFoldersQuery()

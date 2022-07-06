@@ -4,11 +4,13 @@ import React from "react"
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import PropTypes from "prop-types"
+import * as Yup from "yup"
+import { useFormik } from "formik"
 import SubmitButton from "../../../components/button/SubmitButton"
 import EmailInput from "../Input/EmailInput"
 import PasswordInput from "../Input/PasswordInput"
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -30,7 +32,7 @@ const TermsInfo = styled.span`
   }
 `
 
-function FormSignInput({ submitText, onSubmit, displayPasswordReset }) {
+function FormEmailPassword({ submitText, onSubmit, displayPasswordReset }) {
   let passwordReset = null
 
   if (displayPasswordReset) {
@@ -42,11 +44,38 @@ function FormSignInput({ submitText, onSubmit, displayPasswordReset }) {
     )
   }
 
+  const FormSchema = Yup.object().shape({
+    email: Yup.string().email().required(),
+    password: Yup.string().min(8).required(),
+  })
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: FormSchema,
+    onSubmit: (values) => {
+      onSubmit({ email: values.email, password: values.password })
+    },
+  })
+
   return (
-    <Wrapper>
-      <EmailInput value="" onChange={() => console.log("change")} />
-      <PasswordInput value="" onChange={() => console.log("change")} />
+    <Wrapper onSubmit={formik.handleSubmit}>
+      <EmailInput
+        id="email"
+        name="email"
+        value={formik.values.email}
+        onChange={(val) => formik.setFieldValue("email", val)}
+      />
+      <PasswordInput
+        id="password"
+        name="password"
+        value={formik.values.password}
+        onChange={(val) => formik.setFieldValue("password", val)}
+      />
       <SubmitButton
+        disabled={!(formik.isValid && formik.dirty)}
         style={{
           width: "100%",
           height: "65px",
@@ -55,9 +84,6 @@ function FormSignInput({ submitText, onSubmit, displayPasswordReset }) {
         }}
         text={submitText}
         type="submit"
-        onClick={() => {
-          onSubmit()
-        }}
       />
       {passwordReset}
       <TermsInfo>
@@ -69,14 +95,14 @@ function FormSignInput({ submitText, onSubmit, displayPasswordReset }) {
   )
 }
 
-FormSignInput.propTypes = {
+FormEmailPassword.propTypes = {
   submitText: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   displayPasswordReset: PropTypes.bool,
 }
 
-FormSignInput.defaultProps = {
+FormEmailPassword.defaultProps = {
   displayPasswordReset: false,
 }
 
-export default FormSignInput
+export default FormEmailPassword

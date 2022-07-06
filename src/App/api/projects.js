@@ -7,17 +7,31 @@ const post = async ({ projectName, folder }) =>
     method: "POST",
     headers: {
       "content-type": "application/json",
+      Authorization: sessionStorage.getItem("Auth Token"),
     },
     body: JSON.stringify({ projectName, folder }),
   })
 
-const getAll = async () => fetchWithError(`${API_URL}`)
+const getAll = async () =>
+  fetchWithError(`${API_URL}`, {
+    headers: {
+      Authorization: sessionStorage.getItem("Auth Token"),
+    },
+  })
 
-const getOne = async (projectId) => fetchWithError(`${API_URL}/${projectId}`)
+const getOne = async (projectId) =>
+  fetchWithError(`${API_URL}/${projectId}`, {
+    headers: {
+      Authorization: sessionStorage.getItem("Auth Token"),
+    },
+  })
 
 const del = async (projectId) =>
   fetchWithError(`${API_URL}/${projectId}`, {
     method: "DELETE",
+    headers: {
+      Authorization: sessionStorage.getItem("Auth Token"),
+    },
   })
 
 const patch = async ({ projectId, props }) =>
@@ -25,6 +39,7 @@ const patch = async ({ projectId, props }) =>
     method: "PATCH",
     headers: {
       "content-type": "application/json",
+      Authorization: sessionStorage.getItem("Auth Token"),
     },
     body: JSON.stringify({ ...props }),
   })
