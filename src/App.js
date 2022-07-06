@@ -8,19 +8,21 @@ import light from "./styles/light"
 import dark from "./styles/dark"
 import GlobalStyle from "./styles/GlobalStyle"
 import Navigation from "./navigation/Navigation"
+import AuthContextProvider from "./context/AuthContextProvider"
 
 function App() {
   const queryClient = new QueryClient()
-
   const isDarkMode = useSelector((state) => state.theme.isDarkMode)
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={isDarkMode === true ? dark : light}>
-        <GlobalStyle />
-        <Navigation />
-      </ThemeProvider>
-    </QueryClientProvider>
+    <AuthContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={isDarkMode === true ? dark : light}>
+          <GlobalStyle />
+          <Navigation />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </AuthContextProvider>
   )
 }
 

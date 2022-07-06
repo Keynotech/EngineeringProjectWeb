@@ -19,10 +19,12 @@ function FormSocialAuth() {
       <SocialAuthButton
         icon={<GoogleIcon color="inherit" />}
         text="Continue with Google"
+        onClick={() => console.log("google")}
       />
       <SocialAuthButton
         icon={<AppleIcon color="inherit" />}
         text="Continue with Apple"
+        onClick={() => console.log("apple")}
       />
     </Wrapper>
   )

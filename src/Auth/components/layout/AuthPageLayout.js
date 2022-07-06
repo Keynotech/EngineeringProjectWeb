@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import styled from "styled-components"
 
 const Wrapper = styled.div`
@@ -19,11 +19,13 @@ const Container = styled.div`
   justify-content: center;
 `
 
-function AuthPageLayout({ user }) {
+function AuthPageLayout() {
+  /*
   if (user) {
     const navigate = useNavigate()
     navigate("/app")
   }
+  */
   return (
     <Wrapper>
       <Container>

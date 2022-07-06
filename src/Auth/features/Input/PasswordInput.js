@@ -17,6 +17,8 @@ function PasswordInput({ value, onChange }) {
   return (
     <Wrapper>
       <TextInput
+        name="password"
+        id="password"
         type="password"
         placeholder="Password"
         multiline={false}

@@ -17,6 +17,8 @@ function EmailInput({ value, onChange }) {
   return (
     <Wrapper>
       <TextInput
+        name="email"
+        id="email"
         type="email"
         placeholder="exampleemail123@jettasks.com"
         multiline={false}

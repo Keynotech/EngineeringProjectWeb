@@ -49,7 +49,7 @@ const Main = styled.main`
     `}
 `
 
-function AppLayout({ user }) {
+function AppLayout() {
   // Queries
   // ===========================================================================
 

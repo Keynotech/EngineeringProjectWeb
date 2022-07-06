@@ -1,6 +1,5 @@
 import React from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { useSelector } from "react-redux"
 import Today from "../App/pages/Today/Today"
 import Inbox from "../App/pages/Inbox/Inbox"
 import Upcoming from "../App/pages/Upcoming/Upcoming"
@@ -12,22 +11,24 @@ import AuthPageLayout from "../Auth/components/layout/AuthPageLayout"
 import LoginPage from "../Auth/pages/Login/LoginPage"
 import SignUpPage from "../Auth/pages/SignUp/SignUpPage"
 import PasswordResetPage from "../Auth/pages/PasswordReset/PasswordResetPage"
+import { useAuthContext } from "../context/AuthContextProvider"
 
 function Navigation() {
-  const user = useSelector((state) => state.auth.userToken)
+  const auth = useAuthContext()
+  console.log(auth)
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<Navigate replace to="/" />} />
         <Route path="/" element={<Navigate replace to="/auth" />} />
-        <Route path="/auth" element={<AuthPageLayout user={user} />}>
+        <Route path="/auth" element={<AuthPageLayout />}>
           <Route path="/auth" element={<Navigate replace to="signup" />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route path="reset" element={<PasswordResetPage />} />
         </Route>
-        <Route path="/app" element={<AppLayout user={user} />}>
+        <Route path="/app" element={<AppLayout />}>
           <Route path="/app" element={<Navigate replace to="today" />} />
           <Route path="today/*" element={<Today />}>
             <Route path="tasks/:taskId" element={<TaskPage />} />

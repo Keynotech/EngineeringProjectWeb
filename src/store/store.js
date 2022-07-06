@@ -6,7 +6,6 @@ import tagEditPageReducer from "../App/store/features/tagEditPageSlice"
 import projectEditPageSlice from "../App/store/features/projectEditPageSlice"
 import windowDragEnterReducer from "../App/store/features/windowDragEnterSlice"
 import foldersSliceReducer from "../App/store/features/foldersSlice"
-import authSliceReducer from "./features/authSlice"
 
 export default configureStore({
   reducer: {
@@ -17,6 +16,5 @@ export default configureStore({
     tagEditPage: tagEditPageReducer,
     projectEditPage: projectEditPageSlice,
     folders: foldersSliceReducer,
-    auth: authSliceReducer,
   },
 })
