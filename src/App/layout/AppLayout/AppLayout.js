@@ -22,6 +22,7 @@ import FolderEdit from "../../feature/Folder/FolderInput/FolderEdit"
 import useWindowDragDetect from "../../hooks/useWindowDragDetect"
 import QuickFind from "../../feature/QuickFind/QuickFind"
 import { useAuthContext } from "../../../context/AuthContextProvider"
+import { firebaseAuth } from "../../../firebase"
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -51,17 +52,15 @@ const Main = styled.main`
 `
 
 function AppLayout() {
-  // User
-  // ===========================================================================
-
   // Queries
   // ===========================================================================
   const projects = useProjectsQuery()
   const tags = useTagsQuery()
   const folders = useFoldersQuery()
   const tasks = useTasksQuery()
-  const theme = useTheme()
-  const navigate = useNavigate()
+
+  // User
+  // ===========================================================================
 
   // State hooks
   // ===========================================================================

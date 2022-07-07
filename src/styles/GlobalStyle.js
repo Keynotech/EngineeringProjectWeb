@@ -16,6 +16,7 @@ body {
     color: ${({ theme }) => theme.textPrimary};
     transition: all 0.2s cubic-bezier(0,0,.58,1);
 }
+
 h1,h2,h3, header,p, a, a:link, a:active, a:visited, a:hover {
     padding: 0;
     margin:0;

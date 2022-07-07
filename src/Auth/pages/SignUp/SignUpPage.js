@@ -3,8 +3,8 @@ import {
   FormBody,
   FormContent,
   FormImage,
-} from "../../components/layout/FormBody"
-import SignUpForm from "./SignUpForm"
+} from "../../components/Form/FormBody"
+import SignUpForm from "../../features/Forms/SignUpForm"
 
 function SignUpPage() {
   return (

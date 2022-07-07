@@ -112,15 +112,15 @@ function Sidebar() {
             <SidebarLink
               icon={<InboxOutlinedIcon fontSize="inherit" />}
               name={t("sidebar.inbox")}
-              route="/inbox"
+              route="/app/inbox"
             />
             <SidebarLink
               icon={<TodayOutlinedIcon fontSize="inherit" />}
               name={t("sidebar.today")}
-              route="/today"
+              route="/app/today"
             />
             <SidebarLink
-              route="/upcoming"
+              route="/app/upcoming"
               name={t("sidebar.upcoming")}
               icon={<CalendarViewWeekOutlinedIcon fontSize="inherit" />}
             />

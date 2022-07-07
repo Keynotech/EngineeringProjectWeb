@@ -11,20 +11,36 @@ import AuthPageLayout from "../Auth/components/layout/AuthPageLayout"
 import LoginPage from "../Auth/pages/Login/LoginPage"
 import SignUpPage from "../Auth/pages/SignUp/SignUpPage"
 import PasswordResetPage from "../Auth/pages/PasswordReset/PasswordResetPage"
+import ProtectedRoute from "./ProtectedRoute"
+import RedirectLoggedUser from "./RedirectLoggedUser"
 
 function Navigation() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="*" element={<Navigate replace to="/" />} />
-        <Route path="/" element={<Navigate replace to="/auth" />} />
-        <Route path="/auth" element={<AuthPageLayout />}>
+        <Route path="/" element={<Navigate replace to="auth" />} />
+        <Route
+          path="/auth"
+          element={
+            <RedirectLoggedUser>
+              <AuthPageLayout />
+            </RedirectLoggedUser>
+          }
+        >
           <Route path="/auth" element={<Navigate replace to="signup" />} />
-          <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignUpPage />} />
+          <Route path="login" element={<LoginPage />} />
           <Route path="reset" element={<PasswordResetPage />} />
         </Route>
-        <Route path="/app" element={<AppLayout />}>
+        <Route
+          path="/app"
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/app" element={<Navigate replace to="today" />} />
           <Route path="today/*" element={<Today />}>
             <Route path="tasks/:taskId" element={<TaskPage />} />

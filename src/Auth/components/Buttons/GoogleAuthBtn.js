@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import GoogleIcon from "@mui/icons-material/Google"
-import SocialAuthButton from "../../components/SocialAuthButton"
+import SocialAuthButton from "./SocialAuthButton"
 
 function GoogleAuthBtn({ onClick }) {
   return (

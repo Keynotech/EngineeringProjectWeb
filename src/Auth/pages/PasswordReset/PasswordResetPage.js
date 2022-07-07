@@ -3,8 +3,8 @@ import {
   FormBody,
   FormContent,
   FormImage,
-} from "../../components/layout/FormBody"
-import PasswordResetForm from "./PassworedResetForm"
+} from "../../components/Form/FormBody"
+import PasswordResetForm from "../../features/Forms/PassworedResetForm"
 
 function PasswordResetPage() {
   return (

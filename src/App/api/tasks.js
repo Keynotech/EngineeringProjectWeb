@@ -6,24 +6,13 @@ const post = async ({ title, status, dueDate, priority, tags, project }) =>
   fetchWithError(API_URL, {
     method: "POST",
     headers: {
-      Authorization: sessionStorage.getItem("Auth Token"),
       "content-type": "application/json",
     },
     body: JSON.stringify({ title, status, dueDate, priority, tags, project }),
   })
 
-const getAll = async () =>
-  fetchWithError(`${API_URL}`, {
-    headers: {
-      Authorization: sessionStorage.getItem("Auth Token"),
-    },
-  })
-const getOne = async (taskId) =>
-  fetchWithError(`${API_URL}/${taskId}`, {
-    headers: {
-      Authorization: sessionStorage.getItem("Auth Token"),
-    },
-  })
+const getAll = async () => fetchWithError(`${API_URL}`)
+const getOne = async (taskId) => fetchWithError(`${API_URL}/${taskId}`)
 
 const getTaskByTag = async (tagId) =>
   fetchWithError(`${API_URL}/findByTag/${tagId}`)
@@ -31,9 +20,6 @@ const getTaskByTag = async (tagId) =>
 const del = async (taskId) =>
   fetchWithError(`${API_URL}/${taskId}`, {
     method: "DELETE",
-    headers: {
-      Authorization: sessionStorage.token,
-    },
   })
 
 const patch = async ({ taskId, props }) =>
@@ -41,7 +27,6 @@ const patch = async ({ taskId, props }) =>
     method: "PATCH",
     headers: {
       "content-type": "application/json",
-      Authorization: sessionStorage.getItem("Auth Token"),
     },
     body: JSON.stringify({ ...props }),
   })

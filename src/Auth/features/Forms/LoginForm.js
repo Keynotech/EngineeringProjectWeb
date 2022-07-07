@@ -7,7 +7,7 @@ import {
   FormContainer,
   FormSocialAuth,
   FormEmailPassword,
-} from "../../features/Form"
+} from "../../components/Form"
 import { useAuthContext } from "../../../context/AuthContextProvider"
 
 const SubHeader = styled.span`
@@ -30,20 +30,12 @@ function LoginForm() {
   const auth = useAuthContext()
 
   const onSubmit = ({ email, password }) => {
-    signInWithEmailAndPassword(auth.auth, email, password)
-      .then((userCredential) => {
-        sessionStorage.setItem(
-          "Auth Token",
-          userCredential._tokenResponse.refreshToken
-        )
-        // ...
-      })
-      .catch((error) => {
-        const { code, message } = error
-        console.log(code, message)
+    signInWithEmailAndPassword(auth.auth, email, password).catch((error) => {
+      const { code, message } = error
+      console.log(code, message)
 
-        // ..
-      })
+      // ..
+    })
   }
   return (
     <FormContainer>

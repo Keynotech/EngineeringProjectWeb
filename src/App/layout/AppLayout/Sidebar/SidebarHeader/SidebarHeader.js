@@ -2,11 +2,13 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
+import LogoutIcon from "@mui/icons-material/Logout"
 import MenuOpenIcon from "@mui/icons-material/MenuOpen"
 import styled, { css, useTheme } from "styled-components"
 import { hideSidebar } from "../../../../store/features/layoutSlice"
 import { mq } from "../../../../../utils/mq"
 import UserAvatar from "./UserAvatar"
+import { useAuthContext } from "../../../../../context/AuthContextProvider"
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,6 +72,7 @@ function SidebarHeader() {
   const isVisible = useSelector((state) => state.layout.sidebarVisibility)
 
   const theme = useTheme()
+  const { logout } = useAuthContext()
 
   return (
     <Wrapper>
@@ -89,6 +92,9 @@ function SidebarHeader() {
             <SettingsOutlinedIcon
               sx={{ color: theme.textSecondary, fontSize: "22px" }}
             />
+          </SettingsButton>
+          <SettingsButton onClick={logout}>
+            <LogoutIcon sx={{ color: theme.textSecondary, fontSize: "22px" }} />
           </SettingsButton>
           <SidebarToggle onClick={_hideSidebar} isSidebarVisible={isVisible}>
             <MenuOpenIcon

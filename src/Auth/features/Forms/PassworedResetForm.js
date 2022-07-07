@@ -1,8 +1,8 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { FormHeader, FormContainer } from "../../features/Form"
-import EmailInput from "../../features/Input/EmailInput"
+import { FormHeader, FormContainer } from "../../components/Form"
+import EmailInput from "../../components/Input/EmailInput"
 import SubmitButton from "../../../components/button/SubmitButton"
 
 const SubHeader = styled.span`

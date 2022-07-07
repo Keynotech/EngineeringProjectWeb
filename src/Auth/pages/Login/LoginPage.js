@@ -4,8 +4,8 @@ import {
   FormBody,
   FormContent,
   FormImage,
-} from "../../components/layout/FormBody"
-import LoginForm from "./LoginForm"
+} from "../../components/Form/FormBody"
+import LoginForm from "../../features/Forms/LoginForm"
 
 function LoginPage() {
   return (
