@@ -18,16 +18,16 @@ export const AuthContext = createContext()
 export default ({ children }) => {
   const [user, setUser] = useState({})
 
-  const signUpWithEmail = (email, password) => {
-    createUserWithEmailAndPassword(firebaseAuth, email, password)
+  async function signUpWithEmail(email, password) {
+    await createUserWithEmailAndPassword(firebaseAuth, email, password)
   }
 
-  const loginWithEmail = (email, password) => {
-    signInWithEmailAndPassword(firebaseAuth, email, password)
+  async function loginWithEmail(email, password) {
+    await signInWithEmailAndPassword(firebaseAuth, email, password)
   }
 
-  const logout = () => {
-    signOut(firebaseAuth)
+  async function logout() {
+    await signOut(firebaseAuth)
   }
 
   useEffect(() => {

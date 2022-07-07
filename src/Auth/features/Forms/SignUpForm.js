@@ -1,7 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { createUserWithEmailAndPassword } from "firebase/auth"
 import {
   FormHeader,
   FormContainer,
@@ -27,17 +26,13 @@ const SubHeader = styled.span`
 
 function SignUpForm() {
   const navigate = useNavigate()
-  const auth = useAuthContext()
+  const { signUpWithEmail } = useAuthContext()
 
   const onSubmit = ({ email, password }) => {
-    createUserWithEmailAndPassword(auth.auth, email, password).catch(
-      (error) => {
-        const { code, message } = error
-        console.log(code, message)
-
-        // ..
-      }
-    )
+    signUpWithEmail(email, password).catch((error) => {
+      const { code, message } = error
+      console.log(code, message)
+    })
   }
 
   return (

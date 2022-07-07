@@ -1,7 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { signInWithEmailAndPassword } from "firebase/auth"
 import {
   FormHeader,
   FormContainer,
@@ -27,14 +26,12 @@ const SubHeader = styled.span`
 
 function LoginForm() {
   const navigate = useNavigate()
-  const auth = useAuthContext()
+  const { loginWithEmail } = useAuthContext()
 
   const onSubmit = ({ email, password }) => {
-    signInWithEmailAndPassword(auth.auth, email, password).catch((error) => {
+    loginWithEmail(email, password).catch((error) => {
       const { code, message } = error
       console.log(code, message)
-
-      // ..
     })
   }
   return (
